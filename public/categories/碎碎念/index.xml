@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>碎碎念 on ch3n9w の 超元域</title>
-    <link>//localhost:1313/categories/%E7%A2%8E%E7%A2%8E%E5%BF%B5/</link>
+    <link>http://ch3n9w.cpolar.cn/categories/%E7%A2%8E%E7%A2%8E%E5%BF%B5/</link>
     <description>Recent content in 碎碎念 on ch3n9w の 超元域</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 23 Mar 2024 22:57:50 +0000</lastBuildDate>
-    <atom:link href="//localhost:1313/categories/%E7%A2%8E%E7%A2%8E%E5%BF%B5/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://ch3n9w.cpolar.cn/categories/%E7%A2%8E%E7%A2%8E%E5%BF%B5/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>若为自由故, 软件皆可抛</title>
-      <link>//localhost:1313/posts/gossip-free-opensource/</link>
+      <link>http://ch3n9w.cpolar.cn/posts/gossip-free-opensource/</link>
       <pubDate>Sat, 23 Mar 2024 22:57:50 +0000</pubDate>
-      <guid>//localhost:1313/posts/gossip-free-opensource/</guid>
+      <guid>http://ch3n9w.cpolar.cn/posts/gossip-free-opensource/</guid>
       <description>借着&amp;quot;若为自由故&amp;quot;这本书, 读者可以更深刻地理解开源软件与自由软件的异同之处. 由于在实际情况中, 二者都开放了源代码, 大部分情况下也都会采用互相兼容甚至相同的协议, 因此其中的区别在越来越多人眼里逐渐模糊. 如今的软件行业, 大多数人在表达相同意思时更加倾向于使用&amp;quot;Open-source&amp;quot;而不是&amp;quot;Free&amp;quot;这个词, 不仅能够直观清晰地表达信息, 也能避免&amp;quot;Free&amp;quot;这个单词常用的&amp;quot;免费&amp;quot;之意 (为了人们认识到&amp;quot;Free software&amp;quot;中的Free不是免费而是自由的意思, Stallman 可强调了许多次, 但很遗憾, 大部分公司在听到他的强调前就会被吓跑). 但只要了解过自由软件和开源软件的历史, 就能发现其中差距并不在技术而是在道德层面上的分歧.
 具体来说, 开源运动更加注重软件开发方式的开放性, 一种类似于集市场景中人人可参与的, 以软件质量为最终目标的倡议, 它关注的是软件本身, 因此颇具工程师的纯粹特性; 相反, 自由软件运动不仅仅注重软件开发方式, 更赋予软件本身以道德属性, 它更强调软件用户的自由修改和自由传播的权利, 以&amp;quot;人的自由&amp;quot;为中心, 任何限制软件用户这些权利的个人和组织都是&amp;quot;邪恶&amp;quot;且需要被抵制的, 这让它更像是一种社会运动. 有一句Stallman的话可以很好地阐释其意: &amp;ldquo;如果一个软件是不自由的, 哪怕它的技术非常先进, 我也不会去使用它&amp;rdquo;, 相反, 开源运动的代表人物Linus曾经在一次大会上公开表示自己是Microsoft Powerpoint的粉丝用户, 二者的冲突也由此而来: 在开源主义者眼中, 商业软件是一个不完美的解决方案, 但是在自由软件者眼中, 商业软件则是彻头彻尾的敌人.
 两种运动并不是互相独立的, 相反, 开源运动脱胎于自由软件运动, 是后者为了适应软件行业商业发展的一种必然演变, 也是追求自由的理想主义者在现实屡屡碰壁后的一种妥协. 在今天, 尽管Stallman依旧在全球各地对着众多慕名而来的听众布道, 他也依旧能给人以震撼人心开悟明智的感觉, 但这种感觉过后又有谁会真的去追随他的步伐, 去将自己生活中的所有专有软件清除呢? 要知道, Stallman的攻击目标, 可不仅仅是个人计算机中的专有软件, 任何非自由软件, 不管是汽车上的, 飞机上的, 动车上的, 乃至收音机里的, 都是他的抵制对象. 而对于没有资源的普通人来说, 单是找一台彻头彻尾源码可见(指主板上的固件)的笔记本电脑, 就已经是一件非常困难且完全没有性价比的事情了.
@@ -20,25 +20,25 @@
     </item>
     <item>
       <title>家的感觉</title>
-      <link>//localhost:1313/posts/gossip-home-feeling/</link>
+      <link>http://ch3n9w.cpolar.cn/posts/gossip-home-feeling/</link>
       <pubDate>Tue, 12 Mar 2024 09:50:38 +0000</pubDate>
-      <guid>//localhost:1313/posts/gossip-home-feeling/</guid>
+      <guid>http://ch3n9w.cpolar.cn/posts/gossip-home-feeling/</guid>
       <description>&lt;p&gt;对于家庭, 我的情绪是复杂的.&lt;/p&gt;</description>
     </item>
     <item>
       <title>2023年度总结</title>
-      <link>//localhost:1313/posts/gossip-2023-summary/</link>
+      <link>http://ch3n9w.cpolar.cn/posts/gossip-2023-summary/</link>
       <pubDate>Fri, 09 Feb 2024 22:31:25 +0000</pubDate>
-      <guid>//localhost:1313/posts/gossip-2023-summary/</guid>
+      <guid>http://ch3n9w.cpolar.cn/posts/gossip-2023-summary/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;一事无成的一年, 但也算有所收获, 如果教训也算收获的话.&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>RIP Clash</title>
-      <link>//localhost:1313/posts/gossip-rip-clash/</link>
+      <link>http://ch3n9w.cpolar.cn/posts/gossip-rip-clash/</link>
       <pubDate>Sat, 04 Nov 2023 10:13:59 +0000</pubDate>
-      <guid>//localhost:1313/posts/gossip-rip-clash/</guid>
+      <guid>http://ch3n9w.cpolar.cn/posts/gossip-rip-clash/</guid>
       <description>2023年11初,简中互联网又发生了一出闹剧,不过于以往的过眼云烟所不同的是,这次的事件导致了一系列优秀开源软件的消亡.
 起因 事件的经过其实并不复杂.11.2,clash for windows 的作者删除了github上用于发布的仓库中的信息,并在个人telegram频道上宣布不再开发.由于cfw的操作简单,对小白友好,因此其用户数量相当之大.删库的消息出来后,网友们纷纷开始关注作者的社交账号,对是否因信息泄露导致被抓加以猜测.其实对于一个网络代理软件来说,无论是因为被请喝茶还是因为作者不想干了而删库都是一件很正常的事情.
 如果事情仅仅到这里就结束,那么大家顶多也就感慨一句过去说烂了的那些话,甚至对于开源主义者来说连感慨都没有,因为cfw本身就是一个闭源软件,而github仅仅是用来发布二进制包的.
@@ -61,9 +61,9 @@ clash for windows是基于开源的clash core核心代码做的图形化客户�
     </item>
     <item>
       <title>2023 记北京秋游</title>
-      <link>//localhost:1313/posts/gossip-beijing-travel-2023-2/</link>
+      <link>http://ch3n9w.cpolar.cn/posts/gossip-beijing-travel-2023-2/</link>
       <pubDate>Mon, 30 Oct 2023 21:35:04 +0000</pubDate>
-      <guid>//localhost:1313/posts/gossip-beijing-travel-2023-2/</guid>
+      <guid>http://ch3n9w.cpolar.cn/posts/gossip-beijing-travel-2023-2/</guid>
       <description>与所爱之人在一起的时光, 会生出互相的珍惜, 这份珍惜犹如风筝线一般, 即便对方远在云端, 依旧可以感知到其心念所动, 于是思念由此而生.
 在yq成功上岸家乡的教师编后, 为了庆祝, 也为了缓解许久未见的相思之苦, 我匆忙计划了一下行程, 一边让她订来北京的车票, 一边思考附近哪里有卖香槟的.
 颐和园 选择颐和园, 是因为离信工所比较近. 当日原本想带yq去我平时去的早餐店, 可惜我们出发之时, 已是中午十二点了, 于是带她吃之前推荐过的意大利沙县萨莉亚. 这是一个价格非常亲民的意大利西餐厅, 看了看菜单上十几二十元的菜品后, 我们彻底放下了对价格的顾虑, 仅仅考虑口味和胃口. 实际上这家店的口味确实不错, 特别是蘑菇浓汤, 虽然肯定不能说顶级, 但这种不用顾虑价格就享受西餐的轻松感, 独此一份 (说白了还是太穷).
@@ -74,59 +74,59 @@ clash for windows是基于开源的clash core核心代码做的图形化客户�
     </item>
     <item>
       <title>动荡时代</title>
-      <link>//localhost:1313/posts/gossip-unstable-software/</link>
+      <link>http://ch3n9w.cpolar.cn/posts/gossip-unstable-software/</link>
       <pubDate>Wed, 02 Aug 2023 22:42:20 +0000</pubDate>
-      <guid>//localhost:1313/posts/gossip-unstable-software/</guid>
+      <guid>http://ch3n9w.cpolar.cn/posts/gossip-unstable-software/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;乱世之中, 唯有自我与我所爱值得珍惜&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>2023 小游京城</title>
-      <link>//localhost:1313/posts/gossip-beijing-travel-2023/</link>
+      <link>http://ch3n9w.cpolar.cn/posts/gossip-beijing-travel-2023/</link>
       <pubDate>Wed, 26 Apr 2023 22:54:10 +0000</pubDate>
-      <guid>//localhost:1313/posts/gossip-beijing-travel-2023/</guid>
+      <guid>http://ch3n9w.cpolar.cn/posts/gossip-beijing-travel-2023/</guid>
       <description>&lt;p&gt;难得黄小姐来一次北京, 作为肥宅的自己紧急规划了一下游玩路线, 发现北京可玩的地方相当的多, 这里仅仅记录这次游玩所经过的三个景区.&lt;/p&gt;</description>
     </item>
     <item>
       <title>2022年度总结</title>
-      <link>//localhost:1313/posts/gossip-2022-summary/</link>
+      <link>http://ch3n9w.cpolar.cn/posts/gossip-2022-summary/</link>
       <pubDate>Sat, 31 Dec 2022 22:31:25 +0000</pubDate>
-      <guid>//localhost:1313/posts/gossip-2022-summary/</guid>
+      <guid>http://ch3n9w.cpolar.cn/posts/gossip-2022-summary/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;2022年是一个记得被纪念的年份, 不是因为它有多好, 而是因为它有多现实&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>小阳人日记</title>
-      <link>//localhost:1313/posts/gossip-yang-diary-md/</link>
+      <link>http://ch3n9w.cpolar.cn/posts/gossip-yang-diary-md/</link>
       <pubDate>Tue, 20 Dec 2022 22:45:44 +0000</pubDate>
-      <guid>//localhost:1313/posts/gossip-yang-diary-md/</guid>
+      <guid>http://ch3n9w.cpolar.cn/posts/gossip-yang-diary-md/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;生命本就如此脆弱&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>服务器过期之后</title>
-      <link>//localhost:1313/posts/gossip-boring-note-md/</link>
+      <link>http://ch3n9w.cpolar.cn/posts/gossip-boring-note-md/</link>
       <pubDate>Mon, 12 Dec 2022 14:49:41 +0000</pubDate>
-      <guid>//localhost:1313/posts/gossip-boring-note-md/</guid>
+      <guid>http://ch3n9w.cpolar.cn/posts/gossip-boring-note-md/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;超元域这个词, 出自雪崩这本书, 人们在这个虚拟世界中可以随意行事, 尽情做自己, 这也是我的初衷: 把发言权还给我&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>2021年度总结</title>
-      <link>//localhost:1313/posts/gossip-2021-summary/</link>
+      <link>http://ch3n9w.cpolar.cn/posts/gossip-2021-summary/</link>
       <pubDate>Wed, 09 Feb 2022 16:12:20 +0000</pubDate>
-      <guid>//localhost:1313/posts/gossip-2021-summary/</guid>
+      <guid>http://ch3n9w.cpolar.cn/posts/gossip-2021-summary/</guid>
       <description>&lt;p&gt;这是一篇拖延了很久的年度总结,在下决心写它的时候,我已经从过年开始无所事事地玩了十几天的游戏了,本来说好要在过年那天写的总结也一直到现在才开始动笔,着实是惭愧.&lt;/p&gt;</description>
     </item>
     <item>
       <title>赛博内卷</title>
-      <link>//localhost:1313/posts/gossip-cyberpunk/</link>
+      <link>http://ch3n9w.cpolar.cn/posts/gossip-cyberpunk/</link>
       <pubDate>Fri, 19 Nov 2021 11:18:11 +0000</pubDate>
-      <guid>//localhost:1313/posts/gossip-cyberpunk/</guid>
+      <guid>http://ch3n9w.cpolar.cn/posts/gossip-cyberpunk/</guid>
       <description>科技的发展并不代表内卷的避免,相反,一味追求在虚拟世界中开疆拓土,忽视宇宙和深海的探索开发正是人类社会内卷化的集中反映,此处的内卷,和通常的内卷定义相同,即&amp;quot;一类文化模式达到了某种最终的形态以后,既没有办法稳定下来,也没有办法转变为新的形态.而只能不断地在内部变得更加复杂的现象&amp;quot;,只不过对象从普通的小群体变成了全体人类,社会矛盾的频繁爆发让人类倾向于将自己的灵与肉奉献给虚拟的神,这种奉献的热诚背后充斥着对冰冷现实的无力感和逃避,即便这种虚拟是人类自己创造出来的,他们依旧选择忽视甚至忘却这种自知,选择被奴役,膜拜和瞻仰.
 另外一方面,正如洛夫克拉夫特所说的&amp;quot;人类最古老又最强烈的情绪,就是恐惧;而最古老又最强烈的恐惧,是对未知的恐惧&amp;quot;,在刻录在基因中的人性的驱使下,人类在总体层面上对未知的深海和太空是恐惧的,可是,要让人类接受自己社会发展停滞不前的事实,又是可耻且无法接受的.在这种背景下,虚拟世界的扩张从另一个角度为全体人类提供了一个&amp;quot;发展&amp;quot;的幻象,使得人类可以将蒙蔽双眼,逃脱生存困境,将注意力集中在已有事物的&amp;quot;发展&amp;quot;上,即便是内卷式的发展.
 从理性的角度来说,人类文明要想长存不休,必须要将触角极力扩张到太空和海洋当中,然而人类总体上呈现的是一种非理性的意识形态,这并不新奇,在上帝已死的年代里,人类相信的不再是神明而是科技和资本,而科技为资本所掌控,所以资本的信仰便是人类的信仰,乍看之下,资本代表着贪婪和逐利,并且具备一定程度上的理性,但可惜的是,正是这种信仰将虚拟世界捧上神坛并加剧了社会的内卷化,而这种情况很难发生改变,理由如下:
@@ -141,9 +141,9 @@ clash for windows是基于开源的clash core核心代码做的图形化客户�
     </item>
     <item>
       <title>临行前夜--2019</title>
-      <link>//localhost:1313/posts/gossip-note-before-back/</link>
+      <link>http://ch3n9w.cpolar.cn/posts/gossip-note-before-back/</link>
       <pubDate>Wed, 08 Jan 2020 05:29:24 +0000</pubDate>
-      <guid>//localhost:1313/posts/gossip-note-before-back/</guid>
+      <guid>http://ch3n9w.cpolar.cn/posts/gossip-note-before-back/</guid>
       <description>&lt;p&gt;昨晚约好的车今天早上竟然被司机一声不吭取消了, 真的无语&amp;hellip;&amp;hellip;得亏睡得浅起床看了一眼.新约的车又要早早开往机场, 于是无奈起了个大早. 到达后又被通知延误, 也不知和离开时候的飞雪有无关系, 但不管怎样, 孤身顶着鹅毛行走路上, 这样离开倒还是别有风味, 于是也有了碎碎念的兴致.&lt;/p&gt;</description>
     </item>
   </channel>

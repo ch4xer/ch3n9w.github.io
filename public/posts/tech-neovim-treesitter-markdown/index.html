@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>优化neovim markdown中的treesitter高亮 | ch3n9w の 超元域</title>
 <meta name="keywords" content="">
 <meta name="description" content="
 eye candy也是一种生产力!
 ">
 <meta name="author" content="ch3n9w">
-<link rel="canonical" href="//localhost:1313/posts/tech-neovim-treesitter-markdown/">
+<link rel="canonical" href="http://ch3n9w.cpolar.cn/posts/tech-neovim-treesitter-markdown/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="//localhost:1313/flash.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/flash.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="//localhost:1313/flash.ico">
-<link rel="apple-touch-icon" href="//localhost:1313/flash.ico">
-<link rel="mask-icon" href="//localhost:1313/flash.ico">
+<link rel="icon" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="apple-touch-icon" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="mask-icon" href="http://ch3n9w.cpolar.cn/flash.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="//localhost:1313/posts/tech-neovim-treesitter-markdown/">
+<link rel="alternate" hreflang="en" href="http://ch3n9w.cpolar.cn/posts/tech-neovim-treesitter-markdown/">
 <noscript>
     <style>
         #theme-toggle,
@@ -57,7 +57,75 @@ eye candy也是一种生产力!
         }
 
     </style>
-</noscript>
+</noscript><meta property="og:title" content="优化neovim markdown中的treesitter高亮" />
+<meta property="og:description" content="
+eye candy也是一种生产力!
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ch3n9w.cpolar.cn/posts/tech-neovim-treesitter-markdown/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-25T21:33:47+00:00" />
+<meta property="article:modified_time" content="2023-04-25T21:33:47+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="优化neovim markdown中的treesitter高亮"/>
+<meta name="twitter:description" content="
+eye candy也是一种生产力!
+"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://ch3n9w.cpolar.cn/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "优化neovim markdown中的treesitter高亮",
+      "item": "http://ch3n9w.cpolar.cn/posts/tech-neovim-treesitter-markdown/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "优化neovim markdown中的treesitter高亮",
+  "name": "优化neovim markdown中的treesitter高亮",
+  "description": " eye candy也是一种生产力!\n",
+  "keywords": [
+    
+  ],
+  "articleBody": " eye candy也是一种生产力!\n动机 treesitter为neovim带来了语法高亮, 让不同语言都被解析成统一的语法树, 并对语法树上的不同部分进行样式的定义. 然而, neovim treesitter对markdown的默认解析方式和高亮模式过于简陋, 不同层级的标题采用的是统一的样式, 列表也仅有开头采用了高亮. 这对于日常使用neovim来编辑markdown的人十分不友好, 于是我花了一点时间了解了一下treesitter的高亮过程, 并最终形成了自定制的漂亮样式.\n这是原来的\n这是自定义后的\n步骤 复制neovim treesitter插件自带的markdown highlight.scm 文件, 由于我使用的插件管理器是lazy, 因此该文件位于~/.local/share/nvim/lazy/nvim-treesitter/queries/markdown/highlights.scm 进入你的配置文件目录 ~/.config/nvim, 创建 ~/.config/nvim/queries/markdown/highlights.scm , 没有目录就创建一下, 将第一步复制的文件内容复制到这里来\n对~/.config/nvim/queries/markdown/highlights.scm 进行自定义修改, 在这里贴出我的\n;From MDeiml/tree-sitter-markdown ; (atx_heading (inline) @text.title) ; (setext_heading (paragraph) @text.title) ; [ ; (atx_h1_marker) ; (atx_h2_marker) ; (atx_h3_marker) ; (atx_h4_marker) ; (atx_h5_marker) ; (atx_h6_marker) ; (setext_h1_underline) ; (setext_h2_underline) ; ] @punctuation.special [ (atx_heading (atx_h1_marker)) ] @text.title1 [ (atx_heading (atx_h2_marker)) ] @text.title2 [ (atx_heading (atx_h3_marker)) ] @text.title3 [ (atx_heading (atx_h4_marker)) ] @text.title4 [ (atx_heading (atx_h5_marker)) ] @text.title5 [ (atx_heading (atx_h6_marker)) ] @text.title6 [ (link_title) (indented_code_block) (fenced_code_block) ] @text.literal (pipe_table_header (pipe_table_cell) @text.title) (pipe_table_header \"|\" @punctuation.special) (pipe_table_row \"|\" @punctuation.special) (pipe_table_delimiter_row \"|\" @punctuation.special) (pipe_table_delimiter_cell) @punctuation.special [ (fenced_code_block_delimiter) ] @punctuation.delimiter (code_fence_content) @none [ (link_destination) ] @text.uri [ (link_label) ] @text.reference [ (thematic_break) (list (list_item (list_marker_minus) (paragraph (inline)))) (list (list_item (list_marker_plus) (paragraph (inline)))) (list (list_item (list_marker_star) (paragraph (inline)))) (list (list_item (list_marker_dot) (paragraph (inline)))) (list (list_item (list_marker_parenthesis) (paragraph (inline)))) ] @punctuation.special2 (task_list_marker_unchecked) @text.todo.unchecked (task_list_marker_checked) @text.todo.checked (block_quote) @text.quote [ (block_continuation) (block_quote_marker) ] @punctuation.special [ (backslash_escape) ] @string.escape ([ (info_string) (fenced_code_block_delimiter) ] @conceal (#set! conceal \"\")) (inline) @spell 前往~/.config/nvim/ftplugin/markdown.lua文件, 为新增加的节点定义高亮样式, 我的该文件内容如下, 读者可以自行修改颜色\nvim.opt_local.expandtab = true vim.opt_local.shiftwidth = 4 vim.opt_local.tabstop = 4 vim.opt_local.softtabstop = 4 vim.opt_local.foldmethod = \"expr\" vim.opt_local.foldexpr = \"nvim_treesitter#foldexpr()\" vim.api.nvim_set_hl(0, \"@text.title1\", {fg=\"#7aa2f7\", bold=true, italic=true}) vim.api.nvim_set_hl(0, \"@text.title2\", {fg=\"#ff9e64\", bold=true, italic=true}) vim.api.nvim_set_hl(0, \"@text.title3\", {fg=\"#9ece6a\", bold=true, italic=true}) vim.api.nvim_set_hl(0, \"@text.title4\", {fg=\"#7dcfff\", bold=true, italic=true}) vim.api.nvim_set_hl(0, \"@text.title5\", {fg=\"#bb9af7\", bold=true, italic=true}) vim.api.nvim_set_hl(0, \"@text.title6\", {fg=\"#cfc9c2\", bold=true, italic=true}) vim.api.nvim_set_hl(0, \"@text.quote\", {fg=\"#bb9af7\", bold=false, italic=true}) vim.api.nvim_set_hl(0, \"@punctuation.special2\", {fg=\"#73daca\", bold=true, italic=false}) End\n",
+  "wordCount" : "245",
+  "inLanguage": "en",
+  "datePublished": "2023-04-25T21:33:47Z",
+  "dateModified": "2023-04-25T21:33:47Z",
+  "author":{
+    "@type": "Person",
+    "name": "ch3n9w"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://ch3n9w.cpolar.cn/posts/tech-neovim-treesitter-markdown/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ch3n9w の 超元域",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://ch3n9w.cpolar.cn/flash.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
@@ -75,8 +143,8 @@ eye candy也是一种生产力!
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="//localhost:1313/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
-                <img src="//localhost:1313/sabito.jpg" alt="" aria-label="logo"
+            <a href="http://ch3n9w.cpolar.cn/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
+                <img src="http://ch3n9w.cpolar.cn/sabito.jpg" alt="" aria-label="logo"
                     height="35">ch3n9w の 超元域</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -103,7 +171,7 @@ eye candy也是一种生产力!
         </div>
         <ul id="menu">
             <li>
-                <a href="//localhost:1313/categories/" title="categories">
+                <a href="http://ch3n9w.cpolar.cn/categories/" title="categories">
                     <span>categories</span>
                 </a>
             </li>
@@ -114,7 +182,7 @@ eye candy也是一种生产力!
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="//localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="//localhost:1313/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://ch3n9w.cpolar.cn/">Home</a>&nbsp;»&nbsp;<a href="http://ch3n9w.cpolar.cn/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       优化neovim markdown中的treesitter高亮
     </h1>
@@ -310,12 +378,12 @@ eye candy也是一种生产力!
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="//localhost:1313/posts/gossip-beijing-travel-2023/">
+  <a class="prev" href="http://ch3n9w.cpolar.cn/posts/gossip-beijing-travel-2023/">
     <span class="title">« Prev</span>
     <br>
     <span>2023 小游京城</span>
   </a>
-  <a class="next" href="//localhost:1313/posts/tech-openwrt-rasp/">
+  <a class="next" href="http://ch3n9w.cpolar.cn/posts/tech-openwrt-rasp/">
     <span class="title">Next »</span>
     <br>
     <span>树莓派搭载clash作为旁路由</span>
@@ -327,7 +395,7 @@ eye candy也是一种生产力!
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="//localhost:1313/">ch3n9w の 超元域</a></span>
+    <span>&copy; 2024 <a href="http://ch3n9w.cpolar.cn/">ch3n9w の 超元域</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>ch3n9w 的 vim | ch3n9w の 超元域</title>
 <meta name="keywords" content="">
 <meta name="description" content="ch3n9w 的 vim
@@ -13,16 +13,16 @@
 
 《程序员修炼之道》中有一句话:最好是精通一种编辑器，并将其用于所有编辑任务。如果不坚持使用一种编辑器，可能会面临现代的巴别特大混乱。 ，实质今日，深以为然。而自从接触vim之后我一直都保持着有空折腾折腾的好习惯，它的简洁和高度自由让人着迷，围绕着vim衍生出的插件数不胜数。奈何插件繁多的同时也意味着选择的困难和配置的繁琐。为了准备以后可能出现的突发情况比如配置丢失或者重新安装，特在此以实现特定功能为主题，记录自己配置vim的过程。">
 <meta name="author" content="ch3n9w">
-<link rel="canonical" href="//localhost:1313/posts/tech-ch4ser-vim/">
+<link rel="canonical" href="http://ch3n9w.cpolar.cn/posts/tech-ch4ser-vim/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="//localhost:1313/flash.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/flash.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="//localhost:1313/flash.ico">
-<link rel="apple-touch-icon" href="//localhost:1313/flash.ico">
-<link rel="mask-icon" href="//localhost:1313/flash.ico">
+<link rel="icon" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="apple-touch-icon" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="mask-icon" href="http://ch3n9w.cpolar.cn/flash.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="//localhost:1313/posts/tech-ch4ser-vim/">
+<link rel="alternate" hreflang="en" href="http://ch3n9w.cpolar.cn/posts/tech-ch4ser-vim/">
 <noscript>
     <style>
         #theme-toggle,
@@ -59,7 +59,79 @@
         }
 
     </style>
-</noscript>
+</noscript><meta property="og:title" content="ch3n9w 的 vim" />
+<meta property="og:description" content="ch3n9w 的 vim
+
+本篇文章中的插件均已过时, 不推荐使用
+
+《程序员修炼之道》中有一句话:最好是精通一种编辑器，并将其用于所有编辑任务。如果不坚持使用一种编辑器，可能会面临现代的巴别特大混乱。 ，实质今日，深以为然。而自从接触vim之后我一直都保持着有空折腾折腾的好习惯，它的简洁和高度自由让人着迷，围绕着vim衍生出的插件数不胜数。奈何插件繁多的同时也意味着选择的困难和配置的繁琐。为了准备以后可能出现的突发情况比如配置丢失或者重新安装，特在此以实现特定功能为主题，记录自己配置vim的过程。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ch3n9w.cpolar.cn/posts/tech-ch4ser-vim/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-04-22T02:05:35+00:00" />
+<meta property="article:modified_time" content="2019-04-22T02:05:35+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ch3n9w 的 vim"/>
+<meta name="twitter:description" content="ch3n9w 的 vim
+
+本篇文章中的插件均已过时, 不推荐使用
+
+《程序员修炼之道》中有一句话:最好是精通一种编辑器，并将其用于所有编辑任务。如果不坚持使用一种编辑器，可能会面临现代的巴别特大混乱。 ，实质今日，深以为然。而自从接触vim之后我一直都保持着有空折腾折腾的好习惯，它的简洁和高度自由让人着迷，围绕着vim衍生出的插件数不胜数。奈何插件繁多的同时也意味着选择的困难和配置的繁琐。为了准备以后可能出现的突发情况比如配置丢失或者重新安装，特在此以实现特定功能为主题，记录自己配置vim的过程。"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://ch3n9w.cpolar.cn/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "ch3n9w 的 vim",
+      "item": "http://ch3n9w.cpolar.cn/posts/tech-ch4ser-vim/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "ch3n9w 的 vim",
+  "name": "ch3n9w 的 vim",
+  "description": "ch3n9w 的 vim 本篇文章中的插件均已过时, 不推荐使用\n《程序员修炼之道》中有一句话:最好是精通一种编辑器，并将其用于所有编辑任务。如果不坚持使用一种编辑器，可能会面临现代的巴别特大混乱。 ，实质今日，深以为然。而自从接触vim之后我一直都保持着有空折腾折腾的好习惯，它的简洁和高度自由让人着迷，围绕着vim衍生出的插件数不胜数。奈何插件繁多的同时也意味着选择的困难和配置的繁琐。为了准备以后可能出现的突发情况比如配置丢失或者重新安装，特在此以实现特定功能为主题，记录自己配置vim的过程。\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "ch3n9w 的 vim 本篇文章中的插件均已过时, 不推荐使用\n《程序员修炼之道》中有一句话:最好是精通一种编辑器，并将其用于所有编辑任务。如果不坚持使用一种编辑器，可能会面临现代的巴别特大混乱。 ，实质今日，深以为然。而自从接触vim之后我一直都保持着有空折腾折腾的好习惯，它的简洁和高度自由让人着迷，围绕着vim衍生出的插件数不胜数。奈何插件繁多的同时也意味着选择的困难和配置的繁琐。为了准备以后可能出现的突发情况比如配置丢失或者重新安装，特在此以实现特定功能为主题，记录自己配置vim的过程。\n相比较vim, neovim的速度更快.\n为了调动食欲,先上效果图:\nvim下打开终端\n以下内容是配置 安装（vim-plug） curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim ~/.config/nvim/init.vim \" c to caplock , add XKBOPTIONS=\"caps:escape\" in /etc/default/keyboard \" 让进入vim的时候显示绝对行号,当进入编辑模式的时候也显示绝对行号,但是从编辑模式回到普通模式的时候切换到相对行号 set number augroup relative_numbser autocmd! autocmd InsertEnter * :set norelativenumber autocmd InsertLeave * :set relativenumber augroup END set wildmenu \" 忽略大小写 set ignorecase set shell=/bin/zsh \" font and icons for vim set encoding=utf8 \" set guifont=DroidSansMono\\ Nerd\\ Font\\ 11 autocmd User Startified setlocal buflisted \" leader键映射 let mapleader=\"\\\" map w :w map q :q! map r :call Runit() \" 设定函数,自动根据文件类型来调用相应的解释器来执行代码 func Runit() if \u0026filetype == 'php' exec \"!time php %\" elseif \u0026filetype == 'python' exec \"!time python %\" elseif \u0026filetype == 'c' exec \"!gcc % -o %\u003c\" exec \"!time sudo ./%\u003c\" elseif \u0026filetype == 'cpp' exec \"!g++ % -o %\u003c\" exec \"!time ./%\u003c\" endif endfunc \" \" set shift width set shiftwidth=4 set scrolloff=6 \" 启动鼠标 set mouse=n map map \" 关于多窗口的键位映射 map vs :vs map sp :sp map l l map h h map j j map k k map L L map H H map J J map K K \" 终端模式 map te :vsL:teA tnoremap ",
+  "wordCount" : "728",
+  "inLanguage": "en",
+  "datePublished": "2019-04-22T02:05:35Z",
+  "dateModified": "2019-04-22T02:05:35Z",
+  "author":{
+    "@type": "Person",
+    "name": "ch3n9w"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://ch3n9w.cpolar.cn/posts/tech-ch4ser-vim/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ch3n9w の 超元域",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://ch3n9w.cpolar.cn/flash.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
@@ -77,8 +149,8 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="//localhost:1313/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
-                <img src="//localhost:1313/sabito.jpg" alt="" aria-label="logo"
+            <a href="http://ch3n9w.cpolar.cn/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
+                <img src="http://ch3n9w.cpolar.cn/sabito.jpg" alt="" aria-label="logo"
                     height="35">ch3n9w の 超元域</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -105,7 +177,7 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="//localhost:1313/categories/" title="categories">
+                <a href="http://ch3n9w.cpolar.cn/categories/" title="categories">
                     <span>categories</span>
                 </a>
             </li>
@@ -116,7 +188,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="//localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="//localhost:1313/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://ch3n9w.cpolar.cn/">Home</a>&nbsp;»&nbsp;<a href="http://ch3n9w.cpolar.cn/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       ch3n9w 的 vim
     </h1>
@@ -420,7 +492,7 @@ xcape -e &#39;Control_L=Escape&#39;
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="//localhost:1313/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">
+  <a class="prev" href="http://ch3n9w.cpolar.cn/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">
     <span class="title">« Prev</span>
     <br>
     <span>使用hexo和github搭建网站</span>
@@ -432,7 +504,7 @@ xcape -e &#39;Control_L=Escape&#39;
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="//localhost:1313/">ch3n9w の 超元域</a></span>
+    <span>&copy; 2024 <a href="http://ch3n9w.cpolar.cn/">ch3n9w の 超元域</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

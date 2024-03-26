@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>流量分析 | ch3n9w の 超元域</title>
 <meta name="keywords" content="">
 <meta name="description" content="
 bugku 中的部分misc题目
 ">
 <meta name="author" content="ch3n9w">
-<link rel="canonical" href="//localhost:1313/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/">
+<link rel="canonical" href="http://ch3n9w.cpolar.cn/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="//localhost:1313/flash.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/flash.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="//localhost:1313/flash.ico">
-<link rel="apple-touch-icon" href="//localhost:1313/flash.ico">
-<link rel="mask-icon" href="//localhost:1313/flash.ico">
+<link rel="icon" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="apple-touch-icon" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="mask-icon" href="http://ch3n9w.cpolar.cn/flash.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="//localhost:1313/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/">
+<link rel="alternate" hreflang="en" href="http://ch3n9w.cpolar.cn/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/">
 <noscript>
     <style>
         #theme-toggle,
@@ -57,7 +57,75 @@ bugku 中的部分misc题目
         }
 
     </style>
-</noscript>
+</noscript><meta property="og:title" content="流量分析" />
+<meta property="og:description" content="
+bugku 中的部分misc题目
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ch3n9w.cpolar.cn/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-04-22T04:16:47+00:00" />
+<meta property="article:modified_time" content="2019-04-22T04:16:47+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="流量分析"/>
+<meta name="twitter:description" content="
+bugku 中的部分misc题目
+"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://ch3n9w.cpolar.cn/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "流量分析",
+      "item": "http://ch3n9w.cpolar.cn/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "流量分析",
+  "name": "流量分析",
+  "description": " bugku 中的部分misc题目\n",
+  "keywords": [
+    
+  ],
+  "articleBody": " bugku 中的部分misc题目\n中国菜刀 下载流量包之后追踪tcp流量或者http流量可以在目录中看见flag.tar.gz字段\n思路1：binwalk\n先把数据包文件拖进kali子系统中\nchmod 777 caidao/ cd caidao/ chmod 777 caidao.pcapng binwalk -e caidao.pcapng cd _caidao.pcapng.extracted/ cat 1E43 思路2：wireshark数据包追踪，把一串base64拎出来\n@ini_set(\"display_errors\",\"0\"); @set_time_limit(0); if(PHP_VERSION\u003c'5.3.0') {@set_magic_quotes_runtime(0);}; echo(\"X@Y\"); $D='C:\\\\wwwroot\\\\'; $F=@opendir($D); if($F==NULL){echo(\"ERROR:// Path Not Found Or No Permission!\");} else{$M=NULL;$L=NULL; while($N=@readdir($F)){$P=$D.'/'.$N;$T=@date(\"Y-m-d H:i:s\",@filemtime($P));@$E=substr(base_convert(@fileperms($P),10,8),-4);$R=\"\\t\".$T.\"\\t\".@filesize($P).\"\\t\".$E.\"\\n\";if(@is_dir($P))$M.=$N.\"/\".$R;else $L.=$N.$R;} echo $M.$L;@closedir($F);};echo(\"X@Y\");die(); 当然这没啥用。。\n数据包的数据都是在line-based text data里面的\n点击line-based text data,右击，点击显示show packet bytes 额。。。把像\\301\\213\\341这样的编码处理一下，之所以start设置为3，是因为前面的开头是x@y，不是base64的东西。。。设置为处理模式为压缩\n这么多数据包 分析，据说如果是挂木马的话tcp流中会有“command”字段,于是设定过滤规则为：\ntcp contains \"command\" 找出一些tcp包来，然后follow，注意如果是乱码的话可以尝试点一点stream长度，说不定就好了 然后就找到了flag的base64码\n手机热点 蓝牙协议的名字叫做obex，所以在wireshark中搜索一下挑出几个包，然后有一个包写着“secret.rar” 导出来，解压得到flag\n抓到一只苍蝇 http过滤一下，在第一个数据包中的内容如下：\n{ \"path\":\"fly.rar\", \"appid\":\"\", \"size\":525701, \"md5\":\"e023afa4f6579db5becda8fe7861c2d3\", \"sha\":\"ecccba7aea1d482684374b22e2e7abad2ba86749\", \"sha3\":\"\" } 发现了要传输的文件名字、文件的md5码、文件大小，\nhttp \u0026\u0026 http.request.method==POST 过滤出来的接下来的5个分片数据包 总长度加起来超过了原文件的数据包大小，原因是附加的文件头。 将这些数据包一个一个导出 然后使用命令：\ndd if=1 bs=1 skip=364 of=1.1 #dd命令用于读取、转换、输出数据 cat *.1 \u003e fly.rar #将这些文件碎片都拼成原始的压缩文件 md5sum fly.rar | grep e023afa4f6579db5becda8fe7861c2d3 #检查MD5码是否匹配 然后用bless打开rar文件，检查加密位，发现是伪加密，因为第一行的73后面的标记位是0000，如果加密就是8000 rar文件头格式介绍：https://wenku.baidu.com/view/b7889b64783e0912a2162aa4.html\n把第二行74后面的84改成80就可以了，因为看论文可以知道，这两个字节的值类似于linux中chmod的1、2、4代表三种权限， 最终将所需权限的值相加在一起得到最终的标志位内容\n改完之后，解压，打开，发现乱码，改后缀为exe，执行，发现一大堆苍蝇\nbinwalk flag.txt #发现很多png图片，尝试使用foremost工具进行文件修复 foremost -v -i flag.txt -o outputfile #-v 将所有信息输出到屏幕上，-i表示输入文件,-o表示输出目标 打开后有二维码，里头有flag\n日志审计 sqlmap二分搜索\n观察下面这个\n172.17.0.1 - - [03/Nov/2018:02:50:57 +0000] \"GET /vulnerabilities/sqli_blind/?id=2' AND ORD(MID((SELECT IFNULL(CAST(flag AS CHAR),0x20) FROM dvwa.flag_is_here ORDER BY flag LIMIT 0,1),24,1))\u003e124 AND 'RCKM'='RCKM\u0026Submit=Submit HTTP/1.1\" 200 1765 \"http://127.0.0.1:8001/vulnerabilities/sqli_blind/?id=1\u0026Submit=Submit\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36\" 特征有200响应成功，而且对于每一位来说，最后一次得到200响应匹配的ascii码加上一就是真实的ascii码，\n1 import urllib 2 import re 3 4 ffile=open('/home/access.log','r') 5 datas=ffile.readlines() 6 avalid=[] 7 for data in datas: 8 tmp=urllib.unquote(data) 9 if 'flag' in tmp and 'COUNT' not in tmp and '200' in tmp: 10 avalid.append(tmp) 11 12 flag_ascii={} 13 for segment in avalid: 14 checkout=re.search(r'LIMIT 0,1\\),(.*?),1\\)\\)\u003e(.*?) AND',segment) #这里(.*?)后面要加AND否则大于号之后的所有内容都被包括进(.*?)中去了 15 if checkout: 16 key=int(checkout.group(1)) 17 print key 18 print checkout.group(2) 19 print int(checkout.group(2)) 20 value=int(checkout.group(2))+1 21 flag_ascii[key]=value #同一个key，value在变化直到最后一个 23 flag='' for value in flag_ascii.values(): flag+=chr(value) print flag weblogic 说是要找到被攻击主机的名字。过滤条件\ntcp contains \"hostname\" 然后找一找就行了。。。\n信息提取 这道题真的很懵圈。 将wireshark中涉及到盲注的数据包都导出到txt文件中来。 然后python脚本：\nimport urllib import re f=open('/root/kkk.txt','r') lines=f.readlines() datas=[] for line in lines: tmp=urllib.unquote(line) datas.append(tmp) flag_ascii={} for data in datas: checkout=re.search(r'LIMIT 0,1),(.*?),1\\)\\)\u003e(.*?) HTTP',data) if checkout: key=int(checkout.group(1)) value=int(checkout.group(2)) flag_ascii[key]=value flag='' for value in flag_ascii.values(): flag+=chr(value) print flag 但是不知道为什么flag中有的字符是对的有的是错的。\n",
+  "wordCount" : "278",
+  "inLanguage": "en",
+  "datePublished": "2019-04-22T04:16:47Z",
+  "dateModified": "2019-04-22T04:16:47Z",
+  "author":{
+    "@type": "Person",
+    "name": "ch3n9w"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://ch3n9w.cpolar.cn/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ch3n9w の 超元域",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://ch3n9w.cpolar.cn/flash.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
@@ -75,8 +143,8 @@ bugku 中的部分misc题目
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="//localhost:1313/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
-                <img src="//localhost:1313/sabito.jpg" alt="" aria-label="logo"
+            <a href="http://ch3n9w.cpolar.cn/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
+                <img src="http://ch3n9w.cpolar.cn/sabito.jpg" alt="" aria-label="logo"
                     height="35">ch3n9w の 超元域</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -103,7 +171,7 @@ bugku 中的部分misc题目
         </div>
         <ul id="menu">
             <li>
-                <a href="//localhost:1313/categories/" title="categories">
+                <a href="http://ch3n9w.cpolar.cn/categories/" title="categories">
                     <span>categories</span>
                 </a>
             </li>
@@ -114,7 +182,7 @@ bugku 中的部分misc题目
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="//localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="//localhost:1313/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://ch3n9w.cpolar.cn/">Home</a>&nbsp;»&nbsp;<a href="http://ch3n9w.cpolar.cn/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       流量分析
     </h1>
@@ -286,12 +354,12 @@ foremost -v -i flag.txt -o outputfile
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="//localhost:1313/posts/ctf-2019-ddctf-web/">
+  <a class="prev" href="http://ch3n9w.cpolar.cn/posts/ctf-2019-ddctf-web/">
     <span class="title">« Prev</span>
     <br>
     <span>2019 DDCTF web</span>
   </a>
-  <a class="next" href="//localhost:1313/posts/ctf-crypto/">
+  <a class="next" href="http://ch3n9w.cpolar.cn/posts/ctf-crypto/">
     <span class="title">Next »</span>
     <br>
     <span>密码学题目</span>
@@ -303,7 +371,7 @@ foremost -v -i flag.txt -o outputfile
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="//localhost:1313/">ch3n9w の 超元域</a></span>
+    <span>&copy; 2024 <a href="http://ch3n9w.cpolar.cn/">ch3n9w の 超元域</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

