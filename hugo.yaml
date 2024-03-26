@@ -1,0 +1,39 @@
+languageCode: en-us
+paginate: 20
+title: ch3n9w の 超元域
+theme: ["PaperMod"]
+params:
+  homeInfoParams:
+    Title: ch3n9w
+    Content: But I don't want comfort. I want God, I want poetry, I want real danger, I want freedom, I want goodness. I want sin.
+
+  socialIcons:
+    - name: "Github"
+      url: "https://github.com/ch3n9w"
+    - name: "Telegram"
+      url: "https://t.me/ch3n9w"
+  UseHugoToc: true
+  showtoc: true
+  tocopen: true
+  ShowReadingTime: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowWordCount: true
+  assets:
+    favicon: "flash.ico"
+    favicon16x16: "flash.ico"
+    favicon32x32: "flash.ico"
+    apple_touch_icon: "flash.ico"
+    safari_pinned_tab: "flash.ico"
+  label:
+    text: "ch3n9w の 超元域"
+    icon: sabito.jpg
+    iconHeight: 35
+
+menu:
+  main:
+    - identifier: categories
+      name: categories
+      url: /categories/
+      weight: 10
