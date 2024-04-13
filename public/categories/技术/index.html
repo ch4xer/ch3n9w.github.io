@@ -396,7 +396,7 @@ openssl req -text -in target.csr -verify 例如:
 openssl x509 -in target.csr -out target.crt -req -signkey ca.key -days 365 target.crt就是签名成功后的证书. 对于常见的自签名场景来说, ca.key就是target.key, 用自己的密钥去签名自己的证书请求, 自签名请求命令就是
 openssl x509 -in target.csr -out target.crt -req -signkey target.key -days 365 然后CA将target.crt以及由Root CA签名的CA证书一同返回给申请人. 如下图所示:...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-09-01 15:23:10 +0000 UTC'>September 1, 2019</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;544 words&nbsp;·&nbsp;ch3n9w</footer>
+  <footer class="entry-footer"><span title='2019-09-01 15:23:10 +0000 UTC'>September 1, 2019</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;574 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to 证书相关" href="http://ch3n9w.cpolar.cn/posts/tech-openssl/"></a>
 </article>
 

@@ -6,8 +6,6 @@ typora-root-url: ../
 categories: 技术
 ---
 
-
-
 > 来看看互联网世界的基石
 
 ## 通信过程的简化模型
@@ -303,3 +301,12 @@ curl --cert /home/ch4ser/.minikube/profiles/minikube/client.crt --key /home/ch4s
 其中`192.168.49.2:8443`是`.kube/config`中的API server 地址
 
 速查: https://help.aliyun.com/document_detail/160530.html
+
+## 其他
+
+1. TLS 是 SSL V2 标准化后的产物, 事实上现在大家用的都是tls, 只是习惯了ssl这个称呼
+2. 在网站启用https之后, 使用http访问会被重定向到443端口上以使用https服务
+3. 如果请求中的cookie中有secure属性, 浏览器只会允许该请求发送到https服务中, 而不是http (除了发往localhost)
+4. Insecure sites (with http: in the URL) can't set cookies with the Secure attribute. 
+
+涉及到nginx配置反向代理到https中存在的坑可以参考 [link](https://dhyuan.github.io/2021/04/07/micro_service/http_nginx_to_https_upstream/)

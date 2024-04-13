@@ -8,8 +8,6 @@ categories: 技术
 
 eBPF 是一项革命性的技术, 起源于Linux 内核, 它可以在特权上下文中(如操作系统内核)运行沙盒程序. 它用于安全有效地扩展内核的功能, 而无需通过更改内核源代码或加载内核模块的方式来实现. 从历史上看,由于内核具有监督和控制整个系统的特权,操作系统一直是实现可观测性, 安全性和网络功能的理想场所.
 
-<!--more-->
-
 对ebpf慕名许久, 正好趁寒假拜读一下Learning eBPF, 虽然是基于略过时的框架bcc, 但是在这个过程中学到的知识想必依旧可以迁移到别的框架去.
 
 ## Background and pre-knowledge
@@ -48,7 +46,7 @@ Loading a BPF program into kernel returns a file descriptor, which is a referenc
 
 `vmlinux.h` is drived from the kernel source headers, which includes any kernel data structures or type, and is necessary for eBPF program so that you dont have to write definitions for types like u32, u64 by hand.
 
-to use any BPF helper functions, it's needed to include header files from `libbpf`, which includes the definitions of helper functions and is also needed in both user space and eBPF C code.
+to use any BPF helper functions, it's needed to include header files from `libbpf`, which includes the definitions of helper functions and is also needed in **both user space and eBPF C code**.
 
 ## Basic Helloworld
 
@@ -307,4 +305,116 @@ bpftool btf list
 bpftool btf dump id 251
 # generate header file from BTF information
 bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
+```
+
+## CO-RE (Compile Once, Run Everywhere) eBPF Programs
+
+```c
+#include "vmlinux.h"
+#include <bpf/bpf_helpers.h>
+#include <bpf/bpf_tracing.h>
+#include <bpf/bpf_core_read.h>
+
+char message[12] = "Hello World";
+
+struct {
+    __uint(type, BPF_MAP_TYPE_PERF_EVENT_ARRAY);
+    __uint(key_size, sizeof(u32));
+    __uint(value_size, sizeof(u32));
+} output SEC(".maps");
+
+struct data_t {
+   int pid;
+   int uid;
+   char command[16];
+   char message[12];
+   char path[16];
+};
+
+struct user_msg_t {
+    char message[12];
+};
+
+// This structure is used to define the map, not map itself
+// however, my_config can be the map's reference
+struct {
+    __uint(type, BPF_MAP_TYPE_HASH);
+    __uint(max_entries, 10240);
+    __type(key, u32);
+    __type(value, struct user_msg_t);
+} my_config SEC(".maps");
+
+// Tells the loader to attach to the program to the kprobe in the execve syscall
+// BPF_KPROBE_SYSCALL is a macro that expands to the correct BPF program type
+// The first argument is the name of the program: hello
+// The second argument is the executable pathname for execve syscall
+SEC("ksyscall/execve")
+int BPF_KPROBE_SYSCALL(hello, const char *pathname) {
+    struct data_t data = {};
+    struct user_msg_t *p;
+
+    data.pid = bpf_get_current_pid_tgid() >> 32;
+    data.uid = bpf_get_current_uid_gid() & 0xFFFFFFFF;
+
+    bpf_get_current_comm(&data.command, sizeof(data.command));
+    bpf_probe_read_user_str(&data.path, sizeof(data.path), pathname);
+
+    // my_config is the map's reference
+    p = bpf_map_lookup_elem(&my_config, &data.uid);
+    if (p != 0) {
+        bpf_probe_read_kernel_str(&data.message, sizeof(data.message),
+                                  p->message);
+    } else {
+        bpf_probe_read_kernel_str(&data.message, sizeof(data.message), message);
+    }
+
+	// submit the data to the user space
+    bpf_perf_event_output(ctx, &output, BPF_F_CURRENT_CPU, &data, sizeof(data));
+    return 0;
+}
+
+char LICENSE[] SEC("license") = "Dual BSD/GPL";
+```
+
+The `Makefile`
+
+```
+TARGET = hello-buffer-config
+ARCH = $(shell uname -m | sed 's/x86_64/x86/' | sed 's/aarch64/arm64/')
+
+BPF_OBJ = ${TARGET:=.bpf.o}
+USER_C = ${TARGET:=.c}
+USER_SKEL = ${TARGET:=.skel.h}
+
+all: $(TARGET) $(BPF_OBJ) find-map
+.PHONY: all 
+
+$(TARGET): $(USER_C) $(USER_SKEL) 
+	gcc -Wall -o $(TARGET) $(USER_C) -L../libbpf/src -l:libbpf.a -lelf -lz
+
+%.bpf.o: %.bpf.c vmlinux.h
+	clang \
+	    -target bpf \
+        -D __TARGET_ARCH_$(ARCH) \
+	    -Wall \
+	    -O2 -g -o $@ -c $<
+
+$(USER_SKEL): $(BPF_OBJ)
+	bpftool gen skeleton $< > $@
+
+vmlinux.h:
+	bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
+
+clean:
+	- rm $(BPF_OBJ)
+	- rm $(TARGET)
+	- rm find-map
+
+find-map: find-map.c
+	gcc -Wall -o find-map find-map.c -L../libbpf/src -l:libbpf.a -lelf -lz
+```
+
+load:
+```sh
+bpftool prog load hello.bpf.o /sys/fs/bpf/hello
 ```
