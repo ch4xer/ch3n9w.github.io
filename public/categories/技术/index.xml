@@ -13,7 +13,12 @@
       <link>http://ch3n9w.cpolar.cn/posts/tech-learning-ebpf/</link>
       <pubDate>Sun, 04 Feb 2024 00:06:15 +0000</pubDate>
       <guid>http://ch3n9w.cpolar.cn/posts/tech-learning-ebpf/</guid>
-      <description>&lt;p&gt;eBPF 是一项革命性的技术, 起源于Linux 内核, 它可以在特权上下文中(如操作系统内核)运行沙盒程序. 它用于安全有效地扩展内核的功能, 而无需通过更改内核源代码或加载内核模块的方式来实现. 从历史上看,由于内核具有监督和控制整个系统的特权,操作系统一直是实现可观测性, 安全性和网络功能的理想场所.&lt;/p&gt;</description>
+      <description>eBPF 是一项革命性的技术, 起源于Linux 内核, 它可以在特权上下文中(如操作系统内核)运行沙盒程序. 它用于安全有效地扩展内核的功能, 而无需通过更改内核源代码或加载内核模块的方式来实现. 从历史上看,由于内核具有监督和控制整个系统的特权,操作系统一直是实现可观测性, 安全性和网络功能的理想场所.
+对ebpf慕名许久, 正好趁寒假拜读一下Learning eBPF, 虽然是基于略过时的框架bcc, 但是在这个过程中学到的知识想必依旧可以迁移到别的框架去.
+Background and pre-knowledge bcc bcc的ebpf c代码不是真正的C, 而是bcc自己定义的一种和C类似的语言.
+limitation of ebpf program eBPF 程序必须被验证器校验通过后才能执行，且不能包含无法到达的指令； eBPF 程序不能随意调用内核函数，只能调用在 API 中定义的辅助函数； eBPF 程序栈空间最多只有 512 字节，想要更大的存储，就必须要借助映射存储； 在内核 5.2 之前，eBPF 字节码最多只支持 4096 条指令，而 5.2 内核把这个限制提高到了 100 万条； 由于内核的快速变化，在不同版本内核中运行时，需要访问内核数据结构的 eBPF 程序很可能需要调整源码，并重新编译。 tracepoint and kprobe tracepoint其实就是在Linux内核的一些关键函数中埋下的hook点,这样在tracing的时候,我们就可以在这些固定的点上挂载调试的函数,然后查看内核的信息.
+Tracepoint是在内核中固定的hook点, 并不是在所有的函数中都有tracepoint. 这时候, 我们就需要用到kprobe了. kprobe可以动态地在所有的内核函数(除了inline函数)上挂载probe函数
+eBPF virtual machine The ebpf virtual machine uses 10 general-purpose registers (0-9), and additional register 10 which was used as a stack frame pointer (can only be read but not written).</description>
     </item>
     <item>
       <title>lineageos使用体验</title>
