@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>技术 on ch3n9w の 超元域</title>
-    <link>http://ch3n9w.cpolar.cn/categories/%E6%8A%80%E6%9C%AF/</link>
+    <link>https://ch3n9w.cpolar.cn/categories/%E6%8A%80%E6%9C%AF/</link>
     <description>Recent content in 技术 on ch3n9w の 超元域</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 04 Feb 2024 00:06:15 +0000</lastBuildDate>
-    <atom:link href="http://ch3n9w.cpolar.cn/categories/%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://ch3n9w.cpolar.cn/categories/%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Learning eBPF</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-learning-ebpf/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-learning-ebpf/</link>
       <pubDate>Sun, 04 Feb 2024 00:06:15 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-learning-ebpf/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-learning-ebpf/</guid>
       <description>eBPF 是一项革命性的技术, 起源于Linux 内核, 它可以在特权上下文中(如操作系统内核)运行沙盒程序. 它用于安全有效地扩展内核的功能, 而无需通过更改内核源代码或加载内核模块的方式来实现. 从历史上看,由于内核具有监督和控制整个系统的特权,操作系统一直是实现可观测性, 安全性和网络功能的理想场所.
 对ebpf慕名许久, 正好趁寒假拜读一下Learning eBPF, 虽然是基于略过时的框架bcc, 但是在这个过程中学到的知识想必依旧可以迁移到别的框架去.
 Background and pre-knowledge bcc bcc的ebpf c代码不是真正的C, 而是bcc自己定义的一种和C类似的语言.
@@ -22,9 +22,9 @@ eBPF virtual machine The ebpf virtual machine uses 10 general-purpose registers 
     </item>
     <item>
       <title>lineageos使用体验</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-lineageos-md/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-lineageos-md/</link>
       <pubDate>Sun, 13 Aug 2023 21:34:53 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-lineageos-md/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-lineageos-md/</guid>
       <description>2024年2月更新: Lsposed连同一系列root隐藏模块已经归档无法使用, 为了方便日常使用, 建议卸载magisk, 刷机的时代已经过去了.
 不知道从什么时候开始, 往日被冠以高可玩性高自由度的安卓系统逐渐变得封闭, 一步步沦为资本市场的玩物和工具. MIUI也好, ColorOS也罢, 用户总能在使用系统的过程中发现一些去也去不掉的应用和小程序, 看到一些不想看也得看的广告, 而起初, 有些人尽管对此有所不满, 但基本都选择容忍的态度, 但这几年国内的趋势越来越不对劲: 先是某APP在全社会的宣传下或软性或硬性地被安装在了相当大一部分人的手机中监控个人信息(当然, 我理解打击诈骗行为, 保护平民百姓的钱包远比软件自由重要得多), 又是拼多多被爆出利用安卓手机的0day漏洞在所有用户的手机上进行多种恶意行为, 一直到最近, 一则某信部的发文通知将这种 我的手机不归我管 的焦虑感推向了新的高潮.
 就目前来看, 这则通知的社会反响并不强烈, 不出意外应该可以顺利推行. 之后最直观的效果就是所有使用国内安卓系统的用户都只能安装指定的app, 不再具备安装推特等软件的能力, 这无异于干掉了安卓最大的特点, 使其沦落为全方位落后于苹果的手机系统. 作为一个经历过安卓app爆发式增长年代的玩家, 我很好奇现在新接触到手机的用户对自己掌中的设备是一个什么样的印象, 是一个拥有无限可能的工具? 还是一个用低质量内容, 广告和充满限制的操作系统来无限吸收注意力, 获取个人隐私并变相管理个人精神世界的资本和政府工具?
@@ -35,36 +35,36 @@ magisk 按照 https://magiskcn.com/oneplus-magisk 中的第七步安装magisk ap
     </item>
     <item>
       <title>我的neovim</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-neovim2023/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-neovim2023/</link>
       <pubDate>Wed, 07 Jun 2023 09:32:57 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-neovim2023/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-neovim2023/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;现在回头看几年前自己写的插件配置文章, 看着那些曾经用过但后来都纷纷被替代的插件, 我会莫名怀念那段因计算机和终端而兴奋不已的自己.&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>优化neovim markdown中的treesitter高亮</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-neovim-treesitter-markdown/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-neovim-treesitter-markdown/</link>
       <pubDate>Tue, 25 Apr 2023 21:33:47 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-neovim-treesitter-markdown/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-neovim-treesitter-markdown/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;eye candy也是一种生产力!&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>树莓派搭载clash作为旁路由</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-openwrt-rasp/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-openwrt-rasp/</link>
       <pubDate>Thu, 06 Apr 2023 21:29:58 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-openwrt-rasp/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-openwrt-rasp/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;“一个黑暗的形体，像一个匍匐的人一般大小，但是长着长长的蜘蛛一样的肢体……黑暗中的形体以惊人的速度向他奔来。当它靠近时，他看到那蹲坐着的乌黑身体上有一张脸，在身体底部那些多节的腿之间。那张面孔用一种怀疑和质问的可憎表情凝视着他；而当这个大胆的猎人与那小而狡诈的，四周全是毛发的眼睛对视时，恐惧流遍了他的每一根血管。”&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>ext4到btrfs转换记录</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-ext4-to-btrfs/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-ext4-to-btrfs/</link>
       <pubDate>Mon, 16 Jan 2023 05:28:51 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-ext4-to-btrfs/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-ext4-to-btrfs/</guid>
       <description>这篇文章是对我从ext4文件系统转换到btrfs过程中的一些操作记录, 便于日后参考.
 前置准备 制作arch linux 启动盘, 版本越新越好. 备份重要文件 我个人在转换前会把大文件(例如虚拟机文件)转移到移动硬盘里, 让转换过程更快一些 转换 进入LiveCD 系统, 对主分区进行转换
 btrfs-convert /dev/nvme0n1p2 等待一段时间之后, 显示conversion complete就表示没有问题, 接下来还需要做三件事情才可以进入系统
@@ -79,9 +79,9 @@ grub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就
     </item>
     <item>
       <title>wayland下的划词翻译解决方案</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/</link>
       <pubDate>Wed, 11 Jan 2023 04:36:45 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/</guid>
       <description>对于我这种英语不好的人来说, 翻译是离不开的工具, 但是众所周知, Linux的日用软件生态相比较windows和macos来说相差甚远, 别说目前正处于发展阶段的wayland, 就连成熟透了的x11下也没有拿得出手的翻译软件. 作为一个英语不好的Linux爱好者, 缺少翻译软件必定会对日常的使用造成一定的影响, 于是开始思考怎么样解决这个问题.
 我的第一个思路, 也就是见到最多的划词翻译软件的样子, 选中文本之后, 在被选中的文本周围的某块区域中绘制一个窗口, 在其中展示翻译结果. 但是问题来了, 要如何绘制这样的窗口呢? 在wayland中, 窗口的位置交给了compositor进行管理, 这种能够自己决定显示位置的能力, 据我所知, 在wayland下仅有fcitx5做到了, 于是我翻阅了一下它的源代码, 并没有看懂, 但是应该没有借助于Qt和GTK来绘制, 而是使用wayland-client. 对我这样一个连Qt GTK开发经历都没有的人来说, 理解wayland编程开发中的那些概念实在有些困难. 于是紧接着又有一个问题出现了:
 能否绕开wayland?
@@ -91,9 +91,9 @@ notify-send &amp;#34;title&amp;#34; &amp;#34;content&amp;#34; 那么接下来的
     </item>
     <item>
       <title>武装火狐</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-arm-firefox/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-arm-firefox/</link>
       <pubDate>Mon, 09 Jan 2023 23:04:29 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-arm-firefox/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-arm-firefox/</guid>
       <description>不管火狐的市场份额多么拉胯, 对于Linux wayland用户来说, 目前体验最好的浏览器依旧是Firefox. 本篇记录我的FIrefox配置, 包括浏览器设置和插件设置.
 外观 titlebar 为了让标题栏中的内容可以更加紧凑, 一个好办法是进入about:config, 设置browser.compactmode.show为true, 然后进入custom toolbar, 设置Density为Compact
 对于wm用户, 一个推荐的设置是勾选上上图中的Title Bar选项, 为什么要这么设置呢, 因为这样子做, 那些按钮(最大最小化, 关闭窗口)就会出现到title bar中, 然后title bar会被wm吃掉, 这样就可以给火狐的标题栏留出更多的空间
@@ -106,9 +106,9 @@ extensions.webextensions.restrictedDomains清空掉 privacy.resistFingerprinting
     </item>
     <item>
       <title>使用Arch Linux &#43; Sway一年后</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-arch-sway/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-arch-sway/</link>
       <pubDate>Sat, 17 Dec 2022 14:24:23 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-arch-sway/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-arch-sway/</guid>
       <description>不知不觉使用sway已经整整一年了，于是来谈一谈自己这一年的使用感受，顺便回顾了一下过去。
 起因 2019年，在一次编程作业的时候，同专业的另一个老哥向我展示了vim的代码h补全，我立刻被这种简陋但是扩展性极强的代码编辑器吸引了，于是当时还是个刚转入计算机专业的小白就开始哼哧哼哧地学习vim的配置和插件的安装。当然，这些都发生在我的Kali Linux虚拟机中。
 那个时候我正接触CTF，很多时候都要开着虚拟机，于是有一天动起了把电脑系统直接装成linux的想法。因为自己的第一台笔记本是暗夜精灵2，游戏本装Linux，第一个要考虑的就是兼容性和稳定性，在权衡各个发行版的优势和流行程度后，我选择了ubuntu18.04。笔记本重装完毕后除了风扇转个不停竟然一切运行正常，这让我实在有些惊喜，而风扇问题是英伟达独显导致的，在ubuntu上，只需要一条sudo ubuntu-drivers autoinstall就完美解决了。当时的自己很开心，仿佛打开了一道新世界的大门。
@@ -130,34 +130,34 @@ Sway是一个窗口管理器，开发者做的事情是在wayland下复刻一个
     </item>
     <item>
       <title>vim/neovim 的问题</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-thinking-about-vim/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-thinking-about-vim/</link>
       <pubDate>Thu, 15 Dec 2022 12:04:12 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-thinking-about-vim/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-thinking-about-vim/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;在消磨三年时光之后，我终于明白这个编辑器还远远称不上稳定，在道路的尽头之前，我能做的其实只有观望。&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>在红米ac2100路由器上开启clash</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-clash-ac2100/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-clash-ac2100/</link>
       <pubDate>Mon, 12 Dec 2022 20:17:03 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-clash-ac2100/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-clash-ac2100/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;在争取自由这个宏大命题下, 上网自由可以算得上一件&amp;quot;小事&amp;quot;, 然而越是小事, 越与我们的日常息息相关.&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>virtualbox中搭建kubernetes集群</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-k8s-setup/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-k8s-setup/</link>
       <pubDate>Mon, 12 Dec 2022 12:17:49 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-k8s-setup/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-k8s-setup/</guid>
       <description>&lt;p&gt;环境问题, 一生之敌.&lt;/p&gt;</description>
     </item>
     <item>
       <title>使用idea开启Servlet</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-idea-start-servlet/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-idea-start-servlet/</link>
       <pubDate>Thu, 01 Oct 2020 22:10:28 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-idea-start-servlet/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-idea-start-servlet/</guid>
       <description>采用的是版本较新的idea2020.2, 使用的操作系统为MANJARO LINUX, 其中的过程挺迷迷糊糊的就水一篇来记录一下.
 File --&amp;gt; New --&amp;gt; Project --&amp;gt; Java --&amp;gt; Nextnext 新建一个项目 右键Project --&amp;gt; open module setting --&amp;gt; 点击+号 --&amp;gt; 导入tomcat8的Servlet-api.jar 右键项目 --&amp;gt; Add Frameworks Support --&amp;gt; 选中web application 选中后会多出来几个东西, 如下图, 多了WEB-INF目录和index.jsp
 Web-INF里面有只有一个web.xml, 什么是WEB-INF? 根据百度百科的介绍
@@ -173,18 +173,18 @@ jsp 1.2 以下版本的文件存放位置。改目录没有特定的声明，同
     </item>
     <item>
       <title>Django学习笔记</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-django%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-django%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Tue, 28 Jan 2020 18:48:34 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-django%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-django%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;Django学习的个人笔记&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>证书相关</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-openssl/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-openssl/</link>
       <pubDate>Sun, 01 Sep 2019 15:23:10 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-openssl/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-openssl/</guid>
       <description>来看看互联网世界的基石
 通信过程的简化模型 第一阶段: 服务器向CA发起证书签名请求 服务器组织生成一个私钥
 openssl genrsa -out target.key 1024 从私钥文件中得到公钥, 这个公钥会被用于给CA签名
@@ -198,9 +198,9 @@ openssl x509 -in target.csr -out target.crt -req -signkey target.key -days 365 �
     </item>
     <item>
       <title>使用hexo和github搭建网站</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</link>
       <pubDate>Mon, 22 Apr 2019 03:12:31 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</guid>
       <description>基础修改 修改 _config.yml，写上网站的标题
 title: subtitle: description: 选择主题
 theme: next hexo 插件 字数统计和阅读时长统计 https://github.com/theme-next/hexo-symbols-count-time
@@ -213,9 +213,9 @@ npm install hexo-deployer-git --save 修改网站根目录下的_config.</descri
     </item>
     <item>
       <title>ch3n9w 的 vim</title>
-      <link>http://ch3n9w.cpolar.cn/posts/tech-ch4ser-vim/</link>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-ch4ser-vim/</link>
       <pubDate>Mon, 22 Apr 2019 02:05:35 +0000</pubDate>
-      <guid>http://ch3n9w.cpolar.cn/posts/tech-ch4ser-vim/</guid>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-ch4ser-vim/</guid>
       <description>&lt;h1 id=&#34;ch3n9w-的-vim&#34;&gt;ch3n9w 的 vim&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;本篇文章中的插件均已过时, 不推荐使用&lt;/p&gt;
