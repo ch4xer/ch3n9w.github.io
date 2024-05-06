@@ -143,6 +143,41 @@
 </header>
 
 <article class="post-entry"> 
+<figure class="entry-cover">
+        <img loading="lazy" srcset="https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/2024-05-05-18-14-26_hu8a871f7a05408e5557358e47e198e221_100002_360x0_resize_box_3.png 360w ,https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/2024-05-05-18-14-26_hu8a871f7a05408e5557358e47e198e221_100002_480x0_resize_box_3.png 480w ,https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/2024-05-05-18-14-26_hu8a871f7a05408e5557358e47e198e221_100002_720x0_resize_box_3.png 720w ,https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/2024-05-05-18-14-26_hu8a871f7a05408e5557358e47e198e221_100002_1080x0_resize_box_3.png 1080w ,https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/2024-05-05-18-14-26.png 1112w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/2024-05-05-18-14-26.png" alt="" 
+            width="1112" height="619">
+</figure>
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Kubernetes Admission Webhook 部署和调试
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Deployment and Debugging of Admission Webhook in Kubernetes cluster Intro Dynamic admission control 允许开发者添加自己的逻辑代码来对提交给API Server的对象进行修改和验证, 是非常强大的功能. 本文将部署一组demo admission webhook, 包括一个validating webhook 和一个 mutating webhook, 并介绍webhook的调试方法. 本文主要使用和参考了从0到1开发K8S_Webhook最佳实践, 并通过查阅官方文档对其中的一些不适应新版本k8s的内容进行了修正.
+本文使用的集群环境为Kubernetes v1.25.16, 使用minikube创建. 我所在的机器为Arch Linux. 代码仓库为 admission-webhook-example中的v1部分.
+在开始之前, 请确保集群的API Server开启了MutatingAdmissionWebhook和ValidatingAdmissionWebhook (一般默认情况下都开启了).
+Deployment 创建 service account 创建一个用于webhook的service account
+kubectl apply -f deployment/rbac.yaml 创建证书 API Server调用Webhook的过程是需要HTTPS通信的(其实集群内的通信几乎都是HTTPS), 因此需要为webhook创建证书来对webhook的service进行域名认证. 原博客使用的webhook-create-signed-cert.sh已经过时, 不再适用于1.25.16版本的集群了, 主要出问题的地方如下:
+# create server cert/key CSR and send to k8s API cat &lt;&lt;EOF | kubectl create -f - apiVersion: certificates....</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-05-03 17:14:14 +0800 CST'>May 3, 2024</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;564 words&nbsp;·&nbsp;ch3n9w</footer>
+  <a class="entry-link" aria-label="post link to Kubernetes Admission Webhook 部署和调试" href="https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">CVE-2023-26484 Kubevirt 权限提升漏洞复现
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>该漏洞是论文工作 “Take Over the Whole Cluster: Attacking Kubernetes via Excessive Permissions of Third-party Applications” 挖掘到的, 对其进行复现可以更好地理解rbac的潜在风险.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-04-30 20:29:05 +0800 CST'>April 30, 2024</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;284 words</footer>
+  <a class="entry-link" aria-label="post link to CVE-2023-26484 Kubevirt 权限提升漏洞复现" href="https://ch3n9w.cpolar.cn/posts/sec-cve-2023-26484/"></a>
+</article>
+
+<article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">若为自由故, 软件皆可抛
     </h2>
@@ -170,23 +205,13 @@
   </header>
   <div class="entry-content">
     <p>Long time no CTF~~
-...</p>
+RECON Just check the environment related to K8s using env and reconnoiter internal service using dnscan
+This blog is good written link
+Finding Neighbours According to the description, the sidecar container of current pod is sending some information (possibly flag) to remote server. So, the first step is digging the remote server like what we do in the first challenge, which leads me to reporting-service.k8s-lan-party.svc.cluster.local.
+As we all know, all containers within same pod share one network namespace, which means we can sniff the traffic from our current container....</p>
   </div>
   <footer class="entry-footer"><span title='2024-03-15 07:34:46 +0000 UTC'>March 15, 2024</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;674 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to k8s lan party" href="https://ch3n9w.cpolar.cn/posts/ctf-k8s-lan-party/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">家的感觉
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>对于家庭, 我的情绪是复杂的.
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2024-03-12 09:50:38 +0000 UTC'>March 12, 2024</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;57 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to 家的感觉" href="https://ch3n9w.cpolar.cn/posts/gossip-home-feeling/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -495,19 +520,6 @@ Sway是一个窗口管理器，开发者做的事情是在wayland下复刻一个
   <footer class="entry-footer"><span title='2022-12-17 14:24:23 +0000 UTC'>December 17, 2022</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;171 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to 使用Arch Linux &#43; Sway一年后" href="https://ch3n9w.cpolar.cn/posts/tech-arch-sway/"></a>
 </article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">vim/neovim 的问题
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p> 在消磨三年时光之后，我终于明白这个编辑器还远远称不上稳定，在道路的尽头之前，我能做的其实只有观望。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-12-15 12:04:12 +0000 UTC'>December 15, 2022</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;119 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to vim/neovim 的问题" href="https://ch3n9w.cpolar.cn/posts/tech-thinking-about-vim/"></a>
-</article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="next" href="https://ch3n9w.cpolar.cn/posts/page/2/">Next&nbsp;&nbsp;»
@@ -517,7 +529,8 @@ Sway是一个窗口管理器，开发者做的事情是在wayland下复刻一个
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://ch3n9w.cpolar.cn/">ch3n9w の 超元域</a></span>
+        <span>&copy; 2024 <a href="https://ch3n9w.cpolar.cn/">ch3n9w の 超元域</a></span> · 
+
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

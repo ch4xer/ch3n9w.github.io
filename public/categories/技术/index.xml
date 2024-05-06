@@ -4,10 +4,22 @@
     <title>技术 on ch3n9w の 超元域</title>
     <link>https://ch3n9w.cpolar.cn/categories/%E6%8A%80%E6%9C%AF/</link>
     <description>Recent content in 技术 on ch3n9w の 超元域</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.125.5</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Feb 2024 00:06:15 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 May 2024 17:14:14 +0800</lastBuildDate>
     <atom:link href="https://ch3n9w.cpolar.cn/categories/%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes Admission Webhook 部署和调试</title>
+      <link>https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/</link>
+      <pubDate>Fri, 03 May 2024 17:14:14 +0800</pubDate>
+      <guid>https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/</guid>
+      <description>Deployment and Debugging of Admission Webhook in Kubernetes cluster Intro Dynamic admission control 允许开发者添加自己的逻辑代码来对提交给API Server的对象进行修改和验证, 是非常强大的功能. 本文将部署一组demo admission webhook, 包括一个validating webhook 和一个 mutating webhook, 并介绍webhook的调试方法. 本文主要使用和参考了从0到1开发K8S_Webhook最佳实践, 并通过查阅官方文档对其中的一些不适应新版本k8s的内容进行了修正.
+本文使用的集群环境为Kubernetes v1.25.16, 使用minikube创建. 我所在的机器为Arch Linux. 代码仓库为 admission-webhook-example中的v1部分.
+在开始之前, 请确保集群的API Server开启了MutatingAdmissionWebhook和ValidatingAdmissionWebhook (一般默认情况下都开启了).
+Deployment 创建 service account 创建一个用于webhook的service account
+kubectl apply -f deployment/rbac.yaml 创建证书 API Server调用Webhook的过程是需要HTTPS通信的(其实集群内的通信几乎都是HTTPS), 因此需要为webhook创建证书来对webhook的service进行域名认证. 原博客使用的webhook-create-signed-cert.sh已经过时, 不再适用于1.25.16版本的集群了, 主要出问题的地方如下:
+# create server cert/key CSR and send to k8s API cat &amp;lt;&amp;lt;EOF | kubectl create -f - apiVersion: certificates.</description>
+    </item>
     <item>
       <title>Learning eBPF</title>
       <link>https://ch3n9w.cpolar.cn/posts/tech-learning-ebpf/</link>

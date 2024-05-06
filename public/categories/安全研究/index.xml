@@ -4,10 +4,17 @@
     <title>安全研究 on ch3n9w の 超元域</title>
     <link>https://ch3n9w.cpolar.cn/categories/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/</link>
     <description>Recent content in 安全研究 on ch3n9w の 超元域</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.125.5</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Jan 2022 10:52:46 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Apr 2024 20:29:05 +0800</lastBuildDate>
     <atom:link href="https://ch3n9w.cpolar.cn/categories/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CVE-2023-26484 Kubevirt 权限提升漏洞复现</title>
+      <link>https://ch3n9w.cpolar.cn/posts/sec-cve-2023-26484/</link>
+      <pubDate>Tue, 30 Apr 2024 20:29:05 +0800</pubDate>
+      <guid>https://ch3n9w.cpolar.cn/posts/sec-cve-2023-26484/</guid>
+      <description>&lt;p&gt;该漏洞是论文工作 &amp;ldquo;Take Over the Whole Cluster: Attacking Kubernetes via Excessive Permissions of Third-party Applications&amp;rdquo; 挖掘到的, 对其进行复现可以更好地理解rbac的潜在风险.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>shiro 漏洞复现</title>
       <link>https://ch3n9w.cpolar.cn/posts/sec-shiro-attack/</link>

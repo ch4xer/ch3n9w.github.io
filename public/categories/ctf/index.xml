@@ -4,7 +4,7 @@
     <title>CTF on ch3n9w の 超元域</title>
     <link>https://ch3n9w.cpolar.cn/categories/ctf/</link>
     <description>Recent content in CTF on ch3n9w の 超元域</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.125.5</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 15 Mar 2024 07:34:46 +0000</lastBuildDate>
     <atom:link href="https://ch3n9w.cpolar.cn/categories/ctf/index.xml" rel="self" type="application/rss+xml" />
@@ -13,7 +13,11 @@
       <link>https://ch3n9w.cpolar.cn/posts/ctf-k8s-lan-party/</link>
       <pubDate>Fri, 15 Mar 2024 07:34:46 +0000</pubDate>
       <guid>https://ch3n9w.cpolar.cn/posts/ctf-k8s-lan-party/</guid>
-      <description>&lt;p&gt;Long time no CTF~~&lt;/p&gt;</description>
+      <description>Long time no CTF~~
+RECON Just check the environment related to K8s using env and reconnoiter internal service using dnscan
+This blog is good written link
+Finding Neighbours According to the description, the sidecar container of current pod is sending some information (possibly flag) to remote server. So, the first step is digging the remote server like what we do in the first challenge, which leads me to reporting-service.k8s-lan-party.svc.cluster.local.
+As we all know, all containers within same pod share one network namespace, which means we can sniff the traffic from our current container.</description>
     </item>
     <item>
       <title>pwnable尝试</title>

@@ -128,6 +128,28 @@
 </header>
 
 <article class="post-entry tag-entry"> 
+<figure class="entry-cover">
+        <img loading="lazy" srcset="https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/2024-05-05-18-14-26_hu8a871f7a05408e5557358e47e198e221_100002_360x0_resize_box_3.png 360w ,https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/2024-05-05-18-14-26_hu8a871f7a05408e5557358e47e198e221_100002_480x0_resize_box_3.png 480w ,https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/2024-05-05-18-14-26_hu8a871f7a05408e5557358e47e198e221_100002_720x0_resize_box_3.png 720w ,https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/2024-05-05-18-14-26_hu8a871f7a05408e5557358e47e198e221_100002_1080x0_resize_box_3.png 1080w ,https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/2024-05-05-18-14-26.png 1112w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/2024-05-05-18-14-26.png" alt="" 
+            width="1112" height="619">
+</figure>
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Kubernetes Admission Webhook 部署和调试
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Deployment and Debugging of Admission Webhook in Kubernetes cluster Intro Dynamic admission control 允许开发者添加自己的逻辑代码来对提交给API Server的对象进行修改和验证, 是非常强大的功能. 本文将部署一组demo admission webhook, 包括一个validating webhook 和一个 mutating webhook, 并介绍webhook的调试方法. 本文主要使用和参考了从0到1开发K8S_Webhook最佳实践, 并通过查阅官方文档对其中的一些不适应新版本k8s的内容进行了修正.
+本文使用的集群环境为Kubernetes v1.25.16, 使用minikube创建. 我所在的机器为Arch Linux. 代码仓库为 admission-webhook-example中的v1部分.
+在开始之前, 请确保集群的API Server开启了MutatingAdmissionWebhook和ValidatingAdmissionWebhook (一般默认情况下都开启了).
+Deployment 创建 service account 创建一个用于webhook的service account
+kubectl apply -f deployment/rbac.yaml 创建证书 API Server调用Webhook的过程是需要HTTPS通信的(其实集群内的通信几乎都是HTTPS), 因此需要为webhook创建证书来对webhook的service进行域名认证. 原博客使用的webhook-create-signed-cert.sh已经过时, 不再适用于1.25.16版本的集群了, 主要出问题的地方如下:
+# create server cert/key CSR and send to k8s API cat &lt;&lt;EOF | kubectl create -f - apiVersion: certificates....</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-05-03 17:14:14 +0800 CST'>May 3, 2024</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;564 words&nbsp;·&nbsp;ch3n9w</footer>
+  <a class="entry-link" aria-label="post link to Kubernetes Admission Webhook 部署和调试" href="https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">Learning eBPF
     </h2>
@@ -448,7 +470,8 @@ npm install hexo-deployer-git --save 修改网站根目录下的_config....</p>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://ch3n9w.cpolar.cn/">ch3n9w の 超元域</a></span>
+        <span>&copy; 2024 <a href="https://ch3n9w.cpolar.cn/">ch3n9w の 超元域</a></span> · 
+
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

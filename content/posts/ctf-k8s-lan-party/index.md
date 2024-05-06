@@ -9,8 +9,6 @@ cover:
 
 Long time no CTF~~
 
-<!--more-->
-
 ## RECON
 
 Just check the environment related to K8s using `env` and reconnoiter internal service using `dnscan`
