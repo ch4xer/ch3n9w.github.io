@@ -82,12 +82,12 @@ grub-mkconfig -o /boot/grub/grub.cfg 重建grub引导 在上一步的chroot环�
 grub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ch3n9w.cpolar.cn/posts/tech-ext4-to-btrfs/" />
-<meta property="og:image" content="https://ch3n9w.cpolar.cn/u=https%253A%252F%252Ftse3.mm.bing.net%252Fth%253Fid%253DOIP.jpeg" /><meta property="article:section" content="posts" />
+<meta property="og:image" content="https://ch3n9w.cpolar.cn/btrfs.jpeg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-01-16T05:28:51+00:00" />
 <meta property="article:modified_time" content="2023-01-16T05:28:51+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://ch3n9w.cpolar.cn/u=https%253A%252F%252Ftse3.mm.bing.net%252Fth%253Fid%253DOIP.jpeg" />
+<meta name="twitter:image" content="https://ch3n9w.cpolar.cn/btrfs.jpeg" />
 <meta name="twitter:title" content="ext4到btrfs转换记录"/>
 <meta name="twitter:description" content="这篇文章是对我从ext4文件系统转换到btrfs过程中的一些操作记录, 便于日后参考.
 前置准备 制作arch linux 启动盘, 版本越新越好. 备份重要文件 我个人在转换前会把大文件(例如虚拟机文件)转移到移动硬盘里, 让转换过程更快一些 转换 进入LiveCD 系统, 对主分区进行转换
@@ -135,7 +135,7 @@ grub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就
   "articleBody": "这篇文章是对我从ext4文件系统转换到btrfs过程中的一些操作记录, 便于日后参考.\n前置准备 制作arch linux 启动盘, 版本越新越好. 备份重要文件 我个人在转换前会把大文件(例如虚拟机文件)转移到移动硬盘里, 让转换过程更快一些 转换 进入LiveCD 系统, 对主分区进行转换\nbtrfs-convert /dev/nvme0n1p2 等待一段时间之后, 显示conversion complete就表示没有问题, 接下来还需要做三件事情才可以进入系统\n修改fstab 首先将转换成功后的分区挂载到/mnt下\nmount /dev/nvme0n1p2 /mnt 使用lsblk -f命令查看分区的UUID号, 拍个照片记一下\n编辑/mnt/etc/fstab, 修改这个分区类型为btrfs, 将最后的两列数字都改成0, 保存退出\n重建内存盘 先挂载, 然后进入chroot环境\nmount -t proc none /mnt/proc mount -t sysfs none /mnt/sys mount -o bind /dev /mnt/dev chroot /mnt bash 然后执行下列命令来为所有内核重建内存盘\nmkinitcpio -P 最后重建grub引导, 按照道理应该要把引导分区/dev/nvme0n1p1挂载到/mnt/boot之后才可以, 但是我记得自己执行的时候没有挂载?\ngrub-mkconfig -o /boot/grub/grub.cfg 重建grub引导 在上一步的chroot环境中, 执行下列命令, 记得把引导分区挂载到/mnt/boot\ngrub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了.\n子卷建立 经过上述操作后, 你会得到一个没有子卷的根文件系统, 这点可以通过命令验证\nsudo btrfs subvol list / 没有子卷就没有快照, 为了利用好btrfs的特性, 有必要新建快照, 并将数据迁移到里面. 同样, 我们需要进入 LiveCD 系统\n首先将btrfs分区挂载到/mnt下\nmount -o subvol=/ /dev/nvme0n1p2 /mnt 接下来就要开始新建子卷了, 我新建的子卷有两个, 一个叫做@, 一个叫做@home, 分别挂载根目录和家目录. 这样新建的原因是timeshift在使用btrfs进行备份的时候规定这样的命名.\n那么首先, 使用btrfs的快照功能新建@子卷\nbtrfs subvol snapshot /mnt /mnt/@ 然后建立@home子卷, 再将@子卷中/home的内容迁移过去\nbtrfs subvol create /mnt/@home mv -v /mnt/@/home/* /mnt/@home 好了, 子卷新建完毕, 接下来要让系统在启动的时候挂载子卷\n首先, 挂载btrfs分区到/mnt\n# 这一步在上面如果执行过了就不需要执行了 mount -o subvol=/ /dev/nvme0n1p2 /mnt # 这些需要挂载 mount -o bind /dev /mnt/dev mount -o bind /proc /mnt/proc mount -o bind /sys /mnt/sys mount -o bind /boot /mnt/boot # 进入chroot环境 chroot /mnt 然后新建内存初始盘\nmkinitcpio -P 然后更新fstab, 我的如下, 里面重要的是subvol一项, 其他的参数中, autodefrag是btrfs用于应对碎片化的挂载选项, compress=lzo启动透明压缩\n# /dev/nvme0n1p2 UUID=6dd702be-7727-447e-98ec-a79205f18df7\t/ btrfs defaults,noatime,autodefrag,subvol=@,compress=lzo,\t0 0 UUID=6dd702be-7727-447e-98ec-a79205f18df7\t/home btrfs defaults,noatime,autodefrag,subvol=@home,compress=lzo\t0 0 # /dev/nvme0n1p1 UUID=8D41-41B9 /boot vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro\t0 2 最后顺手更新一下grub (似乎没必要?)\ngrub-mkconfig -o /boot/grub/grub.cfg 重启进入系统就可以了. 接下来可以安装timeshift来对系统进行定时备份\n在一切都没有问题后, 就可以重新进入LiveCD环境, 清理掉原来的那些文件了\nmount -o subvol=/ /dev/nvme0n1p2 /mnt cd /mnt rm -r var usr .......(除了子卷外都删掉) 最后剩下这些\n清理完毕, 收工\n其他 去除已有文件的碎片化\nsudo btrfs filesystem defragment -r / 回收分配但未使用的数据, 对节约空间有帮助\nsudo btrfs balance start / sudo btrfs balance status / 参考 https://coda.world/btrfs-move-to-subvolume/\nhttps://blog.samchu.cn/posts/linux-ext4-to-btrfs/\nhttps://www.jwillikers.com/btrfs-mount-options\n",
   "wordCount" : "237",
   "inLanguage": "en",
-  "image":"https://ch3n9w.cpolar.cn/u=https%253A%252F%252Ftse3.mm.bing.net%252Fth%253Fid%253DOIP.jpeg","datePublished": "2023-01-16T05:28:51Z",
+  "image":"https://ch3n9w.cpolar.cn/btrfs.jpeg","datePublished": "2023-01-16T05:28:51Z",
   "dateModified": "2023-01-16T05:28:51Z",
   "author":{
     "@type": "Person",
@@ -219,7 +219,10 @@ grub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就
 
 </div>
   </header> 
-<figure class="entry-cover"><img loading="eager" src="https://ch3n9w.cpolar.cn/u=https%253A%252F%252Ftse3.mm.bing.net%252Fth%253Fid%253DOIP.jpeg" alt="">
+<figure class="entry-cover">
+        <img loading="eager" srcset="https://ch3n9w.cpolar.cn/posts/tech-ext4-to-btrfs/btrfs_hu94c281e3c36cea000a6c864820d2178d_12001_360x0_resize_q75_box.jpeg 360w ,https://ch3n9w.cpolar.cn/posts/tech-ext4-to-btrfs/btrfs.jpeg 474w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="https://ch3n9w.cpolar.cn/posts/tech-ext4-to-btrfs/btrfs.jpeg" alt="" 
+            width="474" height="302">
         
 </figure><div class="toc">
     <details  open>

@@ -5,7 +5,7 @@ typora-root-url: ../
 date: 2023-01-16 05:28:51
 categories: 技术
 cover:
-  image: u=https%253A%252F%252Ftse3.mm.bing.net%252Fth%253Fid%253DOIP.jpeg
+  image: btrfs.jpeg
 ---
 
 这篇文章是对我从ext4文件系统转换到btrfs过程中的一些操作记录, 便于日后参考. 
