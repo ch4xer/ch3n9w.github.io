@@ -306,7 +306,7 @@ eBPF virtual machine The ebpf virtual machine uses 10 general-purpose registers 
 </span></span><span style="display:flex;"><span>    print(s)
 </span></span></code></pre></div><h3 id="ring-buffer-maps">ring buffer maps<a hidden class="anchor" aria-hidden="true" href="#ring-buffer-maps">#</a></h3>
 <p>Ring buffer consists of a buffer, a pointer for written, and pointer for read. The access of data depend on the movement of these two pointers. When a element was read out, the others didn&rsquo;t need to change its location. Data writing may overwrite data that has not been read in a timely manner, which is permissible in some scenarios.</p>
-<p><img loading="lazy" src="/images/tech-learning-ebpf/ring-buffer.png" alt="ringbuffer"  />
+<p><img loading="lazy" src="ring-buffer.png" alt="ringbuffer"  />
 </p>
 <p>The hello world example using ring buffer in book:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> bcc <span style="color:#f92672">import</span> BPF
@@ -351,12 +351,12 @@ eBPF virtual machine The ebpf virtual machine uses 10 general-purpose registers 
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e"># read from ring buffer, every execution will trigger callback function print_event</span>
 </span></span><span style="display:flex;"><span>    b<span style="color:#f92672">.</span>ring_buffer_poll()
 </span></span></code></pre></div><p><strong>Ring buffers are preferred over perf buffers for performance reasons, here is the difference in example code</strong></p>
-<p><img loading="lazy" src="/images/tech-learning-epbf/perf-ring-diff.png" alt="differences between ring buffers and perf buffers in code"  />
+<p><img loading="lazy" src="perf-ring-diff.png" alt="differences between ring buffers and perf buffers in code"  />
 </p>
 <h3 id="tail-calls">tail calls<a hidden class="anchor" aria-hidden="true" href="#tail-calls">#</a></h3>
 <p>bpf_tail_call 是一个 eBPF 提供的机制, 它允许一个 eBPF 程序调用另一个 eBPF 程序, 类似于函数调用. 然而, 与传统的函数调用不同, bpf_tail_call 实际上是将当前程序替换为另一个程序, 而不是创建一个新的函数调用栈帧. 这意味着被调用的程序(尾调用程序)会接管当前程序的执行上下文, 并且当尾调用程序开始执行时, 原始程序的执行就结束了.</p>
 <p>bpf的栈帧空间只有512字节. tail call的通用目的是为了避免当函数递归调用时,栈帧无限地增加(这会导致栈溢出)</p>
-<p><img loading="lazy" src="/images/tech-learning-ebpf/function-call.png" alt="一个正常的函数调用过程"  />
+<p><img loading="lazy" src="function-call.png" alt="一个正常的函数调用过程"  />
 </p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> bcc <span style="color:#f92672">import</span> BPF
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> ctypes <span style="color:#66d9ef">as</span> ct

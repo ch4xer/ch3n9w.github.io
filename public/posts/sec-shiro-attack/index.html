@@ -232,42 +232,42 @@ git checkout shiro-root-1.2.4
 <pre tabindex="0"><code>sudo chmod -R 755 /var/lib/tomcat8
 sudo chmod -R 755 /etc/tomcat8
 </code></pre><p>使用idea打开<code>shiro/samples/web</code>项目, 等待maven项目依赖下载完成, 编辑配置</p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122154253032.png" alt="image-20220122154253032"  />
+<p><img loading="lazy" src="image-20220122154253032.png" alt="image-20220122154253032"  />
 </p>
 <p>进入Deployment, 添加artifact</p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122154335606.png" alt="image-20220122154335606"  />
+<p><img loading="lazy" src="image-20220122154335606.png" alt="image-20220122154335606"  />
 </p>
 <p>启动项目, 看到下面的页面就说明环境搭建完成了</p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122154432029.png" alt="image-20220122154432029"  />
+<p><img loading="lazy" src="image-20220122154432029.png" alt="image-20220122154432029"  />
 </p>
 <h2 id="漏洞调试">漏洞调试<a hidden class="anchor" aria-hidden="true" href="#漏洞调试">#</a></h2>
 <h3 id="登陆过程">登陆过程<a hidden class="anchor" aria-hidden="true" href="#登陆过程">#</a></h3>
 <p>首先看登陆过程, 在<code>org.apache.shiro.mgt.AbstractRememberMeManager#onSuccessfulLogin</code>打下断点, 随后在浏览器中选中Remember Me选项进行登陆, 程序进入断点:</p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122163548996.png" alt="image-20220122163548996"  />
+<p><img loading="lazy" src="image-20220122163548996.png" alt="image-20220122163548996"  />
 </p>
 <p>在<code>forgetIdentity</code>函数中, 会尝试获取request 和 response, 并移除之前的身份信息.</p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122164355343.png" alt="image-20220122164355343"  />
+<p><img loading="lazy" src="image-20220122164355343.png" alt="image-20220122164355343"  />
 </p>
 <p>回到之前的函数, 进入第一个if分支, 进入<code>rememberIdentity</code>函数, <code>this.getIdentityToRemember</code>函数获取到身份信息, 然后调用<code>rememberIdentity</code>函数.</p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122164841524.png" alt="image-20220122164841524"  />
+<p><img loading="lazy" src="image-20220122164841524.png" alt="image-20220122164841524"  />
 </p>
 <p><code>rememberIdentity</code>函数中, 首先将<code>accountPrincipals</code>转换成bytes</p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122165211999.png" alt="image-20220122165211999"  />
+<p><img loading="lazy" src="image-20220122165211999.png" alt="image-20220122165211999"  />
 </p>
 <p>转换的逻辑为先进行序列化然后再进行加密, 如下</p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122165440695.png" alt="image-20220122165440695"  />
+<p><img loading="lazy" src="image-20220122165440695.png" alt="image-20220122165440695"  />
 </p>
 <p>加密的方式为AES加密</p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122170022825.png" alt="image-20220122170022825"  />
+<p><img loading="lazy" src="image-20220122170022825.png" alt="image-20220122170022825"  />
 </p>
 <p>跟进密钥获取的函数</p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122170008256.png" alt="image-20220122170008256"  />
+<p><img loading="lazy" src="image-20220122170008256.png" alt="image-20220122170008256"  />
 </p>
 <p>从最后一行可以看到,在对象初始化的时候, 自动设置密钥为默认密钥</p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122165857201.png" alt="image-20220122165857201"  />
+<p><img loading="lazy" src="image-20220122165857201.png" alt="image-20220122165857201"  />
 </p>
 <p>返回到<code>rememberIdentity</code>函数, 跟进<code>rememberSerializedIdentity</code>, 这里主要是将加密结果经过base64之后存储进cookie中</p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122172439145.png" alt="image-20220122172439145"  />
+<p><img loading="lazy" src="image-20220122172439145.png" alt="image-20220122172439145"  />
 </p>
 <h3 id="rememberme解密过程">rememberMe解密过程<a hidden class="anchor" aria-hidden="true" href="#rememberme解密过程">#</a></h3>
 <p>在``org.apache.shiro.mgt.DefaultSecurityManager#getRememberedIdentity` 打下断点, 使用脚本向本地服务器发送payload</p>
@@ -298,21 +298,21 @@ sudo chmod -R 755 /etc/tomcat8
 </span></span><span style="display:flex;"><span>    r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(target, cookies<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;rememberMe&#39;</span>:base64_ciphertext<span style="color:#f92672">.</span>decode()}, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span>:
 </span></span><span style="display:flex;"><span>    traceback<span style="color:#f92672">.</span>print_exc()
-</span></span></code></pre></div><h5 id="image-20220122175423163imagesshiro-attackimage-20220122175423163png"><img loading="lazy" src="/images/shiro-attack/image-20220122175423163.png" alt="image-20220122175423163"  />
+</span></span></code></pre></div><h5 id="image-20220122175423163image-20220122175423163png"><img loading="lazy" src="image-20220122175423163.png" alt="image-20220122175423163"  />
 </h5>
 <p>跟进函数, 发现<code>getRememberMeManager</code>会返回cookie的信息, 加密服务和加密解密用的密钥.</p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122175833707.png" alt="image-20220122175833707"  />
+<p><img loading="lazy" src="image-20220122175833707.png" alt="image-20220122175833707"  />
 </p>
 <p>接下来, 跟进<code>getRememberedPrincipals</code>函数, 首先会尝试获取rememberMe中的序列化对象, 然后</p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122180215754.png" alt="image-20220122180215754"  />
+<p><img loading="lazy" src="image-20220122180215754.png" alt="image-20220122180215754"  />
 </p>
 <p>看看<code>getRememberedSerializedIdentity</code>的内容, 主要环节就是获取cookie并进行bas64解密, 并将解密结果返回回去.</p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122191255902.png" alt="image-20220122191255902"  />
+<p><img loading="lazy" src="image-20220122191255902.png" alt="image-20220122191255902"  />
 </p>
 <p>接下来进入 <code>convertBytesToPrincipals</code>函数, 可以看到这里进行了解密操作, 并且进行了反序列化操作. 解密操作和之前的加密操作类似,</p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122192211652.png" alt="image-20220122192211652"  />
+<p><img loading="lazy" src="image-20220122192211652.png" alt="image-20220122192211652"  />
 </p>
-<p><img loading="lazy" src="/images/shiro-attack/image-20220122193026077.png" alt="image-20220122193026077"  />
+<p><img loading="lazy" src="image-20220122193026077.png" alt="image-20220122193026077"  />
 </p>
 <p>至此 , 反序列化漏洞触发. 总体来说这个漏洞跟起来并不复杂.</p>
 <h2 id="密钥爆破">密钥爆破<a hidden class="anchor" aria-hidden="true" href="#密钥爆破">#</a></h2>

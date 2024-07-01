@@ -16,11 +16,11 @@ treesitter为neovim带来了语法高亮, 让不同语言都被解析成统一�
 
 这是原来的
 
-![image-20230425214642532](/images/tech-neovim-treesitter-markdown/image-20230425214642532.png)
+![image-20230425214642532](image-20230425214642532.png)
 
 这是自定义后的
 
-![image-20230425221509291](/images/tech-neovim-treesitter-markdown/image-20230425221509291.png)
+![image-20230425221509291](image-20230425221509291.png)
 
 
 

@@ -141,7 +141,7 @@ for i in range(16):
 print(base64.b64encode(result))
 ```
 
-![image-20211114141832885](/images/padding-oracle-and-cbc-attack/image-20211114141832885.png)
+![image-20211114141832885](image-20211114141832885.png)
 
 
 
@@ -149,11 +149,11 @@ print(base64.b64encode(result))
 
 打开是一个登录界面, 访问``robots.txt``, 发现一个html, 里面是很多api
 
-![image-20200203003409598](/images/image-20200203003409598.png)
+![image-20200203003409598](image-20200203003409598.png)
 
 试着按照里面的使用方法来注册一个用户, 然后回到登录界面登录提示权限不足, 看看浏览器的network
 
-![image-20200203004257291](/images/image-20200203004257291.png)
+![image-20200203004257291](image-20200203004257291.png)
 
 除了向login和info都请求了一次, 看看详情
 
@@ -191,9 +191,9 @@ ICxkSingDanceRaP{A%EÒôõç!SY"Á!nÉZß|ÿíYêW/FzaAk7û
 
 解密过程:
 
-![img](/images/15078975303136.png)
+![img](15078975303136.png)
 
-![img](/images/15078976262418.png!small)
+![img](15078976262418.png!small)
 
 ```
 C1 ^ 中间值的最后一位 = 0×01
@@ -284,7 +284,7 @@ print(plain_text)
 
 之前的那个没有权限登录, 就是这个``role``的关系, 要把它修改成1 , 就要把密文也修改了, 利用``cbc字节反转攻击``来修改密文.
 
-![img](/images/15078975303136.png)
+![img](15078975303136.png)
 
 由于要修改的明文只是在第一区块中, 因此只需要修改IV就行了, 设 原明文为PB, 修改后的明文为PA
 
@@ -359,7 +359,7 @@ print(user_info)
 
 改完后把新的密文作为``key``访问, 刷新页面, 成功登录, 发现音频上传的功能.看赵师傅wp说**上传不同类型的文件然后下载上传的文件(如下图上传后可以在network中发现url), 对比上传前后文件的md5值发现对avi文件有进行处理**, 这个姿势学到了.
 
-![image-20200202225510224](/images/image-20200202225510224.png)
+![image-20200202225510224](image-20200202225510224.png)
 
 
 
@@ -373,7 +373,7 @@ python3 gen_xbin_avi.py file:///flag test.avi
 
 上传, 下载, 播放, 发现flag
 
-![image-20200203014414962](/images/image-20200203014414962.png)
+![image-20200203014414962](image-20200203014414962.png)
 
 
 
@@ -540,7 +540,7 @@ print checksum_final
 
 在session通过之后就不再对session进行验证了，所以前16位乱码也没有关系。
 
-![image-20211114141845867](/images/padding-oracle-and-cbc-attack/image-20211114141845867.png)
+![image-20211114141845867](image-20211114141845867.png)
 
 ## bugku login4
 

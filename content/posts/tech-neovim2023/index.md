@@ -50,7 +50,7 @@ categories: 技术
 
 部分功能截图:
 
-![edit](/images/tech-neovim2023/edit.png)
+![edit](edit.png)
 
 ## 人性化的界面
 
@@ -64,9 +64,9 @@ categories: 技术
 
 截图:
 
-![image-20230901215409924](/images/tech-neovim2023/image-20230901215409924.png)
+![image-20230901215409924](image-20230901215409924.png)
 
-![ui](/images/tech-neovim2023/ui.png)
+![ui](ui.png)
 
 ## 代码调试
 
@@ -76,7 +76,7 @@ categories: 技术
 |     展示 ui     |      rcarriga/nvim-dap-ui       |
 | inline 变量显示 | theHamsta/nvim-dap-virtual-text |
 
-![image-20230901214106726](/images/tech-neovim2023/image-20230901214106726.png)
+![image-20230901214106726](image-20230901214106726.png)
 
 ## 模糊查找
 
@@ -86,7 +86,7 @@ categories: 技术
 | fzf集成  | nvim-telescope/telescope-fzf-native.nvim |
 
 截图:
-![finder](/images/tech-neovim2023/finder.png)
+![finder](finder.png)
 
 ## 其他
 

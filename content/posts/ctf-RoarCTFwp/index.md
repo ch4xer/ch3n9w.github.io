@@ -15,11 +15,11 @@ cover:
 
 特征: 第一次登录后源代码内容有如下:
 
-![image-20211114142027467](/images/RoarCTFwp/image-20211114142027467.png)
+![image-20211114142027467](image-20211114142027467.png)
 
 换一个**X-Forwarded-For** 后会发现currentip是根据xff判别的
 
-![image-20211114142033017](/images/RoarCTFwp/image-20211114142033017.png)
+![image-20211114142033017](image-20211114142033017.png)
 
 那么有理由认为上一个ip被存储进了数据库中,并在每次检测到访问ip和上一个ip不同的时候就会改变数据库. 源码这里也写到了
 
@@ -41,7 +41,7 @@ die("\n<!-- Debug Info: \n Duration: $time s \n Current Ip: $ip ".($last_ip !== 
 
 先用``1'|1|'1``作为xff访问网站网站 , 访问成功之后改变xff, 再次访问, 这个时候由于前后xff不一致, 原来存储进数据库currentip的ip被重新提取出来存进lastip项中, 如果这个lastip没有过滤的话,就可以造成**二次注入**, 事实上也确实如此, 但这个可能得猜......在第二次访问之后, payload被重新插入进数据库中, 带着第二次访问的xff来第三次访问这个网站,可以看到
 
-![image-20211114142040727](/images/RoarCTFwp/image-20211114142040727.png)
+![image-20211114142040727](image-20211114142040727.png)
 
 成功执行了.
 
@@ -99,7 +99,7 @@ print("[+]获取成功：" + execute_sql("SELECT group_concat(F4l9_C01uMn) FROM 
 
 在addslashes后插入数据在数据库中是这样的
 
-![image-20211114142048129](/images/RoarCTFwp/image-20211114142048129.png)
+![image-20211114142048129](image-20211114142048129.png)
 
 第二行是提取出来不经过addslashes重新插入的结果
 

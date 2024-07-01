@@ -102,7 +102,7 @@ while True:
 
 Ring buffer consists of a buffer, a pointer for written, and pointer for read. The access of data depend on the movement of these two pointers. When a element was read out, the others didn't need to change its location. Data writing may overwrite data that has not been read in a timely manner, which is permissible in some scenarios.
 
-![ringbuffer](/images/tech-learning-ebpf/ring-buffer.png)
+![ringbuffer](ring-buffer.png)
 
 
 The hello world example using ring buffer in book:
@@ -153,7 +153,7 @@ while True:
 
 **Ring buffers are preferred over perf buffers for performance reasons, here is the difference in example code**
 
-![differences between ring buffers and perf buffers in code](/images/tech-learning-epbf/perf-ring-diff.png)
+![differences between ring buffers and perf buffers in code](perf-ring-diff.png)
 
 
 ### tail calls
@@ -162,7 +162,7 @@ bpf_tail_call 是一个 eBPF 提供的机制, 它允许一个 eBPF 程序调用�
 
 bpf的栈帧空间只有512字节. tail call的通用目的是为了避免当函数递归调用时,栈帧无限地增加(这会导致栈溢出)
 
-![一个正常的函数调用过程](/images/tech-learning-ebpf/function-call.png)
+![一个正常的函数调用过程](function-call.png)
 
 
 ```python

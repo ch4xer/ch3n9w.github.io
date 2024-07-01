@@ -18,7 +18,7 @@ categories: CTF
 
 <!--more-->
 
-![image-20211114141224625](/images/GACTF2020/image-20211114141224625.png)
+![image-20211114141224625](image-20211114141224625.png)
 
 ## ezflask
 
@@ -93,11 +93,11 @@ eval=ctf.__code__.co_consts
 
 然后通过302重定向访问127.0.0.1:5000, 是一个常规的ssti,再次重定向
 
-![image-20211114141232648](/images/GACTF2020/image-20211114141232648.png)
+![image-20211114141232648](image-20211114141232648.png)
 
 
 
-![image-20211114141239286](/images/GACTF2020/image-20211114141239286.png)
+![image-20211114141239286](image-20211114141239286.png)
 
 
 
@@ -139,4 +139,4 @@ sd' or if(substr((select group_concat(username) from user where privilege='admin
 
 得到用户名和密码之后进行序列化登陆就可以了
 
-![image-20211114141249521](/images/GACTF2020/image-20211114141249521.png)
+![image-20211114141249521](image-20211114141249521.png)

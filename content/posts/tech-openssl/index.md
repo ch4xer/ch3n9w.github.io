@@ -38,7 +38,7 @@ openssl req -text -in target.csr  -verify
 
 例如:
 
-![image-20221223112026855](/images/tech-openssl%E7%AC%94%E8%AE%B0/image-20221223112026855.png)
+![image-20221223112026855](image-20221223112026855.png)
 
 可以看到公钥也在里面. 
 
@@ -56,7 +56,7 @@ openssl x509 -in target.csr -out target.crt -req -signkey target.key -days 365
 
 然后CA将target.crt以及由Root CA签名的CA证书一同返回给申请人. 如下图所示: 
 
-![img](/images/tech-openssl%E7%AC%94%E8%AE%B0/19QiVdLVN-6NCQPy7Zla1BA.jpeg)
+![img](19QiVdLVN-6NCQPy7Zla1BA.jpeg)
 
 **Root CA的证书就那么几个, 内置在操作系统里, 受到所有程序的信任**, 因此申请人得到由Root CA签名的CA证书后, 就可以信任该CA组织, 进而可以信任该CA组织签发给自己的证书. 对于其他的客户端而言也是这样.
 
@@ -64,15 +64,15 @@ openssl x509 -in target.csr -out target.crt -req -signkey target.key -days 365
 
 客户端发起请求, 服务端会把自己的证书和签自己证书的CA机构的证书一起发过去
 
-![img](/images/tech-openssl%E7%AC%94%E8%AE%B0/1isEkaSnJOgq5P3xX-EcMLA.jpeg)
+![img](1isEkaSnJOgq5P3xX-EcMLA.jpeg)
 
 如图, 由于Root CA是可信任的, 因此该CA机构是可信任的, 因此该CA机构签发的服务端证书也是可信任的, 这叫 **信任链**.
 
 信任建立之后, 客户端生成一个对称密钥, 用服务端证书里的公钥加密之后发送给服务端, 最后双方都用这个对称密钥来加密数据进行信息交换 (实际上, 对称密钥的生成是服务端和客户端通过彼此协商过程中的各种消息各自使用相同的算法生成的, 并不会直接在网络上传输, 只不过这些消息中有一部分是公钥加密后传输的, 因此也类似于将对称密钥进行公钥加密了)
 
-![img](/images/tech-openssl%E7%AC%94%E8%AE%B0/1FpRsMB6RZunjZfc265VqdQ.jpeg)
+![img](1FpRsMB6RZunjZfc265VqdQ.jpeg)
 
-![img](/images/tech-openssl%E7%AC%94%E8%AE%B0/1TvwyToeoayeRXjqKM_KhUQ.jpeg)
+![img](1TvwyToeoayeRXjqKM_KhUQ.jpeg)
 
 ## 信息提取
 

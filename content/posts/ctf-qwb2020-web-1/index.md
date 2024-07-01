@@ -228,4 +228,4 @@ print(res.content)
 
 ```
 
-![image-20211114142011268](/images/qwb2020-web-1/image-20211114142011268.png)
+![image-20211114142011268](image-20211114142011268.png)

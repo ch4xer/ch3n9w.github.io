@@ -73,15 +73,8 @@
       <pubDate>Mon, 24 Aug 2020 22:22:46 +0000</pubDate>
       <guid>https://ch3n9w.cpolar.cn/posts/sec-http-smuggling/</guid>
       <description>&lt;p&gt;正常的请求&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://ch3n9w.cpolar.cn/images/http-smuggling/image-20211114141452612.png&#34; alt=&#34;image-20211114141452612&#34;  /&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;image-20211114141452612.png&#34; alt=&#34;image-20211114141452612&#34;  /&gt;
 &lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>nodejs相关</title>
-      <link>https://ch3n9w.cpolar.cn/posts/sec-javascript-learn/</link>
-      <pubDate>Sun, 17 Nov 2019 16:15:38 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/sec-javascript-learn/</guid>
-      <description>&lt;p&gt;不会javascript, 在看smi1e师傅关于原型链污染攻击的博客时候, 这张图片让我思考了很久&lt;/p&gt;</description>
     </item>
     <item>
       <title>php session反序列化</title>

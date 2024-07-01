@@ -228,10 +228,10 @@ $result = query(&#34;select current_ip, last_ip from ip_log where uuid = &#39;&#
   <div class="post-content"><h1 id="web">web<a hidden class="anchor" aria-hidden="true" href="#web">#</a></h1>
 <h2 id="online_proxy">online_proxy<a hidden class="anchor" aria-hidden="true" href="#online_proxy">#</a></h2>
 <p>特征: 第一次登录后源代码内容有如下:</p>
-<p><img loading="lazy" src="/images/RoarCTFwp/image-20211114142027467.png" alt="image-20211114142027467"  />
+<p><img loading="lazy" src="image-20211114142027467.png" alt="image-20211114142027467"  />
 </p>
 <p>换一个<strong>X-Forwarded-For</strong> 后会发现currentip是根据xff判别的</p>
-<p><img loading="lazy" src="/images/RoarCTFwp/image-20211114142033017.png" alt="image-20211114142033017"  />
+<p><img loading="lazy" src="image-20211114142033017.png" alt="image-20211114142033017"  />
 </p>
 <p>那么有理由认为上一个ip被存储进了数据库中,并在每次检测到访问ip和上一个ip不同的时候就会改变数据库. 源码这里也写到了</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>$result <span style="color:#f92672">=</span> <span style="color:#a6e22e">query</span>(<span style="color:#e6db74">&#34;select current_ip, last_ip from ip_log where uuid = &#39;&#34;</span><span style="color:#f92672">.</span><span style="color:#a6e22e">addslashes</span>($uuid)<span style="color:#f92672">.</span><span style="color:#e6db74">&#34;&#39;&#34;</span>);
@@ -247,7 +247,7 @@ $result = query(&#34;select current_ip, last_ip from ip_log where uuid = &#39;&#
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">die</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&lt;!-- Debug Info: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74"> Duration: </span><span style="color:#e6db74">$time</span><span style="color:#e6db74"> s </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74"> Current Ip: </span><span style="color:#e6db74">$ip</span><span style="color:#e6db74"> &#34;</span><span style="color:#f92672">.</span>($last_ip <span style="color:#f92672">!==</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Last Ip: &#34;</span><span style="color:#f92672">.</span>$last_ip <span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;&#34;</span>)<span style="color:#f92672">.</span><span style="color:#e6db74">&#34; --&gt;&#34;</span>);
 </span></span></code></pre></div><p>解法:</p>
 <p>先用<code>1'|1|'1</code>作为xff访问网站网站 , 访问成功之后改变xff, 再次访问, 这个时候由于前后xff不一致, 原来存储进数据库currentip的ip被重新提取出来存进lastip项中, 如果这个lastip没有过滤的话,就可以造成<strong>二次注入</strong>, 事实上也确实如此, 但这个可能得猜&hellip;&hellip;在第二次访问之后, payload被重新插入进数据库中, 带着第二次访问的xff来第三次访问这个网站,可以看到</p>
-<p><img loading="lazy" src="/images/RoarCTFwp/image-20211114142040727.png" alt="image-20211114142040727"  />
+<p><img loading="lazy" src="image-20211114142040727.png" alt="image-20211114142040727"  />
 </p>
 <p>成功执行了.</p>
 <p>搬运赵师傅的脚本学习学习</p>
@@ -298,7 +298,7 @@ $result = query(&#34;select current_ip, last_ip from ip_log where uuid = &#39;&#
 </span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;[+]获取成功：&#34;</span> <span style="color:#f92672">+</span> execute_sql(<span style="color:#e6db74">&#34;SELECT group_concat(F4l9_C01uMn) FROM F4l9_D4t4B45e.F4l9_t4b1e&#34;</span>))
 </span></span></code></pre></div><p>5555555</p>
 <p>在addslashes后插入数据在数据库中是这样的</p>
-<p><img loading="lazy" src="/images/RoarCTFwp/image-20211114142048129.png" alt="image-20211114142048129"  />
+<p><img loading="lazy" src="image-20211114142048129.png" alt="image-20211114142048129"  />
 </p>
 <p>第二行是提取出来不经过addslashes重新插入的结果</p>
 <h2 id="easy_calc">easy_calc<a hidden class="anchor" aria-hidden="true" href="#easy_calc">#</a></h2>
@@ -491,10 +491,10 @@ xyzz + xyzb + az + ab = n
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="https://ch3n9w.cpolar.cn/posts/sec-javascript-learn/">
+  <a class="prev" href="https://ch3n9w.cpolar.cn/posts/ctf-qwb-copperstudy-record/">
     <span class="title">« Prev</span>
     <br>
-    <span>nodejs相关</span>
+    <span>copperstudy-record</span>
   </a>
   <a class="next" href="https://ch3n9w.cpolar.cn/posts/ctf-bytectf2019/">
     <span class="title">Next »</span>

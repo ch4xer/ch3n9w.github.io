@@ -244,49 +244,49 @@ phpggc中关于thinkphp的攻击思路学习
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h3 id="漏洞分析">漏洞分析<a hidden class="anchor" aria-hidden="true" href="#漏洞分析">#</a></h3>
 <p>调试开始, 首先在<code>think\Process#__destruct</code>下断点, 随后跟进到close函数中,这里控制<code>processPipes</code>为<code>think\model\relation\HasMany</code>对象,触发其<code>__call</code>方法,进而进入其<code>baseQuery </code>方法. 在这个方法中可以触发<code>think\console\Output</code>的<code>__call</code>方法</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220114223253882.png" alt="image-20220114223253882"  />
+<p><img loading="lazy" src="image-20220114223253882.png" alt="image-20220114223253882"  />
 </p>
 <p>在这个<code>__call</code>方法中,可以看到调用了<code>call_user_func_array</code>函数, 调用的是block函数, 参数是我们控制的payload</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220114223633326.png" alt="image-20220114223633326"  />
+<p><img loading="lazy" src="image-20220114223633326.png" alt="image-20220114223633326"  />
 </p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220114223541487.png" alt="image-20220114223541487"  />
+<p><img loading="lazy" src="image-20220114223541487.png" alt="image-20220114223541487"  />
 </p>
 <p>这里前面的AAA是为了绕过后文中出现的死亡exit而添加的.后面再说.</p>
 <p>又经过了<code>think\console\Output</code>的writeln 和write 方法后进入 <code>think\session\driver\Memcache#write</code>,</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220114223904642.png" alt="image-20220114223904642"  />
+<p><img loading="lazy" src="image-20220114223904642.png" alt="image-20220114223904642"  />
 </p>
 <p>handler是<code>think\cache\driver\Memcached</code>对象,进入其set方法</p>
 <p>&lt;butu</p>
 <p>进入set方法中的has方法</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220114224239986.png" alt="image-20220114224239986"  />
+<p><img loading="lazy" src="image-20220114224239986.png" alt="image-20220114224239986"  />
 </p>
 <p>handler是<code>think\cache\driver\File</code>对象,get方法调用了getCacheKey方法</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220114224858431.png" alt="image-20220114224858431"  />
+<p><img loading="lazy" src="image-20220114224858431.png" alt="image-20220114224858431"  />
 </p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220114224432506.png" alt="image-20220114224432506"  />
+<p><img loading="lazy" src="image-20220114224432506.png" alt="image-20220114224432506"  />
 </p>
 <p>返回结果为<code>php://filter/convert.base64-decode/resource=/srv/http/tp5/6a644d26b09257b882dae6e407f23d42.php</code>, 因为这不是一个文件,所以返回了default的值也就是false, 那么前面提到的<code>think\cache\driver\Memcached#has</code>返回的也是false.</p>
 <p>回到<code>think\cache\driver\Memcached#set</code>,进入<code>think\cache\driver\Memcached#getCacheKey</code>,返回的key是<code>&lt;where&gt;AAAPD9waHAgcGhwaW5mbygpOz8+Cg++&lt;/where&gt;</code></p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220114225505600.png" alt="image-20220114225505600"  />
+<p><img loading="lazy" src="image-20220114225505600.png" alt="image-20220114225505600"  />
 </p>
 <p>随后进入下面一行的<code>think\cache\driver\File#set</code>, <em>注意这里是第一次进入think\cache\driver\File#set</em> .</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220114230046005.png" alt="image-20220114230046005"  />
+<p><img loading="lazy" src="image-20220114230046005.png" alt="image-20220114230046005"  />
 </p>
 <p>在这个set方法中调用<code>getCacheKey</code>方法, 和之前一样返回的是<code>php://filter/convert.base64-decode/resource=/srv/http/tp5/6a644d26b09257b882dae6e407f23d42</code> , 然后在下文进行一次文件写,<em>但是这里写出来的文件不是目标文件!</em>, 你看:</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220114230207667.png" alt="image-20220114230207667"  />
+<p><img loading="lazy" src="image-20220114230207667.png" alt="image-20220114230207667"  />
 </p>
 <p>exit后面不是我们的payload, 但是别着急, 之后还会回来这里一次, 那次就会将payload写进去了.</p>
 <p>这一步之后, 返回<code>think\cache\driver\Memcached#set</code>, 并随之调用setTagItem方法</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220114230439083.png" alt="image-20220114230439083"  />
+<p><img loading="lazy" src="image-20220114230439083.png" alt="image-20220114230439083"  />
 </p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220114230615233.png" alt="image-20220114230615233"  />
+<p><img loading="lazy" src="image-20220114230615233.png" alt="image-20220114230615233"  />
 </p>
 <p>tag的生成是根据<code>this-&gt;tag</code>的md5值来决定的, 这里<code>this-&gt;tag</code>是null, 所以生成的tag是我们可以预测的值也就是<code>tag_c4ca4238a0b923820dcc509a6f75849b</code>, 然后带着这个tag值和我们的payload作为key和value , 再次进入<code>think\cache\driver\Memcached#set</code>方法, 并在其中第二次进入<code>think\cache\driver\File#set</code>方法</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220114231241867.png" alt="image-20220114231241867"  />
+<p><img loading="lazy" src="image-20220114231241867.png" alt="image-20220114231241867"  />
 </p>
 <p>注意到和第一次进入<code>think\cache\driver\File#set</code>有什么不一样吗? 第一次进入的时候, payload的值(也就是<code>&lt;where&gt;AAAxxxxxx</code>那个东西)是被赋值给了set函数的name参数, 但是第二次进入的时候, name参数tag值, value参数是payload.</p>
 <p>最后在这次set函数中, 成功将payload拼接在了exit后面, 并使用<code>php://filter</code>成功绕过, 当然,通过getCacheKey方法得到的文件名只不过是对tag值的一次md5而已.</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220114231607135.png" alt="image-20220114231607135"  />
+<p><img loading="lazy" src="image-20220114231607135.png" alt="image-20220114231607135"  />
 </p>
 <p>到此为止,成功写入文件, 需要注意的是phpggc生成的这个payload写入的文件文件名是固定的<code>3b58a9545013e88c7186db11bb158c44.php</code>, 理由前面说过, 就是该文件名的生成就null值的md5再拼接上字符串<code>tag_</code>然后再进行md5.</p>
 <p>整体思路如下, 感觉最关键的还是在setTagItem那一步, 那一步将原本是key的payload变成了value参数, 并使其在后面成功被写入文件.</p>
@@ -319,40 +319,40 @@ think\cache\driver\File#set 参数是前面的两个参数 --&gt; getCacheKey �
 <p>首先生成payload</p>
 <pre tabindex="0"><code>./phpggc ThinkPHP/RCE2 system &#34;touch /tmp/helloman&#34; | base64 -w 0
 </code></pre><p>开始调试前, 请确认你的php环境的版本, 如果版本是php7.x, 请打开文件<code>thinkphp/library/think/db/Query.php</code>  看第400行代码, 这里使用我的带有警告提示的vim看:</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220118152359839.png" alt="image-20220118152359839"  />
+<p><img loading="lazy" src="image-20220118152359839.png" alt="image-20220118152359839"  />
 </p>
 <p>这种写法在php7.x中已经被弃用, 具体是哪一个子版本我没有深究. 总之, 如果发现payload不能执行, 请切换自己的php版本, 或者像我一样将这一行删掉改成上图第400行.</p>
 <p>PS: 这里要吐槽一下Arch Linux Aur里面的php56-xdebug包&hellip;17年开始就不更新了, 21年都有用户在评论说得修改构建文件才可以安装.</p>
 <p>好了, 下面开始调试.</p>
 <p>第一部分, 和过往thinkphp5.0.24写文件反序列化链的前半部分一样,具体可以参考https://althims.com/2020/02/07/thinkphp-5-0-24-unserialize/#more  , 这里就简单说明.</p>
 <p>首先进入<code>think\process\pipes\Windows#__destruct</code>的<code>think\process\pipes\Windows#removeFiles</code>, 其中的<code>file_exists</code>函数会触发<code>think\model\Pivot#__toString</code>, 然后<code>think\model\Pivot</code>会触发内部的<code>toJson</code> 然后触发<code>toArray</code>, 在这个函数中, 控制代码执行到912行的<code>$value-&gt;getAttr($attr)</code>, <code>$value</code>是<code>think\console\Output</code>对象, 这会触发<code>think\console\Output#__call</code></p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220118154512661.png" alt="image-20220118154512661"  />
+<p><img loading="lazy" src="image-20220118154512661.png" alt="image-20220118154512661"  />
 </p>
 <p>接下来触发<code>think\console\Output</code>的<code>block</code> <code>writeln</code> <code>write</code> 三个方法</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220118154657583.png" alt="image-20220118154657583"  />
+<p><img loading="lazy" src="image-20220118154657583.png" alt="image-20220118154657583"  />
 </p>
 <p>handle是<code>think\session\driver\Memcached</code>对象</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220118154821573.png" alt="image-20220118154821573"  />
+<p><img loading="lazy" src="image-20220118154821573.png" alt="image-20220118154821573"  />
 </p>
 <p>handler是<code>think\cache\driver\Memcache</code>对象, 它的set 方法会调用它的has方法</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220118155004986.png" alt="image-20220118155004986"  />
+<p><img loading="lazy" src="image-20220118155004986.png" alt="image-20220118155004986"  />
 </p>
 <p>这里, handler是<code>think\Request</code>对象,  rce最终将会在这个对象中触发, 跟进可以看到调用了<code>input</code>方法</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220118155116387.png" alt="image-20220118155116387"  />
+<p><img loading="lazy" src="image-20220118155116387.png" alt="image-20220118155116387"  />
 </p>
 <p>在input方法中, input方法的参数如下</p>
 <pre tabindex="0"><code>public function input($data = [], $name = &#39;&#39;, $default = null, $filter = &#39;&#39;)
 </code></pre><p>输入的参数如下</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220118160034911.png" alt="image-20220118160034911"  />
+<p><img loading="lazy" src="image-20220118160034911.png" alt="image-20220118160034911"  />
 </p>
 <p>经过了一系列对数组的处理后 , 代码进入<code>$filter = $this-&gt;getFilter($filter, $default);</code></p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220118160322248.png" alt="image-20220118160322248"  />
+<p><img loading="lazy" src="image-20220118160322248.png" alt="image-20220118160322248"  />
 </p>
 <p>在这里, &ldquo;system&rdquo; 字符串会被赋予给filter并转换为数组后返回</p>
 <p>接下来代码执行到<code>$this-&gt;filterValue($data, $name, $filter);</code>输入如下</p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220118160531947.png" alt="image-20220118160531947"  />
+<p><img loading="lazy" src="image-20220118160531947.png" alt="image-20220118160531947"  />
 </p>
-<p><img loading="lazy" src="/images/phpggc-thinkphp/image-20220118160541477.png" alt="image-20220118160541477"  />
+<p><img loading="lazy" src="image-20220118160541477.png" alt="image-20220118160541477"  />
 </p>
 <p>到这里代码执行完成.</p>
 <p>完整调用链条</p>
@@ -392,19 +392,19 @@ think\console\Output#__call
 </code></pre><p>和之前一样,写入一个反序列化入口.</p>
 <h3 id="漏洞分析-2">漏洞分析<a hidden class="anchor" aria-hidden="true" href="#漏洞分析-2">#</a></h3>
 <p>首先,反序列化进入<code>think\process\pipes\Windows#__destruct</code>, 进入<code>removeFiles</code>方法</p>
-<p><img loading="lazy" src="../images/phpggc-thinkphp/image-20220120152925122.png" alt="image-20220120152925122"  />
+<p><img loading="lazy" src="image-20220120152925122.png" alt="image-20220120152925122"  />
 </p>
 <p>filename 是 <code>think\model\Pivot</code>  对象,  <code>file_exists</code>方法触发<code>__toString</code>方法, 经过<code>toJson</code> 方法后触发<code>toArray</code>方法, 部分代码如下</p>
-<p><img loading="lazy" src="../images/phpggc-thinkphp/image-20220120153345826.png" alt="image-20220120153345826"  />
+<p><img loading="lazy" src="image-20220120153345826.png" alt="image-20220120153345826"  />
 </p>
 <p><code>think\model\Pivot-&gt;data</code>从父类<code>think\model</code>中获取, <code>relation</code>为空, 得到结果为<code>{smi1e =&gt; &quot;id&quot;}</code></p>
 <p>接着触发<code>$this-&gt;getAttr($key)</code>, key是<code>smi1e</code>.</p>
-<p><img loading="lazy" src="../images/phpggc-thinkphp/image-20220120154139486.png" alt="image-20220120154139486"  />
+<p><img loading="lazy" src="image-20220120154139486.png" alt="image-20220120154139486"  />
 </p>
 <p>首先通过<code>getData</code>函数,获取到字符串id, 然后通过<code>$this-&gt;withAttr[$fieldName]</code> 获取到system字符串, 中间能跳过的if判断都跳过</p>
-<p><img loading="lazy" src="../images/phpggc-thinkphp/image-20220120154425498.png" alt="image-20220120154425498"  />
+<p><img loading="lazy" src="image-20220120154425498.png" alt="image-20220120154425498"  />
 </p>
-<p><img loading="lazy" src="../images/phpggc-thinkphp/image-20220120154335991.png" alt="image-20220120154335991"  />
+<p><img loading="lazy" src="image-20220120154335991.png" alt="image-20220120154335991"  />
 </p>
 <p>最后在第493进行动态执行, 这里传入的参数有两个,第一个就是要执行的命令, 第二个根据php手册, 应该是int类型的引用变量, 负责记录命令执行 的结果, 但是这里为什么传入第二个参数是数组却还是可以执行呢? 我也不知道, 不过确实是可以的, 可以执行以下代码来验证</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>

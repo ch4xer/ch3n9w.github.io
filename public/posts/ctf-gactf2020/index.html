@@ -209,7 +209,7 @@
 
   <div class="post-content"><h2 id="simpleflask">simpleflask<a hidden class="anchor" aria-hidden="true" href="#simpleflask">#</a></h2>
 <p>和以往的flask不一样的地方在于, 这里是经过更新后的flask, 计算pin码的方式已经和以前不一样了, 参考 <a href="https://www.chainnews.com/articles/898433701852.htm">https://www.chainnews.com/articles/898433701852.htm</a>, 不过问题不大,就把machine-id拼接在docker那一串东西的前面就可以了, 需要注意的是每十分钟重启时候的机器mac地址是会变化的.</p>
-<p><img loading="lazy" src="/images/GACTF2020/image-20211114141224625.png" alt="image-20211114141224625"  />
+<p><img loading="lazy" src="image-20211114141224625.png" alt="image-20211114141224625"  />
 </p>
 <h2 id="ezflask">ezflask<a hidden class="anchor" aria-hidden="true" href="#ezflask">#</a></h2>
 <p>点击看到代码</p>
@@ -255,9 +255,9 @@
 </code></pre><pre tabindex="0"><code>
 (None, &#39;the admin route :h4rdt0f1nd_9792uagcaca00qjaf&lt;!-- port : 5000 --&gt;&#39;, &#39;too young too simple&#39;)
 </code></pre><p>然后通过302重定向访问127.0.0.1:5000, 是一个常规的ssti,再次重定向</p>
-<p><img loading="lazy" src="/images/GACTF2020/image-20211114141232648.png" alt="image-20211114141232648"  />
+<p><img loading="lazy" src="image-20211114141232648.png" alt="image-20211114141232648"  />
 </p>
-<p><img loading="lazy" src="/images/GACTF2020/image-20211114141239286.png" alt="image-20211114141239286"  />
+<p><img loading="lazy" src="image-20211114141239286.png" alt="image-20211114141239286"  />
 </p>
 <h2 id="xwiki">XWIKI<a hidden class="anchor" aria-hidden="true" href="#xwiki">#</a></h2>
 <p>找到了CVE, 然后根据例子反弹shell后发现有一个二进制文件, 会给你很多选择题比较大小的, 到这里就做不出来了, 不过看到其他选手的脚本, 这里记录一下.</p>
@@ -284,7 +284,7 @@
 <p>在改名的地方进行二次注入</p>
 <pre tabindex="0"><code>sd&#39; or if(substr((select group_concat(username) from user where privilege=&#39;admin&#39;),1,1)=&#39;X&#39;,exp(5000),1)#
 </code></pre><p>得到用户名和密码之后进行序列化登陆就可以了</p>
-<p><img loading="lazy" src="/images/GACTF2020/image-20211114141249521.png" alt="image-20211114141249521"  />
+<p><img loading="lazy" src="image-20211114141249521.png" alt="image-20211114141249521"  />
 </p>
 
   </div>

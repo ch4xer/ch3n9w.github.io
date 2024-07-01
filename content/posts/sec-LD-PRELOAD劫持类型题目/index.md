@@ -20,7 +20,7 @@ https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD
 
 看首页
 
-![image-20200130163255077](/images/image-20200130163255077.png)
+![image-20200130163255077](image-20200130163255077.png)
 
 功能点
 
@@ -29,7 +29,7 @@ https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD
 - 删除博客
 - 查找字符串并替换
 
-![image-20200130163356347](/images/image-20200130163356347.png)
+![image-20200130163356347](image-20200130163356347.png)
 
 这个replace有点诡异, 需要``vip``身份, 看源代码关键的一步在``edit.php``中
 
@@ -57,7 +57,7 @@ update users set isvip=1 where username='ch3n9w'
 ';set @a=0x757064617465207573657273207365742069737669703d3120776865726520757365726e616d653d2763683473657227;prepare kk from @a;execute kk;'
 ```
 
-![image-20200130164043550](/images/image-20200130164043550.png)
+![image-20200130164043550](image-20200130164043550.png)
 
 这样我就是vip了, 可以使用replace功能了, 这个在源码中其实就是``preg_replace``.
 
@@ -277,7 +277,7 @@ __attribute__ ((__constructor__)) void angel (void){
 
 使用命令``gcc --share -fPIC hack.c -o hack.so``命令来编译共享文件。在服务器目录下面开启``python -m SimpleHTTPServer 80``，并运行上述python脚本，即可看到flag。
 
-![image-20211114141817095](/images/LD-PRELOAD劫持类型题目/image-20211114141817095.png)
+![image-20211114141817095](image-20211114141817095.png)
 
 > ps:每个人的目录会不定时被服务器清空
 

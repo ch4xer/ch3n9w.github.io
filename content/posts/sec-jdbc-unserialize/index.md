@@ -60,7 +60,7 @@ public class main {
 
 启动wireshark进行抓包，设置过滤规则`mysql`
 
-![image-20211015221453492](/images/jdbc-unserialize/image-20211015221453492.png)
+![image-20211015221453492](image-20211015221453492.png)
 
 图中选中的数据包就是执行`select evil from eviltable ;`后返回的数据，也就是刚才生成的数据。将其复制出来，并删除mysql之外的数据，得到如下数据
 
@@ -183,7 +183,7 @@ public class ResultSetUtil {
 
 那么链条就会比较清晰了，接下来是怎么伪造一个mysql服务端来和jdbc客户端进行数据交互，并在客户端发送`SHOW SESSION STATUS`的时候将payload发送给客户端触发反序列化漏洞。这里通过观察wireshark数据包简单分析一下
 
-![image-20211015225145865](/images/jdbc-unserialize/image-20211015225145865.png)
+![image-20211015225145865](image-20211015225145865.png)
 
 首先是`greeting`，然后jdbc发送登陆请求，服务端返回`Response OK`数据，这个`Response OK`在后面的数据交互中多次用到，需要我们伪造的mysql服务端用来进行数据返回。在经过一些数据协商后，来到`SHOW SESSION STATUS`部分，我们伪造的mysql服务端就可以发送真正的payload给jdbc客户端来进行反序列化了。
 

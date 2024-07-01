@@ -409,7 +409,7 @@ ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到
       <pubDate>Mon, 24 Aug 2020 22:22:46 +0000</pubDate>
       <guid>https://ch3n9w.cpolar.cn/posts/sec-http-smuggling/</guid>
       <description>&lt;p&gt;正常的请求&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://ch3n9w.cpolar.cn/images/http-smuggling/image-20211114141452612.png&#34; alt=&#34;image-20211114141452612&#34;  /&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;image-20211114141452612.png&#34; alt=&#34;image-20211114141452612&#34;  /&gt;
 &lt;/p&gt;</description>
     </item>
     <item>
@@ -444,15 +444,6 @@ if (filename.startsWith(&amp;#34;excel-&amp;#34;) &amp;amp;&amp;amp; &amp;#34;xl
       <description>&lt;p&gt;padding oracle 原理: &lt;a href=&#34;https://www.freebuf.com/articles/database/150606.html&#34;&gt;https://www.freebuf.com/articles/database/150606.html&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
-      <title>Django学习笔记</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-django%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
-      <pubDate>Tue, 28 Jan 2020 18:48:34 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-django%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;Django学习的个人笔记&lt;/p&gt;
-&lt;/blockquote&gt;</description>
-    </item>
-    <item>
       <title>临行前夜--2019</title>
       <link>https://ch3n9w.cpolar.cn/posts/gossip-note-before-back/</link>
       <pubDate>Wed, 08 Jan 2020 05:29:24 +0000</pubDate>
@@ -483,13 +474,6 @@ if (filename.startsWith(&amp;#34;excel-&amp;#34;) &amp;amp;&amp;amp; &amp;#34;xl
       <description>&lt;h2 id=&#34;强网杯-2019-copperstudy&#34;&gt;强网杯 2019 copperstudy&lt;/h2&gt;
 &lt;p&gt;拖拖拉拉终于把这题复现了&amp;hellip;&lt;/p&gt;
 &lt;p&gt;开局计算哈希, 爆破爆破&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>nodejs相关</title>
-      <link>https://ch3n9w.cpolar.cn/posts/sec-javascript-learn/</link>
-      <pubDate>Sun, 17 Nov 2019 16:15:38 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/sec-javascript-learn/</guid>
-      <description>&lt;p&gt;不会javascript, 在看smi1e师傅关于原型链污染攻击的博客时候, 这张图片让我思考了很久&lt;/p&gt;</description>
     </item>
     <item>
       <title>RoarCTF 2019复现</title>

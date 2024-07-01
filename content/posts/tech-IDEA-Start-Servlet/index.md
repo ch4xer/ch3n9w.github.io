@@ -18,17 +18,17 @@ File --> New --> Project --> Java --> Nextnext 新建一个项目
 右键Project --> open module setting --> 点击+号 --> 导入tomcat8的Servlet-api.jar 
 ```
 
-![image-20211114141517710](/images/IDEA-Start-Servlet/image-20211114141517710.png)
+![image-20211114141517710](image-20211114141517710.png)
 
 ```
 右键项目 --> Add Frameworks Support --> 选中web application
 ```
 
-![image-20211114141525898](/images/IDEA-Start-Servlet/image-20211114141525898.png)
+![image-20211114141525898](image-20211114141525898.png)
 
 选中后会多出来几个东西, 如下图, 多了``WEB-INF``目录和``index.jsp``
 
-![image-20211114141531496](/images/IDEA-Start-Servlet/image-20211114141531496.png)
+![image-20211114141531496](image-20211114141531496.png)
 
 ``Web-INF``里面有只有一个``web.xml``, 什么是``WEB-INF``? 根据百度百科的介绍
 
@@ -63,7 +63,7 @@ File --> New --> Project --> Java --> Nextnext 新建一个项目
 
 最重要的是``classes``文件夹和``lib``文件夹, 所以新建两个文件夹, 一个是``classes``,  另一个是``lib``, 配置项目结构让编译出来的class文件输出到``classes``中去
 
-![image-20211114141542947](/images/IDEA-Start-Servlet/image-20211114141542947.png)
+![image-20211114141542947](image-20211114141542947.png)
 
 然后在``src``目录下面编写``TestServlet.java``文件
 
@@ -87,13 +87,13 @@ public class TestServelet extends HttpServlet {
 
 然后添加运行配置, 在``Manjaro linux``里面``tomcat``的目录是``/usr/share/tomcat8/``, ps: 为了不和``burpsuite``的默认端口冲突, 我将``tomcat``服务的默认端口设置在了8081.
 
-![image-20211114141552533](/images/IDEA-Start-Servlet/image-20211114141552533.png)
+![image-20211114141552533](image-20211114141552533.png)
 
 如果有提示错误的化就点击fix去修复, 然后在``Development``下面修改context, 这样就可以通过``http://localhost:8081/MyServlet``访问到服务了.
 
-![image-20211114141601679](/images/IDEA-Start-Servlet/image-20211114141601679.png)
+![image-20211114141601679](image-20211114141601679.png)
 
 点击运行就可以启动``Tomcat``服务器了.
 
-![image-20211114141610853](/images/IDEA-Start-Servlet/image-20211114141610853.png)
+![image-20211114141610853](image-20211114141610853.png)
 

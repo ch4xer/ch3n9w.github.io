@@ -132,7 +132,7 @@ export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$CATALINA_HOME/bin
 
 然后用IDEA打开第二个文件夹中的java目录。添加配置
 
-![image-20211113142502055](/images/GhostCat/image-20211113142502055.png)
+![image-20211113142502055](image-20211113142502055.png)
 
 下断点，运行debug，然后运行exp脚本，开始调试
 
@@ -148,7 +148,7 @@ python2 CNVD-2020-10487-Tomcat-Ajp-lfi.py -p 8009 -f WEB-INF/web.xml 127.0.0.1
 
 这里使用wireshark来抓取exp发出的流量。
 
-![image-20211113143147373](/images/GhostCat/image-20211113143147373.png)
+![image-20211113143147373](image-20211113143147373.png)
 
 可以看到AJP协议请求中包含了结尾的三个键值对，并且请求的是/asdf路径，因此处理这个请求的是DefaultServlet。
 
@@ -156,39 +156,39 @@ python2 CNVD-2020-10487-Tomcat-Ajp-lfi.py -p 8009 -f WEB-INF/web.xml 127.0.0.1
 
 在prepareRequest函数里面的for循环中获取了几个特定的请求头信息，然后到这里
 
-![image-20211113145700194](/images/GhostCat/image-20211113145700194.png)
+![image-20211113145700194](image-20211113145700194.png)
 
 步进
 
-![image-20211113150356416](/images/GhostCat/image-20211113150356416.png)
+![image-20211113150356416](image-20211113150356416.png)
 
 这里mb还是Upgrade-Insecure-Requests，再步进
 
-![image-20211113150710953](/images/GhostCat/image-20211113150710953.png)
+![image-20211113150710953](image-20211113150710953.png)
 
 到这里mb的值没变，然后再往下
 
-![image-20211113150748292](/images/GhostCat/image-20211113150748292.png)
+![image-20211113150748292](image-20211113150748292.png)
 
 变成了攻击的配置项，看看setBytes函数里面做了什么
 
-![image-20211113151042858](/images/GhostCat/image-20211113151042858.png)
+![image-20211113151042858](image-20211113151042858.png)
 
 看看b的值
 
-![image-20211113152429398](/images/GhostCat/image-20211113152429398.png)
+![image-20211113152429398](image-20211113152429398.png)
 
 是请求体，然后off的值是255，len的值是33。setBytes函数中对几个变量进行了设置，这里start和end中间的那段字符串就是``javax.servlet.include.request_uri``。
 
-![image-20211113153716357](/images/GhostCat/image-20211113153716357.png)
+![image-20211113153716357](image-20211113153716357.png)
 
 然后返回，接下来同样的方法读取了值
 
-![image-20211113154708867](/images/GhostCat/image-20211113154708867.png)
+![image-20211113154708867](image-20211113154708867.png)
 
 设置
 
-![image-20211113154801961](/images/GhostCat/image-20211113154801961.png)
+![image-20211113154801961](image-20211113154801961.png)
 
 其他两个配置项都是同样的读取方式，这里不再赘述。到此位置prepareRequest()函数分析完成
 
@@ -196,49 +196,49 @@ python2 CNVD-2020-10487-Tomcat-Ajp-lfi.py -p 8009 -f WEB-INF/web.xml 127.0.0.1
 
 回到prepareRequest函数所在的位置，继续往下
 
-![image-20211113155216081](/images/GhostCat/image-20211113155216081.png)
+![image-20211113155216081](image-20211113155216081.png)
 
 将请求交给了service函数，步进，一直到这里
 
-![image-20211113155811748](/images/GhostCat/image-20211113155811748.png)
+![image-20211113155811748](image-20211113155811748.png)
 
 步进，继续调可以看到wrapper选择了DefaultServlet
 
-![image-20211113160344440](/images/GhostCat/image-20211113160344440.png)
+![image-20211113160344440](image-20211113160344440.png)
 
 继续，一直到DefaultServlet#doGet方法。
 
-![image-20211113160613367](/images/GhostCat/image-20211113160613367.png)
+![image-20211113160613367](image-20211113160613367.png)
 
 request携带着攻击配置项进入了serveResource中，步进，一直到getRelativePath函数，发现这里在尝试获取request请求中的``javax.servlet.include.request_uri``。
 
-![image-20211113161327282](/images/GhostCat/image-20211113161327282.png)
+![image-20211113161327282](image-20211113161327282.png)
 
-![image-20211113161255693](/images/GhostCat/image-20211113161255693.png)
+![image-20211113161255693](image-20211113161255693.png)
 
 进入if判断之后又紧接着获取了``javax.servlet.include.path_info`` 和 ``javax.servlet.include.servlet_path`` 两个属性，然后在下面进行了拼接返回
 
-![image-20211113162336349](/images/GhostCat/image-20211113162336349.png)
+![image-20211113162336349](image-20211113162336349.png)
 
 回到DefaultServlet#serveResource， 在这里获取文件资源
 
-![image-20211113162524740](/images/GhostCat/image-20211113162524740.png)
+![image-20211113162524740](image-20211113162524740.png)
 
 步进，发现会做一个path的验证
 
-![image-20211113162608850](/images/GhostCat/image-20211113162608850.png)
+![image-20211113162608850](image-20211113162608850.png)
 
 步进validate，发现这里进行了一个normalize操作
 
-![image-20211113162726068](/images/GhostCat/image-20211113162726068.png)
+![image-20211113162726068](image-20211113162726068.png)
 
 这两个while循环不允许path中出现``./``和``../``，会将其替换为空，也就是说文件读取漏洞是不能穿透到上层目录读取的。
 
-![image-20211113162826441](/images/GhostCat/image-20211113162826441.png)
+![image-20211113162826441](image-20211113162826441.png)
 
 返回到StandarRoot#getResource方法，步进到cache.getResource中
 
-![image-20211113163421942](/images/GhostCat/image-20211113163421942.png)
+![image-20211113163421942](image-20211113163421942.png)
 
 在这里，获取到了对应web路径下的文件内容并最终返回结果，至此文件读取漏洞分析完毕。
 
@@ -259,27 +259,27 @@ request携带着攻击配置项进入了serveResource中，步进，一直到get
 
 然后exp里面需要修改这部分
 
-![image-20211113165621018](/images/GhostCat/image-20211113165621018.png)
+![image-20211113165621018](image-20211113165621018.png)
 
 为
 
-![image-20211113165639432](/images/GhostCat/image-20211113165639432.png)
+![image-20211113165639432](image-20211113165639432.png)
 
 这样才可以让请求被JspServlet处理。这之后进入``org.apache.jasper.servlet.JspServlet``，直接在service方法中下断点。运行exp开始调试，跳过前面的prepareRequest环节后，来到这里
 
-![image-20211113171213281](/images/GhostCat/image-20211113171213281.png)
+![image-20211113171213281](image-20211113171213281.png)
 
 这里和之前一样也获取了``javax.servlet.include.path_info``等属性，然后进入serviceJspFile方法
 
-![image-20211113171440245](/images/GhostCat/image-20211113171440245.png)
+![image-20211113171440245](image-20211113171440245.png)
 
 生成了wrapper对象，然后调用了``wrapper.service``方法，继续调试，看到JspServletWrapper的service方法中调用了getServlet()
 
-![image-20211113171851877](/images/GhostCat/image-20211113171851877.png)
+![image-20211113171851877](image-20211113171851877.png)
 
 继续往下就可以看到这里了，代码执行成功。
 
-![image-20211113171934381](/images/GhostCat/image-20211113171934381.png)
+![image-20211113171934381](image-20211113171934381.png)
 
 ## 总结
 

@@ -12,7 +12,7 @@ categories: CTF
 
 ### Level 3
 
-![image-20211114141306312](/images/Google-Game/image-20211114141306312.png)
+![image-20211114141306312](image-20211114141306312.png)
 
 This website provides some API (after the arch pointer).
 
@@ -22,7 +22,7 @@ solution:
 
 ### level 4
 
-![image-20211114141313076](/images/Google-Game/image-20211114141313076.png)
+![image-20211114141313076](image-20211114141313076.png)
 
 
 
@@ -64,7 +64,7 @@ https://xss-game.appspot.com/level4/frame?timer=');alert('
 
 ### level 5
 
-![image-20211114141321457](/images/Google-Game/image-20211114141321457.png)
+![image-20211114141321457](image-20211114141321457.png)
 
 
 
@@ -99,7 +99,7 @@ and click the ``Next`` button.
 
 ### level 6
 
-![image-20211114141329514](/images/Google-Game/image-20211114141329514.png)
+![image-20211114141329514](image-20211114141329514.png)
 
 This website allow user to execute alternative js script
 

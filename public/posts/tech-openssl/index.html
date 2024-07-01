@@ -253,7 +253,7 @@ openssl x509 -in target.csr -out target.crt -req -signkey target.key -days 365 �
 </span></span></code></pre></div><p>生成完成后, 可以运行下面命令看看这个证书签名请求文件里都有什么</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>openssl req -text -in target.csr  -verify
 </span></span></code></pre></div><p>例如:</p>
-<p><img loading="lazy" src="/images/tech-openssl%E7%AC%94%E8%AE%B0/image-20221223112026855.png" alt="image-20221223112026855"  />
+<p><img loading="lazy" src="image-20221223112026855.png" alt="image-20221223112026855"  />
 </p>
 <p>可以看到公钥也在里面.</p>
 <p>接下来把证书签名请求文件提交给CA, CA审核通过后对该文件进行签名</p>
@@ -261,18 +261,18 @@ openssl x509 -in target.csr -out target.crt -req -signkey target.key -days 365 �
 </span></span></code></pre></div><p>target.crt就是签名成功后的证书. 对于常见的自签名场景来说, <code>ca.key</code>就是<code>target.key</code>, 用自己的密钥去签名自己的证书请求, 自签名请求命令就是</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>openssl x509 -in target.csr -out target.crt -req -signkey target.key -days <span style="color:#ae81ff">365</span>
 </span></span></code></pre></div><p>然后CA将target.crt以及由Root CA签名的CA证书一同返回给申请人. 如下图所示:</p>
-<p><img loading="lazy" src="/images/tech-openssl%E7%AC%94%E8%AE%B0/19QiVdLVN-6NCQPy7Zla1BA.jpeg" alt="img"  />
+<p><img loading="lazy" src="19QiVdLVN-6NCQPy7Zla1BA.jpeg" alt="img"  />
 </p>
 <p><strong>Root CA的证书就那么几个, 内置在操作系统里, 受到所有程序的信任</strong>, 因此申请人得到由Root CA签名的CA证书后, 就可以信任该CA组织, 进而可以信任该CA组织签发给自己的证书. 对于其他的客户端而言也是这样.</p>
 <h3 id="第二阶段-客户访问服务端">第二阶段 客户访问服务端<a hidden class="anchor" aria-hidden="true" href="#第二阶段-客户访问服务端">#</a></h3>
 <p>客户端发起请求, 服务端会把自己的证书和签自己证书的CA机构的证书一起发过去</p>
-<p><img loading="lazy" src="/images/tech-openssl%E7%AC%94%E8%AE%B0/1isEkaSnJOgq5P3xX-EcMLA.jpeg" alt="img"  />
+<p><img loading="lazy" src="1isEkaSnJOgq5P3xX-EcMLA.jpeg" alt="img"  />
 </p>
 <p>如图, 由于Root CA是可信任的, 因此该CA机构是可信任的, 因此该CA机构签发的服务端证书也是可信任的, 这叫 <strong>信任链</strong>.</p>
 <p>信任建立之后, 客户端生成一个对称密钥, 用服务端证书里的公钥加密之后发送给服务端, 最后双方都用这个对称密钥来加密数据进行信息交换 (实际上, 对称密钥的生成是服务端和客户端通过彼此协商过程中的各种消息各自使用相同的算法生成的, 并不会直接在网络上传输, 只不过这些消息中有一部分是公钥加密后传输的, 因此也类似于将对称密钥进行公钥加密了)</p>
-<p><img loading="lazy" src="/images/tech-openssl%E7%AC%94%E8%AE%B0/1FpRsMB6RZunjZfc265VqdQ.jpeg" alt="img"  />
+<p><img loading="lazy" src="1FpRsMB6RZunjZfc265VqdQ.jpeg" alt="img"  />
 </p>
-<p><img loading="lazy" src="/images/tech-openssl%E7%AC%94%E8%AE%B0/1TvwyToeoayeRXjqKM_KhUQ.jpeg" alt="img"  />
+<p><img loading="lazy" src="1TvwyToeoayeRXjqKM_KhUQ.jpeg" alt="img"  />
 </p>
 <h2 id="信息提取">信息提取<a hidden class="anchor" aria-hidden="true" href="#信息提取">#</a></h2>
 <p>生成一个包含密钥和公钥的文件,既可以用来加密也可以用来解密.</p>

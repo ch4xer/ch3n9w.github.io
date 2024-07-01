@@ -183,15 +183,6 @@ Web-Inf文件夹中除了有classes文件夹和一个web.xml文件外、还有li
 jsp 1.2 以下版本的文件存放位置。改目录没有特定的声明，同样，可以根据自己的喜好与习惯来命名。此目录主要存放的是 jsp 1.2 以下版本的文件，为区分 jsp 2.0 文件，通常使用 jsp 命名，当然你也可以命名为 jspOldEdition 。</description>
     </item>
     <item>
-      <title>Django学习笔记</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-django%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
-      <pubDate>Tue, 28 Jan 2020 18:48:34 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-django%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;Django学习的个人笔记&lt;/p&gt;
-&lt;/blockquote&gt;</description>
-    </item>
-    <item>
       <title>证书相关</title>
       <link>https://ch3n9w.cpolar.cn/posts/tech-openssl/</link>
       <pubDate>Sun, 01 Sep 2019 15:23:10 +0000</pubDate>

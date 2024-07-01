@@ -294,7 +294,7 @@ php_serialize: 序列化字符串
 </span></span><span style="display:flex;"><span>$c<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">a</span>();
 </span></span><span style="display:flex;"><span><span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">
 </span></span></span></code></pre></div><p>nc 接受:</p>
-<p><img loading="lazy" src="/images/php%e7%9a%84%e4%b8%a4%e7%b1%bb%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96/image-20211114141858477.png" alt="image-20211114141858477"  />
+<p><img loading="lazy" src="image-20211114141858477.png" alt="image-20211114141858477"  />
 </p>
 <p>那么可以这样子:</p>
 <ul>
@@ -302,11 +302,11 @@ php_serialize: 序列化字符串
 <li>session存取完成之后就要想办法去反序列化和触发未知方法,这里使用变量覆盖(<strong>extract</strong>)将b覆盖为call_user_func,因为b有机会接受session反序列化的字符串,并将数组传入b中,调用welcome_to_the_lctf2018方法,从而触发call函数,造成ssrf</li>
 <li>最后<strong>ssrf的结果也会存放在sessoin中</strong>,所以获取SoapClient的PHPSSID并去访问index.php(里面有var_dump(session))得到flag</li>
 </ul>
-<p><img loading="lazy" src="/images/php%e7%9a%84%e4%b8%a4%e7%b1%bb%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96/image-20211114141906159.png" alt="image-20211114141906159"  />
+<p><img loading="lazy" src="image-20211114141906159.png" alt="image-20211114141906159"  />
 </p>
-<p><img loading="lazy" src="/images/php%e7%9a%84%e4%b8%a4%e7%b1%bb%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96/image-20211114141914122.png" alt="image-20211114141914122"  />
+<p><img loading="lazy" src="image-20211114141914122.png" alt="image-20211114141914122"  />
 </p>
-<p><img loading="lazy" src="/images/php%e7%9a%84%e4%b8%a4%e7%b1%bb%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96/image-20211114141921940.png" alt="image-20211114141921940"  />
+<p><img loading="lazy" src="image-20211114141921940.png" alt="image-20211114141921940"  />
 </p>
 <h2 id="swpuctf-2019-web6">SWPUCTF 2019 web6<a hidden class="anchor" aria-hidden="true" href="#swpuctf-2019-web6">#</a></h2>
 <p>前面部分省略, 来到源码部分</p>
@@ -414,9 +414,9 @@ php_serialize: 序列化字符串
 </span></span></code></pre></div><blockquote>
 <p>PHPSESSID随便指定写一个比如kk默认情况下会生成sess_kk session文件</p>
 </blockquote>
-<p><img loading="lazy" src="/images/php%e7%9a%84%e4%b8%a4%e7%b1%bb%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96/image-20211114141933229.png" alt="image-20211114141933229"  />
+<p><img loading="lazy" src="image-20211114141933229.png" alt="image-20211114141933229"  />
 </p>
-<p><img loading="lazy" src="/images/php%e7%9a%84%e4%b8%a4%e7%b1%bb%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96/image-20211114141940499.png" alt="image-20211114141940499"  />
+<p><img loading="lazy" src="image-20211114141940499.png" alt="image-20211114141940499"  />
 </p>
 <p>参考</p>
 <p><a href="https://www.smi1e.top/lctf2018-bestphps-revenge-%E8%AF%A6%E7%BB%86%E9%A2%98%E8%A7%A3/">https://www.smi1e.top/lctf2018-bestphps-revenge-%E8%AF%A6%E7%BB%86%E9%A2%98%E8%A7%A3/</a></p>

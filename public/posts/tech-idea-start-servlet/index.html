@@ -225,13 +225,13 @@ jsp 1.2 以下版本的文件存放位置。改目录没有特定的声明，同
 <!-- raw HTML omitted -->
 <pre tabindex="0"><code>File --&gt; New --&gt; Project --&gt; Java --&gt; Nextnext 新建一个项目
 </code></pre><pre tabindex="0"><code>右键Project --&gt; open module setting --&gt; 点击+号 --&gt; 导入tomcat8的Servlet-api.jar 
-</code></pre><p><img loading="lazy" src="/images/IDEA-Start-Servlet/image-20211114141517710.png" alt="image-20211114141517710"  />
+</code></pre><p><img loading="lazy" src="image-20211114141517710.png" alt="image-20211114141517710"  />
 </p>
 <pre tabindex="0"><code>右键项目 --&gt; Add Frameworks Support --&gt; 选中web application
-</code></pre><p><img loading="lazy" src="/images/IDEA-Start-Servlet/image-20211114141525898.png" alt="image-20211114141525898"  />
+</code></pre><p><img loading="lazy" src="image-20211114141525898.png" alt="image-20211114141525898"  />
 </p>
 <p>选中后会多出来几个东西, 如下图, 多了<code>WEB-INF</code>目录和<code>index.jsp</code></p>
-<p><img loading="lazy" src="/images/IDEA-Start-Servlet/image-20211114141531496.png" alt="image-20211114141531496"  />
+<p><img loading="lazy" src="image-20211114141531496.png" alt="image-20211114141531496"  />
 </p>
 <p><code>Web-INF</code>里面有只有一个<code>web.xml</code>, 什么是<code>WEB-INF</code>? 根据百度百科的介绍</p>
 <blockquote>
@@ -253,7 +253,7 @@ jsp 1.2 以下版本的文件存放位置。改目录没有特定的声明，同
 　　manifest.mf文件，在用jar打包时自动生成。</p>
 </blockquote>
 <p>最重要的是<code>classes</code>文件夹和<code>lib</code>文件夹, 所以新建两个文件夹, 一个是<code>classes</code>,  另一个是<code>lib</code>, 配置项目结构让编译出来的class文件输出到<code>classes</code>中去</p>
-<p><img loading="lazy" src="/images/IDEA-Start-Servlet/image-20211114141542947.png" alt="image-20211114141542947"  />
+<p><img loading="lazy" src="image-20211114141542947.png" alt="image-20211114141542947"  />
 </p>
 <p>然后在<code>src</code>目录下面编写<code>TestServlet.java</code>文件</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> javax.servlet.ServletException;
@@ -271,13 +271,13 @@ jsp 1.2 以下版本的文件存放位置。改目录没有特定的声明，同
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>然后添加运行配置, 在<code>Manjaro linux</code>里面<code>tomcat</code>的目录是<code>/usr/share/tomcat8/</code>, ps: 为了不和<code>burpsuite</code>的默认端口冲突, 我将<code>tomcat</code>服务的默认端口设置在了8081.</p>
-<p><img loading="lazy" src="/images/IDEA-Start-Servlet/image-20211114141552533.png" alt="image-20211114141552533"  />
+<p><img loading="lazy" src="image-20211114141552533.png" alt="image-20211114141552533"  />
 </p>
 <p>如果有提示错误的化就点击fix去修复, 然后在<code>Development</code>下面修改context, 这样就可以通过<code>http://localhost:8081/MyServlet</code>访问到服务了.</p>
-<p><img loading="lazy" src="/images/IDEA-Start-Servlet/image-20211114141601679.png" alt="image-20211114141601679"  />
+<p><img loading="lazy" src="image-20211114141601679.png" alt="image-20211114141601679"  />
 </p>
 <p>点击运行就可以启动<code>Tomcat</code>服务器了.</p>
-<p><img loading="lazy" src="/images/IDEA-Start-Servlet/image-20211114141610853.png" alt="image-20211114141610853"  />
+<p><img loading="lazy" src="image-20211114141610853.png" alt="image-20211114141610853"  />
 </p>
 
 

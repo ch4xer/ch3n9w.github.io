@@ -38,15 +38,15 @@ sudo chmod -R 755 /etc/tomcat8
 
 使用idea打开`shiro/samples/web`项目, 等待maven项目依赖下载完成, 编辑配置
 
-![image-20220122154253032](/images/shiro-attack/image-20220122154253032.png)
+![image-20220122154253032](image-20220122154253032.png)
 
 进入Deployment, 添加artifact
 
-![image-20220122154335606](/images/shiro-attack/image-20220122154335606.png)
+![image-20220122154335606](image-20220122154335606.png)
 
 启动项目, 看到下面的页面就说明环境搭建完成了
 
-![image-20220122154432029](/images/shiro-attack/image-20220122154432029.png)
+![image-20220122154432029](image-20220122154432029.png)
 
 ## 漏洞调试
 
@@ -54,39 +54,39 @@ sudo chmod -R 755 /etc/tomcat8
 
 首先看登陆过程, 在`org.apache.shiro.mgt.AbstractRememberMeManager#onSuccessfulLogin`打下断点, 随后在浏览器中选中Remember Me选项进行登陆, 程序进入断点:
 
-![image-20220122163548996](/images/shiro-attack/image-20220122163548996.png)
+![image-20220122163548996](image-20220122163548996.png)
 
 在`forgetIdentity`函数中, 会尝试获取request 和 response, 并移除之前的身份信息.
 
-![image-20220122164355343](/images/shiro-attack/image-20220122164355343.png)
+![image-20220122164355343](image-20220122164355343.png)
 
 回到之前的函数, 进入第一个if分支, 进入`rememberIdentity`函数, `this.getIdentityToRemember`函数获取到身份信息, 然后调用`rememberIdentity`函数.
 
-![image-20220122164841524](/images/shiro-attack/image-20220122164841524.png)
+![image-20220122164841524](image-20220122164841524.png)
 
 `rememberIdentity`函数中, 首先将`accountPrincipals`转换成bytes
 
-![image-20220122165211999](/images/shiro-attack/image-20220122165211999.png)
+![image-20220122165211999](image-20220122165211999.png)
 
 转换的逻辑为先进行序列化然后再进行加密, 如下
 
-![image-20220122165440695](/images/shiro-attack/image-20220122165440695.png)
+![image-20220122165440695](image-20220122165440695.png)
 
 加密的方式为AES加密
 
-![image-20220122170022825](/images/shiro-attack/image-20220122170022825.png)
+![image-20220122170022825](image-20220122170022825.png)
 
 跟进密钥获取的函数
 
-![image-20220122170008256](/images/shiro-attack/image-20220122170008256.png)
+![image-20220122170008256](image-20220122170008256.png)
 
 从最后一行可以看到,在对象初始化的时候, 自动设置密钥为默认密钥
 
-![image-20220122165857201](/images/shiro-attack/image-20220122165857201.png)
+![image-20220122165857201](image-20220122165857201.png)
 
 返回到`rememberIdentity`函数, 跟进`rememberSerializedIdentity`, 这里主要是将加密结果经过base64之后存储进cookie中
 
-![image-20220122172439145](/images/shiro-attack/image-20220122172439145.png)
+![image-20220122172439145](image-20220122172439145.png)
 
 ### rememberMe解密过程
 
@@ -122,25 +122,25 @@ except:
     traceback.print_exc()
 ```
 
-##### ![image-20220122175423163](/images/shiro-attack/image-20220122175423163.png)
+##### ![image-20220122175423163](image-20220122175423163.png)
 
 跟进函数, 发现`getRememberMeManager`会返回cookie的信息, 加密服务和加密解密用的密钥. 
 
-![image-20220122175833707](/images/shiro-attack/image-20220122175833707.png)
+![image-20220122175833707](image-20220122175833707.png)
 
 接下来, 跟进`getRememberedPrincipals`函数, 首先会尝试获取rememberMe中的序列化对象, 然后
 
-![image-20220122180215754](/images/shiro-attack/image-20220122180215754.png)
+![image-20220122180215754](image-20220122180215754.png)
 
 看看`getRememberedSerializedIdentity`的内容, 主要环节就是获取cookie并进行bas64解密, 并将解密结果返回回去.
 
-![image-20220122191255902](/images/shiro-attack/image-20220122191255902.png)
+![image-20220122191255902](image-20220122191255902.png)
 
 接下来进入 `convertBytesToPrincipals`函数, 可以看到这里进行了解密操作, 并且进行了反序列化操作. 解密操作和之前的加密操作类似, 
 
-![image-20220122192211652](/images/shiro-attack/image-20220122192211652.png)
+![image-20220122192211652](image-20220122192211652.png)
 
-![image-20220122193026077](/images/shiro-attack/image-20220122193026077.png)
+![image-20220122193026077](image-20220122193026077.png)
 
 至此 , 反序列化漏洞触发. 总体来说这个漏洞跟起来并不复杂. 
 
