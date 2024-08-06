@@ -14,16 +14,16 @@ limitation of ebpf program eBPF 程序必须被验证器校验通过后才能执
 Tracepoint是在内核中固定的hook点, 并不是在所有的函数中都有tracepoint. 这时候, 我们就需要用到kprobe了. kprobe可以动态地在所有的内核函数(除了inline函数)上挂载probe函数
 eBPF virtual machine The ebpf virtual machine uses 10 general-purpose registers (0-9), and additional register 10 which was used as a stack frame pointer (can only be read but not written).">
 <meta name="author" content="ch3n9w">
-<link rel="canonical" href="https://ch3n9w.cpolar.cn/posts/tech-learning-ebpf/">
+<link rel="canonical" href="https://ch3n9w.github.io/posts/tech-learning-ebpf/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://ch3n9w.cpolar.cn/flash.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://ch3n9w.cpolar.cn/flash.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="https://ch3n9w.cpolar.cn/flash.ico">
-<link rel="apple-touch-icon" href="https://ch3n9w.cpolar.cn/flash.ico">
-<link rel="mask-icon" href="https://ch3n9w.cpolar.cn/flash.ico">
+<link rel="icon" href="https://ch3n9w.github.io/flash.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://ch3n9w.github.io/flash.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="https://ch3n9w.github.io/flash.ico">
+<link rel="apple-touch-icon" href="https://ch3n9w.github.io/flash.ico">
+<link rel="mask-icon" href="https://ch3n9w.github.io/flash.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://ch3n9w.cpolar.cn/posts/tech-learning-ebpf/">
+<link rel="alternate" hreflang="en" href="https://ch3n9w.github.io/posts/tech-learning-ebpf/">
 <noscript>
     <style>
         #theme-toggle,
@@ -71,7 +71,7 @@ limitation of ebpf program eBPF 程序必须被验证器校验通过后才能执
 Tracepoint是在内核中固定的hook点, 并不是在所有的函数中都有tracepoint. 这时候, 我们就需要用到kprobe了. kprobe可以动态地在所有的内核函数(除了inline函数)上挂载probe函数
 eBPF virtual machine The ebpf virtual machine uses 10 general-purpose registers (0-9), and additional register 10 which was used as a stack frame pointer (can only be read but not written)." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ch3n9w.cpolar.cn/posts/tech-learning-ebpf/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://ch3n9w.github.io/posts/tech-learning-ebpf/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-02-04T00:06:15+00:00" />
 <meta property="article:modified_time" content="2024-02-04T00:06:15+00:00" />
 
@@ -94,13 +94,13 @@ eBPF virtual machine The ebpf virtual machine uses 10 general-purpose registers 
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://ch3n9w.cpolar.cn/posts/"
+      "item": "https://ch3n9w.github.io/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Learning eBPF",
-      "item": "https://ch3n9w.cpolar.cn/posts/tech-learning-ebpf/"
+      "item": "https://ch3n9w.github.io/posts/tech-learning-ebpf/"
     }
   ]
 }
@@ -126,14 +126,14 @@ eBPF virtual machine The ebpf virtual machine uses 10 general-purpose registers 
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ch3n9w.cpolar.cn/posts/tech-learning-ebpf/"
+    "@id": "https://ch3n9w.github.io/posts/tech-learning-ebpf/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "ch3n9w の 超元域",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://ch3n9w.cpolar.cn/flash.ico"
+      "url": "https://ch3n9w.github.io/flash.ico"
     }
   }
 }
@@ -155,8 +155,8 @@ eBPF virtual machine The ebpf virtual machine uses 10 general-purpose registers 
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://ch3n9w.cpolar.cn/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
-                <img src="https://ch3n9w.cpolar.cn/sabito.jpg" alt="" aria-label="logo"
+            <a href="https://ch3n9w.github.io/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
+                <img src="https://ch3n9w.github.io/sabito.jpg" alt="" aria-label="logo"
                     height="35">ch3n9w の 超元域</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -183,7 +183,7 @@ eBPF virtual machine The ebpf virtual machine uses 10 general-purpose registers 
         </div>
         <ul id="menu">
             <li>
-                <a href="https://ch3n9w.cpolar.cn/categories/" title="categories">
+                <a href="https://ch3n9w.github.io/categories/" title="categories">
                     <span>categories</span>
                 </a>
             </li>
@@ -194,7 +194,7 @@ eBPF virtual machine The ebpf virtual machine uses 10 general-purpose registers 
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://ch3n9w.cpolar.cn/">Home</a>&nbsp;»&nbsp;<a href="https://ch3n9w.cpolar.cn/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="https://ch3n9w.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://ch3n9w.github.io/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       Learning eBPF
     </h1>
@@ -592,12 +592,12 @@ find-map: find-map.c
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="https://ch3n9w.cpolar.cn/posts/gossip-2023-summary/">
+  <a class="prev" href="https://ch3n9w.github.io/posts/gossip-2023-summary/">
     <span class="title">« Prev</span>
     <br>
     <span>2023年度总结</span>
   </a>
-  <a class="next" href="https://ch3n9w.cpolar.cn/posts/gossip-rip-clash/">
+  <a class="next" href="https://ch3n9w.github.io/posts/gossip-rip-clash/">
     <span class="title">Next »</span>
     <br>
     <span>RIP Clash</span>
@@ -609,7 +609,7 @@ find-map: find-map.c
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="https://ch3n9w.cpolar.cn/">ch3n9w の 超元域</a></span> · 
+        <span>&copy; 2024 <a href="https://ch3n9w.github.io/">ch3n9w の 超元域</a></span> · 
 
     <span>
         Powered by
