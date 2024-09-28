@@ -1,6 +1,7 @@
 baseURL: "https://ch3n9w.github.io/"
 languageCode: en-us
-paginate: 20
+pagination:
+  pagerSize: 20
 title: ch3n9w の 超元域
 theme: ["PaperMod"]
 params:

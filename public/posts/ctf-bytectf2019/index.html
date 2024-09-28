@@ -7,8 +7,42 @@
 <meta name="robots" content="index, follow">
 <title>bytectf2019 | ch3n9w の 超元域</title>
 <meta name="keywords" content="">
-<meta name="description" content="boring code source code
-&lt;?php function is_valid_url($url) { if (filter_var($url, FILTER_VALIDATE_URL)) { if (preg_match(&#39;/data:\/\//i&#39;, $url)) { return false; } return true; } return false; } if (isset($_POST[&#39;url&#39;])){ $url = $_POST[&#39;url&#39;]; if (is_valid_url($url)) { $r = parse_url($url); if (preg_match(&#39;/baidu\.com$/&#39;, $r[&#39;host&#39;])) { $code = file_get_contents($url); if (&#39;;&#39; === preg_replace(&#39;/[a-z]&#43;\((?R)?\)/&#39;, NULL, $code)) { if (preg_match(&#39;/et|na|nt|strlen|info|path|rand|dec|bin|hex|oct|pi|exp|log/i&#39;, $code)) { echo &#39;bye~&#39;; } else { eval($code); } } } else { echo &#34;error: host not allowed&#34;; } } else { echo &#34;error: invalid url&#34;; } }else{ highlight_file(__FILE__); } 思路: 注册一个xxxxbaidu.">
+<meta name="description" content="boring code
+source code
+&lt;?php
+function is_valid_url($url) {
+    if (filter_var($url, FILTER_VALIDATE_URL)) {
+        if (preg_match(&#39;/data:\/\//i&#39;, $url)) {
+            return false;
+        }
+        return true;
+    }
+    return false;
+}
+
+if (isset($_POST[&#39;url&#39;])){
+    $url = $_POST[&#39;url&#39;];
+    if (is_valid_url($url)) {
+        $r = parse_url($url);
+        if (preg_match(&#39;/baidu\.com$/&#39;, $r[&#39;host&#39;])) {
+            $code = file_get_contents($url);
+            if (&#39;;&#39; === preg_replace(&#39;/[a-z]&#43;\((?R)?\)/&#39;, NULL, $code)) {
+                if (preg_match(&#39;/et|na|nt|strlen|info|path|rand|dec|bin|hex|oct|pi|exp|log/i&#39;, $code)) {
+                    echo &#39;bye~&#39;;
+                } else {
+                    eval($code);
+                }
+            }
+        } else {
+            echo &#34;error: host not allowed&#34;;
+        }
+    } else {
+        echo &#34;error: invalid url&#34;;
+    }
+}else{
+    highlight_file(__FILE__);
+}
+思路: 注册一个xxxxbaidu.com 形式的域名.绑定到服务器上后放上自己的代码,payload">
 <meta name="author" content="ch3n9w">
 <link rel="canonical" href="https://ch3n9w.github.io/posts/ctf-bytectf2019/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
@@ -56,12 +90,43 @@
         }
 
     </style>
-</noscript>
-  
+</noscript><meta property="og:title" content="bytectf2019" />
+<meta property="og:description" content="boring code
+source code
+&lt;?php
+function is_valid_url($url) {
+    if (filter_var($url, FILTER_VALIDATE_URL)) {
+        if (preg_match(&#39;/data:\/\//i&#39;, $url)) {
+            return false;
+        }
+        return true;
+    }
+    return false;
+}
 
-<meta property="og:title" content="bytectf2019" />
-<meta property="og:description" content="boring code source code
-&lt;?php function is_valid_url($url) { if (filter_var($url, FILTER_VALIDATE_URL)) { if (preg_match(&#39;/data:\/\//i&#39;, $url)) { return false; } return true; } return false; } if (isset($_POST[&#39;url&#39;])){ $url = $_POST[&#39;url&#39;]; if (is_valid_url($url)) { $r = parse_url($url); if (preg_match(&#39;/baidu\.com$/&#39;, $r[&#39;host&#39;])) { $code = file_get_contents($url); if (&#39;;&#39; === preg_replace(&#39;/[a-z]&#43;\((?R)?\)/&#39;, NULL, $code)) { if (preg_match(&#39;/et|na|nt|strlen|info|path|rand|dec|bin|hex|oct|pi|exp|log/i&#39;, $code)) { echo &#39;bye~&#39;; } else { eval($code); } } } else { echo &#34;error: host not allowed&#34;; } } else { echo &#34;error: invalid url&#34;; } }else{ highlight_file(__FILE__); } 思路: 注册一个xxxxbaidu." />
+if (isset($_POST[&#39;url&#39;])){
+    $url = $_POST[&#39;url&#39;];
+    if (is_valid_url($url)) {
+        $r = parse_url($url);
+        if (preg_match(&#39;/baidu\.com$/&#39;, $r[&#39;host&#39;])) {
+            $code = file_get_contents($url);
+            if (&#39;;&#39; === preg_replace(&#39;/[a-z]&#43;\((?R)?\)/&#39;, NULL, $code)) {
+                if (preg_match(&#39;/et|na|nt|strlen|info|path|rand|dec|bin|hex|oct|pi|exp|log/i&#39;, $code)) {
+                    echo &#39;bye~&#39;;
+                } else {
+                    eval($code);
+                }
+            }
+        } else {
+            echo &#34;error: host not allowed&#34;;
+        }
+    } else {
+        echo &#34;error: invalid url&#34;;
+    }
+}else{
+    highlight_file(__FILE__);
+}
+思路: 注册一个xxxxbaidu.com 形式的域名.绑定到服务器上后放上自己的代码,payload" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ch3n9w.github.io/posts/ctf-bytectf2019/" />
 <meta property="og:image" content="https://ch3n9w.github.io/image-20211114141103041.png" /><meta property="article:section" content="posts" />
@@ -71,8 +136,42 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://ch3n9w.github.io/image-20211114141103041.png" />
 <meta name="twitter:title" content="bytectf2019"/>
-<meta name="twitter:description" content="boring code source code
-&lt;?php function is_valid_url($url) { if (filter_var($url, FILTER_VALIDATE_URL)) { if (preg_match(&#39;/data:\/\//i&#39;, $url)) { return false; } return true; } return false; } if (isset($_POST[&#39;url&#39;])){ $url = $_POST[&#39;url&#39;]; if (is_valid_url($url)) { $r = parse_url($url); if (preg_match(&#39;/baidu\.com$/&#39;, $r[&#39;host&#39;])) { $code = file_get_contents($url); if (&#39;;&#39; === preg_replace(&#39;/[a-z]&#43;\((?R)?\)/&#39;, NULL, $code)) { if (preg_match(&#39;/et|na|nt|strlen|info|path|rand|dec|bin|hex|oct|pi|exp|log/i&#39;, $code)) { echo &#39;bye~&#39;; } else { eval($code); } } } else { echo &#34;error: host not allowed&#34;; } } else { echo &#34;error: invalid url&#34;; } }else{ highlight_file(__FILE__); } 思路: 注册一个xxxxbaidu."/>
+<meta name="twitter:description" content="boring code
+source code
+&lt;?php
+function is_valid_url($url) {
+    if (filter_var($url, FILTER_VALIDATE_URL)) {
+        if (preg_match(&#39;/data:\/\//i&#39;, $url)) {
+            return false;
+        }
+        return true;
+    }
+    return false;
+}
+
+if (isset($_POST[&#39;url&#39;])){
+    $url = $_POST[&#39;url&#39;];
+    if (is_valid_url($url)) {
+        $r = parse_url($url);
+        if (preg_match(&#39;/baidu\.com$/&#39;, $r[&#39;host&#39;])) {
+            $code = file_get_contents($url);
+            if (&#39;;&#39; === preg_replace(&#39;/[a-z]&#43;\((?R)?\)/&#39;, NULL, $code)) {
+                if (preg_match(&#39;/et|na|nt|strlen|info|path|rand|dec|bin|hex|oct|pi|exp|log/i&#39;, $code)) {
+                    echo &#39;bye~&#39;;
+                } else {
+                    eval($code);
+                }
+            }
+        } else {
+            echo &#34;error: host not allowed&#34;;
+        }
+    } else {
+        echo &#34;error: invalid url&#34;;
+    }
+}else{
+    highlight_file(__FILE__);
+}
+思路: 注册一个xxxxbaidu.com 形式的域名.绑定到服务器上后放上自己的代码,payload"/>
 
 
 <script type="application/ld+json">
@@ -101,7 +200,7 @@
   "@type": "BlogPosting",
   "headline": "bytectf2019",
   "name": "bytectf2019",
-  "description": "boring code source code\n\u0026lt;?php function is_valid_url($url) { if (filter_var($url, FILTER_VALIDATE_URL)) { if (preg_match(\u0026#39;/data:\\/\\//i\u0026#39;, $url)) { return false; } return true; } return false; } if (isset($_POST[\u0026#39;url\u0026#39;])){ $url = $_POST[\u0026#39;url\u0026#39;]; if (is_valid_url($url)) { $r = parse_url($url); if (preg_match(\u0026#39;/baidu\\.com$/\u0026#39;, $r[\u0026#39;host\u0026#39;])) { $code = file_get_contents($url); if (\u0026#39;;\u0026#39; === preg_replace(\u0026#39;/[a-z]+\\((?R)?\\)/\u0026#39;, NULL, $code)) { if (preg_match(\u0026#39;/et|na|nt|strlen|info|path|rand|dec|bin|hex|oct|pi|exp|log/i\u0026#39;, $code)) { echo \u0026#39;bye~\u0026#39;; } else { eval($code); } } } else { echo \u0026#34;error: host not allowed\u0026#34;; } } else { echo \u0026#34;error: invalid url\u0026#34;; } }else{ highlight_file(__FILE__); } 思路: 注册一个xxxxbaidu.",
+  "description": "boring code source code\n\u0026lt;?php function is_valid_url($url) { if (filter_var($url, FILTER_VALIDATE_URL)) { if (preg_match(\u0026#39;/data:\\/\\//i\u0026#39;, $url)) { return false; } return true; } return false; } if (isset($_POST[\u0026#39;url\u0026#39;])){ $url = $_POST[\u0026#39;url\u0026#39;]; if (is_valid_url($url)) { $r = parse_url($url); if (preg_match(\u0026#39;/baidu\\.com$/\u0026#39;, $r[\u0026#39;host\u0026#39;])) { $code = file_get_contents($url); if (\u0026#39;;\u0026#39; === preg_replace(\u0026#39;/[a-z]+\\((?R)?\\)/\u0026#39;, NULL, $code)) { if (preg_match(\u0026#39;/et|na|nt|strlen|info|path|rand|dec|bin|hex|oct|pi|exp|log/i\u0026#39;, $code)) { echo \u0026#39;bye~\u0026#39;; } else { eval($code); } } } else { echo \u0026#34;error: host not allowed\u0026#34;; } } else { echo \u0026#34;error: invalid url\u0026#34;; } }else{ highlight_file(__FILE__); } 思路: 注册一个xxxxbaidu.com 形式的域名.绑定到服务器上后放上自己的代码,payload\n",
   "keywords": [
     
   ],

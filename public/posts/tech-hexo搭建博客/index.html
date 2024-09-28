@@ -7,15 +7,48 @@
 <meta name="robots" content="index, follow">
 <title>使用hexo和github搭建网站 | ch3n9w の 超元域</title>
 <meta name="keywords" content="">
-<meta name="description" content="基础修改 修改 _config.yml，写上网站的标题
-title: subtitle: description: 选择主题
-theme: next hexo 插件 字数统计和阅读时长统计 https://github.com/theme-next/hexo-symbols-count-time
+<meta name="description" content="基础修改
+修改 _config.yml，写上网站的标题
+title:
+subtitle:
+description:
+选择主题
+theme: next
+hexo 插件
+字数统计和阅读时长统计
+https://github.com/theme-next/hexo-symbols-count-time
 在 _config.yml 中添加
-symbols_count_time: symbols: true time: true total_symbols: true total_time: true exclude_codeblock: false awl: 4 wpm: 275 suffix: &#34;mins.&#34; 在Next主题中的 _config.yml中添加
-symbols_count_time: separated_meta: true item_text_post: true item_text_total: true git 部署 在你的github账户上创建仓库yourusername.github.io，必须是用户名开头命名，否则github page不会生效。
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: true
+  exclude_codeblock: false
+  awl: 4
+  wpm: 275
+  suffix: &#34;mins.&#34;
+在Next主题中的 _config.yml中添加
+symbols_count_time:
+  separated_meta: true
+  item_text_post: true
+  item_text_total: true
+git 部署
+在你的github账户上创建仓库yourusername.github.io，必须是用户名开头命名，否则github page不会生效。
 首先生成个人公私钥
-cd ssh-keygen -t rsa -C &#34;your_email@example.com&#34; 然后将公钥粘贴进github账户的个人设置里面 ssh -T git@github.com git config --global user.name &#34;username&#34; git config --global user.email &#34;email&#34; 在博客目录下下载：
-npm install hexo-deployer-git --save 修改网站根目录下的_config.">
+cd
+ssh-keygen -t rsa -C &#34;your_email@example.com&#34;
+然后将公钥粘贴进github账户的个人设置里面
+ssh -T git@github.com
+git config --global user.name &#34;username&#34;
+git config --global user.email &#34;email&#34;
+在博客目录下下载：
+npm install hexo-deployer-git --save
+修改网站根目录下的_config.yml文件
+deploy:
+  - type: git#注意git的前面要加空格否则不生效
+  	repo: https://github.com/example/example.github.io.git
+  	branch: master
+保存退出后执行命令：">
 <meta name="author" content="ch3n9w">
 <link rel="canonical" href="https://ch3n9w.github.io/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
@@ -63,19 +96,49 @@ npm install hexo-deployer-git --save 修改网站根目录下的_config.">
         }
 
     </style>
-</noscript>
-  
-
-<meta property="og:title" content="使用hexo和github搭建网站" />
-<meta property="og:description" content="基础修改 修改 _config.yml，写上网站的标题
-title: subtitle: description: 选择主题
-theme: next hexo 插件 字数统计和阅读时长统计 https://github.com/theme-next/hexo-symbols-count-time
+</noscript><meta property="og:title" content="使用hexo和github搭建网站" />
+<meta property="og:description" content="基础修改
+修改 _config.yml，写上网站的标题
+title:
+subtitle:
+description:
+选择主题
+theme: next
+hexo 插件
+字数统计和阅读时长统计
+https://github.com/theme-next/hexo-symbols-count-time
 在 _config.yml 中添加
-symbols_count_time: symbols: true time: true total_symbols: true total_time: true exclude_codeblock: false awl: 4 wpm: 275 suffix: &#34;mins.&#34; 在Next主题中的 _config.yml中添加
-symbols_count_time: separated_meta: true item_text_post: true item_text_total: true git 部署 在你的github账户上创建仓库yourusername.github.io，必须是用户名开头命名，否则github page不会生效。
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: true
+  exclude_codeblock: false
+  awl: 4
+  wpm: 275
+  suffix: &#34;mins.&#34;
+在Next主题中的 _config.yml中添加
+symbols_count_time:
+  separated_meta: true
+  item_text_post: true
+  item_text_total: true
+git 部署
+在你的github账户上创建仓库yourusername.github.io，必须是用户名开头命名，否则github page不会生效。
 首先生成个人公私钥
-cd ssh-keygen -t rsa -C &#34;your_email@example.com&#34; 然后将公钥粘贴进github账户的个人设置里面 ssh -T git@github.com git config --global user.name &#34;username&#34; git config --global user.email &#34;email&#34; 在博客目录下下载：
-npm install hexo-deployer-git --save 修改网站根目录下的_config." />
+cd
+ssh-keygen -t rsa -C &#34;your_email@example.com&#34;
+然后将公钥粘贴进github账户的个人设置里面
+ssh -T git@github.com
+git config --global user.name &#34;username&#34;
+git config --global user.email &#34;email&#34;
+在博客目录下下载：
+npm install hexo-deployer-git --save
+修改网站根目录下的_config.yml文件
+deploy:
+  - type: git#注意git的前面要加空格否则不生效
+  	repo: https://github.com/example/example.github.io.git
+  	branch: master
+保存退出后执行命令：" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ch3n9w.github.io/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" />
 <meta property="og:image" content="https://ch3n9w.github.io/63487983-da41b080-c4df-11e9-951c-64883a8a5e9b.png" /><meta property="article:section" content="posts" />
@@ -85,15 +148,48 @@ npm install hexo-deployer-git --save 修改网站根目录下的_config." />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://ch3n9w.github.io/63487983-da41b080-c4df-11e9-951c-64883a8a5e9b.png" />
 <meta name="twitter:title" content="使用hexo和github搭建网站"/>
-<meta name="twitter:description" content="基础修改 修改 _config.yml，写上网站的标题
-title: subtitle: description: 选择主题
-theme: next hexo 插件 字数统计和阅读时长统计 https://github.com/theme-next/hexo-symbols-count-time
+<meta name="twitter:description" content="基础修改
+修改 _config.yml，写上网站的标题
+title:
+subtitle:
+description:
+选择主题
+theme: next
+hexo 插件
+字数统计和阅读时长统计
+https://github.com/theme-next/hexo-symbols-count-time
 在 _config.yml 中添加
-symbols_count_time: symbols: true time: true total_symbols: true total_time: true exclude_codeblock: false awl: 4 wpm: 275 suffix: &#34;mins.&#34; 在Next主题中的 _config.yml中添加
-symbols_count_time: separated_meta: true item_text_post: true item_text_total: true git 部署 在你的github账户上创建仓库yourusername.github.io，必须是用户名开头命名，否则github page不会生效。
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: true
+  exclude_codeblock: false
+  awl: 4
+  wpm: 275
+  suffix: &#34;mins.&#34;
+在Next主题中的 _config.yml中添加
+symbols_count_time:
+  separated_meta: true
+  item_text_post: true
+  item_text_total: true
+git 部署
+在你的github账户上创建仓库yourusername.github.io，必须是用户名开头命名，否则github page不会生效。
 首先生成个人公私钥
-cd ssh-keygen -t rsa -C &#34;your_email@example.com&#34; 然后将公钥粘贴进github账户的个人设置里面 ssh -T git@github.com git config --global user.name &#34;username&#34; git config --global user.email &#34;email&#34; 在博客目录下下载：
-npm install hexo-deployer-git --save 修改网站根目录下的_config."/>
+cd
+ssh-keygen -t rsa -C &#34;your_email@example.com&#34;
+然后将公钥粘贴进github账户的个人设置里面
+ssh -T git@github.com
+git config --global user.name &#34;username&#34;
+git config --global user.email &#34;email&#34;
+在博客目录下下载：
+npm install hexo-deployer-git --save
+修改网站根目录下的_config.yml文件
+deploy:
+  - type: git#注意git的前面要加空格否则不生效
+  	repo: https://github.com/example/example.github.io.git
+  	branch: master
+保存退出后执行命令："/>
 
 
 <script type="application/ld+json">
@@ -122,7 +218,7 @@ npm install hexo-deployer-git --save 修改网站根目录下的_config."/>
   "@type": "BlogPosting",
   "headline": "使用hexo和github搭建网站",
   "name": "使用hexo和github搭建网站",
-  "description": "基础修改 修改 _config.yml，写上网站的标题\ntitle: subtitle: description: 选择主题\ntheme: next hexo 插件 字数统计和阅读时长统计 https://github.com/theme-next/hexo-symbols-count-time\n在 _config.yml 中添加\nsymbols_count_time: symbols: true time: true total_symbols: true total_time: true exclude_codeblock: false awl: 4 wpm: 275 suffix: \u0026#34;mins.\u0026#34; 在Next主题中的 _config.yml中添加\nsymbols_count_time: separated_meta: true item_text_post: true item_text_total: true git 部署 在你的github账户上创建仓库yourusername.github.io，必须是用户名开头命名，否则github page不会生效。\n首先生成个人公私钥\ncd ssh-keygen -t rsa -C \u0026#34;your_email@example.com\u0026#34; 然后将公钥粘贴进github账户的个人设置里面 ssh -T git@github.com git config --global user.name \u0026#34;username\u0026#34; git config --global user.email \u0026#34;email\u0026#34; 在博客目录下下载：\nnpm install hexo-deployer-git --save 修改网站根目录下的_config.",
+  "description": "基础修改 修改 _config.yml，写上网站的标题\ntitle: subtitle: description: 选择主题\ntheme: next hexo 插件 字数统计和阅读时长统计 https://github.com/theme-next/hexo-symbols-count-time\n在 _config.yml 中添加\nsymbols_count_time: symbols: true time: true total_symbols: true total_time: true exclude_codeblock: false awl: 4 wpm: 275 suffix: \u0026#34;mins.\u0026#34; 在Next主题中的 _config.yml中添加\nsymbols_count_time: separated_meta: true item_text_post: true item_text_total: true git 部署 在你的github账户上创建仓库yourusername.github.io，必须是用户名开头命名，否则github page不会生效。\n首先生成个人公私钥\ncd ssh-keygen -t rsa -C \u0026#34;your_email@example.com\u0026#34; 然后将公钥粘贴进github账户的个人设置里面 ssh -T git@github.com git config --global user.name \u0026#34;username\u0026#34; git config --global user.email \u0026#34;email\u0026#34; 在博客目录下下载：\nnpm install hexo-deployer-git --save 修改网站根目录下的_config.yml文件\ndeploy: - type: git#注意git的前面要加空格否则不生效 repo: https://github.com/example/example.github.io.git branch: master 保存退出后执行命令：\n",
   "keywords": [
     
   ],

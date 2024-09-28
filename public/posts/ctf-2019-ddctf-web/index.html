@@ -8,9 +8,175 @@
 <title>2019 DDCTF web | ch3n9w の 超元域</title>
 <meta name="keywords" content="">
 <meta name="description" content="考试周结束，有时间来复现了。。。然鹅好像有题目崩了，java又没学过。。。只能复现一部分了。
-web 签到题 点击，扫描，发现除了index.php 之外其他都需要登陆，抓包发现有发送Auth.php请求，其中有didictf_username字段，尝试添加成为didictf_username: admin。成功登陆。
+web 签到题
+点击，扫描，发现除了index.php 之外其他都需要登陆，抓包发现有发送Auth.php请求，其中有didictf_username字段，尝试添加成为didictf_username: admin。成功登陆。
 然后在返回包中显示出了一个php文件，尝试访问看到了Session.php的源代码如下：
-&lt;?php Class Application { var $path = &#39;&#39;; public function response($data, $errMsg = &#39;success&#39;) { $ret = [&#39;errMsg&#39; =&gt; $errMsg, &#39;data&#39; =&gt; $data]; $ret = json_encode($ret); header(&#39;Content-type: application/json&#39;); echo $ret; } public function auth() { $DIDICTF_ADMIN = &#39;admin&#39;; if(!empty($_SERVER[&#39;HTTP_DIDICTF_USERNAME&#39;]) &amp;&amp; $_SERVER[&#39;HTTP_DIDICTF_USERNAME&#39;] == $DIDICTF_ADMIN) { $this-&gt;response(&#39;您当前当前权限为管理员----请访问:app/fL2XID2i0Cdh.php&#39;); return TRUE; }else{ $this-&gt;response(&#39;抱歉，您没有登陆权限，请获取权限后访问-----&#39;,&#39;error&#39;); exit(); } } private function sanitizepath($path) { $path = trim($path);//去掉空格 $path=str_replace(&#39;../&#39;,&#39;&#39;,$path);//过滤第一 $path=str_replace(&#39;..\\&#39;,&#39;&#39;,$path);//过滤第二 return $path; }// public function __destruct() { if(empty($this-&gt;path)) { exit(); }else{ $path = $this-&gt;sanitizepath($this-&gt;path);// .">
+
+&lt;?php
+Class Application {
+  var $path = &#39;&#39;;
+
+
+  public function response($data, $errMsg = &#39;success&#39;) {
+      $ret = [&#39;errMsg&#39; =&gt; $errMsg,
+          &#39;data&#39; =&gt; $data];
+      $ret = json_encode($ret);
+      header(&#39;Content-type: application/json&#39;);
+      echo $ret;
+
+  }
+
+  public function auth() {
+      $DIDICTF_ADMIN = &#39;admin&#39;;
+      if(!empty($_SERVER[&#39;HTTP_DIDICTF_USERNAME&#39;]) &amp;&amp; $_SERVER[&#39;HTTP_DIDICTF_USERNAME&#39;] == $DIDICTF_ADMIN) {
+          $this-&gt;response(&#39;您当前当前权限为管理员----请访问:app/fL2XID2i0Cdh.php&#39;);
+          return TRUE;
+      }else{
+          $this-&gt;response(&#39;抱歉，您没有登陆权限，请获取权限后访问-----&#39;,&#39;error&#39;);
+          exit();
+      }
+
+  }
+  private function sanitizepath($path) {
+  $path = trim($path);//去掉空格
+  $path=str_replace(&#39;../&#39;,&#39;&#39;,$path);//过滤第一
+  $path=str_replace(&#39;..\\&#39;,&#39;&#39;,$path);//过滤第二
+  return $path;
+}//
+
+public function __destruct() {
+  if(empty($this-&gt;path)) {
+      exit();
+  }else{
+      $path = $this-&gt;sanitizepath($this-&gt;path);// ....//config/flag.php
+      if(strlen($path) !== 18) {//../config/flag.php
+          exit();
+      }
+      $this-&gt;response($data=file_get_contents($path),&#39;Congratulations&#39;);
+  }
+  exit();
+}
+}
+?&gt;
+
+
+&lt;?php
+include &#39;Application.php&#39;;
+class Session extends Application {
+
+  //key建议为8位字符串
+  var $eancrykey                  = &#39;&#39;;
+  var $cookie_expiration			= 7200;
+  var $cookie_name                = &#39;ddctf_id&#39;;
+  var $cookie_path				= &#39;&#39;;
+  var $cookie_domain				= &#39;&#39;;
+  var $cookie_secure				= FALSE;
+  var $activity                   = &#34;DiDiCTF&#34;;
+
+
+  public function index()
+  {
+	if(parent::auth()) {
+          $this-&gt;get_key();
+          if($this-&gt;session_read()) {
+              $data = &#39;DiDI Welcome you %s&#39;;
+              $data = sprintf($data,$_SERVER[&#39;HTTP_USER_AGENT&#39;]);
+              parent::response($data,&#39;sucess&#39;);
+          }else{
+              $this-&gt;session_create();
+              $data = &#39;DiDI Welcome you&#39;;
+              parent::response($data,&#39;sucess&#39;);
+          }
+      }
+
+  }
+
+  private function get_key() {
+      //eancrykey  and flag under the folder
+      $this-&gt;eancrykey =  file_get_contents(&#39;../config/key.txt&#39;);
+  }
+
+  public function session_read() {//target1: 绕过所有false
+      if(empty($_COOKIE)) {
+           return FALSE;
+      }//cookie not empty
+
+      $session = $_COOKIE[$this-&gt;cookie_name];
+      if(!isset($session)) {
+          parent::response(&#34;session not found&#34;,&#39;error&#39;);
+          return FALSE;
+      }//ddctf_id 不能为空
+
+      $hash = substr($session,strlen($session)-32);//长度要大于32? 32位之后的内容
+      $session = substr($session,0,strlen($session)-32);//一直截断到倒数第32位
+
+      if($hash !== md5($this-&gt;eancrykey.$session)) {//key.txt 内容和 ddctf_id 内容片段拼接 再md5 等于ddctf_id32位之后的内容
+          parent::response(&#34;the cookie data not match&#34;,&#39;error&#39;);
+          return FALSE;
+      }
+      $session = unserialize($session);//ddctf_id 反序列化
+
+
+      if(!is_array($session) OR !isset($session[&#39;session_id&#39;]) OR !isset($session[&#39;ip_address&#39;]) OR !isset($session[&#39;user_agent&#39;])){
+          return FALSE;
+      }//ddctf_id 反序列化之后的内容要有 session_id ip_address user_agent 再来个path??
+
+      if(!empty($_POST[&#34;nickname&#34;])) {
+          $arr = array($_POST[&#34;nickname&#34;],$this-&gt;eancrykey);
+          $data = &#34;Welcome my friend %s&#34;;
+          foreach ($arr as $k =&gt; $v) {
+              $data = sprintf($data,$v);
+          }
+          parent::response($data,&#34;Welcome&#34;);
+      }//sprint格式化打印函数利用，通过传递进参数nickname = %S 让它可以读取key。
+
+      if($session[&#39;ip_address&#39;] != $_SERVER[&#39;REMOTE_ADDR&#39;]) {
+          parent::response(&#39;the ip addree not match&#39;.&#39;error&#39;);
+          return FALSE;
+      }//ip_address 要写自己的ip
+
+      if($session[&#39;user_agent&#39;] != $_SERVER[&#39;HTTP_USER_AGENT&#39;]) {
+          parent::response(&#39;the user agent not match&#39;,&#39;error&#39;);
+          return FALSE;
+      }//user_agent 内容要和 http_user_agent的匹配
+      return TRUE;
+
+  }//看起来可以动手脚的只有session_id?
+
+  private function session_create() {
+      $sessionid = &#39;&#39;;
+      while(strlen($sessionid) &lt; 32) {
+          $sessionid .= mt_rand(0,mt_getrandmax());
+      }
+
+      $userdata = array(
+          &#39;session_id&#39; =&gt; md5(uniqid($sessionid,TRUE)),
+          &#39;ip_address&#39; =&gt; $_SERVER[&#39;REMOTE_ADDR&#39;],
+          &#39;user_agent&#39; =&gt; $_SERVER[&#39;HTTP_USER_AGENT&#39;],
+          &#39;user_data&#39; =&gt; &#39;&#39;,
+      );
+
+      $cookiedata = serialize($
+  );
+      $cookiedata = $cookiedata.md5($this-&gt;eancrykey.$cookiedata);
+      $expire = $this-&gt;cookie_expiration &#43; time();
+      setcookie(
+          $this-&gt;cookie_name,
+          $cookiedata,
+          $expire,
+          $this-&gt;cookie_path,
+          $this-&gt;cookie_domain,
+          $this-&gt;cookie_secure
+          );
+
+  }
+}
+
+
+$ddctf = new Session();
+$ddctf-&gt;index();
+?&gt;
+得到key之后构造ddctfid:">
 <meta name="author" content="ch3n9w">
 <link rel="canonical" href="https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
@@ -58,14 +224,177 @@ web 签到题 点击，扫描，发现除了index.php 之外其他都需要登�
         }
 
     </style>
-</noscript>
-  
-
-<meta property="og:title" content="2019 DDCTF web" />
+</noscript><meta property="og:title" content="2019 DDCTF web" />
 <meta property="og:description" content="考试周结束，有时间来复现了。。。然鹅好像有题目崩了，java又没学过。。。只能复现一部分了。
-web 签到题 点击，扫描，发现除了index.php 之外其他都需要登陆，抓包发现有发送Auth.php请求，其中有didictf_username字段，尝试添加成为didictf_username: admin。成功登陆。
+web 签到题
+点击，扫描，发现除了index.php 之外其他都需要登陆，抓包发现有发送Auth.php请求，其中有didictf_username字段，尝试添加成为didictf_username: admin。成功登陆。
 然后在返回包中显示出了一个php文件，尝试访问看到了Session.php的源代码如下：
-&lt;?php Class Application { var $path = &#39;&#39;; public function response($data, $errMsg = &#39;success&#39;) { $ret = [&#39;errMsg&#39; =&gt; $errMsg, &#39;data&#39; =&gt; $data]; $ret = json_encode($ret); header(&#39;Content-type: application/json&#39;); echo $ret; } public function auth() { $DIDICTF_ADMIN = &#39;admin&#39;; if(!empty($_SERVER[&#39;HTTP_DIDICTF_USERNAME&#39;]) &amp;&amp; $_SERVER[&#39;HTTP_DIDICTF_USERNAME&#39;] == $DIDICTF_ADMIN) { $this-&gt;response(&#39;您当前当前权限为管理员----请访问:app/fL2XID2i0Cdh.php&#39;); return TRUE; }else{ $this-&gt;response(&#39;抱歉，您没有登陆权限，请获取权限后访问-----&#39;,&#39;error&#39;); exit(); } } private function sanitizepath($path) { $path = trim($path);//去掉空格 $path=str_replace(&#39;../&#39;,&#39;&#39;,$path);//过滤第一 $path=str_replace(&#39;..\\&#39;,&#39;&#39;,$path);//过滤第二 return $path; }// public function __destruct() { if(empty($this-&gt;path)) { exit(); }else{ $path = $this-&gt;sanitizepath($this-&gt;path);// ." />
+
+&lt;?php
+Class Application {
+  var $path = &#39;&#39;;
+
+
+  public function response($data, $errMsg = &#39;success&#39;) {
+      $ret = [&#39;errMsg&#39; =&gt; $errMsg,
+          &#39;data&#39; =&gt; $data];
+      $ret = json_encode($ret);
+      header(&#39;Content-type: application/json&#39;);
+      echo $ret;
+
+  }
+
+  public function auth() {
+      $DIDICTF_ADMIN = &#39;admin&#39;;
+      if(!empty($_SERVER[&#39;HTTP_DIDICTF_USERNAME&#39;]) &amp;&amp; $_SERVER[&#39;HTTP_DIDICTF_USERNAME&#39;] == $DIDICTF_ADMIN) {
+          $this-&gt;response(&#39;您当前当前权限为管理员----请访问:app/fL2XID2i0Cdh.php&#39;);
+          return TRUE;
+      }else{
+          $this-&gt;response(&#39;抱歉，您没有登陆权限，请获取权限后访问-----&#39;,&#39;error&#39;);
+          exit();
+      }
+
+  }
+  private function sanitizepath($path) {
+  $path = trim($path);//去掉空格
+  $path=str_replace(&#39;../&#39;,&#39;&#39;,$path);//过滤第一
+  $path=str_replace(&#39;..\\&#39;,&#39;&#39;,$path);//过滤第二
+  return $path;
+}//
+
+public function __destruct() {
+  if(empty($this-&gt;path)) {
+      exit();
+  }else{
+      $path = $this-&gt;sanitizepath($this-&gt;path);// ....//config/flag.php
+      if(strlen($path) !== 18) {//../config/flag.php
+          exit();
+      }
+      $this-&gt;response($data=file_get_contents($path),&#39;Congratulations&#39;);
+  }
+  exit();
+}
+}
+?&gt;
+
+
+&lt;?php
+include &#39;Application.php&#39;;
+class Session extends Application {
+
+  //key建议为8位字符串
+  var $eancrykey                  = &#39;&#39;;
+  var $cookie_expiration			= 7200;
+  var $cookie_name                = &#39;ddctf_id&#39;;
+  var $cookie_path				= &#39;&#39;;
+  var $cookie_domain				= &#39;&#39;;
+  var $cookie_secure				= FALSE;
+  var $activity                   = &#34;DiDiCTF&#34;;
+
+
+  public function index()
+  {
+	if(parent::auth()) {
+          $this-&gt;get_key();
+          if($this-&gt;session_read()) {
+              $data = &#39;DiDI Welcome you %s&#39;;
+              $data = sprintf($data,$_SERVER[&#39;HTTP_USER_AGENT&#39;]);
+              parent::response($data,&#39;sucess&#39;);
+          }else{
+              $this-&gt;session_create();
+              $data = &#39;DiDI Welcome you&#39;;
+              parent::response($data,&#39;sucess&#39;);
+          }
+      }
+
+  }
+
+  private function get_key() {
+      //eancrykey  and flag under the folder
+      $this-&gt;eancrykey =  file_get_contents(&#39;../config/key.txt&#39;);
+  }
+
+  public function session_read() {//target1: 绕过所有false
+      if(empty($_COOKIE)) {
+           return FALSE;
+      }//cookie not empty
+
+      $session = $_COOKIE[$this-&gt;cookie_name];
+      if(!isset($session)) {
+          parent::response(&#34;session not found&#34;,&#39;error&#39;);
+          return FALSE;
+      }//ddctf_id 不能为空
+
+      $hash = substr($session,strlen($session)-32);//长度要大于32? 32位之后的内容
+      $session = substr($session,0,strlen($session)-32);//一直截断到倒数第32位
+
+      if($hash !== md5($this-&gt;eancrykey.$session)) {//key.txt 内容和 ddctf_id 内容片段拼接 再md5 等于ddctf_id32位之后的内容
+          parent::response(&#34;the cookie data not match&#34;,&#39;error&#39;);
+          return FALSE;
+      }
+      $session = unserialize($session);//ddctf_id 反序列化
+
+
+      if(!is_array($session) OR !isset($session[&#39;session_id&#39;]) OR !isset($session[&#39;ip_address&#39;]) OR !isset($session[&#39;user_agent&#39;])){
+          return FALSE;
+      }//ddctf_id 反序列化之后的内容要有 session_id ip_address user_agent 再来个path??
+
+      if(!empty($_POST[&#34;nickname&#34;])) {
+          $arr = array($_POST[&#34;nickname&#34;],$this-&gt;eancrykey);
+          $data = &#34;Welcome my friend %s&#34;;
+          foreach ($arr as $k =&gt; $v) {
+              $data = sprintf($data,$v);
+          }
+          parent::response($data,&#34;Welcome&#34;);
+      }//sprint格式化打印函数利用，通过传递进参数nickname = %S 让它可以读取key。
+
+      if($session[&#39;ip_address&#39;] != $_SERVER[&#39;REMOTE_ADDR&#39;]) {
+          parent::response(&#39;the ip addree not match&#39;.&#39;error&#39;);
+          return FALSE;
+      }//ip_address 要写自己的ip
+
+      if($session[&#39;user_agent&#39;] != $_SERVER[&#39;HTTP_USER_AGENT&#39;]) {
+          parent::response(&#39;the user agent not match&#39;,&#39;error&#39;);
+          return FALSE;
+      }//user_agent 内容要和 http_user_agent的匹配
+      return TRUE;
+
+  }//看起来可以动手脚的只有session_id?
+
+  private function session_create() {
+      $sessionid = &#39;&#39;;
+      while(strlen($sessionid) &lt; 32) {
+          $sessionid .= mt_rand(0,mt_getrandmax());
+      }
+
+      $userdata = array(
+          &#39;session_id&#39; =&gt; md5(uniqid($sessionid,TRUE)),
+          &#39;ip_address&#39; =&gt; $_SERVER[&#39;REMOTE_ADDR&#39;],
+          &#39;user_agent&#39; =&gt; $_SERVER[&#39;HTTP_USER_AGENT&#39;],
+          &#39;user_data&#39; =&gt; &#39;&#39;,
+      );
+
+      $cookiedata = serialize($
+  );
+      $cookiedata = $cookiedata.md5($this-&gt;eancrykey.$cookiedata);
+      $expire = $this-&gt;cookie_expiration &#43; time();
+      setcookie(
+          $this-&gt;cookie_name,
+          $cookiedata,
+          $expire,
+          $this-&gt;cookie_path,
+          $this-&gt;cookie_domain,
+          $this-&gt;cookie_secure
+          );
+
+  }
+}
+
+
+$ddctf = new Session();
+$ddctf-&gt;index();
+?&gt;
+得到key之后构造ddctfid:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/" />
 <meta property="og:image" content="https://ch3n9w.github.io/image-20211114142123083.png" /><meta property="article:section" content="posts" />
@@ -76,9 +405,175 @@ web 签到题 点击，扫描，发现除了index.php 之外其他都需要登�
 <meta name="twitter:image" content="https://ch3n9w.github.io/image-20211114142123083.png" />
 <meta name="twitter:title" content="2019 DDCTF web"/>
 <meta name="twitter:description" content="考试周结束，有时间来复现了。。。然鹅好像有题目崩了，java又没学过。。。只能复现一部分了。
-web 签到题 点击，扫描，发现除了index.php 之外其他都需要登陆，抓包发现有发送Auth.php请求，其中有didictf_username字段，尝试添加成为didictf_username: admin。成功登陆。
+web 签到题
+点击，扫描，发现除了index.php 之外其他都需要登陆，抓包发现有发送Auth.php请求，其中有didictf_username字段，尝试添加成为didictf_username: admin。成功登陆。
 然后在返回包中显示出了一个php文件，尝试访问看到了Session.php的源代码如下：
-&lt;?php Class Application { var $path = &#39;&#39;; public function response($data, $errMsg = &#39;success&#39;) { $ret = [&#39;errMsg&#39; =&gt; $errMsg, &#39;data&#39; =&gt; $data]; $ret = json_encode($ret); header(&#39;Content-type: application/json&#39;); echo $ret; } public function auth() { $DIDICTF_ADMIN = &#39;admin&#39;; if(!empty($_SERVER[&#39;HTTP_DIDICTF_USERNAME&#39;]) &amp;&amp; $_SERVER[&#39;HTTP_DIDICTF_USERNAME&#39;] == $DIDICTF_ADMIN) { $this-&gt;response(&#39;您当前当前权限为管理员----请访问:app/fL2XID2i0Cdh.php&#39;); return TRUE; }else{ $this-&gt;response(&#39;抱歉，您没有登陆权限，请获取权限后访问-----&#39;,&#39;error&#39;); exit(); } } private function sanitizepath($path) { $path = trim($path);//去掉空格 $path=str_replace(&#39;../&#39;,&#39;&#39;,$path);//过滤第一 $path=str_replace(&#39;..\\&#39;,&#39;&#39;,$path);//过滤第二 return $path; }// public function __destruct() { if(empty($this-&gt;path)) { exit(); }else{ $path = $this-&gt;sanitizepath($this-&gt;path);// ."/>
+
+&lt;?php
+Class Application {
+  var $path = &#39;&#39;;
+
+
+  public function response($data, $errMsg = &#39;success&#39;) {
+      $ret = [&#39;errMsg&#39; =&gt; $errMsg,
+          &#39;data&#39; =&gt; $data];
+      $ret = json_encode($ret);
+      header(&#39;Content-type: application/json&#39;);
+      echo $ret;
+
+  }
+
+  public function auth() {
+      $DIDICTF_ADMIN = &#39;admin&#39;;
+      if(!empty($_SERVER[&#39;HTTP_DIDICTF_USERNAME&#39;]) &amp;&amp; $_SERVER[&#39;HTTP_DIDICTF_USERNAME&#39;] == $DIDICTF_ADMIN) {
+          $this-&gt;response(&#39;您当前当前权限为管理员----请访问:app/fL2XID2i0Cdh.php&#39;);
+          return TRUE;
+      }else{
+          $this-&gt;response(&#39;抱歉，您没有登陆权限，请获取权限后访问-----&#39;,&#39;error&#39;);
+          exit();
+      }
+
+  }
+  private function sanitizepath($path) {
+  $path = trim($path);//去掉空格
+  $path=str_replace(&#39;../&#39;,&#39;&#39;,$path);//过滤第一
+  $path=str_replace(&#39;..\\&#39;,&#39;&#39;,$path);//过滤第二
+  return $path;
+}//
+
+public function __destruct() {
+  if(empty($this-&gt;path)) {
+      exit();
+  }else{
+      $path = $this-&gt;sanitizepath($this-&gt;path);// ....//config/flag.php
+      if(strlen($path) !== 18) {//../config/flag.php
+          exit();
+      }
+      $this-&gt;response($data=file_get_contents($path),&#39;Congratulations&#39;);
+  }
+  exit();
+}
+}
+?&gt;
+
+
+&lt;?php
+include &#39;Application.php&#39;;
+class Session extends Application {
+
+  //key建议为8位字符串
+  var $eancrykey                  = &#39;&#39;;
+  var $cookie_expiration			= 7200;
+  var $cookie_name                = &#39;ddctf_id&#39;;
+  var $cookie_path				= &#39;&#39;;
+  var $cookie_domain				= &#39;&#39;;
+  var $cookie_secure				= FALSE;
+  var $activity                   = &#34;DiDiCTF&#34;;
+
+
+  public function index()
+  {
+	if(parent::auth()) {
+          $this-&gt;get_key();
+          if($this-&gt;session_read()) {
+              $data = &#39;DiDI Welcome you %s&#39;;
+              $data = sprintf($data,$_SERVER[&#39;HTTP_USER_AGENT&#39;]);
+              parent::response($data,&#39;sucess&#39;);
+          }else{
+              $this-&gt;session_create();
+              $data = &#39;DiDI Welcome you&#39;;
+              parent::response($data,&#39;sucess&#39;);
+          }
+      }
+
+  }
+
+  private function get_key() {
+      //eancrykey  and flag under the folder
+      $this-&gt;eancrykey =  file_get_contents(&#39;../config/key.txt&#39;);
+  }
+
+  public function session_read() {//target1: 绕过所有false
+      if(empty($_COOKIE)) {
+           return FALSE;
+      }//cookie not empty
+
+      $session = $_COOKIE[$this-&gt;cookie_name];
+      if(!isset($session)) {
+          parent::response(&#34;session not found&#34;,&#39;error&#39;);
+          return FALSE;
+      }//ddctf_id 不能为空
+
+      $hash = substr($session,strlen($session)-32);//长度要大于32? 32位之后的内容
+      $session = substr($session,0,strlen($session)-32);//一直截断到倒数第32位
+
+      if($hash !== md5($this-&gt;eancrykey.$session)) {//key.txt 内容和 ddctf_id 内容片段拼接 再md5 等于ddctf_id32位之后的内容
+          parent::response(&#34;the cookie data not match&#34;,&#39;error&#39;);
+          return FALSE;
+      }
+      $session = unserialize($session);//ddctf_id 反序列化
+
+
+      if(!is_array($session) OR !isset($session[&#39;session_id&#39;]) OR !isset($session[&#39;ip_address&#39;]) OR !isset($session[&#39;user_agent&#39;])){
+          return FALSE;
+      }//ddctf_id 反序列化之后的内容要有 session_id ip_address user_agent 再来个path??
+
+      if(!empty($_POST[&#34;nickname&#34;])) {
+          $arr = array($_POST[&#34;nickname&#34;],$this-&gt;eancrykey);
+          $data = &#34;Welcome my friend %s&#34;;
+          foreach ($arr as $k =&gt; $v) {
+              $data = sprintf($data,$v);
+          }
+          parent::response($data,&#34;Welcome&#34;);
+      }//sprint格式化打印函数利用，通过传递进参数nickname = %S 让它可以读取key。
+
+      if($session[&#39;ip_address&#39;] != $_SERVER[&#39;REMOTE_ADDR&#39;]) {
+          parent::response(&#39;the ip addree not match&#39;.&#39;error&#39;);
+          return FALSE;
+      }//ip_address 要写自己的ip
+
+      if($session[&#39;user_agent&#39;] != $_SERVER[&#39;HTTP_USER_AGENT&#39;]) {
+          parent::response(&#39;the user agent not match&#39;,&#39;error&#39;);
+          return FALSE;
+      }//user_agent 内容要和 http_user_agent的匹配
+      return TRUE;
+
+  }//看起来可以动手脚的只有session_id?
+
+  private function session_create() {
+      $sessionid = &#39;&#39;;
+      while(strlen($sessionid) &lt; 32) {
+          $sessionid .= mt_rand(0,mt_getrandmax());
+      }
+
+      $userdata = array(
+          &#39;session_id&#39; =&gt; md5(uniqid($sessionid,TRUE)),
+          &#39;ip_address&#39; =&gt; $_SERVER[&#39;REMOTE_ADDR&#39;],
+          &#39;user_agent&#39; =&gt; $_SERVER[&#39;HTTP_USER_AGENT&#39;],
+          &#39;user_data&#39; =&gt; &#39;&#39;,
+      );
+
+      $cookiedata = serialize($
+  );
+      $cookiedata = $cookiedata.md5($this-&gt;eancrykey.$cookiedata);
+      $expire = $this-&gt;cookie_expiration &#43; time();
+      setcookie(
+          $this-&gt;cookie_name,
+          $cookiedata,
+          $expire,
+          $this-&gt;cookie_path,
+          $this-&gt;cookie_domain,
+          $this-&gt;cookie_secure
+          );
+
+  }
+}
+
+
+$ddctf = new Session();
+$ddctf-&gt;index();
+?&gt;
+得到key之后构造ddctfid:"/>
 
 
 <script type="application/ld+json">
@@ -107,7 +602,7 @@ web 签到题 点击，扫描，发现除了index.php 之外其他都需要登�
   "@type": "BlogPosting",
   "headline": "2019 DDCTF web",
   "name": "2019 DDCTF web",
-  "description": "考试周结束，有时间来复现了。。。然鹅好像有题目崩了，java又没学过。。。只能复现一部分了。\nweb 签到题 点击，扫描，发现除了index.php 之外其他都需要登陆，抓包发现有发送Auth.php请求，其中有didictf_username字段，尝试添加成为didictf_username: admin。成功登陆。\n然后在返回包中显示出了一个php文件，尝试访问看到了Session.php的源代码如下：\n\u0026lt;?php Class Application { var $path = \u0026#39;\u0026#39;; public function response($data, $errMsg = \u0026#39;success\u0026#39;) { $ret = [\u0026#39;errMsg\u0026#39; =\u0026gt; $errMsg, \u0026#39;data\u0026#39; =\u0026gt; $data]; $ret = json_encode($ret); header(\u0026#39;Content-type: application/json\u0026#39;); echo $ret; } public function auth() { $DIDICTF_ADMIN = \u0026#39;admin\u0026#39;; if(!empty($_SERVER[\u0026#39;HTTP_DIDICTF_USERNAME\u0026#39;]) \u0026amp;\u0026amp; $_SERVER[\u0026#39;HTTP_DIDICTF_USERNAME\u0026#39;] == $DIDICTF_ADMIN) { $this-\u0026gt;response(\u0026#39;您当前当前权限为管理员----请访问:app/fL2XID2i0Cdh.php\u0026#39;); return TRUE; }else{ $this-\u0026gt;response(\u0026#39;抱歉，您没有登陆权限，请获取权限后访问-----\u0026#39;,\u0026#39;error\u0026#39;); exit(); } } private function sanitizepath($path) { $path = trim($path);//去掉空格 $path=str_replace(\u0026#39;../\u0026#39;,\u0026#39;\u0026#39;,$path);//过滤第一 $path=str_replace(\u0026#39;..\\\\\u0026#39;,\u0026#39;\u0026#39;,$path);//过滤第二 return $path; }// public function __destruct() { if(empty($this-\u0026gt;path)) { exit(); }else{ $path = $this-\u0026gt;sanitizepath($this-\u0026gt;path);// .",
+  "description": "考试周结束，有时间来复现了。。。然鹅好像有题目崩了，java又没学过。。。只能复现一部分了。\nweb 签到题 点击，扫描，发现除了index.php 之外其他都需要登陆，抓包发现有发送Auth.php请求，其中有didictf_username字段，尝试添加成为didictf_username: admin。成功登陆。\n然后在返回包中显示出了一个php文件，尝试访问看到了Session.php的源代码如下：\n\u0026lt;?php Class Application { var $path = \u0026#39;\u0026#39;; public function response($data, $errMsg = \u0026#39;success\u0026#39;) { $ret = [\u0026#39;errMsg\u0026#39; =\u0026gt; $errMsg, \u0026#39;data\u0026#39; =\u0026gt; $data]; $ret = json_encode($ret); header(\u0026#39;Content-type: application/json\u0026#39;); echo $ret; } public function auth() { $DIDICTF_ADMIN = \u0026#39;admin\u0026#39;; if(!empty($_SERVER[\u0026#39;HTTP_DIDICTF_USERNAME\u0026#39;]) \u0026amp;\u0026amp; $_SERVER[\u0026#39;HTTP_DIDICTF_USERNAME\u0026#39;] == $DIDICTF_ADMIN) { $this-\u0026gt;response(\u0026#39;您当前当前权限为管理员----请访问:app/fL2XID2i0Cdh.php\u0026#39;); return TRUE; }else{ $this-\u0026gt;response(\u0026#39;抱歉，您没有登陆权限，请获取权限后访问-----\u0026#39;,\u0026#39;error\u0026#39;); exit(); } } private function sanitizepath($path) { $path = trim($path);//去掉空格 $path=str_replace(\u0026#39;../\u0026#39;,\u0026#39;\u0026#39;,$path);//过滤第一 $path=str_replace(\u0026#39;..\\\\\u0026#39;,\u0026#39;\u0026#39;,$path);//过滤第二 return $path; }// public function __destruct() { if(empty($this-\u0026gt;path)) { exit(); }else{ $path = $this-\u0026gt;sanitizepath($this-\u0026gt;path);// ....//config/flag.php if(strlen($path) !== 18) {//../config/flag.php exit(); } $this-\u0026gt;response($data=file_get_contents($path),\u0026#39;Congratulations\u0026#39;); } exit(); } } ?\u0026gt; \u0026lt;?php include \u0026#39;Application.php\u0026#39;; class Session extends Application { //key建议为8位字符串 var $eancrykey = \u0026#39;\u0026#39;; var $cookie_expiration\t= 7200; var $cookie_name = \u0026#39;ddctf_id\u0026#39;; var $cookie_path\t= \u0026#39;\u0026#39;; var $cookie_domain\t= \u0026#39;\u0026#39;; var $cookie_secure\t= FALSE; var $activity = \u0026#34;DiDiCTF\u0026#34;; public function index() { if(parent::auth()) { $this-\u0026gt;get_key(); if($this-\u0026gt;session_read()) { $data = \u0026#39;DiDI Welcome you %s\u0026#39;; $data = sprintf($data,$_SERVER[\u0026#39;HTTP_USER_AGENT\u0026#39;]); parent::response($data,\u0026#39;sucess\u0026#39;); }else{ $this-\u0026gt;session_create(); $data = \u0026#39;DiDI Welcome you\u0026#39;; parent::response($data,\u0026#39;sucess\u0026#39;); } } } private function get_key() { //eancrykey and flag under the folder $this-\u0026gt;eancrykey = file_get_contents(\u0026#39;../config/key.txt\u0026#39;); } public function session_read() {//target1: 绕过所有false if(empty($_COOKIE)) { return FALSE; }//cookie not empty $session = $_COOKIE[$this-\u0026gt;cookie_name]; if(!isset($session)) { parent::response(\u0026#34;session not found\u0026#34;,\u0026#39;error\u0026#39;); return FALSE; }//ddctf_id 不能为空 $hash = substr($session,strlen($session)-32);//长度要大于32? 32位之后的内容 $session = substr($session,0,strlen($session)-32);//一直截断到倒数第32位 if($hash !== md5($this-\u0026gt;eancrykey.$session)) {//key.txt 内容和 ddctf_id 内容片段拼接 再md5 等于ddctf_id32位之后的内容 parent::response(\u0026#34;the cookie data not match\u0026#34;,\u0026#39;error\u0026#39;); return FALSE; } $session = unserialize($session);//ddctf_id 反序列化 if(!is_array($session) OR !isset($session[\u0026#39;session_id\u0026#39;]) OR !isset($session[\u0026#39;ip_address\u0026#39;]) OR !isset($session[\u0026#39;user_agent\u0026#39;])){ return FALSE; }//ddctf_id 反序列化之后的内容要有 session_id ip_address user_agent 再来个path?? if(!empty($_POST[\u0026#34;nickname\u0026#34;])) { $arr = array($_POST[\u0026#34;nickname\u0026#34;],$this-\u0026gt;eancrykey); $data = \u0026#34;Welcome my friend %s\u0026#34;; foreach ($arr as $k =\u0026gt; $v) { $data = sprintf($data,$v); } parent::response($data,\u0026#34;Welcome\u0026#34;); }//sprint格式化打印函数利用，通过传递进参数nickname = %S 让它可以读取key。 if($session[\u0026#39;ip_address\u0026#39;] != $_SERVER[\u0026#39;REMOTE_ADDR\u0026#39;]) { parent::response(\u0026#39;the ip addree not match\u0026#39;.\u0026#39;error\u0026#39;); return FALSE; }//ip_address 要写自己的ip if($session[\u0026#39;user_agent\u0026#39;] != $_SERVER[\u0026#39;HTTP_USER_AGENT\u0026#39;]) { parent::response(\u0026#39;the user agent not match\u0026#39;,\u0026#39;error\u0026#39;); return FALSE; }//user_agent 内容要和 http_user_agent的匹配 return TRUE; }//看起来可以动手脚的只有session_id? private function session_create() { $sessionid = \u0026#39;\u0026#39;; while(strlen($sessionid) \u0026lt; 32) { $sessionid .= mt_rand(0,mt_getrandmax()); } $userdata = array( \u0026#39;session_id\u0026#39; =\u0026gt; md5(uniqid($sessionid,TRUE)), \u0026#39;ip_address\u0026#39; =\u0026gt; $_SERVER[\u0026#39;REMOTE_ADDR\u0026#39;], \u0026#39;user_agent\u0026#39; =\u0026gt; $_SERVER[\u0026#39;HTTP_USER_AGENT\u0026#39;], \u0026#39;user_data\u0026#39; =\u0026gt; \u0026#39;\u0026#39;, ); $cookiedata = serialize($ ); $cookiedata = $cookiedata.md5($this-\u0026gt;eancrykey.$cookiedata); $expire = $this-\u0026gt;cookie_expiration + time(); setcookie( $this-\u0026gt;cookie_name, $cookiedata, $expire, $this-\u0026gt;cookie_path, $this-\u0026gt;cookie_domain, $this-\u0026gt;cookie_secure ); } } $ddctf = new Session(); $ddctf-\u0026gt;index(); ?\u0026gt; 得到key之后构造ddctfid:\n",
   "keywords": [
     
   ],

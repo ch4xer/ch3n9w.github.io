@@ -7,12 +7,33 @@
 <meta name="robots" content="index, follow">
 <title>Kubernetes Admission Webhook 部署和调试 | ch3n9w の 超元域</title>
 <meta name="keywords" content="">
-<meta name="description" content="Deployment and Debugging of Admission Webhook in Kubernetes cluster Intro Dynamic admission control 允许开发者添加自己的逻辑代码来对提交给API Server的对象进行修改和验证, 是非常强大的功能. 本文将部署一组demo admission webhook, 包括一个validating webhook 和一个 mutating webhook, 并介绍webhook的调试方法. 本文主要使用和参考了从0到1开发K8S_Webhook最佳实践, 并通过查阅官方文档对其中的一些不适应新版本k8s的内容进行了修正.
+<meta name="description" content="Deployment and Debugging of Admission Webhook in Kubernetes cluster
+Intro
+Dynamic admission control 允许开发者添加自己的逻辑代码来对提交给API Server的对象进行修改和验证, 是非常强大的功能. 本文将部署一组demo admission webhook, 包括一个validating webhook 和一个 mutating webhook, 并介绍webhook的调试方法. 本文主要使用和参考了从0到1开发K8S_Webhook最佳实践, 并通过查阅官方文档对其中的一些不适应新版本k8s的内容进行了修正.
 本文使用的集群环境为Kubernetes v1.25.16, 使用minikube创建. 我所在的机器为Arch Linux. 代码仓库为 admission-webhook-example中的v1部分.
 在开始之前, 请确保集群的API Server开启了MutatingAdmissionWebhook和ValidatingAdmissionWebhook (一般默认情况下都开启了).
-Deployment 创建 service account 创建一个用于webhook的service account
-kubectl apply -f deployment/rbac.yaml 创建证书 API Server调用Webhook的过程是需要HTTPS通信的(其实集群内的通信几乎都是HTTPS), 因此需要为webhook创建证书来对webhook的service进行域名认证. 原博客使用的webhook-create-signed-cert.sh已经过时, 不再适用于1.25.16版本的集群了, 主要出问题的地方如下:
-# create server cert/key CSR and send to k8s API cat &lt;&lt;EOF | kubectl create -f - apiVersion: certificates.">
+Deployment
+创建 service account
+创建一个用于webhook的service account
+kubectl apply -f deployment/rbac.yaml
+创建证书
+API Server调用Webhook的过程是需要HTTPS通信的(其实集群内的通信几乎都是HTTPS), 因此需要为webhook创建证书来对webhook的service进行域名认证. 原博客使用的webhook-create-signed-cert.sh已经过时, 不再适用于1.25.16版本的集群了, 主要出问题的地方如下:
+# create  server cert/key CSR and  send to k8s API
+cat &lt;&lt;EOF | kubectl create -f -
+apiVersion: certificates.k8s.io/v1beta1
+kind: CertificateSigningRequest
+metadata:
+  name: ${csrName}
+spec:
+  groups:
+  - system:authenticated
+  request: $(cat ${tmpdir}/server.csr | base64 | tr -d &#39;\n&#39;)
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+EOF
+根据文档, 在1.22以及之后版本的kubernetes中, certificates.k8s.io/v1beta1 已经被抛弃不可用, 需要修改为certificates.k8s.io/v1, 并且需要在spec中增加signerName, signer的作用是签署证书. k8s内置的signerName 有以下几种:">
 <meta name="author" content="ch3n9w">
 <link rel="canonical" href="https://ch3n9w.github.io/posts/tech-kubernetes-webhook/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
@@ -60,16 +81,34 @@ kubectl apply -f deployment/rbac.yaml 创建证书 API Server调用Webhook的过
         }
 
     </style>
-</noscript>
-  
-
-<meta property="og:title" content="Kubernetes Admission Webhook 部署和调试" />
-<meta property="og:description" content="Deployment and Debugging of Admission Webhook in Kubernetes cluster Intro Dynamic admission control 允许开发者添加自己的逻辑代码来对提交给API Server的对象进行修改和验证, 是非常强大的功能. 本文将部署一组demo admission webhook, 包括一个validating webhook 和一个 mutating webhook, 并介绍webhook的调试方法. 本文主要使用和参考了从0到1开发K8S_Webhook最佳实践, 并通过查阅官方文档对其中的一些不适应新版本k8s的内容进行了修正.
+</noscript><meta property="og:title" content="Kubernetes Admission Webhook 部署和调试" />
+<meta property="og:description" content="Deployment and Debugging of Admission Webhook in Kubernetes cluster
+Intro
+Dynamic admission control 允许开发者添加自己的逻辑代码来对提交给API Server的对象进行修改和验证, 是非常强大的功能. 本文将部署一组demo admission webhook, 包括一个validating webhook 和一个 mutating webhook, 并介绍webhook的调试方法. 本文主要使用和参考了从0到1开发K8S_Webhook最佳实践, 并通过查阅官方文档对其中的一些不适应新版本k8s的内容进行了修正.
 本文使用的集群环境为Kubernetes v1.25.16, 使用minikube创建. 我所在的机器为Arch Linux. 代码仓库为 admission-webhook-example中的v1部分.
 在开始之前, 请确保集群的API Server开启了MutatingAdmissionWebhook和ValidatingAdmissionWebhook (一般默认情况下都开启了).
-Deployment 创建 service account 创建一个用于webhook的service account
-kubectl apply -f deployment/rbac.yaml 创建证书 API Server调用Webhook的过程是需要HTTPS通信的(其实集群内的通信几乎都是HTTPS), 因此需要为webhook创建证书来对webhook的service进行域名认证. 原博客使用的webhook-create-signed-cert.sh已经过时, 不再适用于1.25.16版本的集群了, 主要出问题的地方如下:
-# create server cert/key CSR and send to k8s API cat &lt;&lt;EOF | kubectl create -f - apiVersion: certificates." />
+Deployment
+创建 service account
+创建一个用于webhook的service account
+kubectl apply -f deployment/rbac.yaml
+创建证书
+API Server调用Webhook的过程是需要HTTPS通信的(其实集群内的通信几乎都是HTTPS), 因此需要为webhook创建证书来对webhook的service进行域名认证. 原博客使用的webhook-create-signed-cert.sh已经过时, 不再适用于1.25.16版本的集群了, 主要出问题的地方如下:
+# create  server cert/key CSR and  send to k8s API
+cat &lt;&lt;EOF | kubectl create -f -
+apiVersion: certificates.k8s.io/v1beta1
+kind: CertificateSigningRequest
+metadata:
+  name: ${csrName}
+spec:
+  groups:
+  - system:authenticated
+  request: $(cat ${tmpdir}/server.csr | base64 | tr -d &#39;\n&#39;)
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+EOF
+根据文档, 在1.22以及之后版本的kubernetes中, certificates.k8s.io/v1beta1 已经被抛弃不可用, 需要修改为certificates.k8s.io/v1, 并且需要在spec中增加signerName, signer的作用是签署证书. k8s内置的signerName 有以下几种:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ch3n9w.github.io/posts/tech-kubernetes-webhook/" />
 <meta property="og:image" content="https://ch3n9w.github.io/2024-05-05-18-14-26.png" /><meta property="article:section" content="posts" />
@@ -79,12 +118,33 @@ kubectl apply -f deployment/rbac.yaml 创建证书 API Server调用Webhook的过
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://ch3n9w.github.io/2024-05-05-18-14-26.png" />
 <meta name="twitter:title" content="Kubernetes Admission Webhook 部署和调试"/>
-<meta name="twitter:description" content="Deployment and Debugging of Admission Webhook in Kubernetes cluster Intro Dynamic admission control 允许开发者添加自己的逻辑代码来对提交给API Server的对象进行修改和验证, 是非常强大的功能. 本文将部署一组demo admission webhook, 包括一个validating webhook 和一个 mutating webhook, 并介绍webhook的调试方法. 本文主要使用和参考了从0到1开发K8S_Webhook最佳实践, 并通过查阅官方文档对其中的一些不适应新版本k8s的内容进行了修正.
+<meta name="twitter:description" content="Deployment and Debugging of Admission Webhook in Kubernetes cluster
+Intro
+Dynamic admission control 允许开发者添加自己的逻辑代码来对提交给API Server的对象进行修改和验证, 是非常强大的功能. 本文将部署一组demo admission webhook, 包括一个validating webhook 和一个 mutating webhook, 并介绍webhook的调试方法. 本文主要使用和参考了从0到1开发K8S_Webhook最佳实践, 并通过查阅官方文档对其中的一些不适应新版本k8s的内容进行了修正.
 本文使用的集群环境为Kubernetes v1.25.16, 使用minikube创建. 我所在的机器为Arch Linux. 代码仓库为 admission-webhook-example中的v1部分.
 在开始之前, 请确保集群的API Server开启了MutatingAdmissionWebhook和ValidatingAdmissionWebhook (一般默认情况下都开启了).
-Deployment 创建 service account 创建一个用于webhook的service account
-kubectl apply -f deployment/rbac.yaml 创建证书 API Server调用Webhook的过程是需要HTTPS通信的(其实集群内的通信几乎都是HTTPS), 因此需要为webhook创建证书来对webhook的service进行域名认证. 原博客使用的webhook-create-signed-cert.sh已经过时, 不再适用于1.25.16版本的集群了, 主要出问题的地方如下:
-# create server cert/key CSR and send to k8s API cat &lt;&lt;EOF | kubectl create -f - apiVersion: certificates."/>
+Deployment
+创建 service account
+创建一个用于webhook的service account
+kubectl apply -f deployment/rbac.yaml
+创建证书
+API Server调用Webhook的过程是需要HTTPS通信的(其实集群内的通信几乎都是HTTPS), 因此需要为webhook创建证书来对webhook的service进行域名认证. 原博客使用的webhook-create-signed-cert.sh已经过时, 不再适用于1.25.16版本的集群了, 主要出问题的地方如下:
+# create  server cert/key CSR and  send to k8s API
+cat &lt;&lt;EOF | kubectl create -f -
+apiVersion: certificates.k8s.io/v1beta1
+kind: CertificateSigningRequest
+metadata:
+  name: ${csrName}
+spec:
+  groups:
+  - system:authenticated
+  request: $(cat ${tmpdir}/server.csr | base64 | tr -d &#39;\n&#39;)
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+EOF
+根据文档, 在1.22以及之后版本的kubernetes中, certificates.k8s.io/v1beta1 已经被抛弃不可用, 需要修改为certificates.k8s.io/v1, 并且需要在spec中增加signerName, signer的作用是签署证书. k8s内置的signerName 有以下几种:"/>
 
 
 <script type="application/ld+json">
@@ -113,7 +173,7 @@ kubectl apply -f deployment/rbac.yaml 创建证书 API Server调用Webhook的过
   "@type": "BlogPosting",
   "headline": "Kubernetes Admission Webhook 部署和调试",
   "name": "Kubernetes Admission Webhook 部署和调试",
-  "description": "Deployment and Debugging of Admission Webhook in Kubernetes cluster Intro Dynamic admission control 允许开发者添加自己的逻辑代码来对提交给API Server的对象进行修改和验证, 是非常强大的功能. 本文将部署一组demo admission webhook, 包括一个validating webhook 和一个 mutating webhook, 并介绍webhook的调试方法. 本文主要使用和参考了从0到1开发K8S_Webhook最佳实践, 并通过查阅官方文档对其中的一些不适应新版本k8s的内容进行了修正.\n本文使用的集群环境为Kubernetes v1.25.16, 使用minikube创建. 我所在的机器为Arch Linux. 代码仓库为 admission-webhook-example中的v1部分.\n在开始之前, 请确保集群的API Server开启了MutatingAdmissionWebhook和ValidatingAdmissionWebhook (一般默认情况下都开启了).\nDeployment 创建 service account 创建一个用于webhook的service account\nkubectl apply -f deployment/rbac.yaml 创建证书 API Server调用Webhook的过程是需要HTTPS通信的(其实集群内的通信几乎都是HTTPS), 因此需要为webhook创建证书来对webhook的service进行域名认证. 原博客使用的webhook-create-signed-cert.sh已经过时, 不再适用于1.25.16版本的集群了, 主要出问题的地方如下:\n# create server cert/key CSR and send to k8s API cat \u0026lt;\u0026lt;EOF | kubectl create -f - apiVersion: certificates.",
+  "description": "Deployment and Debugging of Admission Webhook in Kubernetes cluster Intro Dynamic admission control 允许开发者添加自己的逻辑代码来对提交给API Server的对象进行修改和验证, 是非常强大的功能. 本文将部署一组demo admission webhook, 包括一个validating webhook 和一个 mutating webhook, 并介绍webhook的调试方法. 本文主要使用和参考了从0到1开发K8S_Webhook最佳实践, 并通过查阅官方文档对其中的一些不适应新版本k8s的内容进行了修正.\n本文使用的集群环境为Kubernetes v1.25.16, 使用minikube创建. 我所在的机器为Arch Linux. 代码仓库为 admission-webhook-example中的v1部分.\n在开始之前, 请确保集群的API Server开启了MutatingAdmissionWebhook和ValidatingAdmissionWebhook (一般默认情况下都开启了).\nDeployment 创建 service account 创建一个用于webhook的service account\nkubectl apply -f deployment/rbac.yaml 创建证书 API Server调用Webhook的过程是需要HTTPS通信的(其实集群内的通信几乎都是HTTPS), 因此需要为webhook创建证书来对webhook的service进行域名认证. 原博客使用的webhook-create-signed-cert.sh已经过时, 不再适用于1.25.16版本的集群了, 主要出问题的地方如下:\n# create server cert/key CSR and send to k8s API cat \u0026lt;\u0026lt;EOF | kubectl create -f - apiVersion: certificates.k8s.io/v1beta1 kind: CertificateSigningRequest metadata: name: ${csrName} spec: groups: - system:authenticated request: $(cat ${tmpdir}/server.csr | base64 | tr -d \u0026#39;\\n\u0026#39;) usages: - digital signature - key encipherment - server auth EOF 根据文档, 在1.22以及之后版本的kubernetes中, certificates.k8s.io/v1beta1 已经被抛弃不可用, 需要修改为certificates.k8s.io/v1, 并且需要在spec中增加signerName, signer的作用是签署证书. k8s内置的signerName 有以下几种:\n",
   "keywords": [
     
   ],

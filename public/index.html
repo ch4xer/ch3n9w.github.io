@@ -2,7 +2,7 @@
 <html lang="en" dir="auto">
 
 <head>
-	<meta name="generator" content="Hugo 0.131.0"><meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.134.3"><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -57,10 +57,7 @@
         }
 
     </style>
-</noscript>
-  
-
-<meta property="og:title" content="ch3n9w の 超元域" />
+</noscript><meta property="og:title" content="ch3n9w の 超元域" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://ch3n9w.github.io/" />
@@ -182,7 +179,8 @@
 在开始之前, 请确保集群的API Server开启了MutatingAdmissionWebhook和ValidatingAdmissionWebhook (一般默认情况下都开启了).
 Deployment 创建 service account 创建一个用于webhook的service account
 kubectl apply -f deployment/rbac.yaml 创建证书 API Server调用Webhook的过程是需要HTTPS通信的(其实集群内的通信几乎都是HTTPS), 因此需要为webhook创建证书来对webhook的service进行域名认证. 原博客使用的webhook-create-signed-cert.sh已经过时, 不再适用于1.25.16版本的集群了, 主要出问题的地方如下:
-# create server cert/key CSR and send to k8s API cat &lt;&lt;EOF | kubectl create -f - apiVersion: certificates....</p>
+# create server cert/key CSR and send to k8s API cat &lt;&lt;EOF | kubectl create -f - apiVersion: certificates.k8s.io/v1beta1 kind: CertificateSigningRequest metadata: name: ${csrName} spec: groups: - system:authenticated request: $(cat ${tmpdir}/server.csr | base64 | tr -d &#39;\n&#39;) usages: - digital signature - key encipherment - server auth EOF 根据文档, 在1.22以及之后版本的kubernetes中, certificates.k8s.io/v1beta1 已经被抛弃不可用, 需要修改为certificates.k8s.io/v1, 并且需要在spec中增加signerName, signer的作用是签署证书. k8s内置的signerName 有以下几种:
+...</p>
   </div>
   <footer class="entry-footer"><span title='2024-05-03 17:14:14 +0800 CST'>May 3, 2024</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;564 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to Kubernetes Admission Webhook 部署和调试" href="https://ch3n9w.github.io/posts/tech-kubernetes-webhook/"></a>
@@ -211,7 +209,8 @@ kubectl apply -f deployment/rbac.yaml 创建证书 API Server调用Webhook的过
 具体来说, 开源运动更加注重软件开发方式的开放性, 一种类似于集市场景中人人可参与的, 以软件质量为最终目标的倡议, 它关注的是软件本身, 因此颇具工程师的纯粹特性; 相反, 自由软件运动不仅仅注重软件开发方式, 更赋予软件本身以道德属性, 它更强调软件用户的自由修改和自由传播的权利, 以&#34;人的自由&#34;为中心, 任何限制软件用户这些权利的个人和组织都是&#34;邪恶&#34;且需要被抵制的, 这让它更像是一种社会运动. 有一句Stallman的话可以很好地阐释其意: “如果一个软件是不自由的, 哪怕它的技术非常先进, 我也不会去使用它”, 相反, 开源运动的代表人物Linus曾经在一次大会上公开表示自己是Microsoft Powerpoint的粉丝用户, 二者的冲突也由此而来: 在开源主义者眼中, 商业软件是一个不完美的解决方案, 但是在自由软件者眼中, 商业软件则是彻头彻尾的敌人.
 两种运动并不是互相独立的, 相反, 开源运动脱胎于自由软件运动, 是后者为了适应软件行业商业发展的一种必然演变, 也是追求自由的理想主义者在现实屡屡碰壁后的一种妥协.
 在今天, 尽管Stallman依旧在全球各地对着众多慕名而来的听众布道, 他也依旧能给人以震撼人心开悟明智的感觉, 但这种感觉过后又有谁会真的去追随他的步伐, 去将自己生活中的所有专有软件清除呢? 要知道, Stallman的攻击目标, 可不仅仅是个人计算机中的专有软件, 任何非自由软件, 不管是汽车上的, 飞机上的, 动车上的, 乃至收音机里的, 都是他的抵制对象. 而对于没有资源的普通人来说, 单是找一台彻头彻尾源码可见(指主板上的固件)的笔记本电脑, 就已经是一件非常困难且完全没有性价比的事情了.
-从我的角度来看, 虽然很遗憾, 但是自开源运动成长起来后, 自由软件存在的意义就没有以前那么大了, 甚至说的不客气一些, 微乎其微....</p>
+从我的角度来看, 虽然很遗憾, 但是自开源运动成长起来后, 自由软件存在的意义就没有以前那么大了, 甚至说的不客气一些, 微乎其微. 这是需要联系历史背景来看的, 在自由软件运动诞生的那个年代, 软件行业极度闭塞, 互联网才刚刚诞生, 各个公司都在自己蒙头闭门造车, 极尽所能保护自家的代码不被公开, 相互之间更不用说有什么兼容合作了. 自由软件的诞生是对那个封闭环境的一种彻头彻尾的反叛, 它以一种偏激的姿态在软件行业逐渐打动了一批人, 也培养起了别具一格更加开放的文化.
+...</p>
   </div>
   <footer class="entry-footer"><span title='2024-03-23 22:57:50 +0000 UTC'>March 23, 2024</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;123 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to 若为自由故, 软件皆可抛" href="https://ch3n9w.github.io/posts/read-free-opensource/"></a>
@@ -232,7 +231,7 @@ kubectl apply -f deployment/rbac.yaml 创建证书 API Server调用Webhook的过
 RECON Just check the environment related to K8s using env and reconnoiter internal service using dnscan
 This blog is good written link
 Finding Neighbours According to the description, the sidecar container of current pod is sending some information (possibly flag) to remote server. So, the first step is digging the remote server like what we do in the first challenge, which leads me to reporting-service.k8s-lan-party.svc.cluster.local.
-As we all know, all containers within same pod share one network namespace, which means we can sniff the traffic from our current container....</p>
+...</p>
   </div>
   <footer class="entry-footer"><span title='2024-03-15 07:34:46 +0000 UTC'>March 15, 2024</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;674 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to k8s lan party" href="https://ch3n9w.github.io/posts/ctf-k8s-lan-party/"></a>
@@ -262,7 +261,8 @@ As we all know, all containers within same pod share one network namespace, whic
 Background and pre-knowledge bcc bcc的ebpf c代码不是真正的C, 而是bcc自己定义的一种和C类似的语言.
 limitation of ebpf program eBPF 程序必须被验证器校验通过后才能执行，且不能包含无法到达的指令； eBPF 程序不能随意调用内核函数，只能调用在 API 中定义的辅助函数； eBPF 程序栈空间最多只有 512 字节，想要更大的存储，就必须要借助映射存储； 在内核 5.2 之前，eBPF 字节码最多只支持 4096 条指令，而 5.2 内核把这个限制提高到了 100 万条； 由于内核的快速变化，在不同版本内核中运行时，需要访问内核数据结构的 eBPF 程序很可能需要调整源码，并重新编译。 tracepoint and kprobe tracepoint其实就是在Linux内核的一些关键函数中埋下的hook点,这样在tracing的时候,我们就可以在这些固定的点上挂载调试的函数,然后查看内核的信息.
 Tracepoint是在内核中固定的hook点, 并不是在所有的函数中都有tracepoint. 这时候, 我们就需要用到kprobe了. kprobe可以动态地在所有的内核函数(除了inline函数)上挂载probe函数
-eBPF virtual machine The ebpf virtual machine uses 10 general-purpose registers (0-9), and additional register 10 which was used as a stack frame pointer (can only be read but not written)....</p>
+eBPF virtual machine The ebpf virtual machine uses 10 general-purpose registers (0-9), and additional register 10 which was used as a stack frame pointer (can only be read but not written). As a BPF program is executed, values get stored in these registers to keep track of state.
+...</p>
   </div>
   <footer class="entry-footer"><span title='2024-02-04 00:06:15 +0000 UTC'>February 4, 2024</span>&nbsp;·&nbsp;8 min&nbsp;·&nbsp;1560 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to Learning eBPF" href="https://ch3n9w.github.io/posts/tech-learning-ebpf/"></a>
@@ -297,7 +297,8 @@ clash for windows是基于开源的clash core核心代码做的图形化客户�
 具体来说, 对我而言, 除非开源软件合法合规,否则:
 不要做windows平台下的软件 不要在项目中包含简体中文说明 不要取朗朗上口好记的项目名 控制推广范围,就是对作者最大的保护 尽管以上措施会限制软件的使用范围,但是对于此类软件来说,开发者的人身安全才是第一位的.
 只是,这些教训,对于已经消亡的项目来说,已经太迟了.
-参考 https://github.com/net4people/bbs/issues/303 https://www.eaimty.com/2023/opensource-project-based-on-hormone/</p>
+参考 https://github.com/net4people/bbs/issues/303 https://www.eaimty.com/2023/opensource-project-based-on-hormone/
+</p>
   </div>
   <footer class="entry-footer"><span title='2023-11-04 10:13:59 +0000 UTC'>November 4, 2023</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;46 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to RIP Clash" href="https://ch3n9w.github.io/posts/gossip-rip-clash/"></a>
@@ -314,13 +315,14 @@ clash for windows是基于开源的clash core核心代码做的图形化客户�
     </h2>
   </header>
   <div class="entry-content">
-    <p>与所爱之人在一起的时光, 会生出互相的珍惜, 这份珍惜犹如风筝线一般, 即便对方远在云端, 依旧可以感知到其心念所动, 于是思念由此而生.
+    <p> 与所爱之人在一起的时光, 会生出互相的珍惜, 这份珍惜犹如风筝线一般, 即便对方远在云端, 依旧可以感知到其心念所动, 于是思念由此而生.
 在yq成功上岸家乡的教师编后, 为了庆祝, 也为了缓解许久未见的相思之苦, 我匆忙计划了一下行程, 一边让她订来北京的车票, 一边思考附近哪里有卖香槟的.
 颐和园 选择颐和园, 是因为离信工所比较近. 当日原本想带yq去我平时去的早餐店, 可惜我们出发之时, 已是中午十二点了, 于是带她吃之前推荐过的意大利沙县萨莉亚. 这是一个价格非常亲民的意大利西餐厅, 看了看菜单上十几二十元的菜品后, 我们彻底放下了对价格的顾虑, 仅仅考虑口味和胃口. 实际上这家店的口味确实不错, 特别是蘑菇浓汤, 虽然肯定不能说顶级, 但这种不用顾虑价格就享受西餐的轻松感, 独此一份 (说白了还是太穷).
 阳光正好, 晒在身上暖洋洋的. 我们在下公交之后, 慢慢悠悠前往颐和园的入口, 路上落叶飞舞, 却无半点萧条, 行人来来往往, 一个婴儿车里的小孩指着另一个在妈妈自行车车筐里的小孩羡慕地哇哇直叫, 惹得两边的家长忍俊不禁. 走走停停之间, 我们时而在路边的亭子里歇脚, 时而在红砖绿瓦的不知名府门前驻足拍照, 心下一片闲适.
 进入颐和园后才发现这里出乎意料的大, 但想想这毕竟是皇帝的游玩之地, 倒也算合理. 我们绕过威武的麒麟像, 路过皇帝慈禧临时听政的仁寿宫和一棵棵百年龙柏, 穿过城关, 来到谐趣园. 因为是秋天的缘故, 尽管气温并不让人觉得有秋意, 但是池中的荷花已经尽数枯萎, 风光不再, 宛如那个死去多时的王朝. 沿着回廊行走, 我恼于这行走的空间竟然如此狭窄, 古代的皇帝不与人并肩行走, 其他的人只能尾随, 因此凡是走廊一类的地方都可以设计地窄小一些, 只是我不禁开始无端思考, 长期地处于这样的空间里, 人的心胸眼界是否也会变得狭小呢?
 一路上看到了许多格格打扮的女生在凹造型拍照, 纸扇轻摇, 回眸一笑, 气质优雅, 恬静端庄, 只是都没有我的身边人这般可爱.
-来到苏州街, 我和yq沿河而行, 小心路过一间间无人的商铺....</p>
+来到苏州街, 我和yq沿河而行, 小心路过一间间无人的商铺. 昔日皇帝为在此重现江南风情, 仿照水镇在此地建造了买卖街, 专供宫中人游览, 即所谓&#34;宫市&#34;. 这个地方1860被列强烧毁, 一百多年后才由共和国重建, 然而我对此类皇室娱乐并不感冒, 只是紧张地一遍遍提醒不停拍照的yq小心别把手机丢进河里.
+...</p>
   </div>
   <footer class="entry-footer"><span title='2023-10-30 21:35:04 +0000 UTC'>October 30, 2023</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;191 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to 2023 记北京秋游" href="https://ch3n9w.github.io/posts/gossip-beijing-travel-2023-2/"></a>
@@ -337,12 +339,13 @@ clash for windows是基于开源的clash core核心代码做的图形化客户�
     </h2>
   </header>
   <div class="entry-content">
-    <p>2024年7月更新: 经过了半年的时候, 遇到的问题包括但不限于 1) 微信卡顿 2) 银行类app无法使用 3) system UI经常崩溃 4) 快充消失. 出于可用性考虑, 已经转回coloros
+    <p> 2024年7月更新: 经过了半年的时候, 遇到的问题包括但不限于 1) 微信卡顿 2) 银行类app无法使用 3) system UI经常崩溃 4) 快充消失. 出于可用性考虑, 已经转回coloros
 2024年2月更新: Lsposed连同一系列root隐藏模块已经归档无法使用, 为了方便日常使用, 建议卸载magisk, 刷机的时代已经过去了.
 不知道从什么时候开始, 往日被冠以高可玩性高自由度的安卓系统逐渐变得封闭, 一步步沦为资本市场的玩物和工具. MIUI也好, ColorOS也罢, 用户总能在使用系统的过程中发现一些去也去不掉的应用和小程序, 看到一些不想看也得看的广告, 而起初, 有些人尽管对此有所不满, 但基本都选择容忍的态度, 但这几年国内的趋势越来越不对劲: 先是某APP在全社会的宣传下或软性或硬性地被安装在了相当大一部分人的手机中监控个人信息(当然, 我理解打击诈骗行为, 保护平民百姓的钱包远比软件自由重要得多), 又是拼多多被爆出利用安卓手机的0day漏洞在所有用户的手机上进行多种恶意行为, 一直到最近, 一则某信部的发文通知将这种 我的手机不归我管 的焦虑感推向了新的高潮.
 就目前来看, 这则通知的社会反响并不强烈, 不出意外应该可以顺利推行. 之后最直观的效果就是所有使用国内安卓系统的用户都只能安装指定的app, 不再具备安装推特等软件的能力, 这无异于干掉了安卓最大的特点, 使其沦落为全方位落后于苹果的手机系统. 作为一个经历过安卓app爆发式增长年代的玩家, 我很好奇现在新接触到手机的用户对自己掌中的设备是一个什么样的印象, 是一个拥有无限可能的工具? 还是一个用低质量内容, 广告和充满限制的操作系统来无限吸收注意力, 获取个人隐私并变相管理个人精神世界的资本和政府工具?
 万幸的是, 安卓的开源属性为它保留下了一些自由的火种, 那边是第三方rom. 本文主要记录自己安装 lineageos, magisk, Lsposed 以及一些有用软件的过程.
-购买机器 查看lineageos支持的设备列表, 出于对一加的偏好和对骁龙888发热的不放心, 我选择以一加8pro作为自己的新设备. 在咸鱼上逛了很久, 筛掉一大批机器贩子和低质量卖家后, 我看中了一位宝妈的二手机并下单. 机器到手后我非常满意, 因为成色实在是很好, 连维修店里给我手机换电池的工程师也赞叹保养得不错, 这1700虽然有点贵, 但还是值得的....</p>
+购买机器 查看lineageos支持的设备列表, 出于对一加的偏好和对骁龙888发热的不放心, 我选择以一加8pro作为自己的新设备. 在咸鱼上逛了很久, 筛掉一大批机器贩子和低质量卖家后, 我看中了一位宝妈的二手机并下单. 机器到手后我非常满意, 因为成色实在是很好, 连维修店里给我手机换电池的工程师也赞叹保养得不错, 这1700虽然有点贵, 但还是值得的.
+...</p>
   </div>
   <footer class="entry-footer"><span title='2023-08-13 21:34:53 +0000 UTC'>August 13, 2023</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;124 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to lineageos使用体验" href="https://ch3n9w.github.io/posts/tech-lineageos-md/"></a>
@@ -434,7 +437,8 @@ mount /dev/nvme0n1p2 /mnt 使用lsblk -f命令查看分区的UUID号, 拍个照�
 mount -t proc none /mnt/proc mount -t sysfs none /mnt/sys mount -o bind /dev /mnt/dev chroot /mnt bash 然后执行下列命令来为所有内核重建内存盘
 mkinitcpio -P 最后重建grub引导, 按照道理应该要把引导分区/dev/nvme0n1p1挂载到/mnt/boot之后才可以, 但是我记得自己执行的时候没有挂载?
 grub-mkconfig -o /boot/grub/grub.cfg 重建grub引导 在上一步的chroot环境中, 执行下列命令, 记得把引导分区挂载到/mnt/boot
-grub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了....</p>
+grub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了.
+...</p>
   </div>
   <footer class="entry-footer"><span title='2023-01-16 05:28:51 +0000 UTC'>January 16, 2023</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;237 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to ext4到btrfs转换记录" href="https://ch3n9w.github.io/posts/tech-ext4-to-btrfs/"></a>
@@ -456,7 +460,8 @@ grub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就
 能否绕开wayland?
 就我思考这个问题的时候, linux QQ给我发了一个系统通知, 我的电脑上的系统通知服务原先只是为了让linux qq不崩溃才安装的, 然而这个时候, 它给了我一个新的解决方案: 使用系统通知来呈现翻译结果. 于是搜了一下如何发送系统通知, 发现竟然意外的简单.
 notify-send &#34;title&#34; &#34;content&#34; 那么接下来的问题: 如何获取选中文本的内容? 这个问题, 我原本计划通过阅读wl-clipboard来学习的, 但是我想先尽快用上翻译, 把优化放到以后再说, 于是决定直接使用wl-clipboard来获取选中文本内容, 那么至此思路理清, 大致如下:
-使用剪切板获取到选中文本的内容, 可以使用wl-paste -p来获取 获取文本之后, 将换行符替换成空格 (这块可以有更好的处理方法, 简单起见就全换掉了), 使用sed 文本处理完毕后, 将文本输入进translate.js中进行翻译, (这块可以使用别的现成工具) 翻译结果出来之后, 将结果以系统通知的形式呈现出来, 当然, 系统通知必须要有, 可以是dunst, mako, swaync, 以及kde或者gnome的桌面消息通知都可以....</p>
+使用剪切板获取到选中文本的内容, 可以使用wl-paste -p来获取 获取文本之后, 将换行符替换成空格 (这块可以有更好的处理方法, 简单起见就全换掉了), 使用sed 文本处理完毕后, 将文本输入进translate.js中进行翻译, (这块可以使用别的现成工具) 翻译结果出来之后, 将结果以系统通知的形式呈现出来, 当然, 系统通知必须要有, 可以是dunst, mako, swaync, 以及kde或者gnome的桌面消息通知都可以. 发送翻译结果使用命令notify-send &#34;标题&#34; &#34;翻译内容&#34; 以我的划词翻译为案例, 我在~/.config/sway/config中加入了这么一行作为划词翻译触发按键
+...</p>
   </div>
   <footer class="entry-footer"><span title='2023-01-11 04:36:45 +0000 UTC'>January 11, 2023</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;498 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to wayland下的划词翻译解决方案" href="https://ch3n9w.github.io/posts/tech-translation-under-wayland/"></a>
@@ -481,7 +486,8 @@ Firefox-UI-Fix 使用Firefox-UI-Fix来个性化Firefox的界面
 Addon Vimium 该插件将vim的操作方式带入到浏览器中, 能够让用户更少依赖鼠标.
 默认情况下, firefox出于安全考虑会在一些页面中禁用Addon, 为了让该插件能够在更多的页面上使用, 需要在about:config中进行以下设置
 extensions.webextensions.restrictedDomains清空掉 privacy.resistFingerprinting.block_mozAddonManager设置为true,来让插件在所有页面上都可以使用 以下是我的Vimium键位设置.
-# Insert your preferred key mappings here. unmapAll map H previousTab map J previousTab map L nextTab map K nextTab map &lt;c-j&gt; scrollPageDown map &lt;c-k&gt; scrollPageUp map &lt;c-o&gt; goBack map &lt;c-i&gt; goForward map o Vomnibar....</p>
+# Insert your preferred key mappings here. unmapAll map H previousTab map J previousTab map L nextTab map K nextTab map &lt;c-j&gt; scrollPageDown map &lt;c-k&gt; scrollPageUp map &lt;c-o&gt; goBack map &lt;c-i&gt; goForward map o Vomnibar.activateInNewTab map b Vomnibar.activateBookmarksInNewTab map t Vomnibar.activateTabSelection map M LinkHints.activateModeToOpenInNewTab map m LinkHints.activateModeToOpenInNewForegroundTab map gi focusInput map gg scrollToTop map G scrollToBottom map j scrollDown map k scrollUp map h scrollLeft map l scrollRight map x removeTab map X restoreTab map ? showHelp map yy copyCurrentUrl map p openCopiedUrlInNewTab Tip: 如果在某次更新之后发现插件不可用了, 那么可以考虑临时切换到另一个类似的插件 Vimium C , 把相同的键位复制进去就行啦.
+...</p>
   </div>
   <footer class="entry-footer"><span title='2023-01-09 23:04:29 +0000 UTC'>January 9, 2023</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;247 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to 武装火狐" href="https://ch3n9w.github.io/posts/tech-arm-firefox/"></a>
@@ -541,7 +547,8 @@ Sway是一个窗口管理器，开发者做的事情是在wayland下复刻一个
 在按win&#43;数字键的时候，用大拇指去按是很扭曲的姿势，**一个更加自然的姿势是用左手的掌心左下（手背视角）的部分去压win键，然后用手指去按数字键。**如果要按ctrl&#43;win，就用同样的部位压住两个键，这个难度会大一些，大概确实还可以优化的。 调整窗口大小的时候，进入resize模式然后用键盘去按是很低效的行为，相反，这种时候依赖鼠标不是什么坏事，通过把鼠标悬停在窗口上然后按住右键进行拖拽就可以实现快速的窗口大小调整。 scratchpad中更适合使用tab模式。 有的时候在两个workspace之间切换会很频繁，这个时候更适合用workspace back_and_forth而不是一直执着于用数字键去切换，或者使用鼠标的滚轮来切换，这也是一个不错的主意。 除此之外还有一个小的优点，在sway下可以给不同键盘换上不同的布局，这点对我而言是刚需，但是在xorg下面，这种操作往往只能将同一个布局应用于所有的键盘，一旦布局出现了问题导致键盘不可用，那么所有的键盘都会变得不可用。
 最后，我和大部分的geek用户不一样，我比较笨，只是一个普通用户，我做不到也不想去和他们一样视鼠标如洪水猛兽，相反，sway下我还是会频繁使用鼠标，对我来说用鼠标去交互两个窗口的位置依旧是比用键盘更加高效的操作。所以我想说的是，追求属于自己的实用性，你可以去参考别人的建议，但是最终还是要找到属于你自己的习惯。 对于我个人来说， 我也完全不排除在plasma的bug修复后回到plasma的可能性，毕竟老牌桌面。
 列出我使用的软件：
-桌面环境 SwayWM（窗口管理） waybar（信息展示栏） 终端 alacritty 浏览器 firefox-developer-edition （主力） chrome 输入法 fcitx5 代码编辑 Neovim（主力） Vscode（副手） Jetbrains 做笔记 Neovim-qt zotero 文件浏览器 ranger dolphin 看论文 zotero okular 游戏 steam（泰拉瑞亚、黑暗之魂……） waydroid（明日方舟） HMCL（minecraft） 工具替代 exa 替代 ls zoxide 替代 cd scp 替代 cp Trouble Shooting 关机的时候出现 a stoping job is running for xxx hangout 修改/etc/systemd/system....</p>
+桌面环境 SwayWM（窗口管理） waybar（信息展示栏） 终端 alacritty 浏览器 firefox-developer-edition （主力） chrome 输入法 fcitx5 代码编辑 Neovim（主力） Vscode（副手） Jetbrains 做笔记 Neovim-qt zotero 文件浏览器 ranger dolphin 看论文 zotero okular 游戏 steam（泰拉瑞亚、黑暗之魂……） waydroid（明日方舟） HMCL（minecraft） 工具替代 exa 替代 ls zoxide 替代 cd scp 替代 cp Trouble Shooting 关机的时候出现 a stoping job is running for xxx hangout 修改/etc/systemd/system.conf
+...</p>
   </div>
   <footer class="entry-footer"><span title='2022-12-17 14:24:23 +0000 UTC'>December 17, 2022</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;171 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to 使用Arch Linux &#43; Sway一年后" href="https://ch3n9w.github.io/posts/tech-arch-sway/"></a>

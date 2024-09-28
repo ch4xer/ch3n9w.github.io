@@ -8,10 +8,13 @@
 <title>k8s lan party | ch3n9w の 超元域</title>
 <meta name="keywords" content="">
 <meta name="description" content="Long time no CTF~~
-RECON Just check the environment related to K8s using env and reconnoiter internal service using dnscan
+RECON
+Just check the environment related to K8s using env and reconnoiter internal service using dnscan
+
+
 This blog is good written link
-Finding Neighbours According to the description, the sidecar container of current pod is sending some information (possibly flag) to remote server. So, the first step is digging the remote server like what we do in the first challenge, which leads me to reporting-service.k8s-lan-party.svc.cluster.local.
-As we all know, all containers within same pod share one network namespace, which means we can sniff the traffic from our current container.">
+Finding Neighbours
+According to the description, the sidecar container of current pod is sending some information (possibly flag) to remote server. So, the first step is digging the remote server like what we do in the first challenge, which leads me to reporting-service.k8s-lan-party.svc.cluster.local.">
 <meta name="author" content="ch3n9w">
 <link rel="canonical" href="https://ch3n9w.github.io/posts/ctf-k8s-lan-party/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
@@ -59,15 +62,15 @@ As we all know, all containers within same pod share one network namespace, whic
         }
 
     </style>
-</noscript>
-  
-
-<meta property="og:title" content="k8s lan party" />
+</noscript><meta property="og:title" content="k8s lan party" />
 <meta property="og:description" content="Long time no CTF~~
-RECON Just check the environment related to K8s using env and reconnoiter internal service using dnscan
+RECON
+Just check the environment related to K8s using env and reconnoiter internal service using dnscan
+
+
 This blog is good written link
-Finding Neighbours According to the description, the sidecar container of current pod is sending some information (possibly flag) to remote server. So, the first step is digging the remote server like what we do in the first challenge, which leads me to reporting-service.k8s-lan-party.svc.cluster.local.
-As we all know, all containers within same pod share one network namespace, which means we can sniff the traffic from our current container." />
+Finding Neighbours
+According to the description, the sidecar container of current pod is sending some information (possibly flag) to remote server. So, the first step is digging the remote server like what we do in the first challenge, which leads me to reporting-service.k8s-lan-party.svc.cluster.local." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ch3n9w.github.io/posts/ctf-k8s-lan-party/" />
 <meta property="og:image" content="https://ch3n9w.github.io/2024-03-26-21-02-36.png" /><meta property="article:section" content="posts" />
@@ -78,10 +81,13 @@ As we all know, all containers within same pod share one network namespace, whic
 <meta name="twitter:image" content="https://ch3n9w.github.io/2024-03-26-21-02-36.png" />
 <meta name="twitter:title" content="k8s lan party"/>
 <meta name="twitter:description" content="Long time no CTF~~
-RECON Just check the environment related to K8s using env and reconnoiter internal service using dnscan
+RECON
+Just check the environment related to K8s using env and reconnoiter internal service using dnscan
+
+
 This blog is good written link
-Finding Neighbours According to the description, the sidecar container of current pod is sending some information (possibly flag) to remote server. So, the first step is digging the remote server like what we do in the first challenge, which leads me to reporting-service.k8s-lan-party.svc.cluster.local.
-As we all know, all containers within same pod share one network namespace, which means we can sniff the traffic from our current container."/>
+Finding Neighbours
+According to the description, the sidecar container of current pod is sending some information (possibly flag) to remote server. So, the first step is digging the remote server like what we do in the first challenge, which leads me to reporting-service.k8s-lan-party.svc.cluster.local."/>
 
 
 <script type="application/ld+json">
@@ -110,7 +116,7 @@ As we all know, all containers within same pod share one network namespace, whic
   "@type": "BlogPosting",
   "headline": "k8s lan party",
   "name": "k8s lan party",
-  "description": "Long time no CTF~~\nRECON Just check the environment related to K8s using env and reconnoiter internal service using dnscan\nThis blog is good written link\nFinding Neighbours According to the description, the sidecar container of current pod is sending some information (possibly flag) to remote server. So, the first step is digging the remote server like what we do in the first challenge, which leads me to reporting-service.k8s-lan-party.svc.cluster.local.\nAs we all know, all containers within same pod share one network namespace, which means we can sniff the traffic from our current container.",
+  "description": "Long time no CTF~~\nRECON Just check the environment related to K8s using env and reconnoiter internal service using dnscan\nThis blog is good written link\nFinding Neighbours According to the description, the sidecar container of current pod is sending some information (possibly flag) to remote server. So, the first step is digging the remote server like what we do in the first challenge, which leads me to reporting-service.k8s-lan-party.svc.cluster.local.\n",
   "keywords": [
     
   ],

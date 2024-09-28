@@ -8,16 +8,35 @@
 <title>ext4到btrfs转换记录 | ch3n9w の 超元域</title>
 <meta name="keywords" content="">
 <meta name="description" content="这篇文章是对我从ext4文件系统转换到btrfs过程中的一些操作记录, 便于日后参考.
-前置准备 制作arch linux 启动盘, 版本越新越好. 备份重要文件 我个人在转换前会把大文件(例如虚拟机文件)转移到移动硬盘里, 让转换过程更快一些 转换 进入LiveCD 系统, 对主分区进行转换
-btrfs-convert /dev/nvme0n1p2 等待一段时间之后, 显示conversion complete就表示没有问题, 接下来还需要做三件事情才可以进入系统
-修改fstab 首先将转换成功后的分区挂载到/mnt下
-mount /dev/nvme0n1p2 /mnt 使用lsblk -f命令查看分区的UUID号, 拍个照片记一下
+前置准备
+
+制作arch linux 启动盘, 版本越新越好.
+备份重要文件
+我个人在转换前会把大文件(例如虚拟机文件)转移到移动硬盘里, 让转换过程更快一些
+
+转换
+进入LiveCD 系统, 对主分区进行转换
+btrfs-convert /dev/nvme0n1p2
+等待一段时间之后, 显示conversion complete就表示没有问题, 接下来还需要做三件事情才可以进入系统
+修改fstab
+首先将转换成功后的分区挂载到/mnt下
+mount /dev/nvme0n1p2 /mnt
+使用lsblk -f命令查看分区的UUID号, 拍个照片记一下
 编辑/mnt/etc/fstab, 修改这个分区类型为btrfs, 将最后的两列数字都改成0, 保存退出
-重建内存盘 先挂载, 然后进入chroot环境
-mount -t proc none /mnt/proc mount -t sysfs none /mnt/sys mount -o bind /dev /mnt/dev chroot /mnt bash 然后执行下列命令来为所有内核重建内存盘
-mkinitcpio -P 最后重建grub引导, 按照道理应该要把引导分区/dev/nvme0n1p1挂载到/mnt/boot之后才可以, 但是我记得自己执行的时候没有挂载?
-grub-mkconfig -o /boot/grub/grub.cfg 重建grub引导 在上一步的chroot环境中, 执行下列命令, 记得把引导分区挂载到/mnt/boot
-grub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了.">
+重建内存盘
+先挂载, 然后进入chroot环境
+mount -t proc none /mnt/proc
+mount -t sysfs none /mnt/sys
+mount -o bind /dev /mnt/dev
+chroot /mnt bash
+然后执行下列命令来为所有内核重建内存盘
+mkinitcpio -P
+最后重建grub引导, 按照道理应该要把引导分区/dev/nvme0n1p1挂载到/mnt/boot之后才可以, 但是我记得自己执行的时候没有挂载?
+grub-mkconfig -o /boot/grub/grub.cfg
+重建grub引导
+在上一步的chroot环境中, 执行下列命令, 记得把引导分区挂载到/mnt/boot
+grub-mkconfig -o /boot/grub/grub.cfg
+大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了.">
 <meta name="author" content="ch3n9w">
 <link rel="canonical" href="https://ch3n9w.github.io/posts/tech-ext4-to-btrfs/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
@@ -65,21 +84,37 @@ grub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就
         }
 
     </style>
-</noscript>
-  
-
-<meta property="og:title" content="ext4到btrfs转换记录" />
+</noscript><meta property="og:title" content="ext4到btrfs转换记录" />
 <meta property="og:description" content="这篇文章是对我从ext4文件系统转换到btrfs过程中的一些操作记录, 便于日后参考.
-前置准备 制作arch linux 启动盘, 版本越新越好. 备份重要文件 我个人在转换前会把大文件(例如虚拟机文件)转移到移动硬盘里, 让转换过程更快一些 转换 进入LiveCD 系统, 对主分区进行转换
-btrfs-convert /dev/nvme0n1p2 等待一段时间之后, 显示conversion complete就表示没有问题, 接下来还需要做三件事情才可以进入系统
-修改fstab 首先将转换成功后的分区挂载到/mnt下
-mount /dev/nvme0n1p2 /mnt 使用lsblk -f命令查看分区的UUID号, 拍个照片记一下
+前置准备
+
+制作arch linux 启动盘, 版本越新越好.
+备份重要文件
+我个人在转换前会把大文件(例如虚拟机文件)转移到移动硬盘里, 让转换过程更快一些
+
+转换
+进入LiveCD 系统, 对主分区进行转换
+btrfs-convert /dev/nvme0n1p2
+等待一段时间之后, 显示conversion complete就表示没有问题, 接下来还需要做三件事情才可以进入系统
+修改fstab
+首先将转换成功后的分区挂载到/mnt下
+mount /dev/nvme0n1p2 /mnt
+使用lsblk -f命令查看分区的UUID号, 拍个照片记一下
 编辑/mnt/etc/fstab, 修改这个分区类型为btrfs, 将最后的两列数字都改成0, 保存退出
-重建内存盘 先挂载, 然后进入chroot环境
-mount -t proc none /mnt/proc mount -t sysfs none /mnt/sys mount -o bind /dev /mnt/dev chroot /mnt bash 然后执行下列命令来为所有内核重建内存盘
-mkinitcpio -P 最后重建grub引导, 按照道理应该要把引导分区/dev/nvme0n1p1挂载到/mnt/boot之后才可以, 但是我记得自己执行的时候没有挂载?
-grub-mkconfig -o /boot/grub/grub.cfg 重建grub引导 在上一步的chroot环境中, 执行下列命令, 记得把引导分区挂载到/mnt/boot
-grub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了." />
+重建内存盘
+先挂载, 然后进入chroot环境
+mount -t proc none /mnt/proc
+mount -t sysfs none /mnt/sys
+mount -o bind /dev /mnt/dev
+chroot /mnt bash
+然后执行下列命令来为所有内核重建内存盘
+mkinitcpio -P
+最后重建grub引导, 按照道理应该要把引导分区/dev/nvme0n1p1挂载到/mnt/boot之后才可以, 但是我记得自己执行的时候没有挂载?
+grub-mkconfig -o /boot/grub/grub.cfg
+重建grub引导
+在上一步的chroot环境中, 执行下列命令, 记得把引导分区挂载到/mnt/boot
+grub-mkconfig -o /boot/grub/grub.cfg
+大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ch3n9w.github.io/posts/tech-ext4-to-btrfs/" />
 <meta property="og:image" content="https://ch3n9w.github.io/btrfs.jpeg" /><meta property="article:section" content="posts" />
@@ -90,16 +125,35 @@ grub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就
 <meta name="twitter:image" content="https://ch3n9w.github.io/btrfs.jpeg" />
 <meta name="twitter:title" content="ext4到btrfs转换记录"/>
 <meta name="twitter:description" content="这篇文章是对我从ext4文件系统转换到btrfs过程中的一些操作记录, 便于日后参考.
-前置准备 制作arch linux 启动盘, 版本越新越好. 备份重要文件 我个人在转换前会把大文件(例如虚拟机文件)转移到移动硬盘里, 让转换过程更快一些 转换 进入LiveCD 系统, 对主分区进行转换
-btrfs-convert /dev/nvme0n1p2 等待一段时间之后, 显示conversion complete就表示没有问题, 接下来还需要做三件事情才可以进入系统
-修改fstab 首先将转换成功后的分区挂载到/mnt下
-mount /dev/nvme0n1p2 /mnt 使用lsblk -f命令查看分区的UUID号, 拍个照片记一下
+前置准备
+
+制作arch linux 启动盘, 版本越新越好.
+备份重要文件
+我个人在转换前会把大文件(例如虚拟机文件)转移到移动硬盘里, 让转换过程更快一些
+
+转换
+进入LiveCD 系统, 对主分区进行转换
+btrfs-convert /dev/nvme0n1p2
+等待一段时间之后, 显示conversion complete就表示没有问题, 接下来还需要做三件事情才可以进入系统
+修改fstab
+首先将转换成功后的分区挂载到/mnt下
+mount /dev/nvme0n1p2 /mnt
+使用lsblk -f命令查看分区的UUID号, 拍个照片记一下
 编辑/mnt/etc/fstab, 修改这个分区类型为btrfs, 将最后的两列数字都改成0, 保存退出
-重建内存盘 先挂载, 然后进入chroot环境
-mount -t proc none /mnt/proc mount -t sysfs none /mnt/sys mount -o bind /dev /mnt/dev chroot /mnt bash 然后执行下列命令来为所有内核重建内存盘
-mkinitcpio -P 最后重建grub引导, 按照道理应该要把引导分区/dev/nvme0n1p1挂载到/mnt/boot之后才可以, 但是我记得自己执行的时候没有挂载?
-grub-mkconfig -o /boot/grub/grub.cfg 重建grub引导 在上一步的chroot环境中, 执行下列命令, 记得把引导分区挂载到/mnt/boot
-grub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了."/>
+重建内存盘
+先挂载, 然后进入chroot环境
+mount -t proc none /mnt/proc
+mount -t sysfs none /mnt/sys
+mount -o bind /dev /mnt/dev
+chroot /mnt bash
+然后执行下列命令来为所有内核重建内存盘
+mkinitcpio -P
+最后重建grub引导, 按照道理应该要把引导分区/dev/nvme0n1p1挂载到/mnt/boot之后才可以, 但是我记得自己执行的时候没有挂载?
+grub-mkconfig -o /boot/grub/grub.cfg
+重建grub引导
+在上一步的chroot环境中, 执行下列命令, 记得把引导分区挂载到/mnt/boot
+grub-mkconfig -o /boot/grub/grub.cfg
+大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了."/>
 
 
 <script type="application/ld+json">
@@ -128,7 +182,7 @@ grub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就
   "@type": "BlogPosting",
   "headline": "ext4到btrfs转换记录",
   "name": "ext4到btrfs转换记录",
-  "description": "这篇文章是对我从ext4文件系统转换到btrfs过程中的一些操作记录, 便于日后参考.\n前置准备 制作arch linux 启动盘, 版本越新越好. 备份重要文件 我个人在转换前会把大文件(例如虚拟机文件)转移到移动硬盘里, 让转换过程更快一些 转换 进入LiveCD 系统, 对主分区进行转换\nbtrfs-convert /dev/nvme0n1p2 等待一段时间之后, 显示conversion complete就表示没有问题, 接下来还需要做三件事情才可以进入系统\n修改fstab 首先将转换成功后的分区挂载到/mnt下\nmount /dev/nvme0n1p2 /mnt 使用lsblk -f命令查看分区的UUID号, 拍个照片记一下\n编辑/mnt/etc/fstab, 修改这个分区类型为btrfs, 将最后的两列数字都改成0, 保存退出\n重建内存盘 先挂载, 然后进入chroot环境\nmount -t proc none /mnt/proc mount -t sysfs none /mnt/sys mount -o bind /dev /mnt/dev chroot /mnt bash 然后执行下列命令来为所有内核重建内存盘\nmkinitcpio -P 最后重建grub引导, 按照道理应该要把引导分区/dev/nvme0n1p1挂载到/mnt/boot之后才可以, 但是我记得自己执行的时候没有挂载?\ngrub-mkconfig -o /boot/grub/grub.cfg 重建grub引导 在上一步的chroot环境中, 执行下列命令, 记得把引导分区挂载到/mnt/boot\ngrub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了.",
+  "description": "这篇文章是对我从ext4文件系统转换到btrfs过程中的一些操作记录, 便于日后参考.\n前置准备 制作arch linux 启动盘, 版本越新越好. 备份重要文件 我个人在转换前会把大文件(例如虚拟机文件)转移到移动硬盘里, 让转换过程更快一些 转换 进入LiveCD 系统, 对主分区进行转换\nbtrfs-convert /dev/nvme0n1p2 等待一段时间之后, 显示conversion complete就表示没有问题, 接下来还需要做三件事情才可以进入系统\n修改fstab 首先将转换成功后的分区挂载到/mnt下\nmount /dev/nvme0n1p2 /mnt 使用lsblk -f命令查看分区的UUID号, 拍个照片记一下\n编辑/mnt/etc/fstab, 修改这个分区类型为btrfs, 将最后的两列数字都改成0, 保存退出\n重建内存盘 先挂载, 然后进入chroot环境\nmount -t proc none /mnt/proc mount -t sysfs none /mnt/sys mount -o bind /dev /mnt/dev chroot /mnt bash 然后执行下列命令来为所有内核重建内存盘\nmkinitcpio -P 最后重建grub引导, 按照道理应该要把引导分区/dev/nvme0n1p1挂载到/mnt/boot之后才可以, 但是我记得自己执行的时候没有挂载?\ngrub-mkconfig -o /boot/grub/grub.cfg 重建grub引导 在上一步的chroot环境中, 执行下列命令, 记得把引导分区挂载到/mnt/boot\ngrub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了.\n",
   "keywords": [
     
   ],

@@ -8,14 +8,52 @@
 <title>武装火狐 | ch3n9w の 超元域</title>
 <meta name="keywords" content="">
 <meta name="description" content="不管火狐的市场份额多么拉胯, 对于Linux wayland用户来说, 目前体验最好的浏览器依旧是Firefox. 本篇记录我的FIrefox配置, 包括浏览器设置和插件设置.
-外观 titlebar 为了让标题栏中的内容可以更加紧凑, 一个好办法是进入about:config, 设置browser.compactmode.show为true, 然后进入custom toolbar, 设置Density为Compact
+外观
+titlebar
+为了让标题栏中的内容可以更加紧凑, 一个好办法是进入about:config, 设置browser.compactmode.show为true, 然后进入custom toolbar, 设置Density为Compact
+
+
 对于wm用户, 一个推荐的设置是勾选上上图中的Title Bar选项, 为什么要这么设置呢, 因为这样子做, 那些按钮(最大最小化, 关闭窗口)就会出现到title bar中, 然后title bar会被wm吃掉, 这样就可以给火狐的标题栏留出更多的空间
 ps: 我用的主题名字叫做tokyonight
-Firefox-UI-Fix 使用Firefox-UI-Fix来个性化Firefox的界面
-Addon Vimium 该插件将vim的操作方式带入到浏览器中, 能够让用户更少依赖鼠标.
+Firefox-UI-Fix
+使用Firefox-UI-Fix来个性化Firefox的界面
+Addon
+Vimium
+该插件将vim的操作方式带入到浏览器中, 能够让用户更少依赖鼠标.
 默认情况下, firefox出于安全考虑会在一些页面中禁用Addon, 为了让该插件能够在更多的页面上使用, 需要在about:config中进行以下设置
-extensions.webextensions.restrictedDomains清空掉 privacy.resistFingerprinting.block_mozAddonManager设置为true,来让插件在所有页面上都可以使用 以下是我的Vimium键位设置.
-# Insert your preferred key mappings here. unmapAll map H previousTab map J previousTab map L nextTab map K nextTab map &lt;c-j&gt; scrollPageDown map &lt;c-k&gt; scrollPageUp map &lt;c-o&gt; goBack map &lt;c-i&gt; goForward map o Vomnibar.">
+
+extensions.webextensions.restrictedDomains清空掉
+privacy.resistFingerprinting.block_mozAddonManager设置为true,来让插件在所有页面上都可以使用
+
+以下是我的Vimium键位设置.
+# Insert your preferred key mappings here.
+unmapAll
+map H previousTab
+map J previousTab
+map L nextTab
+map K nextTab
+map &lt;c-j&gt; scrollPageDown
+map &lt;c-k&gt; scrollPageUp
+map &lt;c-o&gt; goBack
+map &lt;c-i&gt; goForward
+map o Vomnibar.activateInNewTab
+map b Vomnibar.activateBookmarksInNewTab
+map t Vomnibar.activateTabSelection
+map M LinkHints.activateModeToOpenInNewTab
+map m LinkHints.activateModeToOpenInNewForegroundTab
+map gi focusInput
+map gg scrollToTop
+map G scrollToBottom
+map j scrollDown
+map k scrollUp
+map h scrollLeft
+map l scrollRight
+map x removeTab
+map X restoreTab
+map ? showHelp
+map yy copyCurrentUrl
+map p openCopiedUrlInNewTab
+Tip: 如果在某次更新之后发现插件不可用了, 那么可以考虑临时切换到另一个类似的插件 Vimium C , 把相同的键位复制进去就行啦.">
 <meta name="author" content="ch3n9w">
 <link rel="canonical" href="https://ch3n9w.github.io/posts/tech-arm-firefox/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
@@ -63,19 +101,54 @@ extensions.webextensions.restrictedDomains清空掉 privacy.resistFingerprinting
         }
 
     </style>
-</noscript>
-  
-
-<meta property="og:title" content="武装火狐" />
+</noscript><meta property="og:title" content="武装火狐" />
 <meta property="og:description" content="不管火狐的市场份额多么拉胯, 对于Linux wayland用户来说, 目前体验最好的浏览器依旧是Firefox. 本篇记录我的FIrefox配置, 包括浏览器设置和插件设置.
-外观 titlebar 为了让标题栏中的内容可以更加紧凑, 一个好办法是进入about:config, 设置browser.compactmode.show为true, 然后进入custom toolbar, 设置Density为Compact
+外观
+titlebar
+为了让标题栏中的内容可以更加紧凑, 一个好办法是进入about:config, 设置browser.compactmode.show为true, 然后进入custom toolbar, 设置Density为Compact
+
+
 对于wm用户, 一个推荐的设置是勾选上上图中的Title Bar选项, 为什么要这么设置呢, 因为这样子做, 那些按钮(最大最小化, 关闭窗口)就会出现到title bar中, 然后title bar会被wm吃掉, 这样就可以给火狐的标题栏留出更多的空间
 ps: 我用的主题名字叫做tokyonight
-Firefox-UI-Fix 使用Firefox-UI-Fix来个性化Firefox的界面
-Addon Vimium 该插件将vim的操作方式带入到浏览器中, 能够让用户更少依赖鼠标.
+Firefox-UI-Fix
+使用Firefox-UI-Fix来个性化Firefox的界面
+Addon
+Vimium
+该插件将vim的操作方式带入到浏览器中, 能够让用户更少依赖鼠标.
 默认情况下, firefox出于安全考虑会在一些页面中禁用Addon, 为了让该插件能够在更多的页面上使用, 需要在about:config中进行以下设置
-extensions.webextensions.restrictedDomains清空掉 privacy.resistFingerprinting.block_mozAddonManager设置为true,来让插件在所有页面上都可以使用 以下是我的Vimium键位设置.
-# Insert your preferred key mappings here. unmapAll map H previousTab map J previousTab map L nextTab map K nextTab map &lt;c-j&gt; scrollPageDown map &lt;c-k&gt; scrollPageUp map &lt;c-o&gt; goBack map &lt;c-i&gt; goForward map o Vomnibar." />
+
+extensions.webextensions.restrictedDomains清空掉
+privacy.resistFingerprinting.block_mozAddonManager设置为true,来让插件在所有页面上都可以使用
+
+以下是我的Vimium键位设置.
+# Insert your preferred key mappings here.
+unmapAll
+map H previousTab
+map J previousTab
+map L nextTab
+map K nextTab
+map &lt;c-j&gt; scrollPageDown
+map &lt;c-k&gt; scrollPageUp
+map &lt;c-o&gt; goBack
+map &lt;c-i&gt; goForward
+map o Vomnibar.activateInNewTab
+map b Vomnibar.activateBookmarksInNewTab
+map t Vomnibar.activateTabSelection
+map M LinkHints.activateModeToOpenInNewTab
+map m LinkHints.activateModeToOpenInNewForegroundTab
+map gi focusInput
+map gg scrollToTop
+map G scrollToBottom
+map j scrollDown
+map k scrollUp
+map h scrollLeft
+map l scrollRight
+map x removeTab
+map X restoreTab
+map ? showHelp
+map yy copyCurrentUrl
+map p openCopiedUrlInNewTab
+Tip: 如果在某次更新之后发现插件不可用了, 那么可以考虑临时切换到另一个类似的插件 Vimium C , 把相同的键位复制进去就行啦." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ch3n9w.github.io/posts/tech-arm-firefox/" />
 <meta property="og:image" content="https://ch3n9w.github.io/image-20230109230723998.png" /><meta property="article:section" content="posts" />
@@ -86,14 +159,52 @@ extensions.webextensions.restrictedDomains清空掉 privacy.resistFingerprinting
 <meta name="twitter:image" content="https://ch3n9w.github.io/image-20230109230723998.png" />
 <meta name="twitter:title" content="武装火狐"/>
 <meta name="twitter:description" content="不管火狐的市场份额多么拉胯, 对于Linux wayland用户来说, 目前体验最好的浏览器依旧是Firefox. 本篇记录我的FIrefox配置, 包括浏览器设置和插件设置.
-外观 titlebar 为了让标题栏中的内容可以更加紧凑, 一个好办法是进入about:config, 设置browser.compactmode.show为true, 然后进入custom toolbar, 设置Density为Compact
+外观
+titlebar
+为了让标题栏中的内容可以更加紧凑, 一个好办法是进入about:config, 设置browser.compactmode.show为true, 然后进入custom toolbar, 设置Density为Compact
+
+
 对于wm用户, 一个推荐的设置是勾选上上图中的Title Bar选项, 为什么要这么设置呢, 因为这样子做, 那些按钮(最大最小化, 关闭窗口)就会出现到title bar中, 然后title bar会被wm吃掉, 这样就可以给火狐的标题栏留出更多的空间
 ps: 我用的主题名字叫做tokyonight
-Firefox-UI-Fix 使用Firefox-UI-Fix来个性化Firefox的界面
-Addon Vimium 该插件将vim的操作方式带入到浏览器中, 能够让用户更少依赖鼠标.
+Firefox-UI-Fix
+使用Firefox-UI-Fix来个性化Firefox的界面
+Addon
+Vimium
+该插件将vim的操作方式带入到浏览器中, 能够让用户更少依赖鼠标.
 默认情况下, firefox出于安全考虑会在一些页面中禁用Addon, 为了让该插件能够在更多的页面上使用, 需要在about:config中进行以下设置
-extensions.webextensions.restrictedDomains清空掉 privacy.resistFingerprinting.block_mozAddonManager设置为true,来让插件在所有页面上都可以使用 以下是我的Vimium键位设置.
-# Insert your preferred key mappings here. unmapAll map H previousTab map J previousTab map L nextTab map K nextTab map &lt;c-j&gt; scrollPageDown map &lt;c-k&gt; scrollPageUp map &lt;c-o&gt; goBack map &lt;c-i&gt; goForward map o Vomnibar."/>
+
+extensions.webextensions.restrictedDomains清空掉
+privacy.resistFingerprinting.block_mozAddonManager设置为true,来让插件在所有页面上都可以使用
+
+以下是我的Vimium键位设置.
+# Insert your preferred key mappings here.
+unmapAll
+map H previousTab
+map J previousTab
+map L nextTab
+map K nextTab
+map &lt;c-j&gt; scrollPageDown
+map &lt;c-k&gt; scrollPageUp
+map &lt;c-o&gt; goBack
+map &lt;c-i&gt; goForward
+map o Vomnibar.activateInNewTab
+map b Vomnibar.activateBookmarksInNewTab
+map t Vomnibar.activateTabSelection
+map M LinkHints.activateModeToOpenInNewTab
+map m LinkHints.activateModeToOpenInNewForegroundTab
+map gi focusInput
+map gg scrollToTop
+map G scrollToBottom
+map j scrollDown
+map k scrollUp
+map h scrollLeft
+map l scrollRight
+map x removeTab
+map X restoreTab
+map ? showHelp
+map yy copyCurrentUrl
+map p openCopiedUrlInNewTab
+Tip: 如果在某次更新之后发现插件不可用了, 那么可以考虑临时切换到另一个类似的插件 Vimium C , 把相同的键位复制进去就行啦."/>
 
 
 <script type="application/ld+json">
@@ -122,7 +233,7 @@ extensions.webextensions.restrictedDomains清空掉 privacy.resistFingerprinting
   "@type": "BlogPosting",
   "headline": "武装火狐",
   "name": "武装火狐",
-  "description": "不管火狐的市场份额多么拉胯, 对于Linux wayland用户来说, 目前体验最好的浏览器依旧是Firefox. 本篇记录我的FIrefox配置, 包括浏览器设置和插件设置.\n外观 titlebar 为了让标题栏中的内容可以更加紧凑, 一个好办法是进入about:config, 设置browser.compactmode.show为true, 然后进入custom toolbar, 设置Density为Compact\n对于wm用户, 一个推荐的设置是勾选上上图中的Title Bar选项, 为什么要这么设置呢, 因为这样子做, 那些按钮(最大最小化, 关闭窗口)就会出现到title bar中, 然后title bar会被wm吃掉, 这样就可以给火狐的标题栏留出更多的空间\nps: 我用的主题名字叫做tokyonight\nFirefox-UI-Fix 使用Firefox-UI-Fix来个性化Firefox的界面\nAddon Vimium 该插件将vim的操作方式带入到浏览器中, 能够让用户更少依赖鼠标.\n默认情况下, firefox出于安全考虑会在一些页面中禁用Addon, 为了让该插件能够在更多的页面上使用, 需要在about:config中进行以下设置\nextensions.webextensions.restrictedDomains清空掉 privacy.resistFingerprinting.block_mozAddonManager设置为true,来让插件在所有页面上都可以使用 以下是我的Vimium键位设置.\n# Insert your preferred key mappings here. unmapAll map H previousTab map J previousTab map L nextTab map K nextTab map \u0026lt;c-j\u0026gt; scrollPageDown map \u0026lt;c-k\u0026gt; scrollPageUp map \u0026lt;c-o\u0026gt; goBack map \u0026lt;c-i\u0026gt; goForward map o Vomnibar.",
+  "description": "不管火狐的市场份额多么拉胯, 对于Linux wayland用户来说, 目前体验最好的浏览器依旧是Firefox. 本篇记录我的FIrefox配置, 包括浏览器设置和插件设置.\n外观 titlebar 为了让标题栏中的内容可以更加紧凑, 一个好办法是进入about:config, 设置browser.compactmode.show为true, 然后进入custom toolbar, 设置Density为Compact\n对于wm用户, 一个推荐的设置是勾选上上图中的Title Bar选项, 为什么要这么设置呢, 因为这样子做, 那些按钮(最大最小化, 关闭窗口)就会出现到title bar中, 然后title bar会被wm吃掉, 这样就可以给火狐的标题栏留出更多的空间\nps: 我用的主题名字叫做tokyonight\nFirefox-UI-Fix 使用Firefox-UI-Fix来个性化Firefox的界面\nAddon Vimium 该插件将vim的操作方式带入到浏览器中, 能够让用户更少依赖鼠标.\n默认情况下, firefox出于安全考虑会在一些页面中禁用Addon, 为了让该插件能够在更多的页面上使用, 需要在about:config中进行以下设置\nextensions.webextensions.restrictedDomains清空掉 privacy.resistFingerprinting.block_mozAddonManager设置为true,来让插件在所有页面上都可以使用 以下是我的Vimium键位设置.\n# Insert your preferred key mappings here. unmapAll map H previousTab map J previousTab map L nextTab map K nextTab map \u0026lt;c-j\u0026gt; scrollPageDown map \u0026lt;c-k\u0026gt; scrollPageUp map \u0026lt;c-o\u0026gt; goBack map \u0026lt;c-i\u0026gt; goForward map o Vomnibar.activateInNewTab map b Vomnibar.activateBookmarksInNewTab map t Vomnibar.activateTabSelection map M LinkHints.activateModeToOpenInNewTab map m LinkHints.activateModeToOpenInNewForegroundTab map gi focusInput map gg scrollToTop map G scrollToBottom map j scrollDown map k scrollUp map h scrollLeft map l scrollRight map x removeTab map X restoreTab map ? showHelp map yy copyCurrentUrl map p openCopiedUrlInNewTab Tip: 如果在某次更新之后发现插件不可用了, 那么可以考虑临时切换到另一个类似的插件 Vimium C , 把相同的键位复制进去就行啦.\n",
   "keywords": [
     
   ],

