@@ -3,7 +3,6 @@ title: 卡牌迷思
 author: ch3n9w
 date: 2024-09-28T13:11:48+08:00
 cagetories: 碎碎念
-draft: true
 ---
 
 # 卡牌迷思: 从万智牌的衰退开始
