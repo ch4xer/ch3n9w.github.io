@@ -6,14 +6,16 @@ title: ch3n9w の 超元域
 theme: ["PaperMod"]
 params:
   homeInfoParams:
-    Title: ch3n9w
+    Title: 苦难与牺牲才是人生的简历
     Content: But I don't want comfort. I want God, I want poetry, I want real danger, I want freedom, I want goodness. I want sin.
 
   socialIcons:
     - name: "Github"
       url: "https://github.com/ch3n9w"
-    - name: "Telegram"
-      url: "https://t.me/ch3n9w"
+    - name: "Mail"
+      url: "mailto:ch4xer@gmail.com"
+    - name: "RSS"
+      url: "index.xml"
   UseHugoToc: true
   showtoc: true
   tocopen: true
@@ -39,3 +41,9 @@ menu:
       name: categories
       url: /categories/
       weight: 10
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
