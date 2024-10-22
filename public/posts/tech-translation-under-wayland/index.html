@@ -21,16 +21,16 @@ notify-send &#34;title&#34; &#34;content&#34;
 
 以我的划词翻译为案例,  我在~/.config/sway/config中加入了这么一行作为划词翻译触发按键">
 <meta name="author" content="ch3n9w">
-<link rel="canonical" href="https://ch3n9w.github.io/posts/tech-translation-under-wayland/">
+<link rel="canonical" href="https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://ch3n9w.github.io/flash.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://ch3n9w.github.io/flash.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="https://ch3n9w.github.io/flash.ico">
-<link rel="apple-touch-icon" href="https://ch3n9w.github.io/flash.ico">
-<link rel="mask-icon" href="https://ch3n9w.github.io/flash.ico">
+<link rel="icon" href="https://ch3n9w.cpolar.cn/flash.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://ch3n9w.cpolar.cn/flash.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="https://ch3n9w.cpolar.cn/flash.ico">
+<link rel="apple-touch-icon" href="https://ch3n9w.cpolar.cn/flash.ico">
+<link rel="mask-icon" href="https://ch3n9w.cpolar.cn/flash.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://ch3n9w.github.io/posts/tech-translation-under-wayland/">
+<link rel="alternate" hreflang="en" href="https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/">
 <noscript>
     <style>
         #theme-toggle,
@@ -82,13 +82,13 @@ notify-send &#34;title&#34; &#34;content&#34;
 
 以我的划词翻译为案例,  我在~/.config/sway/config中加入了这么一行作为划词翻译触发按键" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ch3n9w.github.io/posts/tech-translation-under-wayland/" />
-<meta property="og:image" content="https://ch3n9w.github.io/1.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/" />
+<meta property="og:image" content="https://ch3n9w.cpolar.cn/1.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-01-11T04:36:45+00:00" />
 <meta property="article:modified_time" content="2023-01-11T04:36:45+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://ch3n9w.github.io/1.jpg" />
+<meta name="twitter:image" content="https://ch3n9w.cpolar.cn/1.jpg" />
 <meta name="twitter:title" content="wayland下的划词翻译解决方案"/>
 <meta name="twitter:description" content="对于我这种英语不好的人来说, 翻译是离不开的工具, 但是众所周知, Linux的日用软件生态相比较windows和macos来说相差甚远, 别说目前正处于发展阶段的wayland, 就连成熟透了的x11下也没有拿得出手的翻译软件. 作为一个英语不好的Linux爱好者, 缺少翻译软件必定会对日常的使用造成一定的影响, 于是开始思考怎么样解决这个问题.
 我的第一个思路, 也就是见到最多的划词翻译软件的样子, 选中文本之后, 在被选中的文本周围的某块区域中绘制一个窗口, 在其中展示翻译结果. 但是问题来了, 要如何绘制这样的窗口呢? 在wayland中, 窗口的位置交给了compositor进行管理, 这种能够自己决定显示位置的能力, 据我所知, 在wayland下仅有fcitx5做到了, 于是我翻阅了一下它的源代码, 并没有看懂, 但是应该没有借助于Qt和GTK来绘制, 而是使用wayland-client. 对我这样一个连Qt GTK开发经历都没有的人来说, 理解wayland编程开发中的那些概念实在有些困难. 于是紧接着又有一个问题出现了:
@@ -114,13 +114,13 @@ notify-send &#34;title&#34; &#34;content&#34;
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://ch3n9w.github.io/posts/"
+      "item": "https://ch3n9w.cpolar.cn/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "wayland下的划词翻译解决方案",
-      "item": "https://ch3n9w.github.io/posts/tech-translation-under-wayland/"
+      "item": "https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/"
     }
   ]
 }
@@ -138,7 +138,7 @@ notify-send &#34;title&#34; &#34;content&#34;
   "articleBody": "对于我这种英语不好的人来说, 翻译是离不开的工具, 但是众所周知, Linux的日用软件生态相比较windows和macos来说相差甚远, 别说目前正处于发展阶段的wayland, 就连成熟透了的x11下也没有拿得出手的翻译软件. 作为一个英语不好的Linux爱好者, 缺少翻译软件必定会对日常的使用造成一定的影响, 于是开始思考怎么样解决这个问题.\n我的第一个思路, 也就是见到最多的划词翻译软件的样子, 选中文本之后, 在被选中的文本周围的某块区域中绘制一个窗口, 在其中展示翻译结果. 但是问题来了, 要如何绘制这样的窗口呢? 在wayland中, 窗口的位置交给了compositor进行管理, 这种能够自己决定显示位置的能力, 据我所知, 在wayland下仅有fcitx5做到了, 于是我翻阅了一下它的源代码, 并没有看懂, 但是应该没有借助于Qt和GTK来绘制, 而是使用wayland-client. 对我这样一个连Qt GTK开发经历都没有的人来说, 理解wayland编程开发中的那些概念实在有些困难. 于是紧接着又有一个问题出现了:\n能否绕开wayland?\n就我思考这个问题的时候, linux QQ给我发了一个系统通知, 我的电脑上的系统通知服务原先只是为了让linux qq不崩溃才安装的, 然而这个时候, 它给了我一个新的解决方案: 使用系统通知来呈现翻译结果. 于是搜了一下如何发送系统通知, 发现竟然意外的简单.\nnotify-send \"title\" \"content\" 那么接下来的问题: 如何获取选中文本的内容? 这个问题, 我原本计划通过阅读wl-clipboard来学习的, 但是我想先尽快用上翻译, 把优化放到以后再说, 于是决定直接使用wl-clipboard来获取选中文本内容, 那么至此思路理清, 大致如下:\n使用剪切板获取到选中文本的内容, 可以使用wl-paste -p来获取 获取文本之后, 将换行符替换成空格 (这块可以有更好的处理方法, 简单起见就全换掉了), 使用sed 文本处理完毕后, 将文本输入进translate.js中进行翻译, (这块可以使用别的现成工具) 翻译结果出来之后, 将结果以系统通知的形式呈现出来, 当然, 系统通知必须要有, 可以是dunst, mako, swaync, 以及kde或者gnome的桌面消息通知都可以. 发送翻译结果使用命令notify-send \"标题\" \"翻译内容\" 以我的划词翻译为案例, 我在~/.config/sway/config中加入了这么一行作为划词翻译触发按键\nbindsym Ctrl+Mod1+z exec ~/.config/sway/bin/translate.sh 那么来看看translate.sh的内容是怎么样的:\na=$(wl-paste -p | sed ':a;N;$!ba;s/\\n/ /g' | node ~/.config/sway/bin/translate.js) notify-send \"Google\" \"$a\" 首先从primary剪切板中获取选中的文本内容, 注意这个剪切板不需要你按ctrl-c, 选中文本的时候, 文本会自动出现在primary剪切板中. 然后使用sed命令将\\n都替换为空格. 再然后执行js脚本, 将要翻译的内容通过管道符输入进去, js脚本调用谷歌翻译. 最后出来的翻译结果通过notify-send发送出去了.\ntranslate.js文件的内容如下\nfunction TL(a) { var k = \"\"; var b = 406644; var b1 = 3293161072; var jd = \".\"; var $b = \"+-a^+6\"; var Zb = \"+-3^+b+-f\"; for (var e = [], f = 0, g = 0; g \u003c a.length; g++) { var m = a.charCodeAt(g); 128 \u003e m ? (e[f++] = m) : (2048 \u003e m ? (e[f++] = (m \u003e\u003e 6) | 192) : (55296 === (m \u0026 64512) \u0026\u0026 g + 1 \u003c a.length \u0026\u0026 56320 === (a.charCodeAt(g + 1) \u0026 64512) ? ((m = 65536 + ((m \u0026 1023) \u003c\u003c 10) + (a.charCodeAt(++g) \u0026 1023)), (e[f++] = (m \u003e\u003e 18) | 240), (e[f++] = ((m \u003e\u003e 12) \u0026 63) | 128)) : (e[f++] = (m \u003e\u003e 12) | 224), (e[f++] = ((m \u003e\u003e 6) \u0026 63) | 128)), (e[f++] = (m \u0026 63) | 128)); } a = b; for (f = 0; f \u003c e.length; f++) (a += e[f]), (a = RL(a, $b)); a = RL(a, Zb); a ^= b1 || 0; 0 \u003e a \u0026\u0026 (a = (a \u0026 2147483647) + 2147483648); a %= 1e6; return a.toString() + jd + (a ^ b); } function RL(a, b) { var t = \"a\"; var Yb = \"+\"; for (var c = 0; c \u003c b.length - 2; c += 3) { var d = b.charAt(c + 2); d = d \u003e= t ? d.charCodeAt(0) - 87 : Number(d); d = b.charAt(c + 1) === Yb ? a \u003e\u003e\u003e d : a \u003c\u003c d; a = b.charAt(c) === Yb ? (a + d) \u0026 4294967295 : a ^ d; } return a; } const http = require(\"http\"); const readline = require(\"readline\"); const rl = readline.createInterface({ input: process.stdin, output: process.stdout, }); rl.question(\"\", function (text) { var strip_text = text.replace(/\\n/g, \"\"); var target_language = \"zh-CN\"; const options = { hostname: \"translate.google.com\", path: `/translate_a/single?client=webapp\u0026sl=auto\u0026tl=${target_language}\u0026hl=${target_language}\u0026dt=at\u0026dt=bd\u0026dt=ex\u0026dt=ld\u0026dt=md\u0026dt=qca\u0026dt=rw\u0026dt=rm\u0026dt=ss\u0026dt=t\u0026source=bh\u0026ssel=0\u0026tsel=0\u0026kc=1\u0026tk=${TL( strip_text, )}\u0026q=${encodeURIComponent(strip_text)}`, method: \"GET\", headers: { responseType: \"json\" }, }; const req = http .request(options, (res) =\u003e { let data = \"\"; res.on(\"data\", (chunk) =\u003e { data += chunk; }); // Ending the response res.on(\"end\", () =\u003e { var result = JSON.parse(data); var content_list = result[0]; var final = \"\"; // console.log(content_list) for (let index = 0; index \u003c content_list.length; index++) { if (content_list[index][0] !== null) { final += content_list[index][0]; } else { break; } } console.log(final); }); }) .on(\"error\", (err) =\u003e { console.log(\"Error: \", err); }) .end(); }); ",
   "wordCount" : "498",
   "inLanguage": "en",
-  "image":"https://ch3n9w.github.io/1.jpg","datePublished": "2023-01-11T04:36:45Z",
+  "image":"https://ch3n9w.cpolar.cn/1.jpg","datePublished": "2023-01-11T04:36:45Z",
   "dateModified": "2023-01-11T04:36:45Z",
   "author":{
     "@type": "Person",
@@ -146,14 +146,14 @@ notify-send &#34;title&#34; &#34;content&#34;
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ch3n9w.github.io/posts/tech-translation-under-wayland/"
+    "@id": "https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "ch3n9w の 超元域",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://ch3n9w.github.io/flash.ico"
+      "url": "https://ch3n9w.cpolar.cn/flash.ico"
     }
   }
 }
@@ -175,8 +175,8 @@ notify-send &#34;title&#34; &#34;content&#34;
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://ch3n9w.github.io/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
-                <img src="https://ch3n9w.github.io/sabito.jpg" alt="" aria-label="logo"
+            <a href="https://ch3n9w.cpolar.cn/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
+                <img src="https://ch3n9w.cpolar.cn/sabito.jpg" alt="" aria-label="logo"
                     height="35">ch3n9w の 超元域</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -203,7 +203,7 @@ notify-send &#34;title&#34; &#34;content&#34;
         </div>
         <ul id="menu">
             <li>
-                <a href="https://ch3n9w.github.io/categories/" title="categories">
+                <a href="https://ch3n9w.cpolar.cn/categories/" title="categories">
                     <span>categories</span>
                 </a>
             </li>
@@ -214,7 +214,7 @@ notify-send &#34;title&#34; &#34;content&#34;
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://ch3n9w.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://ch3n9w.github.io/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="https://ch3n9w.cpolar.cn/">Home</a>&nbsp;»&nbsp;<a href="https://ch3n9w.cpolar.cn/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       wayland下的划词翻译解决方案
     </h1>
@@ -223,8 +223,8 @@ notify-send &#34;title&#34; &#34;content&#34;
 </div>
   </header> 
 <figure class="entry-cover">
-        <img loading="eager" srcset="https://ch3n9w.github.io/posts/tech-translation-under-wayland/1_hu7743657973598238256.jpg 360w ,https://ch3n9w.github.io/posts/tech-translation-under-wayland/1_hu17111790031010727129.jpg 480w ,https://ch3n9w.github.io/posts/tech-translation-under-wayland/1_hu14146749365679280220.jpg 720w ,https://ch3n9w.github.io/posts/tech-translation-under-wayland/1_hu6921630188009710652.jpg 1080w ,https://ch3n9w.github.io/posts/tech-translation-under-wayland/1.jpg 1107w" 
-            sizes="(min-width: 768px) 720px, 100vw" src="https://ch3n9w.github.io/posts/tech-translation-under-wayland/1.jpg" alt="" 
+        <img loading="eager" srcset="https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1_hu7743657973598238256.jpg 360w ,https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1_hu17111790031010727129.jpg 480w ,https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1_hu14146749365679280220.jpg 720w ,https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1_hu6921630188009710652.jpg 1080w ,https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1.jpg 1107w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1.jpg" alt="" 
             width="1107" height="293">
         
 </figure>
@@ -346,12 +346,12 @@ notify-send &#34;title&#34; &#34;content&#34;
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="https://ch3n9w.github.io/posts/tech-ext4-to-btrfs/">
+  <a class="prev" href="https://ch3n9w.cpolar.cn/posts/tech-ext4-to-btrfs/">
     <span class="title">« Prev</span>
     <br>
     <span>ext4到btrfs转换记录</span>
   </a>
-  <a class="next" href="https://ch3n9w.github.io/posts/tech-arm-firefox/">
+  <a class="next" href="https://ch3n9w.cpolar.cn/posts/tech-arm-firefox/">
     <span class="title">Next »</span>
     <br>
     <span>武装火狐</span>
@@ -363,7 +363,7 @@ notify-send &#34;title&#34; &#34;content&#34;
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="https://ch3n9w.github.io/">ch3n9w の 超元域</a></span> · 
+        <span>&copy; 2024 <a href="https://ch3n9w.cpolar.cn/">ch3n9w の 超元域</a></span> · 
 
     <span>
         Powered by
