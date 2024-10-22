@@ -3,6 +3,8 @@ title: 高效原力读书笔记
 author: ch3n9w
 date: 2024-10-22T19:58:09+08:00
 cagetories: 阅读
+cover:
+  image: cover.png
 ---
 
 愉悦心态可以帮助克服焦虑和过度的压力
