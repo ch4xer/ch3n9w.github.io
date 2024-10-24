@@ -1,7 +1,7 @@
 baseURL: "https://ch3n9w.cpolar.cn/"
 languageCode: en-us
 pagination:
-  pagerSize: 50
+  pagerSize: 20
 title: ch3n9w の 超元域
 theme: ["PaperMod"]
 params:
