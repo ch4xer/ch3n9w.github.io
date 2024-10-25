@@ -1,5 +1,5 @@
 ---
-title: 高效原力读书笔记
+title: 《高效原力》读书笔记
 author: ch3n9w
 date: 2024-10-22T19:58:09+08:00
 cagetories: 阅读
