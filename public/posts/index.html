@@ -141,6 +141,27 @@
 
 <article class="post-entry"> 
 <figure class="entry-cover">
+        <img loading="lazy" srcset="https://ch3n9w.cpolar.cn/posts/tech-dev-2024/cover_hu18418491789725541206.png 360w ,https://ch3n9w.cpolar.cn/posts/tech-dev-2024/cover_hu4081178761688973920.png 480w ,https://ch3n9w.cpolar.cn/posts/tech-dev-2024/cover_hu12670031311807647388.png 720w ,https://ch3n9w.cpolar.cn/posts/tech-dev-2024/cover_hu7810611840136498598.png 1080w ,https://ch3n9w.cpolar.cn/posts/tech-dev-2024/cover_hu15383729512062681170.png 1500w ,https://ch3n9w.cpolar.cn/posts/tech-dev-2024/cover.png 2130w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="https://ch3n9w.cpolar.cn/posts/tech-dev-2024/cover.png" alt="" 
+            width="2130" height="1509">
+</figure>
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">终端工具集(2024)
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> 声明: 此项目与那些声称要取代vscode等GUI工具的配置不同, 而是力图填补这些大型开发工具在终端环境下的空白
+项目地址: https://github.com/ch3n9w/dev, 后续README更新不会同步到这篇博客, 但是大体上秉承的思想不会改变: 极简、可用以及最少化心智负担
+Development Toolkit 📡 A comprehensive and user-friendly development toolkit to boost up your productivity 🚀.
+terminal emulator: kitty shell: zsh editor: neovim terminal filemanager: lf multiplexers: tmux or kitty Try docker run -it --rm --name dev ch4xer/dev:latest /bin/zsh Install git clone https://github.com/ch3n9w/dev cd dev # install dependency software and install configuration ./scripts/install-software.sh Alternatively (if you dont want to install all of them), you can copy the configuration directory you like to XDG_CONFIG_HOME (commonly ~/.config), for example:
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-10-26 09:11:56 +0800 CST'>October 26, 2024</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;481 words&nbsp;·&nbsp;ch3n9w</footer>
+  <a class="entry-link" aria-label="post link to 终端工具集(2024)" href="https://ch3n9w.cpolar.cn/posts/tech-dev-2024/"></a>
+</article>
+
+<article class="post-entry"> 
+<figure class="entry-cover">
         <img loading="lazy" srcset="https://ch3n9w.cpolar.cn/posts/read-how-to-read-a-book/cover_hu11043031148736748056.png 360w ,https://ch3n9w.cpolar.cn/posts/read-how-to-read-a-book/cover_hu7344988030949108017.png 480w ,https://ch3n9w.cpolar.cn/posts/read-how-to-read-a-book/cover_hu13780683486271934636.png 720w ,https://ch3n9w.cpolar.cn/posts/read-how-to-read-a-book/cover_hu7021350417325676310.png 1080w ,https://ch3n9w.cpolar.cn/posts/read-how-to-read-a-book/cover.png 1154w" 
             sizes="(min-width: 768px) 720px, 100vw" src="https://ch3n9w.cpolar.cn/posts/read-how-to-read-a-book/cover.png" alt="" 
             width="1154" height="670">
@@ -506,29 +527,6 @@ grub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就
   </div>
   <footer class="entry-footer"><span title='2023-01-16 05:28:51 +0000 UTC'>January 16, 2023</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;237 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to ext4到btrfs转换记录" href="https://ch3n9w.cpolar.cn/posts/tech-ext4-to-btrfs/"></a>
-</article>
-
-<article class="post-entry"> 
-<figure class="entry-cover">
-        <img loading="lazy" srcset="https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1_hu7743657973598238256.jpg 360w ,https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1_hu17111790031010727129.jpg 480w ,https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1_hu14146749365679280220.jpg 720w ,https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1_hu6921630188009710652.jpg 1080w ,https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1.jpg 1107w" 
-            sizes="(min-width: 768px) 720px, 100vw" src="https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1.jpg" alt="" 
-            width="1107" height="293">
-</figure>
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">wayland下的划词翻译解决方案
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>对于我这种英语不好的人来说, 翻译是离不开的工具, 但是众所周知, Linux的日用软件生态相比较windows和macos来说相差甚远, 别说目前正处于发展阶段的wayland, 就连成熟透了的x11下也没有拿得出手的翻译软件. 作为一个英语不好的Linux爱好者, 缺少翻译软件必定会对日常的使用造成一定的影响, 于是开始思考怎么样解决这个问题.
-我的第一个思路, 也就是见到最多的划词翻译软件的样子, 选中文本之后, 在被选中的文本周围的某块区域中绘制一个窗口, 在其中展示翻译结果. 但是问题来了, 要如何绘制这样的窗口呢? 在wayland中, 窗口的位置交给了compositor进行管理, 这种能够自己决定显示位置的能力, 据我所知, 在wayland下仅有fcitx5做到了, 于是我翻阅了一下它的源代码, 并没有看懂, 但是应该没有借助于Qt和GTK来绘制, 而是使用wayland-client. 对我这样一个连Qt GTK开发经历都没有的人来说, 理解wayland编程开发中的那些概念实在有些困难. 于是紧接着又有一个问题出现了:
-能否绕开wayland?
-就我思考这个问题的时候, linux QQ给我发了一个系统通知, 我的电脑上的系统通知服务原先只是为了让linux qq不崩溃才安装的, 然而这个时候, 它给了我一个新的解决方案: 使用系统通知来呈现翻译结果. 于是搜了一下如何发送系统通知, 发现竟然意外的简单.
-notify-send &#34;title&#34; &#34;content&#34; 那么接下来的问题: 如何获取选中文本的内容? 这个问题, 我原本计划通过阅读wl-clipboard来学习的, 但是我想先尽快用上翻译, 把优化放到以后再说, 于是决定直接使用wl-clipboard来获取选中文本内容, 那么至此思路理清, 大致如下:
-使用剪切板获取到选中文本的内容, 可以使用wl-paste -p来获取 获取文本之后, 将换行符替换成空格 (这块可以有更好的处理方法, 简单起见就全换掉了), 使用sed 文本处理完毕后, 将文本输入进translate.js中进行翻译, (这块可以使用别的现成工具) 翻译结果出来之后, 将结果以系统通知的形式呈现出来, 当然, 系统通知必须要有, 可以是dunst, mako, swaync, 以及kde或者gnome的桌面消息通知都可以. 发送翻译结果使用命令notify-send &#34;标题&#34; &#34;翻译内容&#34; 以我的划词翻译为案例, 我在~/.config/sway/config中加入了这么一行作为划词翻译触发按键
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-01-11 04:36:45 +0000 UTC'>January 11, 2023</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;498 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to wayland下的划词翻译解决方案" href="https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
