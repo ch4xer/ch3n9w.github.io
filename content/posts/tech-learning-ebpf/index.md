@@ -418,3 +418,86 @@ load:
 ```sh
 bpftool prog load hello.bpf.o /sys/fs/bpf/hello
 ```
+
+## eBPF for Networking
+
+### Packet Drops
+
+An example based on bcc, which drops all received ICMP requests, run it with root privilege. NOTE: the `network.h` will failed to parse packets at newer kernel.
+
+```python
+#!/usr/bin/python3
+from bcc import BPF
+import socket
+import os
+from time import sleep
+import sys
+
+b = BPF(src_file="ping.bpf.c")
+interface = "lo"
+
+# XDP will be the first program hit when a packet is received ingress
+fx = b.load_func("xdp", BPF.XDP)
+BPF.attach_xdp(interface, fx, 0)
+
+try:
+    b.trace_print()
+except KeyboardInterrupt:
+    sys.exit(0)
+```
+
+```c
+#include "network.h"
+#include <bcc/proto.h>
+#include <linux/pkt_cls.h>
+
+int xdp(struct xdp_md *ctx) {
+  void *data = (void *)(long)ctx->data;
+  void *data_end = (void *)(long)ctx->data_end;
+
+  if (is_icmp_ping_request(data, data_end)) {
+        bpf_trace_printk("Got ping packet");
+        return XDP_DROP;
+  }
+
+  return XDP_PASS;
+}
+```
+
+
+XDP Offloading: run eBPF programs on a network card to make decisions about individual packets before they even reach the kernel’s networking stack
+
+### Load Balancing and Forwarding
+
+omit
+
+### Traffic Control
+
+eBPF programs attached within the TC subsystem receive a pointer to the sk_buff structure as the context parameter, which happens after XDP hook, and so XDP programs dont use the same structure for their context.
+
+> The TC subsystem is intended to regulate how network traffic is scheduled.
+
+omit  
+
+
+### Packet Encryption and Decryption
+
+[example](https://github.com/pixie-io/pixie-demos/tree/410447afd6e566050e8bbf4060c66d76660cb30b/openssl-tracer)
+
+### eBPF and Kubernetes Networking
+
+- avoid iptables to improve performance
+- network policy enforcement
+- encrypted connections (offload the encryption requirement from application, either to a service mesh layer or to the underlying network itself)
+
+## eBPF for Security
+
+### Using System Calls for Security Events
+
+- use seccomp-bpf to filter the syscalls that are and aren't allowed
+- record the set of syscalls an application makes, and generate a seccomp profile to restrict container activities.
+- syscall traching : Falco
+
+### BPF LSM
+
+The LSM interface provides a set of hooks that each occur just before the kernel is about to act on a kernel data structure. The function called by a hook can make a decision about whether to allow the action to go ahead.
