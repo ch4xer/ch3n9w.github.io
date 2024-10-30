@@ -3,7 +3,8 @@ title: LD_PRELOAD劫持类型题目
 author: ch3n9w
 date: 2019-12-26 16:37:19
 typora-root-url: ../
-categories: CTF
+categories:
+  - CTF
 ---
 
 

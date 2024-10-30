@@ -3,7 +3,8 @@ title: thinkphp5漏洞学习
 author: ch3n9w
 typora-root-url: ../
 date: 2022-01-14 22:19:13
-categories: 安全研究
+categories:
+  - 安全研究
 ---
 
 > phpggc中关于thinkphp的攻击思路学习

@@ -3,7 +3,8 @@ title: vim/neovim 的问题
 author: ch3n9w
 typora-root-url: ../
 date: 2022-12-15 12:04:12
-categories: 技术
+categories:
+  - 技术
 ---
 
 > 在消磨三年时光之后，我终于明白这个编辑器还远远称不上稳定，在道路的尽头之前，我能做的其实只有观望。

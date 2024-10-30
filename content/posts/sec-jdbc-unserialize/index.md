@@ -3,7 +3,8 @@ title: mysql jdbc反序列化的不深入研究
 author: ch3n9w
 typora-root-url: ../
 date: 2021-10-15 21:46:28
-categories: 安全研究
+categories:
+  - 安全研究
 ---
 
 > 我终于更新博客了……   

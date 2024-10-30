@@ -3,7 +3,8 @@ title: lineageos使用体验
 author: ch3n9w
 typora-root-url: ../
 date: 2023-08-13 21:34:53
-categories: 技术
+categories:
+  - 技术
 cover:
   image: image-20230814215125234.png 
 ---

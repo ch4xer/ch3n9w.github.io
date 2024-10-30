@@ -2,7 +2,8 @@
 title: ciscn2020_online
 author: ch3n9w
 date: 2020-08-20 13:16:50
-categories: CTF
+categories:
+  - CTF
 typora-root-url: ../
 ---
 

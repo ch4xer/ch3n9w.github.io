@@ -3,7 +3,8 @@ title: http请求走私笔记
 author: ch3n9w
 date: 2020-08-24 22:22:46
 typora-root-url: ../
-categories: 安全研究
+categories:
+  - 安全研究
 ---
 
 

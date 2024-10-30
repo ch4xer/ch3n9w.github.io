@@ -2,7 +2,8 @@
 title: RoarCTF 2019复现
 author: ch3n9w
 date: 2019-10-22 08:32:09
-categories: CTF
+categories:
+  - CTF
 typora-root-url: ../
 cover:
   image: image-20211114142019085.png

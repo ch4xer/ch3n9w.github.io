@@ -3,7 +3,8 @@ title: 密码学题目
 author: ch3n9w
 date: 2019-04-22 04:14:20
 typora-root-url: ../
-categories: CTF
+categories:
+  - CTF
 ---
 
 > 记录密码学刷过的题目

@@ -2,7 +2,8 @@
 title: ch3n9w 的 vim
 author: ch3n9w
 date: 2019-04-22 02:05:35
-categories: 技术
+categories:
+  - 技术
 typora-root-url: ../
 ---
 

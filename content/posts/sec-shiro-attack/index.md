@@ -3,7 +3,8 @@ title: shiro 漏洞复现
 author: ch3n9w
 typora-root-url: ../
 date: 2022-01-22 10:52:46
-categories: 安全研究
+categories:
+  - 安全研究
 ---
 
 > 记录shiro漏洞学习的过程, 参考https://saucer-man.com/information_security/396.html, 并在漏洞分析基础上编写检测脚本

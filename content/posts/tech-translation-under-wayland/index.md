@@ -3,7 +3,8 @@ title: wayland下的划词翻译解决方案
 author: ch3n9w
 typora-root-url: ../
 date: 2023-01-11 04:36:45
-categories: 技术
+categories:
+  - 技术
 cover:
   image: 1.jpg
 ---

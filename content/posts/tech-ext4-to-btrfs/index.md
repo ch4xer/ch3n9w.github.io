@@ -3,7 +3,8 @@ title: ext4到btrfs转换记录
 author: ch3n9w
 typora-root-url: ../
 date: 2023-01-16 05:28:51
-categories: 技术
+categories:
+  - 技术
 cover:
   image: btrfs.jpeg
 ---

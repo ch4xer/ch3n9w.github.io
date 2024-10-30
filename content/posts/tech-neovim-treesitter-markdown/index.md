@@ -3,7 +3,8 @@ title: 优化neovim markdown中的treesitter高亮
 author: ch3n9w
 typora-root-url: ../
 date: 2023-04-25 21:33:47
-categories: 技术
+categories:
+  - 技术
 ---
 
 > eye candy也是一种生产力!

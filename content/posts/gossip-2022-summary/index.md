@@ -3,7 +3,8 @@ title: 2022年度总结
 author: ch3n9w
 typora-root-url: ../
 date: 2022-12-31 22:31:25
-categories: 碎碎念
+categories:
+  - 碎碎念
 ---
 
 > 2022年是一个记得被纪念的年份, 不是因为它有多好, 而是因为它有多现实

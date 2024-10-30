@@ -2,7 +2,8 @@
 title: bytectf2019
 author: ch3n9w
 date: 2019-09-09 08:18:25
-categories: CTF
+categories:
+  - CTF
 typora-root-url: ../
 cover:
   image: image-20211114141103041.png

@@ -2,7 +2,8 @@
 title: copperstudy-record
 author: ch3n9w
 date: 2019-12-19 20:51:05
-categories: CTF
+categories:
+  - CTF
 typora-root-url: ../
 ---
 

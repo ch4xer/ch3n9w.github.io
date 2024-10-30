@@ -2,7 +2,8 @@
 title: 使用hexo和github搭建网站
 author: ch3n9w
 date: 2019-04-22 03:12:31
-categories: 技术
+categories:
+  - 技术
 typora-root-url: ../
 cover:
   image: 63487983-da41b080-c4df-11e9-951c-64883a8a5e9b.png

@@ -3,7 +3,8 @@ title: 赛博内卷
 author: ch3n9w
 typora-root-url: ../
 date: 2021-11-19 11:18:11
-categories: 碎碎念
+categories:
+  - 碎碎念
 cover:
   image: image-20211119151417648.png
 ---

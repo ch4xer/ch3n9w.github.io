@@ -3,7 +3,8 @@ title: 我的neovim
 author: ch3n9w
 typora-root-url: ../
 date: 2023-06-07T09:32:57.000Z
-categories: 技术
+categories:
+  - 技术
 ---
 
 > 现在回头看几年前自己写的插件配置文章, 看着那些曾经用过但后来都纷纷被替代的插件, 我会莫名怀念那段因计算机和终端而兴奋不已的自己.

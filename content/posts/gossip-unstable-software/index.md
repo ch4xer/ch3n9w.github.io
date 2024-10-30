@@ -3,7 +3,8 @@ title: 动荡时代
 author: ch3n9w
 typora-root-url: ../
 date: 2023-08-02 22:42:20
-categories: 碎碎念
+categories:
+  - 碎碎念
 ---
 
 > 乱世之中, 唯有自我与我所爱值得珍惜

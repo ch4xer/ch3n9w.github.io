@@ -3,7 +3,8 @@ title: GhostCat(CVE-2020-1938)漏洞学习
 author: ch3n9w
 typora-root-url: ../
 date: 2021-11-13 13:14:29
-categories: 安全研究
+categories:
+  - 安全研究
 ---
 
 > 本文主要参考 https://blog.csdn.net/qq_31481187/article/details/105917392 和 https://paper.seebug.org/1142/#_6 ，并无原创内容，仅仅是个人学习笔记。

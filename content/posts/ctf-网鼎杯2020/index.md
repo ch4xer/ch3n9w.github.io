@@ -3,7 +3,8 @@ title: 网鼎杯2020 web
 author: ch3n9w
 typora-root-url: ../
 date: 2020-05-11 16:11:31
-categories: CTF
+categories:
+  - CTF
 cover:
   image: image-20211114142107501.png
 ---

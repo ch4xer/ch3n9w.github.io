@@ -2,7 +2,8 @@
 title: php session反序列化
 author: ch3n9w
 date: 2019-09-02 13:40:59
-categories: 安全研究
+categories:
+  - 安全研究
 typora-root-url: ../
 ---
 

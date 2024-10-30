@@ -2,7 +2,8 @@
 title: bugku writeup
 author: ch3n9w
 date: 2019-04-22 04:13:30
-categories: CTF
+categories:
+  - CTF
 typora-root-url: ../
 cover:
   image: image-20211114140949068.png

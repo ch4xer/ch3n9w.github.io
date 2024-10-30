@@ -3,7 +3,8 @@ title: 2023 记北京秋游
 author: ch3n9w
 typora-root-url: ../
 date: 2023-10-30 21:35:04
-categories: 碎碎念
+categories:
+  - 碎碎念
 cover:
   image: image-20231031004630871.png
 ---

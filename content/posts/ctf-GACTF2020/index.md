@@ -3,7 +3,8 @@ title: GACTF2020
 author: ch3n9w
 typora-root-url: ../
 date: 2020-08-29 15:49:36
-categories: CTF
+categories:
+  - CTF
 ---
 
 

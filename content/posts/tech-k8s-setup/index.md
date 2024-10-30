@@ -3,7 +3,8 @@ title: virtualbox中搭建kubernetes集群
 author: ch3n9w
 typora-root-url: ../
 date: 2022-12-12 12:17:49
-categories: 技术
+categories:
+  - 技术
 ---
 
 环境问题, 一生之敌.

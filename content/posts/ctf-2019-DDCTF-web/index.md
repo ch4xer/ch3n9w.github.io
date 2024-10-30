@@ -2,7 +2,8 @@
 title: 2019 DDCTF web
 author: ch3n9w
 date: 2019-05-11 13:58:05
-categories: CTF
+categories:
+  - CTF
 typora-root-url: ../
 cover:
   image: image-20211114142123083.png

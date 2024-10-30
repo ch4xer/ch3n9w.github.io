@@ -3,7 +3,8 @@ title: 小阳人日记
 author: ch3n9w
 typora-root-url: ../
 date: 2022-12-20 22:45:44
-categories: 碎碎念
+categories:
+  - 碎碎念
 ---
 
 > 生命本就如此脆弱

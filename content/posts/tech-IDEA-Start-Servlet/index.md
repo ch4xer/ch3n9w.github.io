@@ -3,7 +3,8 @@ title: 使用idea开启Servlet
 author: ch3n9w
 typora-root-url: ../
 date: 2020-10-01 22:10:28
-categories: 技术
+categories:
+  - 技术
 ---
 
 采用的是版本较新的idea2020.2, 使用的操作系统为``MANJARO LINUX``, 其中的过程挺迷迷糊糊的就水一篇来记录一下. 

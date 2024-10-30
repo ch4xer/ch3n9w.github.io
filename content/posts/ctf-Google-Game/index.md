@@ -3,7 +3,8 @@ title: Google_Game
 author: ch3n9w
 date: 2019-06-12 19:41:56
 typora-root-url: ../
-categories: CTF
+categories:
+  - CTF
 ---
 
 # Google Xss game

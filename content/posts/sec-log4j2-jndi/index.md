@@ -3,7 +3,8 @@ title: log4j2 jndi 漏洞学习和调试
 author: ch3n9w
 typora-root-url: ../
 date: 2021-12-11 14:56:51
-categories: 安全研究
+categories:
+  - 安全研究
 ---
 
 > 明天安全圈校招面试: 

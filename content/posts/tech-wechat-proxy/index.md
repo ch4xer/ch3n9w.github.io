@@ -2,7 +2,8 @@
 title: 特殊网络环境下的微信代理
 author: ch3n9w
 date: 2024-10-02T09:33:06+08:00
-categories: 技术
+categories: 
+  - 技术
 ---
 
 目前单位实施了微信封锁,本文旨在记录绕过封锁的过程.

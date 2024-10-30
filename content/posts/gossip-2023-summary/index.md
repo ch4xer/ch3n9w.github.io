@@ -3,7 +3,8 @@ title: 2023年度总结
 author: ch3n9w
 typora-root-url: ../
 date: 2024-02-09 22:31:25
-categories: 碎碎念
+categories:
+  - 碎碎念
 ---
 
 > 一事无成的一年, 但也算有所收获, 如果教训也算收获的话.

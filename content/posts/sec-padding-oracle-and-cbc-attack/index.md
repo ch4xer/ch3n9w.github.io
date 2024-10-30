@@ -3,7 +3,8 @@ title: padding_oracle 和 cbc字节反转
 author: ch3n9w
 typora-root-url: ../
 date: 2020-02-03 16:42:20
-categories: CTF
+categories:
+  - CTF
 ---
 
 padding oracle 原理: https://www.freebuf.com/articles/database/150606.html

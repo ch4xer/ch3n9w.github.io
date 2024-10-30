@@ -3,7 +3,8 @@ title: 服务器过期之后
 author: ch3n9w
 typora-root-url: ../
 date: 2022-12-12 14:49:41
-categories: 碎碎念
+categories:
+  - 碎碎念
 ---
 
 > 超元域这个词, 出自雪崩这本书, 人们在这个虚拟世界中可以随意行事, 尽情做自己, 这也是我的初衷: 把发言权还给我

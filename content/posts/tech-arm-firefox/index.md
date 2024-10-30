@@ -3,7 +3,8 @@ title: 武装火狐
 author: ch3n9w
 typora-root-url: ../
 date: 2023-01-09 23:04:29
-categories: 技术
+categories:
+  - 技术
 cover:
   image: image-20230109230723998.png
 ---

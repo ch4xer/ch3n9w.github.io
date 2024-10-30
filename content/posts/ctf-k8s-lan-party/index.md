@@ -2,7 +2,8 @@
 title: k8s lan party
 author: ch3n9w
 date: 2024-03-15 07:34:46
-categories: CTF
+categories:
+  - CTF
 cover:
   image: 2024-03-26-21-02-36.png
 ---

@@ -2,7 +2,8 @@
 title: qwb2020web复现
 author: ch3n9w
 date: 2020-08-27 20:48:12
-categories: CTF
+categories:
+  - CTF
 typora-root-url: ../
 cover:
   image: image-20211114141959846.png

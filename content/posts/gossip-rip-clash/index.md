@@ -3,7 +3,8 @@ title: RIP Clash
 author: ch3n9w
 typora-root-url: ../
 date: 2023-11-04 10:13:59
-categories: 碎碎念
+categories:
+  - 碎碎念
 cover:
   image: 404.png
 ---

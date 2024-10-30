@@ -3,7 +3,8 @@ title: 在红米ac2100路由器上开启clash
 author: ch3n9w
 typora-root-url: ../
 date: 2022-12-12 20:17:03
-categories: 技术
+categories:
+  - 技术
 ---
 
 > 在争取自由这个宏大命题下, 上网自由可以算得上一件"小事", 然而越是小事, 越与我们的日常息息相关.

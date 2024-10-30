@@ -3,7 +3,8 @@ title: 树莓派搭载clash作为旁路由
 author: ch3n9w
 typora-root-url: ../
 date: 2023-04-06 21:29:58
-categories: 技术
+categories:
+  - 技术
 ---
 
 
