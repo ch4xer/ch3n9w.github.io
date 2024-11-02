@@ -141,6 +141,34 @@
 
 <article class="post-entry"> 
 <figure class="entry-cover">
+        <img loading="lazy" srcset="https://ch3n9w.cpolar.cn/posts/tech-ext4-to-btrfs/btrfs_hu1807167231330812597.jpeg 360w ,https://ch3n9w.cpolar.cn/posts/tech-ext4-to-btrfs/btrfs.jpeg 474w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="https://ch3n9w.cpolar.cn/posts/tech-ext4-to-btrfs/btrfs.jpeg" alt="" 
+            width="474" height="302">
+</figure>
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">ext4到btrfs转换记录
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>这篇文章是对我从ext4文件系统转换到btrfs过程中的一些操作记录, 便于日后参考.
+前置准备 制作arch linux 启动盘, 版本越新越好. 备份重要文件 我个人在转换前会把大文件(例如虚拟机文件)转移到移动硬盘里, 让转换过程更快一些 转换 进入LiveCD 系统, 对主分区进行转换
+btrfs-convert /dev/nvme0n1p2 等待一段时间之后, 显示conversion complete就表示没有问题, 接下来还需要做三件事情才可以进入系统
+修改fstab 首先将转换成功后的分区挂载到/mnt下
+mount /dev/nvme0n1p2 /mnt 使用lsblk -f命令查看分区的UUID号, 拍个照片记一下
+编辑/mnt/etc/fstab, 修改这个分区类型为btrfs, 将最后的两列数字都改成0, 保存退出
+重建内存盘 先挂载, 然后进入chroot环境
+mount -t proc none /mnt/proc mount -t sysfs none /mnt/sys mount -o bind /dev /mnt/dev chroot /mnt bash 然后执行下列命令来为所有内核重建内存盘
+mkinitcpio -P 最后重建grub引导, 按照道理应该要把引导分区/dev/nvme0n1p1挂载到/mnt/boot之后才可以, 但是我记得自己执行的时候没有挂载?
+grub-mkconfig -o /boot/grub/grub.cfg 重建grub引导 在上一步的chroot环境中, 执行下列命令, 记得把引导分区挂载到/mnt/boot
+grub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2023-01-16 05:28:51 +0000 UTC'>January 16, 2023</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;237 words&nbsp;·&nbsp;ch3n9w</footer>
+  <a class="entry-link" aria-label="post link to ext4到btrfs转换记录" href="https://ch3n9w.cpolar.cn/posts/tech-ext4-to-btrfs/"></a>
+</article>
+
+<article class="post-entry"> 
+<figure class="entry-cover">
         <img loading="lazy" srcset="https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1_hu7743657973598238256.jpg 360w ,https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1_hu17111790031010727129.jpg 480w ,https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1_hu14146749365679280220.jpg 720w ,https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1_hu6921630188009710652.jpg 1080w ,https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1.jpg 1107w" 
             sizes="(min-width: 768px) 720px, 100vw" src="https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/1.jpg" alt="" 
             width="1107" height="293">
@@ -454,26 +482,6 @@ Web-Inf文件夹中除了有classes文件夹和一个web.xml文件外、还有li
   </div>
   <footer class="entry-footer"><span title='2020-08-29 15:49:36 +0000 UTC'>August 29, 2020</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;248 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to GACTF2020" href="https://ch3n9w.cpolar.cn/posts/ctf-gactf2020/"></a>
-</article>
-
-<article class="post-entry"> 
-<figure class="entry-cover">
-        <img loading="lazy" srcset="https://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/image-20211114141959846_hu1815068689607361705.png 360w ,https://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/image-20211114141959846_hu7669767990326402703.png 480w ,https://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/image-20211114141959846_hu9398446658780294442.png 720w ,https://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/image-20211114141959846_hu17098981144027839555.png 1080w ,https://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/image-20211114141959846.png 1296w" 
-            sizes="(min-width: 768px) 720px, 100vw" src="https://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/image-20211114141959846.png" alt="" 
-            width="1296" height="660">
-</figure>
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">qwb2020web复现
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>half_infiltration 开局的页面如下
-&lt;?php highlight_file(__FILE__); $flag=file_get_contents(&#39;ssrf.php&#39;); class Pass { function read() { ob_start(); global $result; print $result; } } class User { public $age,$sex,$num; function __destruct() { $student = $this-&gt;age; $boy = $this-&gt;sex; $a = $this-&gt;num; $student-&gt;$boy(); if(!(is_string($a)) ||!(is_string($boy)) || !(is_object($student))) { ob_end_clean(); exit(); } global $$a; $result=$GLOBALS[&#39;flag&#39;]; ob_end_clean(); } } if (isset($_GET[&#39;x&#39;])) { unserialize($_GET[&#39;x&#39;])-&gt;get_it(); } 思路是进行两次反序列化, 第一次将$_GLOBALS[‘flag’]赋值给全局变量$result, 第二次反序列化是让程序在ob_end_clean()执行之前报错退出. ob_start会打开输出缓冲
-启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2020-08-27 20:48:12 +0000 UTC'>August 27, 2020</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;370 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to qwb2020web复现" href="https://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
