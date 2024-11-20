@@ -2,13 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://ch3n9w.cpolar.cn/posts/read-the-why-cafe/</loc>
-    <lastmod>2024-11-02T20:50:43+08:00</lastmod>
-  </url><url>
     <loc>https://ch3n9w.cpolar.cn/</loc>
-    <lastmod>2024-11-02T20:50:43+08:00</lastmod>
+    <lastmod>2024-11-20T19:32:58+08:00</lastmod>
   </url><url>
     <loc>https://ch3n9w.cpolar.cn/posts/</loc>
+    <lastmod>2024-11-20T19:32:58+08:00</lastmod>
+  </url><url>
+    <loc>https://ch3n9w.cpolar.cn/posts/gossip-scihub/</loc>
+    <lastmod>2024-11-20T19:32:58+08:00</lastmod>
+  </url><url>
+    <loc>https://ch3n9w.cpolar.cn/posts/read-the-why-cafe/</loc>
     <lastmod>2024-11-02T20:50:43+08:00</lastmod>
   </url><url>
     <loc>https://ch3n9w.cpolar.cn/posts/tech-dev-2024/</loc>
