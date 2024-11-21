@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>ch3n9w の 超元域</title>
-    <link>https://ch3n9w.cpolar.cn/</link>
+    <link>https://ch3n9w.github.io/</link>
     <description>Recent content on ch3n9w の 超元域</description>
     <generator>Hugo -- 0.139.0</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 20 Nov 2024 19:32:58 +0800</lastBuildDate>
-    <atom:link href="https://ch3n9w.cpolar.cn/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://ch3n9w.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>从$scihub到自由网络意志</title>
-      <link>https://ch3n9w.cpolar.cn/posts/gossip-scihub/</link>
+      <link>https://ch3n9w.github.io/posts/gossip-scihub/</link>
       <pubDate>Wed, 20 Nov 2024 19:32:58 +0800</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/gossip-scihub/</guid>
+      <guid>https://ch3n9w.github.io/posts/gossip-scihub/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;这篇文章我写得很不满意&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -37,9 +37,9 @@
     </item>
     <item>
       <title>《在世界尽头的咖啡馆》读书笔记</title>
-      <link>https://ch3n9w.cpolar.cn/posts/read-the-why-cafe/</link>
+      <link>https://ch3n9w.github.io/posts/read-the-why-cafe/</link>
       <pubDate>Sat, 02 Nov 2024 20:50:43 +0800</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/read-the-why-cafe/</guid>
+      <guid>https://ch3n9w.github.io/posts/read-the-why-cafe/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;小说的主人公在偶遇一间奇妙的咖啡馆后, 通过店员们的引导开始思考起了人生的意义和价值, 并最终得到了启发.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -68,9 +68,9 @@
     </item>
     <item>
       <title>终端工具集(2024)</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-dev-2024/</link>
+      <link>https://ch3n9w.github.io/posts/tech-dev-2024/</link>
       <pubDate>Sat, 26 Oct 2024 09:11:56 +0800</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-dev-2024/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-dev-2024/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;声明: 此项目与那些声称要取代vscode等GUI工具的配置不同, 而是力图填补这些大型开发工具在终端环境下的空白&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -97,9 +97,9 @@
     </item>
     <item>
       <title>《如何阅读一本书》读书笔记</title>
-      <link>https://ch3n9w.cpolar.cn/posts/read-how-to-read-a-book/</link>
+      <link>https://ch3n9w.github.io/posts/read-how-to-read-a-book/</link>
       <pubDate>Fri, 25 Oct 2024 23:26:18 +0800</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/read-how-to-read-a-book/</guid>
+      <guid>https://ch3n9w.github.io/posts/read-how-to-read-a-book/</guid>
       <description>&lt;p&gt;这本书主要介绍了在进行以提升理解力为目的的阅读时所应该掌握的技巧, 这些技巧可以帮助提升阅读的效率, 节约时间的同时抓住重点. 注意, 这些技巧并不会让阅读变得更轻松, 相反, 读者消耗的精力可能会更多, 因为这些技巧要求读者更多地发挥其主动性, 然而, 这些技巧能够帮助读者更好地提升自己的理解力和知识吸收的速度, 并且有针对性地运用有限的精力.&lt;/p&gt;
 &lt;p&gt;本书并不谈论以消遣为目的的阅读活动, 也不会谈论单纯以获取资讯为目的的阅读活动, 尽管在提升理解力后, 获取资讯会更加迅速.&lt;/p&gt;
 &lt;h2 id=&#34;四个层次的阅读&#34;&gt;四个层次的阅读&lt;/h2&gt;
@@ -156,9 +156,9 @@
     </item>
     <item>
       <title>《高效原力》读书笔记</title>
-      <link>https://ch3n9w.cpolar.cn/posts/read-feel-good-productivity/</link>
+      <link>https://ch3n9w.github.io/posts/read-feel-good-productivity/</link>
       <pubDate>Tue, 22 Oct 2024 19:58:09 +0800</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/read-feel-good-productivity/</guid>
+      <guid>https://ch3n9w.github.io/posts/read-feel-good-productivity/</guid>
       <description>&lt;p&gt;这本书主要讨论了如何在工作过程中保持愉悦的心态, 进而提升工作效率, 保护精神健康. 作者认为愉悦心态可以帮助克服焦虑和过度的压力, 成功不会让你感觉愉悦, 但是感觉愉悦会为你带来成功.&lt;/p&gt;
 &lt;p&gt;本书内容分为三个部分: 激励(让工作更有兴致) 解锁(消除面对工作时的负面情绪) 续航(通过良好的习惯克服倦怠感)&lt;/p&gt;
 &lt;h2 id=&#34;激励&#34;&gt;激励&lt;/h2&gt;
@@ -211,9 +211,9 @@
     </item>
     <item>
       <title>特殊网络环境下的微信代理</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-wechat-proxy/</link>
+      <link>https://ch3n9w.github.io/posts/tech-wechat-proxy/</link>
       <pubDate>Wed, 02 Oct 2024 09:33:06 +0800</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-wechat-proxy/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-wechat-proxy/</guid>
       <description>&lt;p&gt;目前单位实施了微信封锁,本文旨在记录绕过封锁的过程.&lt;/p&gt;
 &lt;h2 id=&#34;阶段一-抓域名&#34;&gt;阶段一: 抓域名&lt;/h2&gt;
 &lt;p&gt;使用了&lt;code&gt;tcpdump&lt;/code&gt;抓取各个dns请求, 来获取需要代理的域名列表&lt;/p&gt;
@@ -236,9 +236,9 @@ pname(wechat) -&amp;gt; proxy
     </item>
     <item>
       <title>卡牌迷思：从万智牌的衰退开始</title>
-      <link>https://ch3n9w.cpolar.cn/posts/gossip-tcg/</link>
+      <link>https://ch3n9w.github.io/posts/gossip-tcg/</link>
       <pubDate>Sat, 28 Sep 2024 13:11:48 +0800</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/gossip-tcg/</guid>
+      <guid>https://ch3n9w.github.io/posts/gossip-tcg/</guid>
       <description>&lt;p&gt;这几天被万智牌所吸引, 富有史诗感的画风, 复杂但不混乱的规则, 简洁的卡面语言, 丰富的卡片种类, 多样性的玩法&amp;hellip;&amp;hellip;这些都是我在游戏王中所接触不到但怀念许久的, 在接触万智牌之前,这种怀念源自于过去的炉石传说,而在了解到万智牌后才发现,这些特质其实是万智牌所创造而让炉石继承下来的, 再加上略倾向于黑暗史诗的画风, 万智牌在很多维度上都比过去接触过的所有卡牌游戏更戳我的xp.&lt;/p&gt;
 &lt;p&gt;当然, 它并不是没有缺点的, 虽然主要的几个缺点都不是卡牌本身带来的.&lt;/p&gt;
 &lt;ul&gt;
@@ -260,9 +260,9 @@ pname(wechat) -&amp;gt; proxy
     </item>
     <item>
       <title>Kubernetes Admission Webhook 部署和调试</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/</link>
+      <link>https://ch3n9w.github.io/posts/tech-kubernetes-webhook/</link>
       <pubDate>Fri, 03 May 2024 17:14:14 +0800</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-kubernetes-webhook/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-kubernetes-webhook/</guid>
       <description>&lt;h1 id=&#34;deployment-and-debugging-of-admission-webhook-in-kubernetes-cluster&#34;&gt;Deployment and Debugging of Admission Webhook in Kubernetes cluster&lt;/h1&gt;
 &lt;h2 id=&#34;intro&#34;&gt;Intro&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;uhttps://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllersrl&#34;&gt;Dynamic admission control&lt;/a&gt; 允许开发者添加自己的逻辑代码来对提交给API Server的对象进行修改和验证, 是非常强大的功能. 本文将部署一组demo admission webhook, 包括一个validating webhook 和一个 mutating webhook, 并介绍webhook的调试方法. 本文主要使用和参考了&lt;a href=&#34;https://zhuanlan.zhihu.com/p/404764407&#34;&gt;从0到1开发K8S_Webhook最佳实践&lt;/a&gt;, 并通过查阅官方文档对其中的一些不适应新版本k8s的内容进行了修正.&lt;/p&gt;
@@ -293,16 +293,16 @@ pname(wechat) -&amp;gt; proxy
     </item>
     <item>
       <title>CVE-2023-26484 Kubevirt 权限提升漏洞复现</title>
-      <link>https://ch3n9w.cpolar.cn/posts/sec-cve-2023-26484/</link>
+      <link>https://ch3n9w.github.io/posts/sec-cve-2023-26484/</link>
       <pubDate>Tue, 30 Apr 2024 20:29:05 +0800</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/sec-cve-2023-26484/</guid>
+      <guid>https://ch3n9w.github.io/posts/sec-cve-2023-26484/</guid>
       <description>&lt;p&gt;该漏洞是论文工作 &amp;ldquo;Take Over the Whole Cluster: Attacking Kubernetes via Excessive Permissions of Third-party Applications&amp;rdquo; 挖掘到的, 对其进行复现可以更好地理解rbac的潜在风险.&lt;/p&gt;</description>
     </item>
     <item>
       <title>若为自由故, 软件皆可抛</title>
-      <link>https://ch3n9w.cpolar.cn/posts/read-free-opensource/</link>
+      <link>https://ch3n9w.github.io/posts/read-free-opensource/</link>
       <pubDate>Sat, 23 Mar 2024 22:57:50 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/read-free-opensource/</guid>
+      <guid>https://ch3n9w.github.io/posts/read-free-opensource/</guid>
       <description>&lt;p&gt;借着&amp;quot;若为自由故&amp;quot;这本书, 读者可以更深刻地理解开源软件与自由软件的异同之处. 由于在实际情况中, 二者都开放了源代码, 大部分情况下也都会采用互相兼容甚至相同的协议, 因此其中的区别在越来越多人眼里逐渐模糊. 如今的软件行业, 大多数人在表达相同意思时更加倾向于使用&amp;quot;Open-source&amp;quot;而不是&amp;quot;Free&amp;quot;这个词, 不仅能够直观清晰地表达信息, 也能避免&amp;quot;Free&amp;quot;这个单词常用的&amp;quot;免费&amp;quot;之意 (为了人们认识到&amp;quot;Free software&amp;quot;中的Free不是免费而是自由的意思, Stallman 可强调了许多次, 但很遗憾, 大部分公司在听到他的强调前就会被吓跑). 但只要了解过自由软件和开源软件的历史, 就能发现其中差距并不在技术而是在道德层面上的分歧.&lt;/p&gt;
 &lt;p&gt;具体来说, 开源运动更加注重软件开发方式的开放性, 一种类似于集市场景中人人可参与的, 以软件质量为最终目标的倡议, 它关注的是软件本身, 因此颇具工程师的纯粹特性; 相反, 自由软件运动不仅仅注重软件开发方式, 更赋予软件本身以道德属性, 它更强调软件用户的自由修改和自由传播的权利, 以&amp;quot;人的自由&amp;quot;为中心, 任何限制软件用户这些权利的个人和组织都是&amp;quot;邪恶&amp;quot;且需要被抵制的, 这让它更像是一种社会运动. 有一句Stallman的话可以很好地阐释其意: &amp;ldquo;如果一个软件是不自由的, 哪怕它的技术非常先进, 我也不会去使用它&amp;rdquo;, 相反, 开源运动的代表人物Linus曾经在一次大会上公开表示自己是Microsoft Powerpoint的粉丝用户, 二者的冲突也由此而来: 在开源主义者眼中, 商业软件是一个不完美的解决方案, 但是在自由软件者眼中, 商业软件则是彻头彻尾的敌人.&lt;/p&gt;
 &lt;p&gt;两种运动并不是互相独立的, 相反, 开源运动脱胎于自由软件运动, 是后者为了适应软件行业商业发展的一种必然演变, 也是追求自由的理想主义者在现实屡屡碰壁后的一种妥协.&lt;/p&gt;
@@ -311,9 +311,9 @@ pname(wechat) -&amp;gt; proxy
     </item>
     <item>
       <title>k8s lan party</title>
-      <link>https://ch3n9w.cpolar.cn/posts/ctf-k8s-lan-party/</link>
+      <link>https://ch3n9w.github.io/posts/ctf-k8s-lan-party/</link>
       <pubDate>Fri, 15 Mar 2024 07:34:46 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/ctf-k8s-lan-party/</guid>
+      <guid>https://ch3n9w.github.io/posts/ctf-k8s-lan-party/</guid>
       <description>&lt;p&gt;Long time no CTF~~&lt;/p&gt;
 &lt;h2 id=&#34;recon&#34;&gt;RECON&lt;/h2&gt;
 &lt;p&gt;Just check the environment related to K8s using &lt;code&gt;env&lt;/code&gt; and reconnoiter internal service using &lt;code&gt;dnscan&lt;/code&gt;&lt;/p&gt;
@@ -325,18 +325,18 @@ pname(wechat) -&amp;gt; proxy
     </item>
     <item>
       <title>2023年度总结</title>
-      <link>https://ch3n9w.cpolar.cn/posts/gossip-2023-summary/</link>
+      <link>https://ch3n9w.github.io/posts/gossip-2023-summary/</link>
       <pubDate>Fri, 09 Feb 2024 22:31:25 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/gossip-2023-summary/</guid>
+      <guid>https://ch3n9w.github.io/posts/gossip-2023-summary/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;一事无成的一年, 但也算有所收获, 如果教训也算收获的话.&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Learning eBPF</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-learning-ebpf/</link>
+      <link>https://ch3n9w.github.io/posts/tech-learning-ebpf/</link>
       <pubDate>Sun, 04 Feb 2024 00:06:15 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-learning-ebpf/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-learning-ebpf/</guid>
       <description>&lt;p&gt;eBPF 是一项革命性的技术, 起源于Linux 内核, 它可以在特权上下文中(如操作系统内核)运行沙盒程序. 它用于安全有效地扩展内核的功能, 而无需通过更改内核源代码或加载内核模块的方式来实现. 从历史上看,由于内核具有监督和控制整个系统的特权,操作系统一直是实现可观测性, 安全性和网络功能的理想场所.&lt;/p&gt;
 &lt;p&gt;对ebpf慕名许久, 正好趁寒假拜读一下Learning eBPF, 虽然是基于略过时的框架bcc, 但是在这个过程中学到的知识想必依旧可以迁移到别的框架去.&lt;/p&gt;
 &lt;h2 id=&#34;background-and-pre-knowledge&#34;&gt;Background and pre-knowledge&lt;/h2&gt;
@@ -358,9 +358,9 @@ pname(wechat) -&amp;gt; proxy
     </item>
     <item>
       <title>RIP Clash</title>
-      <link>https://ch3n9w.cpolar.cn/posts/gossip-rip-clash/</link>
+      <link>https://ch3n9w.github.io/posts/gossip-rip-clash/</link>
       <pubDate>Sat, 04 Nov 2023 10:13:59 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/gossip-rip-clash/</guid>
+      <guid>https://ch3n9w.github.io/posts/gossip-rip-clash/</guid>
       <description>&lt;p&gt;2023年11初,简中互联网又发生了一出闹剧,不过于以往的过眼云烟所不同的是,这次的事件导致了一系列优秀开源软件的消亡.&lt;/p&gt;
 &lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;
 &lt;p&gt;事件的经过其实并不复杂.11.2,clash for windows 的作者删除了github上用于发布的仓库中的信息,并在个人telegram频道上宣布不再开发.由于cfw的操作简单,对小白友好,因此其用户数量相当之大.删库的消息出来后,网友们纷纷开始关注作者的社交账号,对是否因信息泄露导致被抓加以猜测.其实对于一个网络代理软件来说,无论是因为被请喝茶还是因为作者不想干了而删库都是一件很正常的事情.&lt;/p&gt;
@@ -400,9 +400,9 @@ pname(wechat) -&amp;gt; proxy
     </item>
     <item>
       <title>2023 记北京秋游</title>
-      <link>https://ch3n9w.cpolar.cn/posts/gossip-beijing-travel-2023-2/</link>
+      <link>https://ch3n9w.github.io/posts/gossip-beijing-travel-2023-2/</link>
       <pubDate>Mon, 30 Oct 2023 21:35:04 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/gossip-beijing-travel-2023-2/</guid>
+      <guid>https://ch3n9w.github.io/posts/gossip-beijing-travel-2023-2/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;与所爱之人在一起的时光, 会生出互相的珍惜, 这份珍惜犹如风筝线一般, 即便对方远在云端, 依旧可以感知到其心念所动, 于是思念由此而生.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -416,9 +416,9 @@ pname(wechat) -&amp;gt; proxy
     </item>
     <item>
       <title>lineageos使用体验</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-lineageos-md/</link>
+      <link>https://ch3n9w.github.io/posts/tech-lineageos-md/</link>
       <pubDate>Sun, 13 Aug 2023 21:34:53 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-lineageos-md/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-lineageos-md/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;2024年7月更新: 经过了半年的时候, 遇到的问题包括但不限于 1) 微信卡顿 2) 银行类app无法使用 3) system UI经常崩溃 4) 快充消失. 出于可用性考虑, 已经转回coloros&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -434,52 +434,52 @@ pname(wechat) -&amp;gt; proxy
     </item>
     <item>
       <title>动荡时代</title>
-      <link>https://ch3n9w.cpolar.cn/posts/gossip-unstable-software/</link>
+      <link>https://ch3n9w.github.io/posts/gossip-unstable-software/</link>
       <pubDate>Wed, 02 Aug 2023 22:42:20 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/gossip-unstable-software/</guid>
+      <guid>https://ch3n9w.github.io/posts/gossip-unstable-software/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;乱世之中, 唯有自我与我所爱值得珍惜&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>我的neovim</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-neovim2023/</link>
+      <link>https://ch3n9w.github.io/posts/tech-neovim2023/</link>
       <pubDate>Wed, 07 Jun 2023 09:32:57 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-neovim2023/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-neovim2023/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;现在回头看几年前自己写的插件配置文章, 看着那些曾经用过但后来都纷纷被替代的插件, 我会莫名怀念那段因计算机和终端而兴奋不已的自己.&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>2023 小游京城</title>
-      <link>https://ch3n9w.cpolar.cn/posts/gossip-beijing-travel-2023/</link>
+      <link>https://ch3n9w.github.io/posts/gossip-beijing-travel-2023/</link>
       <pubDate>Wed, 26 Apr 2023 22:54:10 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/gossip-beijing-travel-2023/</guid>
+      <guid>https://ch3n9w.github.io/posts/gossip-beijing-travel-2023/</guid>
       <description>&lt;p&gt;难得黄小姐来一次北京, 作为肥宅的自己紧急规划了一下游玩路线, 发现北京可玩的地方相当的多, 这里仅仅记录这次游玩所经过的三个景区.&lt;/p&gt;</description>
     </item>
     <item>
       <title>优化neovim markdown中的treesitter高亮</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-neovim-treesitter-markdown/</link>
+      <link>https://ch3n9w.github.io/posts/tech-neovim-treesitter-markdown/</link>
       <pubDate>Tue, 25 Apr 2023 21:33:47 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-neovim-treesitter-markdown/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-neovim-treesitter-markdown/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;eye candy也是一种生产力!&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>树莓派搭载clash作为旁路由</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-openwrt-rasp/</link>
+      <link>https://ch3n9w.github.io/posts/tech-openwrt-rasp/</link>
       <pubDate>Thu, 06 Apr 2023 21:29:58 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-openwrt-rasp/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-openwrt-rasp/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;“一个黑暗的形体，像一个匍匐的人一般大小，但是长着长长的蜘蛛一样的肢体……黑暗中的形体以惊人的速度向他奔来。当它靠近时，他看到那蹲坐着的乌黑身体上有一张脸，在身体底部那些多节的腿之间。那张面孔用一种怀疑和质问的可憎表情凝视着他；而当这个大胆的猎人与那小而狡诈的，四周全是毛发的眼睛对视时，恐惧流遍了他的每一根血管。”&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>ext4到btrfs转换记录</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-ext4-to-btrfs/</link>
+      <link>https://ch3n9w.github.io/posts/tech-ext4-to-btrfs/</link>
       <pubDate>Mon, 16 Jan 2023 05:28:51 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-ext4-to-btrfs/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-ext4-to-btrfs/</guid>
       <description>&lt;p&gt;这篇文章是对我从ext4文件系统转换到btrfs过程中的一些操作记录, 便于日后参考.&lt;/p&gt;
 &lt;h2 id=&#34;前置准备&#34;&gt;前置准备&lt;/h2&gt;
 &lt;ol&gt;
@@ -513,9 +513,9 @@ pname(wechat) -&amp;gt; proxy
     </item>
     <item>
       <title>wayland下的划词翻译解决方案</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/</link>
+      <link>https://ch3n9w.github.io/posts/tech-translation-under-wayland/</link>
       <pubDate>Wed, 11 Jan 2023 04:36:45 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-translation-under-wayland/</guid>
       <description>&lt;p&gt;对于我这种英语不好的人来说, 翻译是离不开的工具, 但是众所周知, Linux的日用软件生态相比较windows和macos来说相差甚远, 别说目前正处于发展阶段的wayland, 就连成熟透了的x11下也没有拿得出手的翻译软件. 作为一个英语不好的Linux爱好者, 缺少翻译软件必定会对日常的使用造成一定的影响, 于是开始思考怎么样解决这个问题.&lt;/p&gt;
 &lt;p&gt;我的第一个思路, 也就是见到最多的划词翻译软件的样子, 选中文本之后, 在被选中的文本周围的某块区域中绘制一个窗口, 在其中展示翻译结果. 但是问题来了, 要如何绘制这样的窗口呢? 在wayland中, 窗口的位置交给了compositor进行管理, 这种能够自己决定显示位置的能力, 据我所知, 在wayland下仅有fcitx5做到了, 于是我翻阅了一下它的源代码, 并没有看懂, 但是应该没有借助于Qt和GTK来绘制, 而是使用wayland-client. 对我这样一个连Qt GTK开发经历都没有的人来说, 理解wayland编程开发中的那些概念实在有些困难. 于是紧接着又有一个问题出现了:&lt;/p&gt;
 &lt;p&gt;能否绕开wayland?&lt;/p&gt;
@@ -532,9 +532,9 @@ pname(wechat) -&amp;gt; proxy
     </item>
     <item>
       <title>武装火狐</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-arm-firefox/</link>
+      <link>https://ch3n9w.github.io/posts/tech-arm-firefox/</link>
       <pubDate>Mon, 09 Jan 2023 23:04:29 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-arm-firefox/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-arm-firefox/</guid>
       <description>&lt;p&gt;不管火狐的市场份额多么拉胯, 对于Linux wayland用户来说, 目前体验最好的浏览器依旧是Firefox. 本篇记录我的FIrefox配置, 包括浏览器设置和插件设置.&lt;/p&gt;
 &lt;h2 id=&#34;外观&#34;&gt;外观&lt;/h2&gt;
 &lt;h3 id=&#34;titlebar&#34;&gt;titlebar&lt;/h3&gt;
@@ -585,27 +585,27 @@ map p openCopiedUrlInNewTab
     </item>
     <item>
       <title>2022年度总结</title>
-      <link>https://ch3n9w.cpolar.cn/posts/gossip-2022-summary/</link>
+      <link>https://ch3n9w.github.io/posts/gossip-2022-summary/</link>
       <pubDate>Sat, 31 Dec 2022 22:31:25 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/gossip-2022-summary/</guid>
+      <guid>https://ch3n9w.github.io/posts/gossip-2022-summary/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;2022年是一个记得被纪念的年份, 不是因为它有多好, 而是因为它有多现实&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>小阳人日记</title>
-      <link>https://ch3n9w.cpolar.cn/posts/gossip-yang-diary-md/</link>
+      <link>https://ch3n9w.github.io/posts/gossip-yang-diary-md/</link>
       <pubDate>Tue, 20 Dec 2022 22:45:44 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/gossip-yang-diary-md/</guid>
+      <guid>https://ch3n9w.github.io/posts/gossip-yang-diary-md/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;生命本就如此脆弱&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>使用Arch Linux &#43; Sway一年后</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-arch-sway/</link>
+      <link>https://ch3n9w.github.io/posts/tech-arch-sway/</link>
       <pubDate>Sat, 17 Dec 2022 14:24:23 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-arch-sway/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-arch-sway/</guid>
       <description>&lt;p&gt;不知不觉使用sway已经整整一年了，于是来谈一谈自己这一年的使用感受，顺便回顾了一下过去。&lt;/p&gt;
 &lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;
 &lt;p&gt;2019年，在一次编程作业的时候，同专业的另一个老哥向我展示了vim的代码h补全，我立刻被这种简陋但是扩展性极强的代码编辑器吸引了，于是当时还是个刚转入计算机专业的小白就开始哼哧哼哧地学习vim的配置和插件的安装。当然，这些都发生在我的Kali Linux虚拟机中。&lt;/p&gt;
@@ -704,75 +704,75 @@ map p openCopiedUrlInNewTab
     </item>
     <item>
       <title>vim/neovim 的问题</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-thinking-about-vim/</link>
+      <link>https://ch3n9w.github.io/posts/tech-thinking-about-vim/</link>
       <pubDate>Thu, 15 Dec 2022 12:04:12 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-thinking-about-vim/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-thinking-about-vim/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;在消磨三年时光之后，我终于明白这个编辑器还远远称不上稳定，在道路的尽头之前，我能做的其实只有观望。&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>在红米ac2100路由器上开启clash</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-clash-ac2100/</link>
+      <link>https://ch3n9w.github.io/posts/tech-clash-ac2100/</link>
       <pubDate>Mon, 12 Dec 2022 20:17:03 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-clash-ac2100/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-clash-ac2100/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;在争取自由这个宏大命题下, 上网自由可以算得上一件&amp;quot;小事&amp;quot;, 然而越是小事, 越与我们的日常息息相关.&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>服务器过期之后</title>
-      <link>https://ch3n9w.cpolar.cn/posts/gossip-boring-note-md/</link>
+      <link>https://ch3n9w.github.io/posts/gossip-boring-note-md/</link>
       <pubDate>Mon, 12 Dec 2022 14:49:41 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/gossip-boring-note-md/</guid>
+      <guid>https://ch3n9w.github.io/posts/gossip-boring-note-md/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;超元域这个词, 出自雪崩这本书, 人们在这个虚拟世界中可以随意行事, 尽情做自己, 这也是我的初衷: 把发言权还给我&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>virtualbox中搭建kubernetes集群</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-k8s-setup/</link>
+      <link>https://ch3n9w.github.io/posts/tech-k8s-setup/</link>
       <pubDate>Mon, 12 Dec 2022 12:17:49 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-k8s-setup/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-k8s-setup/</guid>
       <description>&lt;p&gt;环境问题, 一生之敌.&lt;/p&gt;</description>
     </item>
     <item>
       <title>2021年度总结</title>
-      <link>https://ch3n9w.cpolar.cn/posts/gossip-2021-summary/</link>
+      <link>https://ch3n9w.github.io/posts/gossip-2021-summary/</link>
       <pubDate>Wed, 09 Feb 2022 16:12:20 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/gossip-2021-summary/</guid>
+      <guid>https://ch3n9w.github.io/posts/gossip-2021-summary/</guid>
       <description>&lt;p&gt;这是一篇拖延了很久的年度总结,在下决心写它的时候,我已经从过年开始无所事事地玩了十几天的游戏了,本来说好要在过年那天写的总结也一直到现在才开始动笔,着实是惭愧.&lt;/p&gt;</description>
     </item>
     <item>
       <title>pwnable尝试</title>
-      <link>https://ch3n9w.cpolar.cn/posts/sec-pwnable/</link>
+      <link>https://ch3n9w.github.io/posts/sec-pwnable/</link>
       <pubDate>Thu, 27 Jan 2022 17:48:33 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/sec-pwnable/</guid>
+      <guid>https://ch3n9w.github.io/posts/sec-pwnable/</guid>
       <description>&lt;p&gt;尝试学pwn,放弃学pwn&lt;/p&gt;</description>
     </item>
     <item>
       <title>shiro 漏洞复现</title>
-      <link>https://ch3n9w.cpolar.cn/posts/sec-shiro-attack/</link>
+      <link>https://ch3n9w.github.io/posts/sec-shiro-attack/</link>
       <pubDate>Sat, 22 Jan 2022 10:52:46 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/sec-shiro-attack/</guid>
+      <guid>https://ch3n9w.github.io/posts/sec-shiro-attack/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;记录shiro漏洞学习的过程, 参考https://saucer-man.com/information_security/396.html, 并在漏洞分析基础上编写检测脚本&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>thinkphp5漏洞学习</title>
-      <link>https://ch3n9w.cpolar.cn/posts/sec-phpggc-thinkphp/</link>
+      <link>https://ch3n9w.github.io/posts/sec-phpggc-thinkphp/</link>
       <pubDate>Fri, 14 Jan 2022 22:19:13 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/sec-phpggc-thinkphp/</guid>
+      <guid>https://ch3n9w.github.io/posts/sec-phpggc-thinkphp/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;phpggc中关于thinkphp的攻击思路学习&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>log4j2 jndi 漏洞学习和调试</title>
-      <link>https://ch3n9w.cpolar.cn/posts/sec-log4j2-jndi/</link>
+      <link>https://ch3n9w.github.io/posts/sec-log4j2-jndi/</link>
       <pubDate>Sat, 11 Dec 2021 14:56:51 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/sec-log4j2-jndi/</guid>
+      <guid>https://ch3n9w.github.io/posts/sec-log4j2-jndi/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;明天安全圈校招面试:
 面试官: 请说说你会什么技能?
@@ -786,9 +786,9 @@ map p openCopiedUrlInNewTab
     </item>
     <item>
       <title>赛博内卷</title>
-      <link>https://ch3n9w.cpolar.cn/posts/gossip-cyberpunk/</link>
+      <link>https://ch3n9w.github.io/posts/gossip-cyberpunk/</link>
       <pubDate>Fri, 19 Nov 2021 11:18:11 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/gossip-cyberpunk/</guid>
+      <guid>https://ch3n9w.github.io/posts/gossip-cyberpunk/</guid>
       <description>&lt;p&gt;科技的发展并不代表内卷的避免,相反,一味追求在虚拟世界中开疆拓土,忽视宇宙和深海的探索开发正是人类社会内卷化的集中反映,此处的内卷,和通常的内卷定义相同,即&amp;quot;一类文化模式达到了某种最终的形态以后,既没有办法稳定下来,也没有办法转变为新的形态.而只能不断地在内部变得更加复杂的现象&amp;quot;,只不过对象从普通的小群体变成了全体人类,社会矛盾的频繁爆发让人类倾向于将自己的灵与肉奉献给虚拟的神,这种奉献的热诚背后充斥着对冰冷现实的无力感和逃避,即便这种虚拟是人类自己创造出来的,他们依旧选择忽视甚至忘却这种自知,选择被奴役,膜拜和瞻仰.&lt;/p&gt;
 &lt;p&gt;另外一方面,正如洛夫克拉夫特所说的&amp;quot;人类最古老又最强烈的情绪,就是恐惧;而最古老又最强烈的恐惧,是对未知的恐惧&amp;quot;,在刻录在基因中的人性的驱使下,人类在总体层面上对未知的深海和太空是恐惧的,可是,要让人类接受自己社会发展停滞不前的事实,又是可耻且无法接受的.在这种背景下,虚拟世界的扩张从另一个角度为全体人类提供了一个&amp;quot;发展&amp;quot;的幻象,使得人类可以将蒙蔽双眼,逃脱生存困境,将注意力集中在已有事物的&amp;quot;发展&amp;quot;上,即便是内卷式的发展.&lt;/p&gt;
 &lt;p&gt;从理性的角度来说,人类文明要想长存不休,必须要将触角极力扩张到太空和海洋当中,然而人类总体上呈现的是一种非理性的意识形态,这并不新奇,在上帝已死的年代里,人类相信的不再是神明而是科技和资本,而科技为资本所掌控,所以资本的信仰便是人类的信仰,乍看之下,资本代表着贪婪和逐利,并且具备一定程度上的理性,但可惜的是,正是这种信仰将虚拟世界捧上神坛并加剧了社会的内卷化,而这种情况很难发生改变,理由如下:&lt;/p&gt;
@@ -811,27 +811,27 @@ map p openCopiedUrlInNewTab
     </item>
     <item>
       <title>GhostCat(CVE-2020-1938)漏洞学习</title>
-      <link>https://ch3n9w.cpolar.cn/posts/sec-ghostcat/</link>
+      <link>https://ch3n9w.github.io/posts/sec-ghostcat/</link>
       <pubDate>Sat, 13 Nov 2021 13:14:29 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/sec-ghostcat/</guid>
+      <guid>https://ch3n9w.github.io/posts/sec-ghostcat/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;本文主要参考 &lt;a href=&#34;https://blog.csdn.net/qq_31481187/article/details/105917392&#34;&gt;https://blog.csdn.net/qq_31481187/article/details/105917392&lt;/a&gt; 和 &lt;a href=&#34;https://paper.seebug.org/1142/#_6&#34;&gt;https://paper.seebug.org/1142/#_6&lt;/a&gt; ，并无原创内容，仅仅是个人学习笔记。&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>mysql jdbc反序列化的不深入研究</title>
-      <link>https://ch3n9w.cpolar.cn/posts/sec-jdbc-unserialize/</link>
+      <link>https://ch3n9w.github.io/posts/sec-jdbc-unserialize/</link>
       <pubDate>Fri, 15 Oct 2021 21:46:28 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/sec-jdbc-unserialize/</guid>
+      <guid>https://ch3n9w.github.io/posts/sec-jdbc-unserialize/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;我终于更新博客了……&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>使用idea开启Servlet</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-idea-start-servlet/</link>
+      <link>https://ch3n9w.github.io/posts/tech-idea-start-servlet/</link>
       <pubDate>Thu, 01 Oct 2020 22:10:28 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-idea-start-servlet/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-idea-start-servlet/</guid>
       <description>&lt;p&gt;采用的是版本较新的idea2020.2, 使用的操作系统为&lt;code&gt;MANJARO LINUX&lt;/code&gt;, 其中的过程挺迷迷糊糊的就水一篇来记录一下.&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;File --&amp;gt; New --&amp;gt; Project --&amp;gt; Java --&amp;gt; Nextnext 新建一个项目
@@ -859,17 +859,17 @@ map p openCopiedUrlInNewTab
     </item>
     <item>
       <title>GACTF2020</title>
-      <link>https://ch3n9w.cpolar.cn/posts/ctf-gactf2020/</link>
+      <link>https://ch3n9w.github.io/posts/ctf-gactf2020/</link>
       <pubDate>Sat, 29 Aug 2020 15:49:36 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/ctf-gactf2020/</guid>
+      <guid>https://ch3n9w.github.io/posts/ctf-gactf2020/</guid>
       <description>&lt;h2 id=&#34;simpleflask&#34;&gt;simpleflask&lt;/h2&gt;
 &lt;p&gt;和以往的flask不一样的地方在于, 这里是经过更新后的flask, 计算pin码的方式已经和以前不一样了, 参考 &lt;a href=&#34;https://www.chainnews.com/articles/898433701852.htm&#34;&gt;https://www.chainnews.com/articles/898433701852.htm&lt;/a&gt;, 不过问题不大,就把machine-id拼接在docker那一串东西的前面就可以了, 需要注意的是每十分钟重启时候的机器mac地址是会变化的.&lt;/p&gt;</description>
     </item>
     <item>
       <title>qwb2020web复现</title>
-      <link>https://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/</link>
+      <link>https://ch3n9w.github.io/posts/ctf-qwb2020-web-1/</link>
       <pubDate>Thu, 27 Aug 2020 20:48:12 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/ctf-qwb2020-web-1/</guid>
+      <guid>https://ch3n9w.github.io/posts/ctf-qwb2020-web-1/</guid>
       <description>&lt;h2 id=&#34;half_infiltration&#34;&gt;half_infiltration&lt;/h2&gt;
 &lt;p&gt;开局的页面如下&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
@@ -920,38 +920,38 @@ map p openCopiedUrlInNewTab
     </item>
     <item>
       <title>http请求走私笔记</title>
-      <link>https://ch3n9w.cpolar.cn/posts/sec-http-smuggling/</link>
+      <link>https://ch3n9w.github.io/posts/sec-http-smuggling/</link>
       <pubDate>Mon, 24 Aug 2020 22:22:46 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/sec-http-smuggling/</guid>
+      <guid>https://ch3n9w.github.io/posts/sec-http-smuggling/</guid>
       <description>&lt;p&gt;正常的请求&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;image-20211114141452612.png&#34; alt=&#34;image-20211114141452612&#34;  /&gt;
 &lt;/p&gt;</description>
     </item>
     <item>
       <title>ciscn2020_online</title>
-      <link>https://ch3n9w.cpolar.cn/posts/ctf-ciscn2020-online/</link>
+      <link>https://ch3n9w.github.io/posts/ctf-ciscn2020-online/</link>
       <pubDate>Thu, 20 Aug 2020 13:16:50 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/ctf-ciscn2020-online/</guid>
+      <guid>https://ch3n9w.github.io/posts/ctf-ciscn2020-online/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;web越來越没有牌面了&amp;hellip;国赛果然是pwn和misc的天下&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>网鼎杯2020 web</title>
-      <link>https://ch3n9w.cpolar.cn/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/</link>
+      <link>https://ch3n9w.github.io/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/</link>
       <pubDate>Mon, 11 May 2020 16:11:31 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/</guid>
+      <guid>https://ch3n9w.github.io/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/</guid>
       <description>&lt;h2 id=&#34;filejava&#34;&gt;filejava&lt;/h2&gt;
 &lt;p&gt;提供了文件上传和下载的功能, 在下载功能那里我们可以任意文件读取, 通过把文件名换成文件夹名字可以在报错中爆出绝对路径, 如图:&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://ch3n9w.cpolar.cn/images/image-20200511193913736.png&#34; alt=&#34;image-20200511193913736&#34;  /&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://ch3n9w.github.io/images/image-20200511193913736.png&#34; alt=&#34;image-20200511193913736&#34;  /&gt;
 &lt;/p&gt;
 &lt;p&gt;绝对路径&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/usr/local/tomcat/webapps/ROOT/WEB-INF/upload/0/10/
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;读文件/etc/passwd&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://ch3n9w.cpolar.cn/images/image-20200511194357766.png&#34; alt=&#34;image-20200511194357766&#34;  /&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://ch3n9w.github.io/images/image-20200511194357766.png&#34; alt=&#34;image-20200511194357766&#34;  /&gt;
 &lt;/p&gt;
 &lt;p&gt;读日志文件 &lt;code&gt;logs/catalina.out&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;​        &lt;img loading=&#34;lazy&#34; src=&#34;https://ch3n9w.cpolar.cn/images/qBJnenyW6ts6Vglb.png__thumbnail&#34; alt=&#34;img&#34;  /&gt;
+&lt;p&gt;​        &lt;img loading=&#34;lazy&#34; src=&#34;https://ch3n9w.github.io/images/qBJnenyW6ts6Vglb.png__thumbnail&#34; alt=&#34;img&#34;  /&gt;
 &lt;/p&gt;
 &lt;p&gt;发现有一个war包,下载下来进行源码审计, 发现一处突兀的地方&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;        if (filename.startsWith(&amp;#34;excel-&amp;#34;) &amp;amp;&amp;amp; &amp;#34;xlsx&amp;#34;.equals(fileExtName))
@@ -977,48 +977,48 @@ map p openCopiedUrlInNewTab
     </item>
     <item>
       <title>padding_oracle 和 cbc字节反转</title>
-      <link>https://ch3n9w.cpolar.cn/posts/sec-padding-oracle-and-cbc-attack/</link>
+      <link>https://ch3n9w.github.io/posts/sec-padding-oracle-and-cbc-attack/</link>
       <pubDate>Mon, 03 Feb 2020 16:42:20 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/sec-padding-oracle-and-cbc-attack/</guid>
+      <guid>https://ch3n9w.github.io/posts/sec-padding-oracle-and-cbc-attack/</guid>
       <description>&lt;p&gt;padding oracle 原理: &lt;a href=&#34;https://www.freebuf.com/articles/database/150606.html&#34;&gt;https://www.freebuf.com/articles/database/150606.html&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>临行前夜--2019</title>
-      <link>https://ch3n9w.cpolar.cn/posts/gossip-note-before-back/</link>
+      <link>https://ch3n9w.github.io/posts/gossip-note-before-back/</link>
       <pubDate>Wed, 08 Jan 2020 05:29:24 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/gossip-note-before-back/</guid>
+      <guid>https://ch3n9w.github.io/posts/gossip-note-before-back/</guid>
       <description>&lt;p&gt;昨晚约好的车今天早上竟然被司机一声不吭取消了, 真的无语&amp;hellip;&amp;hellip;得亏睡得浅起床看了一眼.新约的车又要早早开往机场, 于是无奈起了个大早. 到达后又被通知延误, 也不知和离开时候的飞雪有无关系, 但不管怎样, 孤身顶着鹅毛行走路上, 这样离开倒还是别有风味, 于是也有了碎碎念的兴致.&lt;/p&gt;</description>
     </item>
     <item>
       <title>java_web题目复现记录</title>
-      <link>https://ch3n9w.cpolar.cn/posts/sec-java-web/</link>
+      <link>https://ch3n9w.github.io/posts/sec-java-web/</link>
       <pubDate>Fri, 03 Jan 2020 10:57:44 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/sec-java-web/</guid>
+      <guid>https://ch3n9w.github.io/posts/sec-java-web/</guid>
       <description>&lt;p&gt;开一个新坑~~&lt;/p&gt;</description>
     </item>
     <item>
       <title>LD_PRELOAD劫持类型题目</title>
-      <link>https://ch3n9w.cpolar.cn/posts/sec-ld-preload%E5%8A%AB%E6%8C%81%E7%B1%BB%E5%9E%8B%E9%A2%98%E7%9B%AE/</link>
+      <link>https://ch3n9w.github.io/posts/sec-ld-preload%E5%8A%AB%E6%8C%81%E7%B1%BB%E5%9E%8B%E9%A2%98%E7%9B%AE/</link>
       <pubDate>Thu, 26 Dec 2019 16:37:19 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/sec-ld-preload%E5%8A%AB%E6%8C%81%E7%B1%BB%E5%9E%8B%E9%A2%98%E7%9B%AE/</guid>
+      <guid>https://ch3n9w.github.io/posts/sec-ld-preload%E5%8A%AB%E6%8C%81%E7%B1%BB%E5%9E%8B%E9%A2%98%E7%9B%AE/</guid>
       <description>&lt;p&gt;贴几个参考链接&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/wfzWebSecuity/p/11213732.html&#34;&gt;https://www.cnblogs.com/wfzWebSecuity/p/11213732.html&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD&#34;&gt;https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>copperstudy-record</title>
-      <link>https://ch3n9w.cpolar.cn/posts/ctf-qwb-copperstudy-record/</link>
+      <link>https://ch3n9w.github.io/posts/ctf-qwb-copperstudy-record/</link>
       <pubDate>Thu, 19 Dec 2019 20:51:05 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/ctf-qwb-copperstudy-record/</guid>
+      <guid>https://ch3n9w.github.io/posts/ctf-qwb-copperstudy-record/</guid>
       <description>&lt;h2 id=&#34;强网杯-2019-copperstudy&#34;&gt;强网杯 2019 copperstudy&lt;/h2&gt;
 &lt;p&gt;拖拖拉拉终于把这题复现了&amp;hellip;&lt;/p&gt;
 &lt;p&gt;开局计算哈希, 爆破爆破&lt;/p&gt;</description>
     </item>
     <item>
       <title>RoarCTF 2019复现</title>
-      <link>https://ch3n9w.cpolar.cn/posts/ctf-roarctfwp/</link>
+      <link>https://ch3n9w.github.io/posts/ctf-roarctfwp/</link>
       <pubDate>Tue, 22 Oct 2019 08:32:09 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/ctf-roarctfwp/</guid>
+      <guid>https://ch3n9w.github.io/posts/ctf-roarctfwp/</guid>
       <description>&lt;h1 id=&#34;web&#34;&gt;web&lt;/h1&gt;
 &lt;h2 id=&#34;online_proxy&#34;&gt;online_proxy&lt;/h2&gt;
 &lt;p&gt;特征: 第一次登录后源代码内容有如下:&lt;/p&gt;
@@ -1044,9 +1044,9 @@ map p openCopiedUrlInNewTab
     </item>
     <item>
       <title>bytectf2019</title>
-      <link>https://ch3n9w.cpolar.cn/posts/ctf-bytectf2019/</link>
+      <link>https://ch3n9w.github.io/posts/ctf-bytectf2019/</link>
       <pubDate>Mon, 09 Sep 2019 08:18:25 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/ctf-bytectf2019/</guid>
+      <guid>https://ch3n9w.github.io/posts/ctf-bytectf2019/</guid>
       <description>&lt;h2 id=&#34;boring-code&#34;&gt;boring code&lt;/h2&gt;
 &lt;p&gt;source code&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
@@ -1086,16 +1086,16 @@ map p openCopiedUrlInNewTab
     </item>
     <item>
       <title>php session反序列化</title>
-      <link>https://ch3n9w.cpolar.cn/posts/sec-php%E7%9A%84%E4%B8%A4%E7%B1%BB%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</link>
+      <link>https://ch3n9w.github.io/posts/sec-php%E7%9A%84%E4%B8%A4%E7%B1%BB%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</link>
       <pubDate>Mon, 02 Sep 2019 13:40:59 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/sec-php%E7%9A%84%E4%B8%A4%E7%B1%BB%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</guid>
+      <guid>https://ch3n9w.github.io/posts/sec-php%E7%9A%84%E4%B8%A4%E7%B1%BB%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</guid>
       <description>&lt;p&gt;php中的反序列化分为两类: 一种是常规ctf题目中的直接传入并反序列化, 另一种和session有关:&lt;/p&gt;</description>
     </item>
     <item>
       <title>证书相关</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-openssl/</link>
+      <link>https://ch3n9w.github.io/posts/tech-openssl/</link>
       <pubDate>Sun, 01 Sep 2019 15:23:10 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-openssl/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-openssl/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;来看看互联网世界的基石&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -1123,16 +1123,16 @@ map p openCopiedUrlInNewTab
     </item>
     <item>
       <title>Google_Game</title>
-      <link>https://ch3n9w.cpolar.cn/posts/ctf-google-game/</link>
+      <link>https://ch3n9w.github.io/posts/ctf-google-game/</link>
       <pubDate>Wed, 12 Jun 2019 19:41:56 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/ctf-google-game/</guid>
+      <guid>https://ch3n9w.github.io/posts/ctf-google-game/</guid>
       <description>&lt;h1 id=&#34;google-xss-game&#34;&gt;Google Xss game&lt;/h1&gt;</description>
     </item>
     <item>
       <title>2019 DDCTF web</title>
-      <link>https://ch3n9w.cpolar.cn/posts/ctf-2019-ddctf-web/</link>
+      <link>https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/</link>
       <pubDate>Sat, 11 May 2019 13:58:05 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/ctf-2019-ddctf-web/</guid>
+      <guid>https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/</guid>
       <description>&lt;p&gt;考试周结束，有时间来复现了。。。然鹅好像有题目崩了，java又没学过。。。只能复现一部分了。&lt;/p&gt;
 &lt;h2 id=&#34;web-签到题&#34;&gt;web 签到题&lt;/h2&gt;
 &lt;p&gt;点击，扫描，发现除了index.php 之外其他都需要登陆，抓包发现有发送&lt;code&gt;Auth.php&lt;/code&gt;请求，其中有&lt;code&gt;didictf_username&lt;/code&gt;字段，尝试添加成为&lt;code&gt;didictf_username: admin&lt;/code&gt;。成功登陆。&lt;/p&gt;
@@ -1306,27 +1306,27 @@ map p openCopiedUrlInNewTab
     </item>
     <item>
       <title>流量分析</title>
-      <link>https://ch3n9w.cpolar.cn/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/</link>
+      <link>https://ch3n9w.github.io/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/</link>
       <pubDate>Mon, 22 Apr 2019 04:16:47 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/</guid>
+      <guid>https://ch3n9w.github.io/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;bugku 中的部分misc题目&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>密码学题目</title>
-      <link>https://ch3n9w.cpolar.cn/posts/ctf-crypto/</link>
+      <link>https://ch3n9w.github.io/posts/ctf-crypto/</link>
       <pubDate>Mon, 22 Apr 2019 04:14:20 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/ctf-crypto/</guid>
+      <guid>https://ch3n9w.github.io/posts/ctf-crypto/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;记录密码学刷过的题目&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>bugku writeup</title>
-      <link>https://ch3n9w.cpolar.cn/posts/ctf-bugku-writeup/</link>
+      <link>https://ch3n9w.github.io/posts/ctf-bugku-writeup/</link>
       <pubDate>Mon, 22 Apr 2019 04:13:30 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/ctf-bugku-writeup/</guid>
+      <guid>https://ch3n9w.github.io/posts/ctf-bugku-writeup/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;纪念那段岁月&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -1404,9 +1404,9 @@ Eval函数会将里面的内容作为代码执行，unescape将其解码。要�
     </item>
     <item>
       <title>使用hexo和github搭建网站</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</link>
+      <link>https://ch3n9w.github.io/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</link>
       <pubDate>Mon, 22 Apr 2019 03:12:31 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</guid>
       <description>&lt;h2 id=&#34;基础修改&#34;&gt;基础修改&lt;/h2&gt;
 &lt;p&gt;修改 _config.yml，写上网站的标题&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;title:
@@ -1452,9 +1452,9 @@ git config --global user.email &amp;#34;email&amp;#34;
     </item>
     <item>
       <title>ch3n9w 的 vim</title>
-      <link>https://ch3n9w.cpolar.cn/posts/tech-ch4ser-vim/</link>
+      <link>https://ch3n9w.github.io/posts/tech-ch4ser-vim/</link>
       <pubDate>Mon, 22 Apr 2019 02:05:35 +0000</pubDate>
-      <guid>https://ch3n9w.cpolar.cn/posts/tech-ch4ser-vim/</guid>
+      <guid>https://ch3n9w.github.io/posts/tech-ch4ser-vim/</guid>
       <description>&lt;h1 id=&#34;ch3n9w-的-vim&#34;&gt;ch3n9w 的 vim&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;本篇文章中的插件均已过时, 不推荐使用&lt;/p&gt;

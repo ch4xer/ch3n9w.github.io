@@ -55,16 +55,16 @@ map yy copyCurrentUrl
 map p openCopiedUrlInNewTab
 Tip: 如果在某次更新之后发现插件不可用了, 那么可以考虑临时切换到另一个类似的插件 Vimium C , 把相同的键位复制进去就行啦.">
 <meta name="author" content="ch3n9w">
-<link rel="canonical" href="https://ch3n9w.cpolar.cn/posts/tech-arm-firefox/">
+<link rel="canonical" href="https://ch3n9w.github.io/posts/tech-arm-firefox/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://ch3n9w.cpolar.cn/flash.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://ch3n9w.cpolar.cn/flash.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="https://ch3n9w.cpolar.cn/flash.ico">
-<link rel="apple-touch-icon" href="https://ch3n9w.cpolar.cn/flash.ico">
-<link rel="mask-icon" href="https://ch3n9w.cpolar.cn/flash.ico">
+<link rel="icon" href="https://ch3n9w.github.io/flash.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://ch3n9w.github.io/flash.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="https://ch3n9w.github.io/flash.ico">
+<link rel="apple-touch-icon" href="https://ch3n9w.github.io/flash.ico">
+<link rel="mask-icon" href="https://ch3n9w.github.io/flash.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://ch3n9w.cpolar.cn/posts/tech-arm-firefox/">
+<link rel="alternate" hreflang="en" href="https://ch3n9w.github.io/posts/tech-arm-firefox/">
 <noscript>
     <style>
         #theme-toggle,
@@ -150,13 +150,13 @@ map yy copyCurrentUrl
 map p openCopiedUrlInNewTab
 Tip: 如果在某次更新之后发现插件不可用了, 那么可以考虑临时切换到另一个类似的插件 Vimium C , 把相同的键位复制进去就行啦." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ch3n9w.cpolar.cn/posts/tech-arm-firefox/" />
-<meta property="og:image" content="https://ch3n9w.cpolar.cn/image-20230109230723998.png" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://ch3n9w.github.io/posts/tech-arm-firefox/" />
+<meta property="og:image" content="https://ch3n9w.github.io/image-20230109230723998.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-01-09T23:04:29+00:00" />
 <meta property="article:modified_time" content="2023-01-09T23:04:29+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://ch3n9w.cpolar.cn/image-20230109230723998.png" />
+<meta name="twitter:image" content="https://ch3n9w.github.io/image-20230109230723998.png" />
 <meta name="twitter:title" content="武装火狐"/>
 <meta name="twitter:description" content="不管火狐的市场份额多么拉胯, 对于Linux wayland用户来说, 目前体验最好的浏览器依旧是Firefox. 本篇记录我的FIrefox配置, 包括浏览器设置和插件设置.
 外观
@@ -216,13 +216,13 @@ Tip: 如果在某次更新之后发现插件不可用了, 那么可以考虑临�
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://ch3n9w.cpolar.cn/posts/"
+      "item": "https://ch3n9w.github.io/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "武装火狐",
-      "item": "https://ch3n9w.cpolar.cn/posts/tech-arm-firefox/"
+      "item": "https://ch3n9w.github.io/posts/tech-arm-firefox/"
     }
   ]
 }
@@ -240,7 +240,7 @@ Tip: 如果在某次更新之后发现插件不可用了, 那么可以考虑临�
   "articleBody": "不管火狐的市场份额多么拉胯, 对于Linux wayland用户来说, 目前体验最好的浏览器依旧是Firefox. 本篇记录我的FIrefox配置, 包括浏览器设置和插件设置.\n外观 titlebar 为了让标题栏中的内容可以更加紧凑, 一个好办法是进入about:config, 设置browser.compactmode.show为true, 然后进入custom toolbar, 设置Density为Compact\n对于wm用户, 一个推荐的设置是勾选上上图中的Title Bar选项, 为什么要这么设置呢, 因为这样子做, 那些按钮(最大最小化, 关闭窗口)就会出现到title bar中, 然后title bar会被wm吃掉, 这样就可以给火狐的标题栏留出更多的空间\nps: 我用的主题名字叫做tokyonight\nFirefox-UI-Fix 使用Firefox-UI-Fix来个性化Firefox的界面\nAddon Vimium 该插件将vim的操作方式带入到浏览器中, 能够让用户更少依赖鼠标.\n默认情况下, firefox出于安全考虑会在一些页面中禁用Addon, 为了让该插件能够在更多的页面上使用, 需要在about:config中进行以下设置\nextensions.webextensions.restrictedDomains清空掉 privacy.resistFingerprinting.block_mozAddonManager设置为true,来让插件在所有页面上都可以使用 以下是我的Vimium键位设置.\n# Insert your preferred key mappings here. unmapAll map H previousTab map J previousTab map L nextTab map K nextTab map scrollPageDown map scrollPageUp map goBack map goForward map o Vomnibar.activateInNewTab map b Vomnibar.activateBookmarksInNewTab map t Vomnibar.activateTabSelection map M LinkHints.activateModeToOpenInNewTab map m LinkHints.activateModeToOpenInNewForegroundTab map gi focusInput map gg scrollToTop map G scrollToBottom map j scrollDown map k scrollUp map h scrollLeft map l scrollRight map x removeTab map X restoreTab map ? showHelp map yy copyCurrentUrl map p openCopiedUrlInNewTab Tip: 如果在某次更新之后发现插件不可用了, 那么可以考虑临时切换到另一个类似的插件 Vimium C , 把相同的键位复制进去就行啦.\n然后, 虽然我不经常用, 但是vomnibar是个好东西, 按一个键即可呼出, 在其中搜索tab, 书签, 历史记录, 以及调用搜索引擎,可惜默认主题有点丑, 可以去github上找一些主题, 我个人用的是 https://github.com/catppuccin/vimium\nTampermonkey 常用的脚本不多, 有 https://github.com/the1812/Bilibili-Evolved 和https://github.com/wandou-cc/blog-ui\nChecker Plus for Gmail 进入Option, 添加账号并且设置为stay signed in, 就可以方便管理多个gmail邮箱了.\n其他 Zotero Connector : 搜集文献的时候用的 Cookie-Editor : 编辑Cookie Dark Reader : 全部页面化为暗色模式 Google Scholar Button : 谷歌学术查询, 可以方便查文献 Octotree : 在github仓库网页上列出文件树, 方便临时查阅代码 TWP : 谷歌翻译插件 uBlock Origin : 因为效果太好被chrome下架了一阵子的广告拦截插件 Adblocker for youtube: 跳过youtube的广告 视频硬件解码 参考Archwiki\ngfx.webrender.all = true gfx.webrender.enabled = true media.ffmpeg.vaapi.enabled = true media.ffvpx.enabled = false media.navigator.mediadatadecoder_vpx_enabled = true media.rdd-vpx.enabled = false 由于vainfo显示我的显卡不支持av1解码,所以禁用av1比较好\nmedia.av1.enabled = false 至于vdpau, 由于只有nvidia才可以用, 我没有n卡, 所以不需要安装.\n最后可以使用nvtop来查看视频硬解是否正常工作, 如果出现DEC字样说明正常.\n最后 我并不是一个Mozilla吹, 恰恰相反, 我对这个把大把金钱花在政治活动和给管理层发工资的组织颇有微词, 如果你有兴趣, 可以看看相关的调查报告.\n只是相比之下, 利用自己的市场占有率强行推Manifest v3 和 Web Environment Integrity API 的 google很明显希望对浏览器插件进行最大程度的限制, 尤其是影响到他们赚钱的广告拦截器. 这样的行为很明显与互联网的自由开放精神相互违背, 但是很遗憾, 抛弃chrome选择其他chromium-based浏览器并不能解决问题, 用户依旧受制于chromium的代码库, 而后者作为这些浏览器的基础代码, 只要谷歌对其进行修改, 那么其他浏览器迟早都要跟进. 即便是Firefox也使用了Manifest V3, 但是他依旧保留了Manifest V2, 算是一点小小的反抗吧.\n",
   "wordCount" : "247",
   "inLanguage": "en",
-  "image":"https://ch3n9w.cpolar.cn/image-20230109230723998.png","datePublished": "2023-01-09T23:04:29Z",
+  "image":"https://ch3n9w.github.io/image-20230109230723998.png","datePublished": "2023-01-09T23:04:29Z",
   "dateModified": "2023-01-09T23:04:29Z",
   "author":{
     "@type": "Person",
@@ -248,14 +248,14 @@ Tip: 如果在某次更新之后发现插件不可用了, 那么可以考虑临�
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ch3n9w.cpolar.cn/posts/tech-arm-firefox/"
+    "@id": "https://ch3n9w.github.io/posts/tech-arm-firefox/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "ch3n9w の 超元域",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://ch3n9w.cpolar.cn/flash.ico"
+      "url": "https://ch3n9w.github.io/flash.ico"
     }
   }
 }
@@ -277,8 +277,8 @@ Tip: 如果在某次更新之后发现插件不可用了, 那么可以考虑临�
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://ch3n9w.cpolar.cn/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
-                <img src="https://ch3n9w.cpolar.cn/avatar.jpg" alt="" aria-label="logo"
+            <a href="https://ch3n9w.github.io/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
+                <img src="https://ch3n9w.github.io/avatar.jpg" alt="" aria-label="logo"
                     height="35">ch3n9w の 超元域</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -305,7 +305,7 @@ Tip: 如果在某次更新之后发现插件不可用了, 那么可以考虑临�
         </div>
         <ul id="menu">
             <li>
-                <a href="https://ch3n9w.cpolar.cn/categories/" title="categories">
+                <a href="https://ch3n9w.github.io/categories/" title="categories">
                     <span>categories</span>
                 </a>
             </li>
@@ -316,7 +316,7 @@ Tip: 如果在某次更新之后发现插件不可用了, 那么可以考虑临�
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://ch3n9w.cpolar.cn/">Home</a>&nbsp;»&nbsp;<a href="https://ch3n9w.cpolar.cn/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="https://ch3n9w.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://ch3n9w.github.io/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       武装火狐
     </h1>
@@ -325,8 +325,8 @@ Tip: 如果在某次更新之后发现插件不可用了, 那么可以考虑临�
 </div>
   </header> 
 <figure class="entry-cover">
-        <img loading="eager" srcset="https://ch3n9w.cpolar.cn/posts/tech-arm-firefox/image-20230109230723998_hu1727481018941919071.png 360w ,https://ch3n9w.cpolar.cn/posts/tech-arm-firefox/image-20230109230723998_hu11330921233070397780.png 480w ,https://ch3n9w.cpolar.cn/posts/tech-arm-firefox/image-20230109230723998_hu10408529988219504275.png 720w ,https://ch3n9w.cpolar.cn/posts/tech-arm-firefox/image-20230109230723998_hu8832896402534088130.png 1080w ,https://ch3n9w.cpolar.cn/posts/tech-arm-firefox/image-20230109230723998.png 1292w" 
-            sizes="(min-width: 768px) 720px, 100vw" src="https://ch3n9w.cpolar.cn/posts/tech-arm-firefox/image-20230109230723998.png" alt="" 
+        <img loading="eager" srcset="https://ch3n9w.github.io/posts/tech-arm-firefox/image-20230109230723998_hu1727481018941919071.png 360w ,https://ch3n9w.github.io/posts/tech-arm-firefox/image-20230109230723998_hu11330921233070397780.png 480w ,https://ch3n9w.github.io/posts/tech-arm-firefox/image-20230109230723998_hu10408529988219504275.png 720w ,https://ch3n9w.github.io/posts/tech-arm-firefox/image-20230109230723998_hu8832896402534088130.png 1080w ,https://ch3n9w.github.io/posts/tech-arm-firefox/image-20230109230723998.png 1292w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="https://ch3n9w.github.io/posts/tech-arm-firefox/image-20230109230723998.png" alt="" 
             width="1292" height="518">
         
 </figure><div class="toc">
@@ -447,12 +447,12 @@ media.rdd-vpx.enabled = false
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="https://ch3n9w.cpolar.cn/posts/tech-translation-under-wayland/">
+  <a class="prev" href="https://ch3n9w.github.io/posts/tech-translation-under-wayland/">
     <span class="title">« Prev</span>
     <br>
     <span>wayland下的划词翻译解决方案</span>
   </a>
-  <a class="next" href="https://ch3n9w.cpolar.cn/posts/gossip-2022-summary/">
+  <a class="next" href="https://ch3n9w.github.io/posts/gossip-2022-summary/">
     <span class="title">Next »</span>
     <br>
     <span>2022年度总结</span>
@@ -464,7 +464,7 @@ media.rdd-vpx.enabled = false
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="https://ch3n9w.cpolar.cn/">ch3n9w の 超元域</a></span> · 
+        <span>&copy; 2024 <a href="https://ch3n9w.github.io/">ch3n9w の 超元域</a></span> · 
 
     <span>
         Powered by
