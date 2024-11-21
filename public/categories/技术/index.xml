@@ -375,7 +375,6 @@ map p openCopiedUrlInNewTab
       <pubDate>Thu, 01 Oct 2020 22:10:28 +0000</pubDate>
       <guid>https://ch3n9w.github.io/posts/tech-idea-start-servlet/</guid>
       <description>&lt;p&gt;采用的是版本较新的idea2020.2, 使用的操作系统为&lt;code&gt;MANJARO LINUX&lt;/code&gt;, 其中的过程挺迷迷糊糊的就水一篇来记录一下.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;File --&amp;gt; New --&amp;gt; Project --&amp;gt; Java --&amp;gt; Nextnext 新建一个项目
 &lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;右键Project --&amp;gt; open module setting --&amp;gt; 点击+号 --&amp;gt; 导入tomcat8的Servlet-api.jar 
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;image-20211114141517710.png&#34; alt=&#34;image-20211114141517710&#34;  /&gt;
@@ -397,7 +396,8 @@ map p openCopiedUrlInNewTab
 　　数据库配置文件&lt;/p&gt;
 &lt;p&gt;/WEB-INF/tags/&lt;/p&gt;
 &lt;p&gt;存放了自定义标签文件，该目录并不一定为 tags，可以根据自己的喜好和习惯为自己的标签文件库命名，当使用自定义的标签文件库名称时，在使用标签文件时就必须声明正确的标签文件库路径。例如：当自定义标签文件库名称为 simpleTags 时，在使用 simpleTags 目录下的标签文件时，就必须在 jsp 文件头声明为：&amp;lt;%@ taglibprefix=&amp;ldquo;tags&amp;rdquo; tagdir=&amp;quot;/WEB-INF /simpleTags&amp;quot; % &amp;gt;。&lt;/p&gt;
-&lt;p&gt;/WEB-INF/jsp/&lt;/p&gt;</description>
+&lt;p&gt;/WEB-INF/jsp/&lt;/p&gt;
+&lt;p&gt;jsp 1.2 以下版本的文件存放位置。改目录没有特定的声明，同样，可以根据自己的喜好与习惯来命名。此目录主要存放的是 jsp 1.2 以下版本的文件，为区分 jsp 2.0 文件，通常使用 jsp 命名，当然你也可以命名为 jspOldEdition 。&lt;/p&gt;</description>
     </item>
     <item>
       <title>证书相关</title>

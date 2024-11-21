@@ -374,7 +374,7 @@ can avoid it.
 
 ## never give up
 
-查看源代码，看见注释<!--1p.html-->
+查看源代码，看见注释`<!--1p.html-->`
 
 修改url，进入的是ctf的主页，在viewsource中修改代码，得到了另一个网页的源代码，查找得到
 可能是重定向。

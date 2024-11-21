@@ -614,6 +614,6 @@ print conn.recv(9999)
 
 进入，看起来图片的解密是需要密钥的，那么另一张无法查看的图片可能有我们想要的密钥。修改高宽之后可以查看密钥。进入解密网站解密，并用16进制解密即可。
 
-<img width="799" alt="upload_repaire" src="https://user-images.githubusercontent.com/40637063/57571120-73225380-743c-11e9-8178-e1f74c83a67a.png">
+![x](https://user-images.githubusercontent.com/40637063/57571120-73225380-743c-11e9-8178-e1f74c83a67a.png)
 
 ![Screenshot from 2019-05-11 15-24-45](https://user-images.githubusercontent.com/40637063/57571078-f1322a80-743b-11e9-8ebe-099e2db550f7.png)
