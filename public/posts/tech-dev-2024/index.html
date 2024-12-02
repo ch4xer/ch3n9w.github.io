@@ -16,10 +16,12 @@
 Development Toolkit 📡
 A comprehensive and user-friendly development toolkit to boost up your productivity 🚀.
 
+
+
 terminal emulator: kitty
 shell: zsh
 editor: neovim
-terminal filemanager: lf
+terminal filemanager: yazi
 multiplexers: tmux or kitty
 
 Try
@@ -87,10 +89,12 @@ Alternatively (if you dont want to install all of them), you can copy the config
 Development Toolkit 📡
 A comprehensive and user-friendly development toolkit to boost up your productivity 🚀.
 
+
+
 terminal emulator: kitty
 shell: zsh
 editor: neovim
-terminal filemanager: lf
+terminal filemanager: yazi
 multiplexers: tmux or kitty
 
 Try
@@ -119,10 +123,12 @@ Alternatively (if you dont want to install all of them), you can copy the config
 Development Toolkit 📡
 A comprehensive and user-friendly development toolkit to boost up your productivity 🚀.
 
+
+
 terminal emulator: kitty
 shell: zsh
 editor: neovim
-terminal filemanager: lf
+terminal filemanager: yazi
 multiplexers: tmux or kitty
 
 Try
@@ -161,11 +167,11 @@ Alternatively (if you dont want to install all of them), you can copy the config
   "@type": "BlogPosting",
   "headline": "终端工具集(2024)",
   "name": "终端工具集(2024)",
-  "description": " 声明: 此项目与那些声称要取代vscode等GUI工具的配置不同, 而是力图填补这些大型开发工具在终端环境下的空白\n项目地址: https://github.com/ch3n9w/dev, 后续README更新不会同步到这篇博客, 但是大体上秉承的思想不会改变: 极简、可用以及最少化心智负担\nDevelopment Toolkit 📡 A comprehensive and user-friendly development toolkit to boost up your productivity 🚀.\nterminal emulator: kitty shell: zsh editor: neovim terminal filemanager: lf multiplexers: tmux or kitty Try docker run -it --rm --name dev ch4xer/dev:latest /bin/zsh Install git clone https://github.com/ch3n9w/dev cd dev # install dependency software and install configuration ./scripts/install-software.sh Alternatively (if you dont want to install all of them), you can copy the configuration directory you like to XDG_CONFIG_HOME (commonly ~/.config), for example:\n",
+  "description": " 声明: 此项目与那些声称要取代vscode等GUI工具的配置不同, 而是力图填补这些大型开发工具在终端环境下的空白\n项目地址: https://github.com/ch3n9w/dev, 后续README更新不会同步到这篇博客, 但是大体上秉承的思想不会改变: 极简、可用以及最少化心智负担\nDevelopment Toolkit 📡 A comprehensive and user-friendly development toolkit to boost up your productivity 🚀.\nterminal emulator: kitty shell: zsh editor: neovim terminal filemanager: yazi multiplexers: tmux or kitty Try docker run -it --rm --name dev ch4xer/dev:latest /bin/zsh Install git clone https://github.com/ch3n9w/dev cd dev # install dependency software and install configuration ./scripts/install-software.sh Alternatively (if you dont want to install all of them), you can copy the configuration directory you like to XDG_CONFIG_HOME (commonly ~/.config), for example:\n",
   "keywords": [
     
   ],
-  "articleBody": " 声明: 此项目与那些声称要取代vscode等GUI工具的配置不同, 而是力图填补这些大型开发工具在终端环境下的空白\n项目地址: https://github.com/ch3n9w/dev, 后续README更新不会同步到这篇博客, 但是大体上秉承的思想不会改变: 极简、可用以及最少化心智负担\nDevelopment Toolkit 📡 A comprehensive and user-friendly development toolkit to boost up your productivity 🚀.\nterminal emulator: kitty shell: zsh editor: neovim terminal filemanager: lf multiplexers: tmux or kitty Try docker run -it --rm --name dev ch4xer/dev:latest /bin/zsh Install git clone https://github.com/ch3n9w/dev cd dev # install dependency software and install configuration ./scripts/install-software.sh Alternatively (if you dont want to install all of them), you can copy the configuration directory you like to XDG_CONFIG_HOME (commonly ~/.config), for example:\nnvim -\u003e ~/.config/nvim kitty -\u003e ~/.config/kitty tmux -\u003e ~/.config/tmux lf -\u003e ~/.config/lf zsh/zsh -\u003e ~/.config/zsh zsh/zshrc -\u003e ~/.zshrc starship/starship.toml -\u003e ~/.config/starship.toml Noteable Info Kitty use Ctrl and Shift as modifier key for all shortcuts use JetbrainMono Nerd Font and LXGW WenKai as font Tmux use Alt and Ctrl as modifier key for all shortcuts set Alt-a as prefix key instead of Ctrl-b use tmux-continuum and resurrect to restore sessions. Zsh you can add software settings in zsh/zsh/software disable vim mode. Neovim Only use \u003c=30 plugins to make Neovim tiny and good enough for editing Keymap Software Key Effect kitty C-t new tab kitty C-CR new window kitty C-w delete window kitty C-h/j/k/l focus other window kitty C-S-h/j/k/l move window kitty C-PgUp/PgDn goto other tab kitty C-S-PgUp/PgDn move tab kitty C-=/- adjust font size kitty f1 search content kitty f11 toggle zoom zsh C-r execute lf filemanager zsh C-e open filemanager-gui zsh C-Backspace delete word backward lf gh go to home (~) lf gd go to ~/Documents lf gn go to ~/Downloads lf H/L go to previous/next visited directory lf a mkdir lf t touch lf r rename file or directory lf o open with custom software lf . show hidden file lf ; execute shell command lf y copy lf d cut lf p paste lf D move to trash lf Delete rm lf f fuzzy search using fzf tmux M-a prefix key tmux M-h/j/k/l go to other pane tmux M-q kill pane tmux M-C-j/k swap with other panes tmux M-x split window horizontally tmux M-C-x split window vertically tmux M-f toggle zoom tmux M-t create new window tmux M-C-t rename window tmux M-PgUp/PgDn go to previous/next window tmux M-C-PgUp/PgDn swap with previous/next window tmux M-s choose session tmux M-C-s rename session tmux M-n create new session neovim q quit window/neovim neovim Q record macro neovim H/L go to the begin/end of line neovim Tab move to other window neovim ; enter commandline mode neovim g= format document neovim 2-LeftMouse/CR toggle fold neovim sw fuzzy search word neovim sf fuzzy search filename neovim z fuzzy search opened buffers neovim ga (lsp) code action neovim ge (lsp) show diagnostics in line neovim gh (lsp) get document neovim gn (lsp) rename symbol neovim gd (lsp) go to definition neovim gr (lsp) find reference neovim C-/ comment line neovim f flash jump neovim Tab/S-Tab code completions neovim t File Tree ",
+  "articleBody": " 声明: 此项目与那些声称要取代vscode等GUI工具的配置不同, 而是力图填补这些大型开发工具在终端环境下的空白\n项目地址: https://github.com/ch3n9w/dev, 后续README更新不会同步到这篇博客, 但是大体上秉承的思想不会改变: 极简、可用以及最少化心智负担\nDevelopment Toolkit 📡 A comprehensive and user-friendly development toolkit to boost up your productivity 🚀.\nterminal emulator: kitty shell: zsh editor: neovim terminal filemanager: yazi multiplexers: tmux or kitty Try docker run -it --rm --name dev ch4xer/dev:latest /bin/zsh Install git clone https://github.com/ch3n9w/dev cd dev # install dependency software and install configuration ./scripts/install-software.sh Alternatively (if you dont want to install all of them), you can copy the configuration directory you like to XDG_CONFIG_HOME (commonly ~/.config), for example:\nnvim -\u003e ~/.config/nvim kitty -\u003e ~/.config/kitty tmux -\u003e ~/.config/tmux yazi -\u003e ~/.config/yazi zsh/zsh -\u003e ~/.config/zsh zsh/zshrc -\u003e ~/.zshrc Noteable Info Kitty use Ctrl and Shift as modifier key for all shortcuts use JetbrainMono Nerd Font and LXGW WenKai as font Tmux use Alt and Ctrl as modifier key for all shortcuts set Alt-a as prefix key instead of Ctrl-b use tmux-continuum and resurrect to restore sessions. Zsh you can add software settings in zsh/zsh/software disable vim mode. Neovim Only use \u003c=30 plugins to make Neovim tiny and good enough for editing Keymap Software Key Effect kitty C-t new tab kitty C-CR new window kitty C-w delete window kitty C-h/j/k/l focus other window kitty C-S-h/j/k/l move window kitty C-PgUp/PgDn goto other tab kitty C-S-PgUp/PgDn move tab kitty C-=/- adjust font size kitty f1 search content kitty f11 toggle zoom zsh C-r call filemanager zsh C-e open filemanager-gui zsh C-Backspace delete word backward yazi gh go to home (~) yazi gd go to ~/Documents yazi gn go to ~/Downloads yazi H/L go to previous/next visited directory yazi a create file/dir yazi r rename file or directory yazi . show hidden file yazi ; execute shell command yazi y copy yazi d cut yazi p paste yazi D move to trash yazi Delete rm yazi f search and jump with fzf yazi z jump with zoxide tmux M-a prefix key tmux M-h/j/k/l go to other pane tmux M-q kill pane tmux M-C-j/k swap with other panes tmux M-x split window horizontally tmux M-C-x split window vertically tmux M-f toggle zoom tmux M-t create new window tmux M-C-t rename window tmux M-PgUp/PgDn go to previous/next window tmux M-C-PgUp/PgDn swap with previous/next window tmux M-s choose session tmux M-C-s rename session tmux M-n create new session neovim q quit window/neovim neovim Q record macro neovim C-a select all (normal mode) neovim H/L go to the begin/end of line neovim Tab move to other window neovim ; enter commandline mode neovim g= format document neovim 2-LeftMouse/CR toggle fold neovim sw fuzzy search word neovim sf fuzzy search filename neovim z fuzzy search opened buffers neovim ga (lsp) code action neovim ge (lsp) show diagnostics in line neovim gh (lsp) get document neovim gn (lsp) rename symbol neovim gd (lsp) go to definition neovim gr (lsp) find reference neovim C-/ comment line neovim f flash jump neovim Tab/S-Tab code completions neovim t File Tree ",
   "wordCount" : "481",
   "inLanguage": "en",
   "image":"https://ch3n9w.github.io/cover.png","datePublished": "2024-10-26T09:11:56+08:00",
@@ -283,11 +289,13 @@ Alternatively (if you dont want to install all of them), you can copy the config
 </blockquote>
 <h1 id="development-toolkit-">Development Toolkit 📡<a hidden class="anchor" aria-hidden="true" href="#development-toolkit-">#</a></h1>
 <p>A comprehensive and user-friendly development toolkit to boost up your productivity 🚀.</p>
+<p><img loading="lazy" src="https://ch3n9w.github.io/posts/tech-dev-2024/cover.png" alt="Screenshot"  />
+</p>
 <ul>
 <li>terminal emulator: <a href="https://github.com/kovidgoyal/kitty">kitty</a></li>
 <li>shell: <a href="https://www.zsh.org/">zsh</a></li>
 <li>editor: <a href="https://github.com/neovim/neovim">neovim</a></li>
-<li>terminal filemanager: <a href="https://github.com/gokcehan/lf">lf</a></li>
+<li>terminal filemanager: <a href="https://github.com/sxyazi/yazi">yazi</a></li>
 <li>multiplexers: <a href="https://github.com/tmux/tmux">tmux</a> or <a href="https://github.com/kovidgoyal/kitty">kitty</a></li>
 </ul>
 <h2 id="try">Try<a hidden class="anchor" aria-hidden="true" href="#try">#</a></h2>
@@ -301,10 +309,9 @@ Alternatively (if you dont want to install all of them), you can copy the config
 <pre tabindex="0"><code>nvim -&gt; ~/.config/nvim
 kitty -&gt; ~/.config/kitty
 tmux -&gt; ~/.config/tmux
-lf -&gt; ~/.config/lf
+yazi -&gt; ~/.config/yazi
 zsh/zsh -&gt; ~/.config/zsh
 zsh/zshrc -&gt; ~/.zshrc
-starship/starship.toml -&gt; ~/.config/starship.toml
 </code></pre><h2 id="noteable-info">Noteable Info<a hidden class="anchor" aria-hidden="true" href="#noteable-info">#</a></h2>
 <ul>
 <li>Kitty
@@ -395,7 +402,7 @@ starship/starship.toml -&gt; ~/.config/starship.toml
       <tr>
           <td style="text-align: center">zsh</td>
           <td style="text-align: center">C-r</td>
-          <td style="text-align: center">execute lf filemanager</td>
+          <td style="text-align: center">call filemanager</td>
       </tr>
       <tr>
           <td style="text-align: center">zsh</td>
@@ -408,84 +415,79 @@ starship/starship.toml -&gt; ~/.config/starship.toml
           <td style="text-align: center">delete word backward</td>
       </tr>
       <tr>
-          <td style="text-align: center">lf</td>
+          <td style="text-align: center">yazi</td>
           <td style="text-align: center">gh</td>
           <td style="text-align: center">go to home (~)</td>
       </tr>
       <tr>
-          <td style="text-align: center">lf</td>
+          <td style="text-align: center">yazi</td>
           <td style="text-align: center">gd</td>
           <td style="text-align: center">go to ~/Documents</td>
       </tr>
       <tr>
-          <td style="text-align: center">lf</td>
+          <td style="text-align: center">yazi</td>
           <td style="text-align: center">gn</td>
           <td style="text-align: center">go to ~/Downloads</td>
       </tr>
       <tr>
-          <td style="text-align: center">lf</td>
+          <td style="text-align: center">yazi</td>
           <td style="text-align: center">H/L</td>
           <td style="text-align: center">go to previous/next visited directory</td>
       </tr>
       <tr>
-          <td style="text-align: center">lf</td>
+          <td style="text-align: center">yazi</td>
           <td style="text-align: center">a</td>
-          <td style="text-align: center">mkdir</td>
+          <td style="text-align: center">create file/dir</td>
       </tr>
       <tr>
-          <td style="text-align: center">lf</td>
-          <td style="text-align: center">t</td>
-          <td style="text-align: center">touch</td>
-      </tr>
-      <tr>
-          <td style="text-align: center">lf</td>
+          <td style="text-align: center">yazi</td>
           <td style="text-align: center">r</td>
           <td style="text-align: center">rename file or directory</td>
       </tr>
       <tr>
-          <td style="text-align: center">lf</td>
-          <td style="text-align: center">o</td>
-          <td style="text-align: center">open with custom software</td>
-      </tr>
-      <tr>
-          <td style="text-align: center">lf</td>
+          <td style="text-align: center">yazi</td>
           <td style="text-align: center">.</td>
           <td style="text-align: center">show hidden file</td>
       </tr>
       <tr>
-          <td style="text-align: center">lf</td>
+          <td style="text-align: center">yazi</td>
           <td style="text-align: center">;</td>
           <td style="text-align: center">execute shell command</td>
       </tr>
       <tr>
-          <td style="text-align: center">lf</td>
+          <td style="text-align: center">yazi</td>
           <td style="text-align: center">y</td>
           <td style="text-align: center">copy</td>
       </tr>
       <tr>
-          <td style="text-align: center">lf</td>
+          <td style="text-align: center">yazi</td>
           <td style="text-align: center">d</td>
           <td style="text-align: center">cut</td>
       </tr>
       <tr>
-          <td style="text-align: center">lf</td>
+          <td style="text-align: center">yazi</td>
           <td style="text-align: center">p</td>
           <td style="text-align: center">paste</td>
       </tr>
       <tr>
-          <td style="text-align: center">lf</td>
+          <td style="text-align: center">yazi</td>
           <td style="text-align: center">D</td>
           <td style="text-align: center">move to trash</td>
       </tr>
       <tr>
-          <td style="text-align: center">lf</td>
+          <td style="text-align: center">yazi</td>
           <td style="text-align: center">Delete</td>
           <td style="text-align: center">rm</td>
       </tr>
       <tr>
-          <td style="text-align: center">lf</td>
+          <td style="text-align: center">yazi</td>
           <td style="text-align: center">f</td>
-          <td style="text-align: center">fuzzy search using fzf</td>
+          <td style="text-align: center">search and jump with fzf</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">yazi</td>
+          <td style="text-align: center">z</td>
+          <td style="text-align: center">jump with zoxide</td>
       </tr>
       <tr>
           <td style="text-align: center">tmux</td>
@@ -566,6 +568,11 @@ starship/starship.toml -&gt; ~/.config/starship.toml
           <td style="text-align: center">neovim</td>
           <td style="text-align: center">Q</td>
           <td style="text-align: center">record macro</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">neovim</td>
+          <td style="text-align: center">C-a</td>
+          <td style="text-align: center">select all (normal mode)</td>
       </tr>
       <tr>
           <td style="text-align: center">neovim</td>

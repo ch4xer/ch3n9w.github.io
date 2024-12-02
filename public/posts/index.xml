@@ -91,11 +91,13 @@
 &lt;/blockquote&gt;
 &lt;h1 id=&#34;development-toolkit-&#34;&gt;Development Toolkit 📡&lt;/h1&gt;
 &lt;p&gt;A comprehensive and user-friendly development toolkit to boost up your productivity 🚀.&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://ch3n9w.github.io/posts/tech-dev-2024/cover.png&#34; alt=&#34;Screenshot&#34;  /&gt;
+&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;terminal emulator: &lt;a href=&#34;https://github.com/kovidgoyal/kitty&#34;&gt;kitty&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;shell: &lt;a href=&#34;https://www.zsh.org/&#34;&gt;zsh&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;editor: &lt;a href=&#34;https://github.com/neovim/neovim&#34;&gt;neovim&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;terminal filemanager: &lt;a href=&#34;https://github.com/gokcehan/lf&#34;&gt;lf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;terminal filemanager: &lt;a href=&#34;https://github.com/sxyazi/yazi&#34;&gt;yazi&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;multiplexers: &lt;a href=&#34;https://github.com/tmux/tmux&#34;&gt;tmux&lt;/a&gt; or &lt;a href=&#34;https://github.com/kovidgoyal/kitty&#34;&gt;kitty&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;try&#34;&gt;Try&lt;/h2&gt;
