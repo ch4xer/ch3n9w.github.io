@@ -26,16 +26,16 @@ Tracepoint是在内核中固定的hook点, 并不是在所有的函数中都有t
 eBPF virtual machine
 The ebpf virtual machine uses 10 general-purpose registers (0-9), and additional register 10 which was used as a stack frame pointer (can only be read but not written). As a BPF program is executed, values get stored in these registers to keep track of state.">
 <meta name="author" content="ch3n9w">
-<link rel="canonical" href="https://ch3n9w.github.io/posts/tech-learning-ebpf/">
+<link rel="canonical" href="http://blog.dragonbox.top/posts/tech-learning-ebpf/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://ch3n9w.github.io/flash.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://ch3n9w.github.io/flash.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="https://ch3n9w.github.io/flash.ico">
-<link rel="apple-touch-icon" href="https://ch3n9w.github.io/flash.ico">
-<link rel="mask-icon" href="https://ch3n9w.github.io/flash.ico">
+<link rel="icon" href="http://blog.dragonbox.top/flash.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://blog.dragonbox.top/flash.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="http://blog.dragonbox.top/flash.ico">
+<link rel="apple-touch-icon" href="http://blog.dragonbox.top/flash.ico">
+<link rel="mask-icon" href="http://blog.dragonbox.top/flash.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://ch3n9w.github.io/posts/tech-learning-ebpf/">
+<link rel="alternate" hreflang="en" href="http://blog.dragonbox.top/posts/tech-learning-ebpf/">
 <noscript>
     <style>
         #theme-toggle,
@@ -92,7 +92,7 @@ Tracepoint是在内核中固定的hook点, 并不是在所有的函数中都有t
 eBPF virtual machine
 The ebpf virtual machine uses 10 general-purpose registers (0-9), and additional register 10 which was used as a stack frame pointer (can only be read but not written). As a BPF program is executed, values get stored in these registers to keep track of state." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ch3n9w.github.io/posts/tech-learning-ebpf/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://blog.dragonbox.top/posts/tech-learning-ebpf/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-02-04T00:06:15+00:00" />
 <meta property="article:modified_time" content="2024-02-04T00:06:15+00:00" />
 
@@ -127,13 +127,13 @@ The ebpf virtual machine uses 10 general-purpose registers (0-9), and additional
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://ch3n9w.github.io/posts/"
+      "item": "http://blog.dragonbox.top/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Learning eBPF",
-      "item": "https://ch3n9w.github.io/posts/tech-learning-ebpf/"
+      "item": "http://blog.dragonbox.top/posts/tech-learning-ebpf/"
     }
   ]
 }
@@ -159,14 +159,14 @@ The ebpf virtual machine uses 10 general-purpose registers (0-9), and additional
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ch3n9w.github.io/posts/tech-learning-ebpf/"
+    "@id": "http://blog.dragonbox.top/posts/tech-learning-ebpf/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "ch3n9w の 超元域",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://ch3n9w.github.io/flash.ico"
+      "url": "http://blog.dragonbox.top/flash.ico"
     }
   }
 }
@@ -188,8 +188,8 @@ The ebpf virtual machine uses 10 general-purpose registers (0-9), and additional
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://ch3n9w.github.io/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
-                <img src="https://ch3n9w.github.io/avatar.jpg" alt="" aria-label="logo"
+            <a href="http://blog.dragonbox.top/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
+                <img src="http://blog.dragonbox.top/avatar.jpg" alt="" aria-label="logo"
                     height="35">ch3n9w の 超元域</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -216,7 +216,7 @@ The ebpf virtual machine uses 10 general-purpose registers (0-9), and additional
         </div>
         <ul id="menu">
             <li>
-                <a href="https://ch3n9w.github.io/categories/" title="categories">
+                <a href="http://blog.dragonbox.top/categories/" title="categories">
                     <span>categories</span>
                 </a>
             </li>
@@ -227,7 +227,7 @@ The ebpf virtual machine uses 10 general-purpose registers (0-9), and additional
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://ch3n9w.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://ch3n9w.github.io/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://blog.dragonbox.top/">Home</a>&nbsp;»&nbsp;<a href="http://blog.dragonbox.top/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       Learning eBPF
     </h1>
@@ -702,12 +702,12 @@ find-map: find-map.c
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="https://ch3n9w.github.io/posts/gossip-2023-summary/">
+  <a class="prev" href="http://blog.dragonbox.top/posts/gossip-2023-summary/">
     <span class="title">« Prev</span>
     <br>
     <span>2023年度总结</span>
   </a>
-  <a class="next" href="https://ch3n9w.github.io/posts/gossip-rip-clash/">
+  <a class="next" href="http://blog.dragonbox.top/posts/gossip-rip-clash/">
     <span class="title">Next »</span>
     <br>
     <span>RIP Clash</span>
@@ -719,7 +719,7 @@ find-map: find-map.c
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="https://ch3n9w.github.io/">ch3n9w の 超元域</a></span> · 
+        <span>&copy; 2024 <a href="http://blog.dragonbox.top/">ch3n9w の 超元域</a></span> · 
 
     <span>
         Powered by

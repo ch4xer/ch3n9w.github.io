@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>CTF on ch3n9w の 超元域</title>
-    <link>https://ch3n9w.github.io/categories/ctf/</link>
+    <link>http://blog.dragonbox.top/categories/ctf/</link>
     <description>Recent content in CTF on ch3n9w の 超元域</description>
     <generator>Hugo -- 0.139.3</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 15 Mar 2024 07:34:46 +0000</lastBuildDate>
-    <atom:link href="https://ch3n9w.github.io/categories/ctf/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.dragonbox.top/categories/ctf/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>k8s lan party</title>
-      <link>https://ch3n9w.github.io/posts/ctf-k8s-lan-party/</link>
+      <link>http://blog.dragonbox.top/posts/ctf-k8s-lan-party/</link>
       <pubDate>Fri, 15 Mar 2024 07:34:46 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/ctf-k8s-lan-party/</guid>
+      <guid>http://blog.dragonbox.top/posts/ctf-k8s-lan-party/</guid>
       <description>&lt;p&gt;Long time no CTF~~&lt;/p&gt;
 &lt;h2 id=&#34;recon&#34;&gt;RECON&lt;/h2&gt;
 &lt;p&gt;Just check the environment related to K8s using &lt;code&gt;env&lt;/code&gt; and reconnoiter internal service using &lt;code&gt;dnscan&lt;/code&gt;&lt;/p&gt;
@@ -24,24 +24,24 @@
     </item>
     <item>
       <title>pwnable尝试</title>
-      <link>https://ch3n9w.github.io/posts/sec-pwnable/</link>
+      <link>http://blog.dragonbox.top/posts/sec-pwnable/</link>
       <pubDate>Thu, 27 Jan 2022 17:48:33 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/sec-pwnable/</guid>
+      <guid>http://blog.dragonbox.top/posts/sec-pwnable/</guid>
       <description>&lt;p&gt;尝试学pwn,放弃学pwn&lt;/p&gt;</description>
     </item>
     <item>
       <title>GACTF2020</title>
-      <link>https://ch3n9w.github.io/posts/ctf-gactf2020/</link>
+      <link>http://blog.dragonbox.top/posts/ctf-gactf2020/</link>
       <pubDate>Sat, 29 Aug 2020 15:49:36 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/ctf-gactf2020/</guid>
+      <guid>http://blog.dragonbox.top/posts/ctf-gactf2020/</guid>
       <description>&lt;h2 id=&#34;simpleflask&#34;&gt;simpleflask&lt;/h2&gt;
 &lt;p&gt;和以往的flask不一样的地方在于, 这里是经过更新后的flask, 计算pin码的方式已经和以前不一样了, 参考 &lt;a href=&#34;https://www.chainnews.com/articles/898433701852.htm&#34;&gt;https://www.chainnews.com/articles/898433701852.htm&lt;/a&gt;, 不过问题不大,就把machine-id拼接在docker那一串东西的前面就可以了, 需要注意的是每十分钟重启时候的机器mac地址是会变化的.&lt;/p&gt;</description>
     </item>
     <item>
       <title>qwb2020web复现</title>
-      <link>https://ch3n9w.github.io/posts/ctf-qwb2020-web-1/</link>
+      <link>http://blog.dragonbox.top/posts/ctf-qwb2020-web-1/</link>
       <pubDate>Thu, 27 Aug 2020 20:48:12 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/ctf-qwb2020-web-1/</guid>
+      <guid>http://blog.dragonbox.top/posts/ctf-qwb2020-web-1/</guid>
       <description>&lt;h2 id=&#34;half_infiltration&#34;&gt;half_infiltration&lt;/h2&gt;
 &lt;p&gt;开局的页面如下&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
@@ -92,29 +92,29 @@
     </item>
     <item>
       <title>ciscn2020_online</title>
-      <link>https://ch3n9w.github.io/posts/ctf-ciscn2020-online/</link>
+      <link>http://blog.dragonbox.top/posts/ctf-ciscn2020-online/</link>
       <pubDate>Thu, 20 Aug 2020 13:16:50 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/ctf-ciscn2020-online/</guid>
+      <guid>http://blog.dragonbox.top/posts/ctf-ciscn2020-online/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;web越來越没有牌面了&amp;hellip;国赛果然是pwn和misc的天下&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>网鼎杯2020 web</title>
-      <link>https://ch3n9w.github.io/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/</link>
+      <link>http://blog.dragonbox.top/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/</link>
       <pubDate>Mon, 11 May 2020 16:11:31 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/</guid>
+      <guid>http://blog.dragonbox.top/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/</guid>
       <description>&lt;h2 id=&#34;filejava&#34;&gt;filejava&lt;/h2&gt;
 &lt;p&gt;提供了文件上传和下载的功能, 在下载功能那里我们可以任意文件读取, 通过把文件名换成文件夹名字可以在报错中爆出绝对路径, 如图:&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://ch3n9w.github.io/images/image-20200511193913736.png&#34; alt=&#34;image-20200511193913736&#34;  /&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://blog.dragonbox.top/images/image-20200511193913736.png&#34; alt=&#34;image-20200511193913736&#34;  /&gt;
 &lt;/p&gt;
 &lt;p&gt;绝对路径&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/usr/local/tomcat/webapps/ROOT/WEB-INF/upload/0/10/
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;读文件/etc/passwd&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://ch3n9w.github.io/images/image-20200511194357766.png&#34; alt=&#34;image-20200511194357766&#34;  /&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://blog.dragonbox.top/images/image-20200511194357766.png&#34; alt=&#34;image-20200511194357766&#34;  /&gt;
 &lt;/p&gt;
 &lt;p&gt;读日志文件 &lt;code&gt;logs/catalina.out&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;​        &lt;img loading=&#34;lazy&#34; src=&#34;https://ch3n9w.github.io/images/qBJnenyW6ts6Vglb.png__thumbnail&#34; alt=&#34;img&#34;  /&gt;
+&lt;p&gt;​        &lt;img loading=&#34;lazy&#34; src=&#34;http://blog.dragonbox.top/images/qBJnenyW6ts6Vglb.png__thumbnail&#34; alt=&#34;img&#34;  /&gt;
 &lt;/p&gt;
 &lt;p&gt;发现有一个war包,下载下来进行源码审计, 发现一处突兀的地方&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;        if (filename.startsWith(&amp;#34;excel-&amp;#34;) &amp;amp;&amp;amp; &amp;#34;xlsx&amp;#34;.equals(fileExtName))
@@ -140,41 +140,41 @@
     </item>
     <item>
       <title>padding_oracle 和 cbc字节反转</title>
-      <link>https://ch3n9w.github.io/posts/sec-padding-oracle-and-cbc-attack/</link>
+      <link>http://blog.dragonbox.top/posts/sec-padding-oracle-and-cbc-attack/</link>
       <pubDate>Mon, 03 Feb 2020 16:42:20 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/sec-padding-oracle-and-cbc-attack/</guid>
+      <guid>http://blog.dragonbox.top/posts/sec-padding-oracle-and-cbc-attack/</guid>
       <description>&lt;p&gt;padding oracle 原理: &lt;a href=&#34;https://www.freebuf.com/articles/database/150606.html&#34;&gt;https://www.freebuf.com/articles/database/150606.html&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>java_web题目复现记录</title>
-      <link>https://ch3n9w.github.io/posts/sec-java-web/</link>
+      <link>http://blog.dragonbox.top/posts/sec-java-web/</link>
       <pubDate>Fri, 03 Jan 2020 10:57:44 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/sec-java-web/</guid>
+      <guid>http://blog.dragonbox.top/posts/sec-java-web/</guid>
       <description>&lt;p&gt;开一个新坑~~&lt;/p&gt;</description>
     </item>
     <item>
       <title>LD_PRELOAD劫持类型题目</title>
-      <link>https://ch3n9w.github.io/posts/sec-ld-preload%E5%8A%AB%E6%8C%81%E7%B1%BB%E5%9E%8B%E9%A2%98%E7%9B%AE/</link>
+      <link>http://blog.dragonbox.top/posts/sec-ld-preload%E5%8A%AB%E6%8C%81%E7%B1%BB%E5%9E%8B%E9%A2%98%E7%9B%AE/</link>
       <pubDate>Thu, 26 Dec 2019 16:37:19 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/sec-ld-preload%E5%8A%AB%E6%8C%81%E7%B1%BB%E5%9E%8B%E9%A2%98%E7%9B%AE/</guid>
+      <guid>http://blog.dragonbox.top/posts/sec-ld-preload%E5%8A%AB%E6%8C%81%E7%B1%BB%E5%9E%8B%E9%A2%98%E7%9B%AE/</guid>
       <description>&lt;p&gt;贴几个参考链接&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/wfzWebSecuity/p/11213732.html&#34;&gt;https://www.cnblogs.com/wfzWebSecuity/p/11213732.html&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD&#34;&gt;https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>copperstudy-record</title>
-      <link>https://ch3n9w.github.io/posts/ctf-qwb-copperstudy-record/</link>
+      <link>http://blog.dragonbox.top/posts/ctf-qwb-copperstudy-record/</link>
       <pubDate>Thu, 19 Dec 2019 20:51:05 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/ctf-qwb-copperstudy-record/</guid>
+      <guid>http://blog.dragonbox.top/posts/ctf-qwb-copperstudy-record/</guid>
       <description>&lt;h2 id=&#34;强网杯-2019-copperstudy&#34;&gt;强网杯 2019 copperstudy&lt;/h2&gt;
 &lt;p&gt;拖拖拉拉终于把这题复现了&amp;hellip;&lt;/p&gt;
 &lt;p&gt;开局计算哈希, 爆破爆破&lt;/p&gt;</description>
     </item>
     <item>
       <title>RoarCTF 2019复现</title>
-      <link>https://ch3n9w.github.io/posts/ctf-roarctfwp/</link>
+      <link>http://blog.dragonbox.top/posts/ctf-roarctfwp/</link>
       <pubDate>Tue, 22 Oct 2019 08:32:09 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/ctf-roarctfwp/</guid>
+      <guid>http://blog.dragonbox.top/posts/ctf-roarctfwp/</guid>
       <description>&lt;h1 id=&#34;web&#34;&gt;web&lt;/h1&gt;
 &lt;h2 id=&#34;online_proxy&#34;&gt;online_proxy&lt;/h2&gt;
 &lt;p&gt;特征: 第一次登录后源代码内容有如下:&lt;/p&gt;
@@ -200,9 +200,9 @@
     </item>
     <item>
       <title>bytectf2019</title>
-      <link>https://ch3n9w.github.io/posts/ctf-bytectf2019/</link>
+      <link>http://blog.dragonbox.top/posts/ctf-bytectf2019/</link>
       <pubDate>Mon, 09 Sep 2019 08:18:25 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/ctf-bytectf2019/</guid>
+      <guid>http://blog.dragonbox.top/posts/ctf-bytectf2019/</guid>
       <description>&lt;h2 id=&#34;boring-code&#34;&gt;boring code&lt;/h2&gt;
 &lt;p&gt;source code&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
@@ -242,16 +242,16 @@
     </item>
     <item>
       <title>Google_Game</title>
-      <link>https://ch3n9w.github.io/posts/ctf-google-game/</link>
+      <link>http://blog.dragonbox.top/posts/ctf-google-game/</link>
       <pubDate>Wed, 12 Jun 2019 19:41:56 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/ctf-google-game/</guid>
+      <guid>http://blog.dragonbox.top/posts/ctf-google-game/</guid>
       <description>&lt;h1 id=&#34;google-xss-game&#34;&gt;Google Xss game&lt;/h1&gt;</description>
     </item>
     <item>
       <title>2019 DDCTF web</title>
-      <link>https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/</link>
+      <link>http://blog.dragonbox.top/posts/ctf-2019-ddctf-web/</link>
       <pubDate>Sat, 11 May 2019 13:58:05 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/</guid>
+      <guid>http://blog.dragonbox.top/posts/ctf-2019-ddctf-web/</guid>
       <description>&lt;p&gt;考试周结束，有时间来复现了。。。然鹅好像有题目崩了，java又没学过。。。只能复现一部分了。&lt;/p&gt;
 &lt;h2 id=&#34;web-签到题&#34;&gt;web 签到题&lt;/h2&gt;
 &lt;p&gt;点击，扫描，发现除了index.php 之外其他都需要登陆，抓包发现有发送&lt;code&gt;Auth.php&lt;/code&gt;请求，其中有&lt;code&gt;didictf_username&lt;/code&gt;字段，尝试添加成为&lt;code&gt;didictf_username: admin&lt;/code&gt;。成功登陆。&lt;/p&gt;
@@ -425,27 +425,27 @@
     </item>
     <item>
       <title>流量分析</title>
-      <link>https://ch3n9w.github.io/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/</link>
+      <link>http://blog.dragonbox.top/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/</link>
       <pubDate>Mon, 22 Apr 2019 04:16:47 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/</guid>
+      <guid>http://blog.dragonbox.top/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;bugku 中的部分misc题目&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>密码学题目</title>
-      <link>https://ch3n9w.github.io/posts/ctf-crypto/</link>
+      <link>http://blog.dragonbox.top/posts/ctf-crypto/</link>
       <pubDate>Mon, 22 Apr 2019 04:14:20 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/ctf-crypto/</guid>
+      <guid>http://blog.dragonbox.top/posts/ctf-crypto/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;记录密码学刷过的题目&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>bugku writeup</title>
-      <link>https://ch3n9w.github.io/posts/ctf-bugku-writeup/</link>
+      <link>http://blog.dragonbox.top/posts/ctf-bugku-writeup/</link>
       <pubDate>Mon, 22 Apr 2019 04:13:30 +0000</pubDate>
-      <guid>https://ch3n9w.github.io/posts/ctf-bugku-writeup/</guid>
+      <guid>http://blog.dragonbox.top/posts/ctf-bugku-writeup/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;纪念那段岁月&lt;/p&gt;
 &lt;/blockquote&gt;

