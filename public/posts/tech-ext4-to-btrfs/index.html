@@ -38,16 +38,16 @@ grub-mkconfig -o /boot/grub/grub.cfg
 grub-mkconfig -o /boot/grub/grub.cfg
 大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了.">
 <meta name="author" content="ch3n9w">
-<link rel="canonical" href="http://blog.dragonbox.top/posts/tech-ext4-to-btrfs/">
+<link rel="canonical" href="http://dragonbox.top/posts/tech-ext4-to-btrfs/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://blog.dragonbox.top/flash.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://blog.dragonbox.top/flash.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="http://blog.dragonbox.top/flash.ico">
-<link rel="apple-touch-icon" href="http://blog.dragonbox.top/flash.ico">
-<link rel="mask-icon" href="http://blog.dragonbox.top/flash.ico">
+<link rel="icon" href="http://dragonbox.top/flash.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://dragonbox.top/flash.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="http://dragonbox.top/flash.ico">
+<link rel="apple-touch-icon" href="http://dragonbox.top/flash.ico">
+<link rel="mask-icon" href="http://dragonbox.top/flash.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://blog.dragonbox.top/posts/tech-ext4-to-btrfs/">
+<link rel="alternate" hreflang="en" href="http://dragonbox.top/posts/tech-ext4-to-btrfs/">
 <noscript>
     <style>
         #theme-toggle,
@@ -116,13 +116,13 @@ grub-mkconfig -o /boot/grub/grub.cfg
 grub-mkconfig -o /boot/grub/grub.cfg
 大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://blog.dragonbox.top/posts/tech-ext4-to-btrfs/" />
-<meta property="og:image" content="http://blog.dragonbox.top/btrfs.jpeg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://dragonbox.top/posts/tech-ext4-to-btrfs/" />
+<meta property="og:image" content="http://dragonbox.top/btrfs.jpeg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-01-16T05:28:51+00:00" />
 <meta property="article:modified_time" content="2023-01-16T05:28:51+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://blog.dragonbox.top/btrfs.jpeg" />
+<meta name="twitter:image" content="http://dragonbox.top/btrfs.jpeg" />
 <meta name="twitter:title" content="ext4到btrfs转换记录"/>
 <meta name="twitter:description" content="这篇文章是对我从ext4文件系统转换到btrfs过程中的一些操作记录, 便于日后参考.
 前置准备
@@ -165,13 +165,13 @@ grub-mkconfig -o /boot/grub/grub.cfg
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "http://blog.dragonbox.top/posts/"
+      "item": "http://dragonbox.top/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "ext4到btrfs转换记录",
-      "item": "http://blog.dragonbox.top/posts/tech-ext4-to-btrfs/"
+      "item": "http://dragonbox.top/posts/tech-ext4-to-btrfs/"
     }
   ]
 }
@@ -189,7 +189,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
   "articleBody": "这篇文章是对我从ext4文件系统转换到btrfs过程中的一些操作记录, 便于日后参考.\n前置准备 制作arch linux 启动盘, 版本越新越好. 备份重要文件 我个人在转换前会把大文件(例如虚拟机文件)转移到移动硬盘里, 让转换过程更快一些 转换 进入LiveCD 系统, 对主分区进行转换\nbtrfs-convert /dev/nvme0n1p2 等待一段时间之后, 显示conversion complete就表示没有问题, 接下来还需要做三件事情才可以进入系统\n修改fstab 首先将转换成功后的分区挂载到/mnt下\nmount /dev/nvme0n1p2 /mnt 使用lsblk -f命令查看分区的UUID号, 拍个照片记一下\n编辑/mnt/etc/fstab, 修改这个分区类型为btrfs, 将最后的两列数字都改成0, 保存退出\n重建内存盘 先挂载, 然后进入chroot环境\nmount -t proc none /mnt/proc mount -t sysfs none /mnt/sys mount -o bind /dev /mnt/dev chroot /mnt bash 然后执行下列命令来为所有内核重建内存盘\nmkinitcpio -P 最后重建grub引导, 按照道理应该要把引导分区/dev/nvme0n1p1挂载到/mnt/boot之后才可以, 但是我记得自己执行的时候没有挂载?\ngrub-mkconfig -o /boot/grub/grub.cfg 重建grub引导 在上一步的chroot环境中, 执行下列命令, 记得把引导分区挂载到/mnt/boot\ngrub-mkconfig -o /boot/grub/grub.cfg 大功告成, 退出chroot, 重启电脑就可以进入你的系统了, 唯一的不同是它已经是btrfs了.\n子卷建立 经过上述操作后, 你会得到一个没有子卷的根文件系统, 这点可以通过命令验证\nsudo btrfs subvol list / 没有子卷就没有快照, 为了利用好btrfs的特性, 有必要新建快照, 并将数据迁移到里面. 同样, 我们需要进入 LiveCD 系统\n首先将btrfs分区挂载到/mnt下\nmount -o subvol=/ /dev/nvme0n1p2 /mnt 接下来就要开始新建子卷了, 我新建的子卷有两个, 一个叫做@, 一个叫做@home, 分别挂载根目录和家目录. 这样新建的原因是timeshift在使用btrfs进行备份的时候规定这样的命名.\n那么首先, 使用btrfs的快照功能新建@子卷\nbtrfs subvol snapshot /mnt /mnt/@ 然后建立@home子卷, 再将@子卷中/home的内容迁移过去\nbtrfs subvol create /mnt/@home mv -v /mnt/@/home/* /mnt/@home 好了, 子卷新建完毕, 接下来要让系统在启动的时候挂载子卷\n首先, 挂载btrfs分区到/mnt\n# 这一步在上面如果执行过了就不需要执行了 mount -o subvol=/ /dev/nvme0n1p2 /mnt # 这些需要挂载 mount -o bind /dev /mnt/dev mount -o bind /proc /mnt/proc mount -o bind /sys /mnt/sys mount -o bind /boot /mnt/boot # 进入chroot环境 chroot /mnt 然后新建内存初始盘\nmkinitcpio -P 然后更新fstab, 我的如下, 里面重要的是subvol一项, 其他的参数中, autodefrag是btrfs用于应对碎片化的挂载选项, compress=lzo启动透明压缩\n# /dev/nvme0n1p2 UUID=6dd702be-7727-447e-98ec-a79205f18df7\t/ btrfs defaults,noatime,autodefrag,subvol=@,compress=lzo,\t0 0 UUID=6dd702be-7727-447e-98ec-a79205f18df7\t/home btrfs defaults,noatime,autodefrag,subvol=@home,compress=lzo\t0 0 # /dev/nvme0n1p1 UUID=8D41-41B9 /boot vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro\t0 2 最后顺手更新一下grub (似乎没必要?)\ngrub-mkconfig -o /boot/grub/grub.cfg 重启进入系统就可以了. 接下来可以安装timeshift来对系统进行定时备份\n在一切都没有问题后, 就可以重新进入LiveCD环境, 清理掉原来的那些文件了\nmount -o subvol=/ /dev/nvme0n1p2 /mnt cd /mnt rm -r var usr .......(除了子卷外都删掉) 最后剩下这些\n清理完毕, 收工\n其他 去除已有文件的碎片化\nsudo btrfs filesystem defragment -r / 回收分配但未使用的数据, 对节约空间有帮助\nsudo btrfs balance start / sudo btrfs balance status / 参考 https://coda.world/btrfs-move-to-subvolume/\nhttps://blog.samchu.cn/posts/linux-ext4-to-btrfs/\nhttps://www.jwillikers.com/btrfs-mount-options\n",
   "wordCount" : "237",
   "inLanguage": "en",
-  "image":"http://blog.dragonbox.top/btrfs.jpeg","datePublished": "2023-01-16T05:28:51Z",
+  "image":"http://dragonbox.top/btrfs.jpeg","datePublished": "2023-01-16T05:28:51Z",
   "dateModified": "2023-01-16T05:28:51Z",
   "author":{
     "@type": "Person",
@@ -197,14 +197,14 @@ grub-mkconfig -o /boot/grub/grub.cfg
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://blog.dragonbox.top/posts/tech-ext4-to-btrfs/"
+    "@id": "http://dragonbox.top/posts/tech-ext4-to-btrfs/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "ch3n9w の 超元域",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://blog.dragonbox.top/flash.ico"
+      "url": "http://dragonbox.top/flash.ico"
     }
   }
 }
@@ -226,8 +226,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://blog.dragonbox.top/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
-                <img src="http://blog.dragonbox.top/avatar.jpg" alt="" aria-label="logo"
+            <a href="http://dragonbox.top/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
+                <img src="http://dragonbox.top/avatar.jpg" alt="" aria-label="logo"
                     height="35">ch3n9w の 超元域</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -254,7 +254,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
         </div>
         <ul id="menu">
             <li>
-                <a href="http://blog.dragonbox.top/categories/" title="categories">
+                <a href="http://dragonbox.top/categories/" title="categories">
                     <span>categories</span>
                 </a>
             </li>
@@ -265,7 +265,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="http://blog.dragonbox.top/">Home</a>&nbsp;»&nbsp;<a href="http://blog.dragonbox.top/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://dragonbox.top/">Home</a>&nbsp;»&nbsp;<a href="http://dragonbox.top/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       ext4到btrfs转换记录
     </h1>
@@ -274,8 +274,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 </div>
   </header> 
 <figure class="entry-cover">
-        <img loading="eager" srcset="http://blog.dragonbox.top/posts/tech-ext4-to-btrfs/btrfs_hu1807167231330812597.jpeg 360w ,http://blog.dragonbox.top/posts/tech-ext4-to-btrfs/btrfs.jpeg 474w" 
-            sizes="(min-width: 768px) 720px, 100vw" src="http://blog.dragonbox.top/posts/tech-ext4-to-btrfs/btrfs.jpeg" alt="" 
+        <img loading="eager" srcset="http://dragonbox.top/posts/tech-ext4-to-btrfs/btrfs_hu1807167231330812597.jpeg 360w ,http://dragonbox.top/posts/tech-ext4-to-btrfs/btrfs.jpeg 474w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="http://dragonbox.top/posts/tech-ext4-to-btrfs/btrfs.jpeg" alt="" 
             width="474" height="302">
         
 </figure><div class="toc">
@@ -395,12 +395,12 @@ UUID=8D41-41B9      	/boot     	vfat      	rw,relatime,fmask=0022,dmask=0022,cod
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="http://blog.dragonbox.top/posts/tech-openwrt-rasp/">
+  <a class="prev" href="http://dragonbox.top/posts/tech-openwrt-rasp/">
     <span class="title">« Prev</span>
     <br>
     <span>树莓派搭载clash作为旁路由</span>
   </a>
-  <a class="next" href="http://blog.dragonbox.top/posts/tech-translation-under-wayland/">
+  <a class="next" href="http://dragonbox.top/posts/tech-translation-under-wayland/">
     <span class="title">Next »</span>
     <br>
     <span>wayland下的划词翻译解决方案</span>
@@ -412,7 +412,7 @@ UUID=8D41-41B9      	/boot     	vfat      	rw,relatime,fmask=0022,dmask=0022,cod
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="http://blog.dragonbox.top/">ch3n9w の 超元域</a></span> · 
+        <span>&copy; 2024 <a href="http://dragonbox.top/">ch3n9w の 超元域</a></span> · 
 
     <span>
         Powered by

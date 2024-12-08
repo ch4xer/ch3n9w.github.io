@@ -1,4 +1,4 @@
-baseURL: "http://blog.dragonbox.top/"
+baseURL: "http://dragonbox.top/"
 languageCode: en-us
 pagination:
   pagerSize: 20
