@@ -9,17 +9,17 @@
 <meta name="keywords" content="">
 <meta name="description" content="Posts - ch3n9w の 超元域">
 <meta name="author" content="">
-<link rel="canonical" href="http://dragonbox.top/posts/">
+<link rel="canonical" href="https://dragonbox.top/posts/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://dragonbox.top/flash.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://dragonbox.top/flash.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="http://dragonbox.top/flash.ico">
-<link rel="apple-touch-icon" href="http://dragonbox.top/flash.ico">
-<link rel="mask-icon" href="http://dragonbox.top/flash.ico">
+<link rel="icon" href="https://dragonbox.top/flash.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://dragonbox.top/flash.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="https://dragonbox.top/flash.ico">
+<link rel="apple-touch-icon" href="https://dragonbox.top/flash.ico">
+<link rel="mask-icon" href="https://dragonbox.top/flash.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="http://dragonbox.top/posts/index.xml">
-<link rel="alternate" hreflang="en" href="http://dragonbox.top/posts/">
+<link rel="alternate" type="application/rss+xml" href="https://dragonbox.top/posts/index.xml">
+<link rel="alternate" hreflang="en" href="https://dragonbox.top/posts/">
 <noscript>
     <style>
         #theme-toggle,
@@ -59,7 +59,7 @@
 </noscript><meta property="og:title" content="Posts" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="http://dragonbox.top/posts/" />
+<meta property="og:url" content="https://dragonbox.top/posts/" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -75,7 +75,7 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "http://dragonbox.top/posts/"
+      "item": "https://dragonbox.top/posts/"
     }
   ]
 }
@@ -97,8 +97,8 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://dragonbox.top/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
-                <img src="http://dragonbox.top/avatar.jpg" alt="" aria-label="logo"
+            <a href="https://dragonbox.top/" accesskey="h" title="ch3n9w の 超元域 (Alt + H)">
+                <img src="https://dragonbox.top/avatar.jpg" alt="" aria-label="logo"
                     height="35">ch3n9w の 超元域</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -125,7 +125,7 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="http://dragonbox.top/categories/" title="categories">
+                <a href="https://dragonbox.top/categories/" title="categories">
                     <span>categories</span>
                 </a>
             </li>
@@ -133,11 +133,35 @@
     </nav>
 </header>
 <main class="main"> 
-<header class="page-header"><div class="breadcrumbs"><a href="http://dragonbox.top/">Home</a></div>
+<header class="page-header"><div class="breadcrumbs"><a href="https://dragonbox.top/">Home</a></div>
   <h1>
     Posts
   </h1>
 </header>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">使用idea开启Servlet
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>采用的是版本较新的idea2020.2, 使用的操作系统为MANJARO LINUX, 其中的过程挺迷迷糊糊的就水一篇来记录一下.
+File --&gt; New --&gt; Project --&gt; Java --&gt; Nextnext 新建一个项目 右键Project --&gt; open module setting --&gt; 点击&#43;号 --&gt; 导入tomcat8的Servlet-api.jar 右键项目 --&gt; Add Frameworks Support --&gt; 选中web application 选中后会多出来几个东西, 如下图, 多了WEB-INF目录和index.jsp
+Web-INF里面有只有一个web.xml, 什么是WEB-INF? 根据百度百科的介绍
+WEB-INF是Java的WEB应用的安全目录。所谓安全就是客户端无法访问，只有服务端可以访问的目录。如果想在页面中直接访问其中的文件，必须通过web.xml文件对要访问的文件进行相应映射才能访问。
+WEB-INF文件夹下除了web.xml外，还存一个classes文件夹，用以放置 *.class文件，这些 *.class文件是网站设计人员编写的类库，实现了jsp页面前台美工与后台服务的分离，使得网站的维护非常方便。web.xml文件为网站部署描述XML文件，对网站的部署非常重要。
+Web-Inf文件夹中除了有classes文件夹和一个web.xml文件外、还有lib文件夹（用于存放需要的jar包）（用于配置，比如说用来配置过滤器等。）
+/WEB-INF/src/ 源码目录，按照包名结构放置各个java文件。
+/WEB-INF/database.properties 数据库配置文件
+/WEB-INF/tags/
+存放了自定义标签文件，该目录并不一定为 tags，可以根据自己的喜好和习惯为自己的标签文件库命名，当使用自定义的标签文件库名称时，在使用标签文件时就必须声明正确的标签文件库路径。例如：当自定义标签文件库名称为 simpleTags 时，在使用 simpleTags 目录下的标签文件时，就必须在 jsp 文件头声明为：&lt;%@ taglibprefix=“tags” tagdir=&#34;/WEB-INF /simpleTags&#34; % &gt;。
+/WEB-INF/jsp/
+jsp 1.2 以下版本的文件存放位置。改目录没有特定的声明，同样，可以根据自己的喜好与习惯来命名。此目录主要存放的是 jsp 1.2 以下版本的文件，为区分 jsp 2.0 文件，通常使用 jsp 命名，当然你也可以命名为 jspOldEdition 。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-10-01 22:10:28 +0000 UTC'>October 1, 2020</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;139 words&nbsp;·&nbsp;ch3n9w</footer>
+  <a class="entry-link" aria-label="post link to 使用idea开启Servlet" href="https://dragonbox.top/posts/tech-idea-start-servlet/"></a>
+</article>
 
 <article class="post-entry"> 
   <header class="entry-header">
@@ -149,13 +173,13 @@
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2020-08-29 15:49:36 +0000 UTC'>August 29, 2020</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;248 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to GACTF2020" href="http://dragonbox.top/posts/ctf-gactf2020/"></a>
+  <a class="entry-link" aria-label="post link to GACTF2020" href="https://dragonbox.top/posts/ctf-gactf2020/"></a>
 </article>
 
 <article class="post-entry"> 
 <figure class="entry-cover">
-        <img loading="lazy" srcset="http://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846_hu1815068689607361705.png 360w ,http://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846_hu7669767990326402703.png 480w ,http://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846_hu9398446658780294442.png 720w ,http://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846_hu17098981144027839555.png 1080w ,http://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846.png 1296w" 
-            sizes="(min-width: 768px) 720px, 100vw" src="http://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846.png" alt="" 
+        <img loading="lazy" srcset="https://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846_hu1815068689607361705.png 360w ,https://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846_hu7669767990326402703.png 480w ,https://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846_hu9398446658780294442.png 720w ,https://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846_hu17098981144027839555.png 1080w ,https://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846.png 1296w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="https://dragonbox.top/posts/ctf-qwb2020-web-1/image-20211114141959846.png" alt="" 
             width="1296" height="660">
 </figure>
   <header class="entry-header">
@@ -169,7 +193,7 @@
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2020-08-27 20:48:12 +0000 UTC'>August 27, 2020</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;370 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to qwb2020web复现" href="http://dragonbox.top/posts/ctf-qwb2020-web-1/"></a>
+  <a class="entry-link" aria-label="post link to qwb2020web复现" href="https://dragonbox.top/posts/ctf-qwb2020-web-1/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -182,7 +206,7 @@
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2020-08-24 22:22:46 +0000 UTC'>August 24, 2020</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;319 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to http请求走私笔记" href="http://dragonbox.top/posts/sec-http-smuggling/"></a>
+  <a class="entry-link" aria-label="post link to http请求走私笔记" href="https://dragonbox.top/posts/sec-http-smuggling/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -195,13 +219,13 @@
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2020-08-20 13:16:50 +0000 UTC'>August 20, 2020</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;306 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to ciscn2020_online" href="http://dragonbox.top/posts/ctf-ciscn2020-online/"></a>
+  <a class="entry-link" aria-label="post link to ciscn2020_online" href="https://dragonbox.top/posts/ctf-ciscn2020-online/"></a>
 </article>
 
 <article class="post-entry"> 
 <figure class="entry-cover">
-        <img loading="lazy" srcset="http://dragonbox.top/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501_hu2329845373736822590.png 360w ,http://dragonbox.top/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501_hu6059930348231977431.png 480w ,http://dragonbox.top/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501_hu14153619774600876245.png 720w ,http://dragonbox.top/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501_hu1815663425424639361.png 1080w ,http://dragonbox.top/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501.png 1375w" 
-            sizes="(min-width: 768px) 720px, 100vw" src="http://dragonbox.top/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501.png" alt="" 
+        <img loading="lazy" srcset="https://dragonbox.top/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501_hu2329845373736822590.png 360w ,https://dragonbox.top/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501_hu6059930348231977431.png 480w ,https://dragonbox.top/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501_hu14153619774600876245.png 720w ,https://dragonbox.top/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501_hu1815663425424639361.png 1080w ,https://dragonbox.top/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501.png 1375w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="https://dragonbox.top/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/image-20211114142107501.png" alt="" 
             width="1375" height="597">
 </figure>
   <header class="entry-header">
@@ -220,7 +244,7 @@ if (filename.startsWith(&#34;excel-&#34;) &amp;&amp; &#34;xlsx&#34;.equals(fileE
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2020-05-11 16:11:31 +0000 UTC'>May 11, 2020</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;796 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to 网鼎杯2020 web" href="http://dragonbox.top/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/"></a>
+  <a class="entry-link" aria-label="post link to 网鼎杯2020 web" href="https://dragonbox.top/posts/ctf-%E7%BD%91%E9%BC%8E%E6%9D%AF2020/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -233,7 +257,7 @@ if (filename.startsWith(&#34;excel-&#34;) &amp;&amp; &#34;xlsx&#34;.equals(fileE
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2020-02-03 16:42:20 +0000 UTC'>February 3, 2020</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;1041 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to padding_oracle 和 cbc字节反转" href="http://dragonbox.top/posts/sec-padding-oracle-and-cbc-attack/"></a>
+  <a class="entry-link" aria-label="post link to padding_oracle 和 cbc字节反转" href="https://dragonbox.top/posts/sec-padding-oracle-and-cbc-attack/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -246,7 +270,7 @@ if (filename.startsWith(&#34;excel-&#34;) &amp;&amp; &#34;xlsx&#34;.equals(fileE
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2020-01-08 05:29:24 +0000 UTC'>January 8, 2020</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;45 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to 临行前夜--2019" href="http://dragonbox.top/posts/gossip-note-before-back/"></a>
+  <a class="entry-link" aria-label="post link to 临行前夜--2019" href="https://dragonbox.top/posts/gossip-note-before-back/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -259,7 +283,7 @@ if (filename.startsWith(&#34;excel-&#34;) &amp;&amp; &#34;xlsx&#34;.equals(fileE
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2020-01-03 10:57:44 +0000 UTC'>January 3, 2020</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;950 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to java_web题目复现记录" href="http://dragonbox.top/posts/sec-java-web/"></a>
+  <a class="entry-link" aria-label="post link to java_web题目复现记录" href="https://dragonbox.top/posts/sec-java-web/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -274,7 +298,7 @@ https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2019-12-26 16:37:19 +0000 UTC'>December 26, 2019</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;435 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to LD_PRELOAD劫持类型题目" href="http://dragonbox.top/posts/sec-ld-preload%E5%8A%AB%E6%8C%81%E7%B1%BB%E5%9E%8B%E9%A2%98%E7%9B%AE/"></a>
+  <a class="entry-link" aria-label="post link to LD_PRELOAD劫持类型题目" href="https://dragonbox.top/posts/sec-ld-preload%E5%8A%AB%E6%8C%81%E7%B1%BB%E5%9E%8B%E9%A2%98%E7%9B%AE/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -288,13 +312,13 @@ https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2019-12-19 20:51:05 +0000 UTC'>December 19, 2019</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;598 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to copperstudy-record" href="http://dragonbox.top/posts/ctf-qwb-copperstudy-record/"></a>
+  <a class="entry-link" aria-label="post link to copperstudy-record" href="https://dragonbox.top/posts/ctf-qwb-copperstudy-record/"></a>
 </article>
 
 <article class="post-entry"> 
 <figure class="entry-cover">
-        <img loading="lazy" srcset="http://dragonbox.top/posts/ctf-roarctfwp/image-20211114142019085_hu11205713685870468779.png 360w ,http://dragonbox.top/posts/ctf-roarctfwp/image-20211114142019085_hu11251465444592969194.png 480w ,http://dragonbox.top/posts/ctf-roarctfwp/image-20211114142019085.png 693w" 
-            sizes="(min-width: 768px) 720px, 100vw" src="http://dragonbox.top/posts/ctf-roarctfwp/image-20211114142019085.png" alt="" 
+        <img loading="lazy" srcset="https://dragonbox.top/posts/ctf-roarctfwp/image-20211114142019085_hu11205713685870468779.png 360w ,https://dragonbox.top/posts/ctf-roarctfwp/image-20211114142019085_hu11251465444592969194.png 480w ,https://dragonbox.top/posts/ctf-roarctfwp/image-20211114142019085.png 693w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="https://dragonbox.top/posts/ctf-roarctfwp/image-20211114142019085.png" alt="" 
             width="693" height="347">
 </figure>
   <header class="entry-header">
@@ -310,13 +334,13 @@ $result = query(&#34;select current_ip, last_ip from ip_log where uuid = &#39;&#
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2019-10-22 08:32:09 +0000 UTC'>October 22, 2019</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;611 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to RoarCTF 2019复现" href="http://dragonbox.top/posts/ctf-roarctfwp/"></a>
+  <a class="entry-link" aria-label="post link to RoarCTF 2019复现" href="https://dragonbox.top/posts/ctf-roarctfwp/"></a>
 </article>
 
 <article class="post-entry"> 
 <figure class="entry-cover">
-        <img loading="lazy" srcset="http://dragonbox.top/posts/ctf-bytectf2019/image-20211114141103041_hu4898485989831203944.png 360w ,http://dragonbox.top/posts/ctf-bytectf2019/image-20211114141103041_hu15817065330037084350.png 480w ,http://dragonbox.top/posts/ctf-bytectf2019/image-20211114141103041_hu18234639322561084993.png 720w ,http://dragonbox.top/posts/ctf-bytectf2019/image-20211114141103041.png 917w" 
-            sizes="(min-width: 768px) 720px, 100vw" src="http://dragonbox.top/posts/ctf-bytectf2019/image-20211114141103041.png" alt="" 
+        <img loading="lazy" srcset="https://dragonbox.top/posts/ctf-bytectf2019/image-20211114141103041_hu4898485989831203944.png 360w ,https://dragonbox.top/posts/ctf-bytectf2019/image-20211114141103041_hu15817065330037084350.png 480w ,https://dragonbox.top/posts/ctf-bytectf2019/image-20211114141103041_hu18234639322561084993.png 720w ,https://dragonbox.top/posts/ctf-bytectf2019/image-20211114141103041.png 917w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="https://dragonbox.top/posts/ctf-bytectf2019/image-20211114141103041.png" alt="" 
             width="917" height="577">
 </figure>
   <header class="entry-header">
@@ -329,7 +353,7 @@ $result = query(&#34;select current_ip, last_ip from ip_log where uuid = &#39;&#
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2019-09-09 08:18:25 +0000 UTC'>September 9, 2019</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;787 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to bytectf2019" href="http://dragonbox.top/posts/ctf-bytectf2019/"></a>
+  <a class="entry-link" aria-label="post link to bytectf2019" href="https://dragonbox.top/posts/ctf-bytectf2019/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -342,7 +366,7 @@ $result = query(&#34;select current_ip, last_ip from ip_log where uuid = &#39;&#
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2019-09-02 13:40:59 +0000 UTC'>September 2, 2019</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;369 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to php session反序列化" href="http://dragonbox.top/posts/sec-php%E7%9A%84%E4%B8%A4%E7%B1%BB%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"></a>
+  <a class="entry-link" aria-label="post link to php session反序列化" href="https://dragonbox.top/posts/sec-php%E7%9A%84%E4%B8%A4%E7%B1%BB%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -364,7 +388,7 @@ openssl x509 -in target.csr -out target.crt -req -signkey target.key -days 365 �
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2019-09-01 15:23:10 +0000 UTC'>September 1, 2019</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;574 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to 证书相关" href="http://dragonbox.top/posts/tech-openssl/"></a>
+  <a class="entry-link" aria-label="post link to 证书相关" href="https://dragonbox.top/posts/tech-openssl/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -376,13 +400,13 @@ openssl x509 -in target.csr -out target.crt -req -signkey target.key -days 365 �
     <p>Google Xss game...</p>
   </div>
   <footer class="entry-footer"><span title='2019-06-12 19:41:56 +0000 UTC'>June 12, 2019</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;161 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to Google_Game" href="http://dragonbox.top/posts/ctf-google-game/"></a>
+  <a class="entry-link" aria-label="post link to Google_Game" href="https://dragonbox.top/posts/ctf-google-game/"></a>
 </article>
 
 <article class="post-entry"> 
 <figure class="entry-cover">
-        <img loading="lazy" srcset="http://dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083_hu14124345416118700756.png 360w ,http://dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083_hu13734313669400506323.png 480w ,http://dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083_hu13677728818500619037.png 720w ,http://dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083_hu8167459465426229859.png 1080w ,http://dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083.png 1381w" 
-            sizes="(min-width: 768px) 720px, 100vw" src="http://dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083.png" alt="" 
+        <img loading="lazy" srcset="https://dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083_hu14124345416118700756.png 360w ,https://dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083_hu13734313669400506323.png 480w ,https://dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083_hu13677728818500619037.png 720w ,https://dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083_hu8167459465426229859.png 1080w ,https://dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083.png 1381w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="https://dragonbox.top/posts/ctf-2019-ddctf-web/image-20211114142123083.png" alt="" 
             width="1381" height="591">
 </figure>
   <header class="entry-header">
@@ -397,7 +421,7 @@ web 签到题 点击，扫描，发现除了index.php 之外其他都需要登�
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2019-05-11 13:58:05 +0000 UTC'>May 11, 2019</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;1385 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to 2019 DDCTF web" href="http://dragonbox.top/posts/ctf-2019-ddctf-web/"></a>
+  <a class="entry-link" aria-label="post link to 2019 DDCTF web" href="https://dragonbox.top/posts/ctf-2019-ddctf-web/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -410,7 +434,7 @@ web 签到题 点击，扫描，发现除了index.php 之外其他都需要登�
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2019-04-22 04:16:47 +0000 UTC'>April 22, 2019</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;278 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to 流量分析" href="http://dragonbox.top/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/"></a>
+  <a class="entry-link" aria-label="post link to 流量分析" href="https://dragonbox.top/posts/sec-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -423,13 +447,13 @@ web 签到题 点击，扫描，发现除了index.php 之外其他都需要登�
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2019-04-22 04:14:20 +0000 UTC'>April 22, 2019</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;1043 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to 密码学题目" href="http://dragonbox.top/posts/ctf-crypto/"></a>
+  <a class="entry-link" aria-label="post link to 密码学题目" href="https://dragonbox.top/posts/ctf-crypto/"></a>
 </article>
 
 <article class="post-entry"> 
 <figure class="entry-cover">
-        <img loading="lazy" srcset="http://dragonbox.top/posts/ctf-bugku-writeup/image-20211114140949068.png 320w" 
-            sizes="(min-width: 768px) 720px, 100vw" src="http://dragonbox.top/posts/ctf-bugku-writeup/image-20211114140949068.png" alt="" 
+        <img loading="lazy" srcset="https://dragonbox.top/posts/ctf-bugku-writeup/image-20211114140949068.png 320w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="https://dragonbox.top/posts/ctf-bugku-writeup/image-20211114140949068.png" alt="" 
             width="320" height="118">
 </figure>
   <header class="entry-header">
@@ -461,48 +485,21 @@ import urllib a = &#39;%66%75%6e%63%74%69%6f%6e%20%63%68%65%63%6b%53%75%62%6d%69
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2019-04-22 04:13:30 +0000 UTC'>April 22, 2019</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;1011 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to bugku writeup" href="http://dragonbox.top/posts/ctf-bugku-writeup/"></a>
-</article>
-
-<article class="post-entry"> 
-<figure class="entry-cover">
-        <img loading="lazy" srcset="http://dragonbox.top/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/63487983-da41b080-c4df-11e9-951c-64883a8a5e9b_hu1971001675544332944.png 360w ,http://dragonbox.top/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/63487983-da41b080-c4df-11e9-951c-64883a8a5e9b_hu7881692915022841331.png 480w ,http://dragonbox.top/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/63487983-da41b080-c4df-11e9-951c-64883a8a5e9b_hu1611728061984495013.png 720w ,http://dragonbox.top/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/63487983-da41b080-c4df-11e9-951c-64883a8a5e9b_hu14231343874463798916.png 1080w ,http://dragonbox.top/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/63487983-da41b080-c4df-11e9-951c-64883a8a5e9b_hu15105647320705302674.png 1500w ,http://dragonbox.top/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/63487983-da41b080-c4df-11e9-951c-64883a8a5e9b.png 1600w" 
-            sizes="(min-width: 768px) 720px, 100vw" src="http://dragonbox.top/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/63487983-da41b080-c4df-11e9-951c-64883a8a5e9b.png" alt="" 
-            width="1600" height="900">
-</figure>
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">使用hexo和github搭建网站
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>基础修改 修改 _config.yml，写上网站的标题
-title: subtitle: description: 选择主题
-theme: next hexo 插件 字数统计和阅读时长统计 https://github.com/theme-next/hexo-symbols-count-time
-在 _config.yml 中添加
-symbols_count_time: symbols: true time: true total_symbols: true total_time: true exclude_codeblock: false awl: 4 wpm: 275 suffix: &#34;mins.&#34; 在Next主题中的 _config.yml中添加
-symbols_count_time: separated_meta: true item_text_post: true item_text_total: true git 部署 在你的github账户上创建仓库yourusername.github.io，必须是用户名开头命名，否则github page不会生效。
-首先生成个人公私钥
-cd ssh-keygen -t rsa -C &#34;your_email@example.com&#34; 然后将公钥粘贴进github账户的个人设置里面 ssh -T git@github.com git config --global user.name &#34;username&#34; git config --global user.email &#34;email&#34; 在博客目录下下载：
-npm install hexo-deployer-git --save 修改网站根目录下的_config.yml文件
-deploy: - type: git#注意git的前面要加空格否则不生效 repo: https://github.com/example/example.github.io.git branch: master 保存退出后执行命令：
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-04-22 03:12:31 +0000 UTC'>April 22, 2019</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;431 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to 使用hexo和github搭建网站" href="http://dragonbox.top/posts/tech-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"></a>
+  <a class="entry-link" aria-label="post link to bugku writeup" href="https://dragonbox.top/posts/ctf-bugku-writeup/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
-    <a class="prev" href="http://dragonbox.top/posts/page/2/">
+    <a class="prev" href="https://dragonbox.top/posts/page/2/">
       «&nbsp;Prev&nbsp;
     </a>
-    <a class="next" href="http://dragonbox.top/posts/page/4/">Next&nbsp;&nbsp;»
+    <a class="next" href="https://dragonbox.top/posts/page/4/">Next&nbsp;&nbsp;»
     </a>
   </nav>
 </footer>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="http://dragonbox.top/">ch3n9w の 超元域</a></span> · 
+        <span>&copy; 2024 <a href="https://dragonbox.top/">ch3n9w の 超元域</a></span> · 
 
     <span>
         Powered by
