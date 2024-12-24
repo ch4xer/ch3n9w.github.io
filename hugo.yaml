@@ -4,7 +4,7 @@ pagination:
   pagerSize: 20
 title: ch3n9w の 超元域
 theme: ["PaperMod"]
-publishDir: "/home/ch4ser/Tools/Other/selfhost/blog/public"
+# publishDir: "/home/ch4ser/Tools/Other/selfhost/blog/public"
 params:
   homeInfoParams:
     Title: 你好👋, 随便逛逛吧🐳

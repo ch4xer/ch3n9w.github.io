@@ -4,7 +4,7 @@
     <title>ch3n9w の 超元域</title>
     <link>https://dragonbox.top/</link>
     <description>Recent content on ch3n9w の 超元域</description>
-    <generator>Hugo -- 0.139.3</generator>
+    <generator>Hugo -- 0.140.1</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 08 Dec 2024 17:33:39 +0800</lastBuildDate>
     <atom:link href="https://dragonbox.top/index.xml" rel="self" type="application/rss+xml" />
@@ -40,6 +40,30 @@
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;./ssl-cpolar.png&#34; alt=&#34;ssl cpolar&#34;  /&gt;
 &lt;/p&gt;
 &lt;p&gt;PS: 另外, 在高级选项中, 似乎HTTP绑定方式必须为同时启动, 并且重定向到HTTPS这一项需要设置为false, 否则会出现404的情况, 不知道为什么.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>CodeQL CTF 之 Go and don&#39;t return</title>
+      <link>https://dragonbox.top/posts/sec-codeql-ctf/</link>
+      <pubDate>Fri, 06 Dec 2024 09:03:06 +0800</pubDate>
+      <guid>https://dragonbox.top/posts/sec-codeql-ctf/</guid>
+      <description>&lt;h1 id=&#34;go-and-dont-return&#34;&gt;Go and don&amp;rsquo;t return&lt;/h1&gt;
+&lt;p&gt;这道题目从MinIO的一个已公开的未授权访问漏洞开始, 通过编写并慢慢完善CodeQL语句来检测该漏洞在代码中的位置. 随着题目的进行, 题目将目标将扩展到此类漏洞的各种变种, 难度逐渐加深, 非常适合用来入门和学习. 本文是用来记录我在阅读官方题解时的思考过程, 因为我在Part2就卡住啦hhhhhhh.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://securitylab.github.com/ctf/go-and-dont-return/&#34;&gt;🔗原题目链接&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://securitylab.github.com/ctf/go-and-dont-return/answers/&#34;&gt;🔗官方参考题解链接&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;在开始之前, 可以查看一下该漏洞的&lt;a href=&#34;https://github.com/minio/minio/commit/4cd6ca02c7957aeb2de3eede08b0754332a77923&#34;&gt;细节&lt;/a&gt; 和 &lt;a href=&#34;https://github.com/minio/minio/security/advisories/GHSA-xv4r-vccv-mg4w&#34;&gt;描述&lt;/a&gt;, 发现该漏洞的原理其实十分简单, 就是在 &lt;code&gt;if s3Err != ErrNone&lt;/code&gt; 判断之后没有将不合法的控制流返回, 而是任由它继续进入接下去的&lt;code&gt;claims, s3Err := checkClaimsFromToken(r, cred)&lt;/code&gt;, 导致校验失败.&lt;/p&gt;
+&lt;p&gt;具体的漏洞利用可以看&lt;a href=&#34;https://github.com/cokeBeer/go-cves/blob/main/CVE-2020-11012/CVE-2020-11012.md&#34;&gt;这里&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;part-1-lets-catch-the-bug&#34;&gt;Part 1: Let’s catch the bug!&lt;/h2&gt;
+&lt;h3 id=&#34;11-finding-references-to-errnone&#34;&gt;1.1: Finding references to ErrNone&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Write the query that finds all identifiers named ErrNone. You will find in the documentation the relevant object types to query. Your query should return 231 results.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-ql&#34; data-lang=&#34;ql&#34;&gt;
+import go
+
+from Ident i
+where i.getName() = &amp;#34;ErrNone&amp;#34; //Ident就是标识符
+select i
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;运行后就可以检索出ErrNone出现过的所有位置.&lt;/p&gt;</description>
     </item>
     <item>
       <title>从$scihub到自由网络意志</title>

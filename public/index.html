@@ -2,7 +2,7 @@
 <html lang="en" dir="auto">
 
 <head>
-	<meta name="generator" content="Hugo 0.139.3"><meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.140.1"><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -198,6 +198,30 @@ PS: 另外, 在高级选项中, 似乎HTTP绑定方式必须为同时启动, 并
   </div>
   <footer class="entry-footer"><span title='2024-12-08 17:33:39 +0800 CST'>December 8, 2024</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;57 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to 域名配合隧道穿透服务(Godaddy&#43;Cloudflare&#43;Cpolar)" href="https://dragonbox.top/posts/tech-domain/"></a>
+</article>
+
+<article class="post-entry"> 
+<figure class="entry-cover">
+        <img loading="lazy" srcset="https://dragonbox.top/posts/sec-codeql-ctf/cover_hu18341172239657117764.png 360w ,https://dragonbox.top/posts/sec-codeql-ctf/cover_hu3399689789567156695.png 480w ,https://dragonbox.top/posts/sec-codeql-ctf/cover_hu6462648450707173077.png 720w ,https://dragonbox.top/posts/sec-codeql-ctf/cover_hu196017312278354417.png 1080w ,https://dragonbox.top/posts/sec-codeql-ctf/cover.png 1200w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="https://dragonbox.top/posts/sec-codeql-ctf/cover.png" alt="" 
+            width="1200" height="630">
+</figure>
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">CodeQL CTF 之 Go and don&#39;t return
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Go and don’t return 这道题目从MinIO的一个已公开的未授权访问漏洞开始, 通过编写并慢慢完善CodeQL语句来检测该漏洞在代码中的位置. 随着题目的进行, 题目将目标将扩展到此类漏洞的各种变种, 难度逐渐加深, 非常适合用来入门和学习. 本文是用来记录我在阅读官方题解时的思考过程, 因为我在Part2就卡住啦hhhhhhh.
+🔗原题目链接
+🔗官方参考题解链接
+在开始之前, 可以查看一下该漏洞的细节 和 描述, 发现该漏洞的原理其实十分简单, 就是在 if s3Err != ErrNone 判断之后没有将不合法的控制流返回, 而是任由它继续进入接下去的claims, s3Err := checkClaimsFromToken(r, cred), 导致校验失败.
+具体的漏洞利用可以看这里
+Part 1: Let’s catch the bug! 1.1: Finding references to ErrNone Write the query that finds all identifiers named ErrNone. You will find in the documentation the relevant object types to query. Your query should return 231 results.
+import go from Ident i where i.getName() = &#34;ErrNone&#34; //Ident就是标识符 select i 运行后就可以检索出ErrNone出现过的所有位置.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-12-06 09:03:06 +0800 CST'>December 6, 2024</span>&nbsp;·&nbsp;13 min&nbsp;·&nbsp;2729 words&nbsp;·&nbsp;ch3n9w</footer>
+  <a class="entry-link" aria-label="post link to CodeQL CTF 之 Go and don&#39;t return" href="https://dragonbox.top/posts/sec-codeql-ctf/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -587,19 +611,6 @@ clash for windows是基于开源的clash core核心代码做的图形化客户�
   </div>
   <footer class="entry-footer"><span title='2023-06-07 09:32:57 +0000 UTC'>June 7, 2023</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;163 words&nbsp;·&nbsp;ch3n9w</footer>
   <a class="entry-link" aria-label="post link to 我的neovim" href="https://dragonbox.top/posts/tech-neovim2023/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">2023 小游京城
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>难得黄小姐来一次北京, 作为肥宅的自己紧急规划了一下游玩路线, 发现北京可玩的地方相当的多, 这里仅仅记录这次游玩所经过的三个景区.
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-04-26 22:54:10 +0000 UTC'>April 26, 2023</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;58 words&nbsp;·&nbsp;ch3n9w</footer>
-  <a class="entry-link" aria-label="post link to 2023 小游京城" href="https://dragonbox.top/posts/gossip-beijing-travel-2023/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
