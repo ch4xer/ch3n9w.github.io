@@ -2,9 +2,9 @@ baseURL: "https://dragonbox.top/"
 languageCode: en-us
 pagination:
   pagerSize: 20
-title: ch3n9w の 超元域
+title: ch4xer の 超元域
 theme: ["PaperMod"]
-# publishDir: "/home/ch4ser/Tools/Other/selfhost/blog/public"
+publishDir: "/home/ch4ser/Tools/Other/selfhost/blog/public"
 params:
   homeInfoParams:
     Title: 你好👋, 随便逛逛吧🐳
@@ -12,7 +12,7 @@ params:
 
   socialIcons:
     - name: "Github"
-      url: "https://github.com/ch3n9w"
+      url: "https://github.com/ch4xer"
     - name: "Mail"
       url: "mailto:ch4xer@gmail.com"
     - name: "RSS"
@@ -32,7 +32,7 @@ params:
     apple_touch_icon: "flash.ico"
     safari_pinned_tab: "flash.ico"
   label:
-    text: "ch3n9w の 超元域"
+    text: "ch4xer の 超元域"
     icon: avatar.jpg
     iconHeight: 35
 
