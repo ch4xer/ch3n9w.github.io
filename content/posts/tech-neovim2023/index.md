@@ -1,6 +1,6 @@
 ---
 title: 我的neovim
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2023-06-07T09:32:57.000Z
 categories:
@@ -98,4 +98,4 @@ categories:
 |         远程剪切板同步         |      ojroques/nvim-osc52       |
 |          session 恢复          |      tpope/vim-obsession       |
 
-最后贴上配置文件地址, 感兴趣可以去看看: [link](https://github.com/ch3n9w/dev)
+最后贴上配置文件地址, 感兴趣可以去看看: [link](https://github.com/ch4xer/dev)

@@ -1,6 +1,6 @@
 ---
 title: 'Kubernetes Admission Webhook 部署和调试'
-author: ch3n9w
+author: ch4ser
 date: 2024-05-03T17:14:14+08:00
 categories:
   - 技术

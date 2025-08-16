@@ -1,6 +1,6 @@
 ---
 title: 《在世界尽头的咖啡馆》读书笔记
-author: ch3n9w
+author: ch4ser
 date: 2024-11-02T20:50:43+08:00
 cagetories:
   - 阅读

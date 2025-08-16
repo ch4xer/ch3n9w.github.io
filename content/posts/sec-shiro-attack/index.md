@@ -1,6 +1,6 @@
 ---
 title: shiro 漏洞复现
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2022-01-22 10:52:46
 categories:

@@ -1,6 +1,6 @@
 ---
 title: 小阳人日记
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2022-12-20 22:45:44
 categories:

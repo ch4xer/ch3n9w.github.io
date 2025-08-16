@@ -1,6 +1,6 @@
 ---
 title: bugku writeup
-author: ch3n9w
+author: ch4ser
 date: 2019-04-22 04:13:30
 categories:
   - CTF

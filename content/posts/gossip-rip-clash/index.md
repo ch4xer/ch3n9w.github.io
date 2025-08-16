@@ -1,6 +1,6 @@
 ---
 title: RIP Clash
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2023-11-04 10:13:59
 categories:

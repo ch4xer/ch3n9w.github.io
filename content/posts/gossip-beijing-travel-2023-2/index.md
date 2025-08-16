@@ -1,6 +1,6 @@
 ---
 title: 2023 记北京秋游
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2023-10-30 21:35:04
 categories:

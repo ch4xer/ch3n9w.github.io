@@ -1,6 +1,6 @@
 ---
 title: pwnable尝试
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2022-01-27 17:48:33
 categories:

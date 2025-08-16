@@ -1,6 +1,6 @@
 ---
 title: GhostCat(CVE-2020-1938)漏洞学习
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2021-11-13 13:14:29
 categories:

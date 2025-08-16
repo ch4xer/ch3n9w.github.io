@@ -1,6 +1,6 @@
 ---
 title: bytectf2019
-author: ch3n9w
+author: ch4ser
 date: 2019-09-09 08:18:25
 categories:
   - CTF
@@ -155,14 +155,14 @@ function is_admin(){
 哈希生成
 
 ```
-./hash_extender -d 'admin' -s 52107b08c0f3342d2153ae1d68e6262c -f md5 -a 'ch3n9w' --out-data-format=html -l 13 --quiet
+./hash_extender -d 'admin' -s 52107b08c0f3342d2153ae1d68e6262c -f md5 -a 'ch4ser' --out-data-format=html -l 13 --quiet
 ```
 
 得到了新的哈希值,添加到cookie[user]中
 
 然后新的登录用户名: admin
 
-用户密码:admin%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%90%00%00%00%00%00%00%00ch3n9w
+用户密码:admin%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%90%00%00%00%00%00%00%00ch4ser
 
 第二部分反序列化代码审计.
 

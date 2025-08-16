@@ -1,6 +1,6 @@
 ---
 title: vim/neovim 的问题
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2022-12-15 12:04:12
 categories:

@@ -1,6 +1,6 @@
 ---
 title: 赛博内卷
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2021-11-19 11:18:11
 categories:

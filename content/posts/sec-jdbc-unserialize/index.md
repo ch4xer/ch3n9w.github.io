@@ -1,6 +1,6 @@
 ---
 title: mysql jdbc反序列化的不深入研究
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2021-10-15 21:46:28
 categories:

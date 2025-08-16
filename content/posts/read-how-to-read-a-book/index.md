@@ -1,6 +1,6 @@
 ---
 title: 《如何阅读一本书》读书笔记
-author: ch3n9w
+author: ch4ser
 date: 2024-10-25T23:26:18+08:00
 cagetories: 
   - 阅读

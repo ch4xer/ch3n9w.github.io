@@ -1,6 +1,6 @@
 ---
 title: 优化neovim markdown中的treesitter高亮
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2023-04-25 21:33:47
 categories:

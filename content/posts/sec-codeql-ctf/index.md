@@ -1,6 +1,6 @@
 ---
 title: CodeQL CTF 之 Go and don't return
-author: ch3n9w
+author: ch4ser
 date: 2024-12-06T09:03:06+08:00
 cagetories:
   - 安全研究

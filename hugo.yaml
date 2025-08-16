@@ -7,7 +7,7 @@ theme: ["PaperMod"]
 publishDir: "/home/ch4ser/Tools/Other/selfhost/blog/public"
 params:
   homeInfoParams:
-    Title: 你好👋, 随便逛逛吧🐳
+    Title: 人生如逆旅，我亦是行人。☁️
     Content: But I don't want comfort. I want God, I want poetry, I want real danger, I want freedom, I want goodness. I want sin.
 
   socialIcons:
@@ -32,7 +32,7 @@ params:
     apple_touch_icon: "flash.ico"
     safari_pinned_tab: "flash.ico"
   label:
-    text: "ch4xer の 超元域"
+    text: "ch4ser の 超元域"
     icon: avatar.jpg
     iconHeight: 35
 
@@ -42,6 +42,10 @@ menu:
       name: categories
       url: /categories/
       weight: 10
+    - identifier: about
+      name: about
+      url: /about/
+      weight: 50
 
 outputs:
   home:

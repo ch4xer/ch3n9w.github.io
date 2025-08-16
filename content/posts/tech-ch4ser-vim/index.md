@@ -1,13 +1,13 @@
 ---
-title: ch3n9w 的 vim
-author: ch3n9w
+title: ch4ser 的 vim
+author: ch4ser
 date: 2019-04-22 02:05:35
 categories:
   - 技术
 typora-root-url: ../
 ---
 
-# ch3n9w 的 vim 
+# ch4ser 的 vim 
 
 > 本篇文章中的插件均已过时, 不推荐使用
 
@@ -168,13 +168,13 @@ call plug#end()
 
 " Plugin setting
 "
-source /home/ch3n9w/.vim/plugset/nerdtree.vim
-source /home/ch3n9w/.vim/plugset/ncm2.vim
-source /home/ch3n9w/.vim/plugset/bookmark.vim
-source /home/ch3n9w/.vim/plugset/airline.vim
-source /home/ch3n9w/.vim/plugset/taglists.vim
-source /home/ch3n9w/.vim/plugset/autopair.vim
-source /home/ch3n9w/.vim/plugset/nerdcomment.vim
+source /home/ch4ser/.vim/plugset/nerdtree.vim
+source /home/ch4ser/.vim/plugset/ncm2.vim
+source /home/ch4ser/.vim/plugset/bookmark.vim
+source /home/ch4ser/.vim/plugset/airline.vim
+source /home/ch4ser/.vim/plugset/taglists.vim
+source /home/ch4ser/.vim/plugset/autopair.vim
+source /home/ch4ser/.vim/plugset/nerdcomment.vim
 " source ~/.vim/plugset/keysound.vim
 ```
 

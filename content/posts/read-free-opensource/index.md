@@ -1,6 +1,6 @@
 ---
 title: 若为自由故, 软件皆可抛
-author: ch3n9w
+author: ch4ser
 date: 2024-03-23 22:57:50
 categories:
   - 阅读

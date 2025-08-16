@@ -1,6 +1,6 @@
 ---
 title: 使用Arch Linux + Sway一年后
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2022-12-17 14:24:23
 categories:

@@ -1,6 +1,6 @@
 ---
 title: lineageos使用体验
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2023-08-13 21:34:53
 categories:

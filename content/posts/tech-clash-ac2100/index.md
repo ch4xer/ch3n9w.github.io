@@ -1,6 +1,6 @@
 ---
 title: 在红米ac2100路由器上开启clash
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2022-12-12 20:17:03
 categories:

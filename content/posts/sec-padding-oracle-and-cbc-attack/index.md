@@ -1,6 +1,6 @@
 ---
 title: padding_oracle 和 cbc字节反转
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2020-02-03 16:42:20
 categories:

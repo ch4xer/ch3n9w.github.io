@@ -1,6 +1,6 @@
 ---
 title: Learning eBPF
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2024-02-04 00:06:15
 categories:

@@ -1,6 +1,6 @@
 ---
 title: log4j2 jndi 漏洞学习和调试
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2021-12-11 14:56:51
 categories:

@@ -1,6 +1,6 @@
 ---
 title: wayland下的划词翻译解决方案
-author: ch3n9w
+author: ch4ser
 typora-root-url: ../
 date: 2023-01-11 04:36:45
 categories:
